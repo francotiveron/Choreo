@@ -6,11 +6,11 @@
         xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
         xmlns:local="clr-namespace:Choreo"
         mc:Ignorable="d"
-        Height="1080" Width="1920" WindowStyle="None" Style="{DynamicResource WinAll}" >
-    <!--        Height="450" Width="800" WindowStyle="None" WindowState="Maximized" ResizeMode="NoResize" Topmost="True" Style="{DynamicResource WinAll}"> -->
+        Height="1080" Width="1920" WindowStyle="None" WindowState="Maximized" ResizeMode="NoResize" Topmost="True" Style="{DynamicResource WinAll}" >
     <Window.CommandBindings>
-        <CommandBinding Command="{x:Static local:MainWindow.CueingCmd}" Executed="CueingCmdExecuted" CanExecute="CueingCmdCanExecute"/>
         <CommandBinding Command="{x:Static local:MainWindow.HomeCmd}" Executed="HomeCmdExecuted" CanExecute="HomeCmdCanExecute"/>
+        <CommandBinding Command="{x:Static local:MainWindow.CueingCmd}" Executed="CueingCmdExecuted" CanExecute="CueingCmdCanExecute"/>
+        <CommandBinding Command="{x:Static local:MainWindow.ShowCmd}" Executed="ShowCmdExecuted" CanExecute="ShowCmdCanExecute"/>
     </Window.CommandBindings>
     <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>

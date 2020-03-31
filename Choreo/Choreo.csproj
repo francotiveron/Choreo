@@ -93,6 +93,7 @@
     <Compile Include="HomeTopPanel.xaml.cs">
       <DependentUpon>HomeTopPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Group.cs" />
     <Compile Include="MotorStatusIndicator.xaml.cs">
       <DependentUpon>MotorStatusIndicator.xaml</DependentUpon>
     </Compile>
@@ -101,6 +102,9 @@
       <DependentUpon>PresetBottomPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="PropertyChangedNotifier.cs" />
+    <Compile Include="ShowPage.xaml.cs">
+      <DependentUpon>ShowPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel.cs" />
     <Compile Include="Motor.cs" />
     <Compile Include="TestWindow.xaml.cs">
@@ -147,6 +151,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ResourceDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ShowPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

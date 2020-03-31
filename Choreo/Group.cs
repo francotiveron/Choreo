@@ -9,9 +9,10 @@ using System.Windows.Media;
 
 namespace Choreo
 {
-    public class Motor: PropertyChangedNotifier
+    public class Group: PropertyChangedNotifier
     {
-        public Motor(int index) { Index = index; }
+        public static readonly Color[] GroupColors = { Colors.Red, Colors.Blue, Colors.Purple, Colors.Orange, Colors.DarkCyan, Colors.Green, Colors.Brown, Colors.Magenta };
+        public Group(int index) { Index = index; }
         public float Position => 3.5F;
 
         private bool isOK;
@@ -20,29 +21,17 @@ namespace Choreo
             set { isOK = value; OnPropertyChanged(); }
         }
 
-        string name;
+        private string name;
+
         public string Name {
             get {
-                if (name == null) return $"Motor {Index + 1}";
+                if (name == null) return $"Group {Index + 1}";
                 return name;
             }
             set { name = value; OnPropertyChanged(); }
         }
 
         public int Index { get; set; }
-
-        int group;
-        public int Group {
-            get => group;
-            set { group = value; OnPropertyChanged(); OnPropertyChanged("Color"); }
-        }
-
-        public Color Color {
-            get {
-                if (group == 0) return Colors.Gray;
-                return Choreo.Group.GroupColors[Group];
-            }
-        }
-
+        public Color Color => GroupColors[Index];
     }
 }

@@ -9,17 +9,25 @@ using System.Windows.Controls;
 namespace Choreo
 {
     using Cfg = Configuration;
-    public enum Pages { Home };
+    public enum Pages { Home, Cueing, Show };
     public class ViewModel: PropertyChangedNotifier
     {
         public ViewModel() {
             Motors = new List<Motor>();
-            for (int i = 1; i <= 16; i++) Motors.Add(new Motor($"Motor {i}"));
+            Groups = new List<Group>();
+            for (int i = 0; i < 16; i++) Motors.Add(new Motor(i));
+            for (int i = 0; i < 8; i++) Groups.Add(new Group(i));
             CurrentPage = Pages.Home;
             Plc = PlcFactory.New(Cfg.PLCId); 
         }
         public IPlc Plc { get; private set; }
-        public Pages CurrentPage { get; set; }
+
+        Pages currentPage;
+        public Pages CurrentPage {
+            get => currentPage;
+            set { currentPage = value; OnPropertyChanged(); }
+        }
         public List<Motor> Motors { get; private set; }
+        public List<Group> Groups { get; private set; }
     }
 }

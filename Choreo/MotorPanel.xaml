@@ -23,7 +23,10 @@
                     <RowDefinition/>
                     <RowDefinition Height="5*"/>
                 </Grid.RowDefinitions>
-                <Border Background="#FF6C6666">
+                <Border>
+                    <Border.Background>
+                        <SolidColorBrush Color="{Binding Color}"/>
+                    </Border.Background>
                     <TextBlock Text="{Binding Name}" TextAlignment="Center" VerticalAlignment="Center"/>
                 </Border>
                 <Grid Grid.Row="1">
@@ -31,27 +34,25 @@
                         <ColumnDefinition Width="9*"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel Margin="5" Orientation="Vertical" d:LayoutOverrides="Height">
-                        <Grid Height="327.75" d:LayoutOverrides="LeftPosition, RightPosition">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="3*"/>
-                                <RowDefinition Height="3*"/>
-                                <RowDefinition Height="2*"/>
-                            </Grid.RowDefinitions>
-                            <StackPanel Height="122.906" Width="274.4">
-                                <Label Content="Position" VerticalAlignment="Bottom" Foreground="#FFD1BFBF" FontSize="28" FontWeight="Bold"/>
-                                <Label x:Name="Position" Content="{Binding Position, FallbackValue=13\' - 4.5\'\'}"/>
-                            </StackPanel>
-                            <StackPanel Grid.Row="1">
-                                <Label Content="Load" VerticalAlignment="Bottom" Foreground="#FFD1BFBF" FontSize="28" FontWeight="Bold"/>
-                                <DockPanel d:LayoutOverrides="VerticalAlignment, LeftPosition, RightPosition">
-                                    <Label x:Name="Load" Content="13' - 4.5''"/>
-                                    <Label DockPanel.Dock="Right" Content="LBS" HorizontalAlignment="Center"/>
-                                </DockPanel>
-                            </StackPanel>
-                            <local:MotorStatusIndicator Grid.Row="2"/>
-                        </Grid>
-                    </StackPanel>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="3*"/>
+                            <RowDefinition Height="3*"/>
+                            <RowDefinition Height="2*"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel VerticalAlignment="Center">
+                            <Label Content="Position" VerticalAlignment="Bottom" Foreground="#FFD1BFBF" FontSize="28" FontWeight="Bold"/>
+                            <Label x:Name="Position" Content="{Binding Position, FallbackValue=13\' - 4.5\'\'}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" VerticalAlignment="Center">
+                            <Label Content="Load" VerticalAlignment="Bottom" Foreground="#FFD1BFBF" FontSize="28" FontWeight="Bold"/>
+                            <DockPanel d:LayoutOverrides="VerticalAlignment, LeftPosition, RightPosition">
+                                <Label x:Name="Load" Content="13' - 4.5''"/>
+                                <Label DockPanel.Dock="Right" Content="LBS" HorizontalAlignment="Center"/>
+                            </DockPanel>
+                        </StackPanel>
+                        <local:MotorStatusIndicator Grid.Row="2"/>
+                    </Grid>
                     <ProgressBar Grid.Column="1" Background="#FF534F4F" Foreground="#FFC3BABA" BorderBrush="#00BCBCBC" Value="30" Orientation="Vertical"/>
                 </Grid>
             </Grid>

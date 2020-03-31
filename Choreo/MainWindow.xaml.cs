@@ -21,33 +21,47 @@ namespace Choreo
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static RoutedCommand CueingCmd = new RoutedCommand();
         public static RoutedCommand HomeCmd = new RoutedCommand();
+        public static RoutedCommand CueingCmd = new RoutedCommand();
+        public static RoutedCommand ShowCmd = new RoutedCommand();
 
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new ViewModel();
+            DataContext = VM;
         }
 
         private void HomeCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
+            VM.CurrentPage = Pages.Home;
             PageArea.Child = new HomePage();
         }
 
         private void HomeCmdCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = true;
+            e.CanExecute = VM.CurrentPage != Pages.Home;
         }
 
         private void CueingCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
+            VM.CurrentPage = Pages.Cueing;
             PageArea.Child = new CueingPage();
         }
 
         private void CueingCmdCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = true;
+            e.CanExecute = VM.CurrentPage != Pages.Cueing;
+        }
+
+        private void ShowCmdExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            VM.CurrentPage = Pages.Show;
+            PageArea.Child = new ShowPage();
+        }
+
+        private void ShowCmdCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = VM.CurrentPage != Pages.Show;
         }
     }
 }

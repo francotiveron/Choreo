@@ -6,27 +6,79 @@
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
              d:DesignHeight="90" d:DesignWidth="1920" Style="{DynamicResource WinAll}">
-         <Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="20*"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Image Source="VerendusLogo.png"/>
-                <Button x:Name="MainMenu" Grid.Column="3" Template="{DynamicResource ButtonControlTemplateMainMenu}">
-                    <Button.ContextMenu>
-                        <ContextMenu>
-                            <Button x:Name="ExitButton" Content="Exit" Click="ExitButton_Click"/>
-                        </ContextMenu>
-                    </Button.ContextMenu>
-                </Button>
-                <StackPanel x:Name="TopToolbarPanel" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Content="Home" Command="{x:Static local:MainWindow.HomeCmd}"/>
-                    <Button Content="Cueing" Command="{x:Static local:MainWindow.CueingCmd}"/>
-                    <Button Content="Button"/>
-                </StackPanel>
-            </Grid>
+    <UserControl.Resources>
+        <Style x:Key="buttonStyle" TargetType="Button">
+
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Background" Value="{x:Null}" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Margin" Value="10,1"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter
+                                      Content="{TemplateBinding Content}"
+                                      HorizontalAlignment="Center" 
+                                      VerticalAlignment="Center" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="1"/>
+                    <Setter Property="Foreground" Value="Blue"/>
+                    <Setter Property="Background" Value="{x:Null}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <local:CurrentPageBoolConverter x:Key="CurrentPageBoolConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="20*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Image Source="VerendusLogo.png"/>
+            <Button x:Name="MainMenu" Grid.Column="3" Template="{DynamicResource ButtonControlTemplateMainMenu}">
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <Button x:Name="ExitButton" Content="Exit" Click="ExitButton_Click"/>
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
+            <StackPanel x:Name="TopToolbarPanel" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Button Content="Home" Style="{StaticResource buttonStyle}" Command="{x:Static local:MainWindow.HomeCmd}"/>
+                    <Rectangle Fill="Blue" Grid.Row="1" Margin="0" Visibility="{Binding CurrentPage, Converter={StaticResource CurrentPageBoolConverter}, ConverterParameter=Home}"/>
+                </Grid>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Button Content="Cueing" Style="{StaticResource buttonStyle}" Command="{x:Static local:MainWindow.CueingCmd}"/>
+                    <Rectangle Fill="Blue" Grid.Row="1" Margin="0" Visibility="{Binding CurrentPage, Converter={StaticResource CurrentPageBoolConverter}, ConverterParameter=Cueing }"/>
+                </Grid>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Button Content="Show" Style="{StaticResource buttonStyle}" Command="{x:Static local:MainWindow.ShowCmd}"/>
+                    <Rectangle Fill="Blue" Grid.Row="1" Margin="0" Visibility="{Binding CurrentPage, Converter={StaticResource CurrentPageBoolConverter}, ConverterParameter=Show }"/>
+                </Grid>
+            </StackPanel>
         </Grid>
+    </Grid>
 </UserControl>

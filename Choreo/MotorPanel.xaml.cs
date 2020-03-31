@@ -31,7 +31,10 @@ namespace Choreo
             var row = (int)uc.GetValue(Grid.RowProperty);
             var col = (int)uc.GetValue(Grid.ColumnProperty);
             var index = row * 8 + col;
-            DataContext = VM.Motors[index];
+            if ((string)uc.Parent.GetValue(Grid.NameProperty) == "AxisMonitorGrid")
+                DataContext = VM.Motors[index];
+            else
+                DataContext = VM.Groups[index];
         }
 
         #region Gesture
