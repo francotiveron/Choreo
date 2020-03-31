@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="Choreo.MotorStatusIndicator"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Choreo"
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="200" Style="{DynamicResource WinAll}">
+    <StackPanel Orientation="Horizontal" d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition">
+        <Ellipse VerticalAlignment="Center" Width="40" Height="40" Margin="2,0,0,0">
+            <Ellipse.Style>
+                <Style TargetType="{x:Type Ellipse}">
+                    <Setter Property="Fill" Value="Red"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsOK}" Value="True">
+                            <Setter Property="Fill" Value="Lime"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Ellipse.Style>
+        </Ellipse>
+        <TextBlock Text="Failure" Margin="4,0,0,0" VerticalAlignment="Center"/>
+    </StackPanel>
+</UserControl>

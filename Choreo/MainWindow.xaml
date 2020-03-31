@@ -6,9 +6,21 @@
         xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
         xmlns:local="clr-namespace:Choreo"
         mc:Ignorable="d"
-        Height="450" Width="800" WindowStyle="None" Loaded="Window_Loaded">
+        Height="450" Width="800" WindowStyle="None" Style="{DynamicResource WinAll}">
     <!--        Height="450" Width="800" WindowStyle="None" WindowState="Maximized" ResizeMode="NoResize" Topmost="True" Style="{DynamicResource WinAll}"> -->
-    <Window.DataContext>
-        <Binding Source="{StaticResource ChoreoViewModel}"/>
-    </Window.DataContext>
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static local:MainWindow.CueingCmd}" Executed="CueingCmdExecuted" CanExecute="CueingCmdCanExecute"/>
+        <CommandBinding Command="{x:Static local:MainWindow.HomeCmd}" Executed="HomeCmdExecuted" CanExecute="HomeCmdCanExecute"/>
+    </Window.CommandBindings>
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="25*"/>
+        </Grid.RowDefinitions>
+        <local:HomeTopPanel/>
+        <Border Grid.Row="1" Name="PageArea">
+            <local:HomePage/>
+        </Border>
+        <Rectangle Grid.RowSpan="27" Fill="#FF727200" Opacity="0.645" Visibility="Hidden"/>
+    </Grid>
 </Window>

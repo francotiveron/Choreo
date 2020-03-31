@@ -16,19 +16,13 @@ using System.Windows.Shapes;
 namespace Choreo
 {
     /// <summary>
-    /// Interaction logic for MainPage.xaml
+    /// Interaction logic for MotorStatusIndicator.xaml
     /// </summary>
-    public partial class MainPage : UserControl
+    public partial class MotorStatusIndicator : UserControl
     {
-        public MainPage()
+        public MotorStatusIndicator()
         {
             InitializeComponent();
         }
-
-        private void ExitButton_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
-
     }
 }

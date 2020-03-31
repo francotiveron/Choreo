@@ -14,6 +14,7 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -78,17 +79,47 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Globals.cs" />
-    <Compile Include="MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
+    <Compile Include="AxesAndGroupsPanel.xaml.cs">
+      <DependentUpon>AxesAndGroupsPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PLC.cs" />
+    <Compile Include="Configuration.cs" />
+    <Compile Include="CueingPage.xaml.cs">
+      <DependentUpon>CueingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Globals.cs" />
+    <Compile Include="HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HomeTopPanel.xaml.cs">
+      <DependentUpon>HomeTopPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MotorStatusIndicator.xaml.cs">
+      <DependentUpon>MotorStatusIndicator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MouseTouchDevice.cs" />
+    <Compile Include="Plc.cs" />
+    <Compile Include="PresetBottomPanel.xaml.cs">
+      <DependentUpon>PresetBottomPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyChangedNotifier.cs" />
     <Compile Include="ViewModel.cs" />
     <Compile Include="Motor.cs" />
     <Compile Include="TestWindow.xaml.cs">
       <DependentUpon>TestWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="MainPage.xaml">
+    <Page Include="AxesAndGroupsPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CueingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HomeTopPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -104,7 +135,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MotorUserControl.xaml">
+    <Page Include="MotorPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MotorStatusIndicator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PresetBottomPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -118,8 +157,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MotorUserControl.xaml.cs">
-      <DependentUpon>MotorUserControl.xaml</DependentUpon>
+    <Compile Include="MotorPanel.xaml.cs">
+      <DependentUpon>MotorPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

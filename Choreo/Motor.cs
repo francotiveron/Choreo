@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Choreo
 {
-    public class Motor: INotifyPropertyChanged
+    public class Motor: PropertyChangedNotifier
     {
         public float Position => 3.5F;
 
@@ -20,12 +20,5 @@ namespace Choreo
                 OnPropertyChanged();
             }
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-
     }
 }

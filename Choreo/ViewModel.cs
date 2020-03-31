@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,14 +8,17 @@ using System.Windows.Controls;
 
 namespace Choreo
 {
-    public enum Pages { MainPage };
-    public class ViewModel
+    using Cfg = Configuration;
+    public enum Pages { Home };
+    public class ViewModel: PropertyChangedNotifier
     {
-        public Pages CurrentPage { get; set; }
-        public List<Motor> Motors { get; private set; }
         public ViewModel() {
             Motors = new List<Motor> { new Motor() };
-            CurrentPage = Pages.MainPage;
+            CurrentPage = Pages.Home;
+            Plc = PlcFactory.New(Cfg.PLCId); 
         }
+        public IPlc Plc { get; private set; }
+        public Pages CurrentPage { get; set; }
+        public List<Motor> Motors { get; private set; }
     }
 }

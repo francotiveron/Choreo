@@ -12,27 +12,21 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using static Choreo.Globals;
 
 namespace Choreo
 {
     /// <summary>
-    /// Interaction logic for MotorUserControl.xaml
+    /// Interaction logic for MainTopPanel.xaml
     /// </summary>
-    public partial class MotorUserControl : UserControl
+    public partial class HomeTopPanel : UserControl
     {
-        public MotorUserControl()
+        public HomeTopPanel()
         {
             InitializeComponent();
         }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
-            var uc = (MotorUserControl)sender;
-            var row = (int)uc.GetValue(Grid.RowProperty);
-            var col = (int)uc.GetValue(Grid.ColumnProperty);
-            var index = row * 8 + col;
-            DataContext = VM.Motors[index];
+            Application.Current.Shutdown();
         }
     }
 }
