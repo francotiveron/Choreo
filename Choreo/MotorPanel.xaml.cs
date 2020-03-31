@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,9 +17,7 @@ using static Choreo.Globals;
 
 namespace Choreo
 {
-    /// <summary>
-    /// Interaction logic for MotorUserControl.xaml
-    /// </summary>
+
     public partial class MotorPanel : UserControl
     {
         public MotorPanel()
@@ -35,15 +34,19 @@ namespace Choreo
             DataContext = VM.Motors[index];
         }
 
+        #region Gesture
+        bool gesture;
+        bool Gesture {
+            get => gesture;
+            set {
+                gesture = value;
+                Mouse.OverrideCursor = gesture ? Cursors.ScrollNS : null;
+            }
+        }
+        double gestureStart;
         private void Border_ManipulationStarted(object sender, ManipulationStartedEventArgs e)
         {
 
-        }
-
-        private void Border_Loaded(object sender, RoutedEventArgs e)
-        {
-            var fe = (FrameworkElement)sender;
-            MouseTouchDevice.RegisterEvents(fe);
         }
 
         private void Border_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
@@ -55,5 +58,47 @@ namespace Choreo
         {
 
         }
+
+        private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                StartGesture(e.GetPosition(this));
+            }
+        }
+
+        private void UserControl_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (Gesture)
+            {
+                var y = e.GetPosition(this).Y;
+                if ((y - gestureStart) < -10.0) GestureUp();
+                if ((y - gestureStart) > 10.0) GestureDn();
+            }
+        }
+
+        private void UserControl_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Gesture = false;
+        }
+
+        private void StartGesture(Point p)
+        {
+            gestureStart = p.Y;
+            Gesture = true;
+        }
+
+        private void GestureUp()
+        {
+            Gesture = false;
+        }
+
+        private void GestureDn()
+        {
+            Gesture = false;
+        }
+
+        #endregion
     }
 }
+    

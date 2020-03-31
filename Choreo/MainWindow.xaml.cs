@@ -49,6 +49,5 @@ namespace Choreo
         {
             e.CanExecute = true;
         }
-
     }
 }

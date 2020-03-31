@@ -13,7 +13,8 @@ namespace Choreo
     public class ViewModel: PropertyChangedNotifier
     {
         public ViewModel() {
-            Motors = new List<Motor> { new Motor() };
+            Motors = new List<Motor>();
+            for (int i = 1; i <= 16; i++) Motors.Add(new Motor($"Motor {i}"));
             CurrentPage = Pages.Home;
             Plc = PlcFactory.New(Cfg.PLCId); 
         }

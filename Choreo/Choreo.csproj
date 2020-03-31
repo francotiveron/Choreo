@@ -96,7 +96,6 @@
     <Compile Include="MotorStatusIndicator.xaml.cs">
       <DependentUpon>MotorStatusIndicator.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MouseTouchDevice.cs" />
     <Compile Include="Plc.cs" />
     <Compile Include="PresetBottomPanel.xaml.cs">
       <DependentUpon>PresetBottomPanel.xaml</DependentUpon>

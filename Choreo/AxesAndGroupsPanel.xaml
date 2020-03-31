@@ -11,7 +11,7 @@
             <ColumnDefinition Width="24*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Grid x:Name="AxisGrid">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="10*"/>
@@ -20,7 +20,7 @@
             </Grid.RowDefinitions>
             <Label Content="Axis Monitor" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
             <Label Content="Axis Groups" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-            <Grid Grid.Row =" 1" x:Name="AxisMonitorGrid">
+            <Grid Grid.Row ="1" x:Name="AxisMonitorGrid">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
@@ -36,8 +36,23 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <local:MotorPanel Grid.Row="0" Grid.Column="0"/>
+                <local:MotorPanel Grid.Row="0" Grid.Column="1"/>
+                <local:MotorPanel Grid.Row="0" Grid.Column="2"/>
+                <local:MotorPanel Grid.Row="0" Grid.Column="3"/>
+                <local:MotorPanel Grid.Row="0" Grid.Column="4"/>
+                <local:MotorPanel Grid.Row="0" Grid.Column="5"/>
+                <local:MotorPanel Grid.Row="0" Grid.Column="6"/>
+                <local:MotorPanel Grid.Row="0" Grid.Column="7"/>
+                <local:MotorPanel Grid.Row="1" Grid.Column="0"/>
+                <local:MotorPanel Grid.Row="1" Grid.Column="1"/>
+                <local:MotorPanel Grid.Row="1" Grid.Column="2"/>
+                <local:MotorPanel Grid.Row="1" Grid.Column="3"/>
+                <local:MotorPanel Grid.Row="1" Grid.Column="4"/>
+                <local:MotorPanel Grid.Row="1" Grid.Column="5"/>
+                <local:MotorPanel Grid.Row="1" Grid.Column="6"/>
+                <local:MotorPanel Grid.Row="1" Grid.Column="7"/>
             </Grid>
-            <Grid Grid.Row =" 3" x:Name="AxisGroupsGrid">
+            <Grid Grid.Row ="3" x:Name="AxisGroupsGrid">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
@@ -49,7 +64,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
             </Grid>
-
         </Grid>
+        <ProgressBar Grid.Column="1" Background="#FF8D8585" Foreground="#FFC7D4CA" BorderBrush="{x:Null}" Orientation="Vertical"/>
     </Grid>
 </UserControl>

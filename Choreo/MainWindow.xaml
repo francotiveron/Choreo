@@ -6,7 +6,7 @@
         xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
         xmlns:local="clr-namespace:Choreo"
         mc:Ignorable="d"
-        Height="450" Width="800" WindowStyle="None" Style="{DynamicResource WinAll}">
+        Height="1080" Width="1920" WindowStyle="None" Style="{DynamicResource WinAll}" >
     <!--        Height="450" Width="800" WindowStyle="None" WindowState="Maximized" ResizeMode="NoResize" Topmost="True" Style="{DynamicResource WinAll}"> -->
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static local:MainWindow.CueingCmd}" Executed="CueingCmdExecuted" CanExecute="CueingCmdCanExecute"/>
