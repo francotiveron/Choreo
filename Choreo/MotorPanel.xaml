@@ -7,7 +7,7 @@
              xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
-             d:DesignHeight="390" d:DesignWidth="320" Loaded="UserControl_Loaded" Style="{DynamicResource WinAll}" MouseDown="UserControl_MouseDown" MouseMove="UserControl_MouseMove" MouseUp="UserControl_MouseUp">
+             d:DesignHeight="390" d:DesignWidth="320" Loaded="UserControl_Loaded" Style="{DynamicResource WinAll}" MouseDown="UserControl_MouseDown" MouseMove="UserControl_MouseMove" MouseUp="UserControl_MouseUp" OpacityMask="Black">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -55,6 +55,14 @@
                     </Grid>
                     <ProgressBar Grid.Column="1" Background="#FF534F4F" Foreground="#FFC3BABA" BorderBrush="#00BCBCBC" Value="30" Orientation="Vertical"/>
                 </Grid>
+                <Rectangle Grid.RowSpan="2" Fill="Black" Opacity="0.6">
+                    <Rectangle.Visibility>
+                        <MultiBinding Converter="{StaticResource DarkeningConverter}">
+                            <Binding RelativeSource="{RelativeSource Self}"/>
+                            <Binding Path="MyValue"/>
+                        </MultiBinding>
+                    </Rectangle.Visibility>
+                </Rectangle>
             </Grid>
         </Border>
     </Viewbox>

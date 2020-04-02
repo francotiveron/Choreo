@@ -1,1 +1,15 @@
-﻿- Motor Settings Window
+﻿+ Darken motor
+* Group logic
+- Motor Settings Window
+- Motor move window
+- Preset logic
+- Cueing creation logic/window
+- Edit Cue window
+- Show window
+- Cue execution logic	
+- Motor Lock for group
+- Motor out of place function/dialog
+- Clear button (the clear button removes any current move or jog assignments)
+- Jog velocity slide management
+- Motor position bar movement
+- Clarify meaning of arrows in motor pos bar
