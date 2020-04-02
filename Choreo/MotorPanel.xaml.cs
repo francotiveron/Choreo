@@ -1,48 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
-using TwinCAT.PlcOpen;
 using static Choreo.Globals;
 
 namespace Choreo
 {
     public partial class MotorPanel : UserControl
     {
+        DispatcherTimer gestureTimer;
         public MotorPanel()
         {
             InitializeComponent();
+            gestureTimer = new DispatcherTimer(TimeSpan.FromSeconds(5), DispatcherPriority.Normal, GestureTimeout, Dispatcher.CurrentDispatcher) { Tag = this };
         }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            var uc = (MotorPanel)sender;
-            var row = (int)uc.GetValue(Grid.RowProperty);
-            var col = (int)uc.GetValue(Grid.ColumnProperty);
-            var index = row * 8 + col;
-            gestureTimer.Tag = this;
-            if ((string)uc.Parent.GetValue(Grid.NameProperty) == "AxisMonitorGrid")
-                DataContext = VM.Motors[index];
-            else
-                DataContext = VM.Groups[index];
-        }
-
         public bool IsMotor => DataContext is Motor;
         public bool IsGroup => DataContext is Group;
+
+        public int Index => IsGroup ? ((Group)DataContext).Index : ((Motor)DataContext).Index;
 
         #region Gesture
         bool gesture;
@@ -54,7 +35,6 @@ namespace Choreo
             }
         }
         double gestureStart;
-        DispatcherTimer gestureTimer = new DispatcherTimer(TimeSpan.FromSeconds(5), DispatcherPriority.Normal, GestureTimeout, Dispatcher.CurrentDispatcher);
 
         private static void GestureTimeout(object sender, EventArgs e)
         {
@@ -62,7 +42,7 @@ namespace Choreo
             if (panel.Gesture)
             {
                 panel.StopGesture();
-                Debug.Print("Settings");
+                if (panel.IsGroup) VM.BeginGroupEditing(panel.Index);
             }
         }
 
@@ -85,7 +65,16 @@ namespace Choreo
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                StartGesture(e.GetPosition(this));
+                if (VM.IsGroupEditing) {
+                    if (IsMotor) {
+                        var m = DataContext as Motor;
+                        if (m.Group == 0) m.Group = VM.GroupBeingEdited;
+                        else
+                        if (m.Group == VM.GroupBeingEdited) m.Group = 0;
+                    }
+                    return;
+                }
+                else StartGesture(e.GetPosition(this));
             }
         }
 
@@ -107,6 +96,7 @@ namespace Choreo
         private void StartGesture(Point p)
         {
             gestureStart = p.X;
+            gestureTimer.Interval = TimeSpan.FromSeconds(5);
             gestureTimer.Start();
             Gesture = true;
         }
@@ -130,13 +120,19 @@ namespace Choreo
         #endregion
     }
 
-    public class MotorPanelDarkeningConverter: IValueConverter {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+    public class MotorPanelDarkeningConverter: IMultiValueConverter {
+        public object Convert(object[] value, Type targetType, object parameter, CultureInfo culture)
         {
-            return null;
-        }
+            if (VM.GroupBeingEdited > 0) {
+                switch (value[0]) {
+                    case Motor m: return m.Group == VM.GroupBeingEdited ? Visibility.Hidden : Visibility.Visible;
+                    case Group g: return g.Index + 1 == VM.GroupBeingEdited ? Visibility.Hidden : Visibility.Visible;
+                }
+            }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            return Visibility.Hidden;
+        }
+        public object[] ConvertBack(object value, Type[] targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

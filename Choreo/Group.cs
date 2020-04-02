@@ -13,6 +13,8 @@ namespace Choreo
     {
         public static readonly Color[] GroupColors = { Colors.Red, Colors.Blue, Colors.Purple, Colors.Orange, Colors.DarkCyan, Colors.Green, Colors.Brown, Colors.Magenta };
         public Group(int index) { Index = index; }
+
+        public List<int> Motors = new List<int>();
         public float Position => 3.5F;
 
         private bool isOK;

@@ -9,5 +9,7 @@ namespace Choreo
 {
     static class Globals {
         public static ViewModel VM { get; } = new ViewModel();
+
+        static Globals() => Storage.LoadAll();
     }
 }

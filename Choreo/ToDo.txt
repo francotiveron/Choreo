@@ -1,5 +1,6 @@
 ﻿+ Darken motor
-* Group logic
++ Group logic
+- Settings persistence
 - Motor Settings Window
 - Motor move window
 - Preset logic

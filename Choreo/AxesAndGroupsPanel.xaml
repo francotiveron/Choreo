@@ -36,21 +36,21 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <local:MotorPanel Grid.Row="0" Grid.Column="0" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[0]}"/>
-                <local:MotorPanel Grid.Row="0" Grid.Column="1"/>
-                <local:MotorPanel Grid.Row="0" Grid.Column="2"/>
-                <local:MotorPanel Grid.Row="0" Grid.Column="3"/>
-                <local:MotorPanel Grid.Row="0" Grid.Column="4"/>
-                <local:MotorPanel Grid.Row="0" Grid.Column="5"/>
-                <local:MotorPanel Grid.Row="0" Grid.Column="6"/>
-                <local:MotorPanel Grid.Row="0" Grid.Column="7"/>
-                <local:MotorPanel Grid.Row="1" Grid.Column="0"/>
-                <local:MotorPanel Grid.Row="1" Grid.Column="1"/>
-                <local:MotorPanel Grid.Row="1" Grid.Column="2"/>
-                <local:MotorPanel Grid.Row="1" Grid.Column="3"/>
-                <local:MotorPanel Grid.Row="1" Grid.Column="4"/>
-                <local:MotorPanel Grid.Row="1" Grid.Column="5"/>
-                <local:MotorPanel Grid.Row="1" Grid.Column="6"/>
-                <local:MotorPanel Grid.Row="1" Grid.Column="7"/>
+                <local:MotorPanel Grid.Row="0" Grid.Column="1" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[1]}"/>
+                <local:MotorPanel Grid.Row="0" Grid.Column="2" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[2]}"/>
+                <local:MotorPanel Grid.Row="0" Grid.Column="3" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[3]}"/>
+                <local:MotorPanel Grid.Row="0" Grid.Column="4" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[4]}"/>
+                <local:MotorPanel Grid.Row="0" Grid.Column="5" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[5]}"/>
+                <local:MotorPanel Grid.Row="0" Grid.Column="6" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[6]}"/>
+                <local:MotorPanel Grid.Row="0" Grid.Column="7" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[7]}"/>
+                <local:MotorPanel Grid.Row="1" Grid.Column="0" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[8]}"/>
+                <local:MotorPanel Grid.Row="1" Grid.Column="1" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[9]}"/>
+                <local:MotorPanel Grid.Row="1" Grid.Column="2" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[10]}"/>
+                <local:MotorPanel Grid.Row="1" Grid.Column="3" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[11]}"/>
+                <local:MotorPanel Grid.Row="1" Grid.Column="4" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[12]}"/>
+                <local:MotorPanel Grid.Row="1" Grid.Column="5" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[13]}"/>
+                <local:MotorPanel Grid.Row="1" Grid.Column="6" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[14]}"/>
+                <local:MotorPanel Grid.Row="1" Grid.Column="7" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[15]}"/>
             </Grid>
             <Grid Grid.Row ="3" x:Name="AxisGroupsGrid">
                 <Grid.ColumnDefinitions>
@@ -63,14 +63,14 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <local:MotorPanel Grid.Row="0" Grid.Column="0"/>
-                <local:MotorPanel Grid.Row="0" Grid.Column="1"/>
-                <local:MotorPanel Grid.Row="0" Grid.Column="2"/>
-                <local:MotorPanel Grid.Row="0" Grid.Column="3"/>
-                <local:MotorPanel Grid.Row="0" Grid.Column="4"/>
-                <local:MotorPanel Grid.Row="0" Grid.Column="5"/>
-                <local:MotorPanel Grid.Row="0" Grid.Column="6"/>
-                <local:MotorPanel Grid.Row="0" Grid.Column="7"/>
+                <local:MotorPanel Grid.Row="0" Grid.Column="0" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Groups[0]}"/>
+                <local:MotorPanel Grid.Row="0" Grid.Column="1" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Groups[1]}"/>
+                <local:MotorPanel Grid.Row="0" Grid.Column="2" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Groups[2]}"/>
+                <local:MotorPanel Grid.Row="0" Grid.Column="3" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Groups[3]}"/>
+                <local:MotorPanel Grid.Row="0" Grid.Column="4" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Groups[4]}"/>
+                <local:MotorPanel Grid.Row="0" Grid.Column="5" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Groups[5]}"/>
+                <local:MotorPanel Grid.Row="0" Grid.Column="6" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Groups[6]}"/>
+                <local:MotorPanel Grid.Row="0" Grid.Column="7" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Groups[7]}"/>
             </Grid>
         </Grid>
         <ProgressBar Grid.Column="1" Background="#FF8D8585" Foreground="#FFC7D4CA" BorderBrush="{x:Null}" Orientation="Vertical"/>

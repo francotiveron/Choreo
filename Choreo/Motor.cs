@@ -34,13 +34,16 @@ namespace Choreo
         int group;
         public int Group {
             get => group;
-            set { group = value; OnPropertyChanged(); OnPropertyChanged("Color"); }
+            set { 
+                group = value; 
+                OnPropertyChanged(); OnPropertyChanged("Color"); 
+            }
         }
 
         public Color Color {
             get {
                 if (group == 0) return Colors.Gray;
-                return Choreo.Group.GroupColors[Group];
+                return Choreo.Group.GroupColors[Group - 1];
             }
         }
 

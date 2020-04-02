@@ -23,7 +23,11 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="25*"/>
         </Grid.RowDefinitions>
-        <local:HomeTopPanel/>
+        <Border Grid.Row="0" Name="TopPanelArea">
+            <Border.Child>
+                <local:HomeTopPanel/>
+            </Border.Child>
+        </Border>
         <Border Grid.Row="1" Name="PageArea">
             <local:HomePage/>
         </Border>

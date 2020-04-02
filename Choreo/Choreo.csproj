@@ -115,13 +115,16 @@
       <DependentUpon>CueingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Globals.cs" />
+    <Compile Include="GroupTopPanel.xaml.cs">
+      <DependentUpon>GroupTopPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Group.cs" />
     <Compile Include="HomeTopPanel.xaml.cs">
       <DependentUpon>HomeTopPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Group.cs" />
     <Compile Include="MotorStatusIndicator.xaml.cs">
       <DependentUpon>MotorStatusIndicator.xaml</DependentUpon>
     </Compile>
@@ -133,6 +136,7 @@
     <Compile Include="ShowPage.xaml.cs">
       <DependentUpon>ShowPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Storage.cs" />
     <Compile Include="ViewModel.cs" />
     <Compile Include="Motor.cs" />
     <Compile Include="TestWindow.xaml.cs">
@@ -146,13 +150,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GroupTopPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
     <Page Include="HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="HomeTopPanel.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

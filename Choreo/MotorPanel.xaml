@@ -7,7 +7,7 @@
              xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
-             d:DesignHeight="390" d:DesignWidth="320" Loaded="UserControl_Loaded" Style="{DynamicResource WinAll}" MouseDown="UserControl_MouseDown" MouseMove="UserControl_MouseMove" MouseUp="UserControl_MouseUp" OpacityMask="Black">
+             d:DesignHeight="390" d:DesignWidth="320" Style="{DynamicResource WinAll}" MouseDown="UserControl_MouseDown" MouseMove="UserControl_MouseMove" MouseUp="UserControl_MouseUp" OpacityMask="Black">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -26,9 +26,9 @@
                 </Grid.RowDefinitions>
                 <Border>
                     <Border.Background>
-                        <SolidColorBrush Color="{Binding Color}"/>
+                        <SolidColorBrush Color="{Binding Color, FallbackValue=LightGray}"/>
                     </Border.Background>
-                    <TextBlock Text="{Binding Name}" TextAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding Name, FallbackValue=Motor X}" TextAlignment="Center" VerticalAlignment="Center"/>
                 </Border>
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
@@ -56,8 +56,17 @@
                     </Grid>
                     <ProgressBar Grid.Column="1" Background="#FF534F4F" Foreground="#FFC3BABA" BorderBrush="#00BCBCBC" Value="30" Orientation="Vertical"/>
                 </Grid>
-                <!--<Rectangle Grid.RowSpan="2" Fill="Black" Opacity="0.6" Visibility="{Binding Path=DataContext, Converter={StaticResource DarkeningConverter} }">-->
-                <Rectangle Grid.RowSpan="2" Fill="Black" Opacity="0.6" Visibility="{Binding Path=Index, Converter={StaticResource DarkeningConverter}, ConverterParameter=Index}" />
+                <!--<Rectangle Grid.RowSpan="2" Fill="Black" Opacity="0.6" Visibility="{Binding Path=., Converter={StaticResource DarkeningConverter}, FallbackValue=Hidden}"/>-->
+                <!--<Rectangle Grid.RowSpan="2" Fill="Black" Opacity="0.6" Visibility="{Binding Path=Index, Converter={StaticResource DarkeningConverter}, ConverterParameter=Index}" />-->
+                <Rectangle Grid.RowSpan="2" Fill="Black" Opacity="0.6">
+                    <Rectangle.Visibility>
+                        <MultiBinding Converter="{StaticResource DarkeningConverter}" FallbackValue="Hidden">
+                            <Binding/>
+                            <Binding Source="{x:Static local:Globals.VM}" Path="GroupBeingEdited"/>
+                            <Binding Path="Group"/>
+                        </MultiBinding>
+                    </Rectangle.Visibility>
+                </Rectangle>
             </Grid>
         </Border>
     </Viewbox>

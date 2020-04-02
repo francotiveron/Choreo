@@ -30,6 +30,38 @@ namespace Choreo
         public List<Motor> Motors { get; private set; }
         public List<Group> Groups { get; private set; }
 
-        public int GroupBeingEdited => 2;
+        public void BeginGroupEditing(int group) => GroupBeingEdited = group + 1;
+        public void EndGroupEditing() => GroupBeingEdited = 0;
+        public void GroupEditSave() {
+            var group = Groups[GroupBeingEdited - 1];
+            group.Motors.Clear();
+            for (int i = 0; i < Motors.Count; i++)
+                if (Motors[i].Group == GroupBeingEdited)
+                    group.Motors.Add(i);
+            Save();
+            EndGroupEditing();
+        }
+        public void GroupEditClear() { foreach (Motor m in Motors.Where(m => m.Group == GroupBeingEdited)) m.Group = 0; }
+        public void GroupEditCancel() {
+            var group = Groups[GroupBeingEdited - 1];
+            var groupSet = new HashSet<int>(group.Motors);
+            var motorSet = new HashSet<int>(Motors.Where(m => m.Group == GroupBeingEdited).Select(m => m.Index));
+            var motorsToSet = groupSet.Except(motorSet);
+            var motorsToReset = motorSet.Except(groupSet);
+
+            foreach (int i in motorsToSet) Motors[i].Group = GroupBeingEdited;
+            foreach (int i in motorsToReset) Motors[i].Group = 0;
+            EndGroupEditing();
+        }
+
+        int groupBeingEdited;
+        public int GroupBeingEdited {
+            get => groupBeingEdited;
+            set { groupBeingEdited = value; OnPropertyChanged(); }
+        }
+        public bool IsGroupEditing => GroupBeingEdited > 0;
+
+        public void Save() { Storage.SaveMotors(); }
+        public void Load() { }
     }
 }

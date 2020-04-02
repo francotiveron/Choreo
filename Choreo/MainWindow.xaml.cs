@@ -28,6 +28,19 @@ namespace Choreo
         public MainWindow()
         {
             InitializeComponent();
+            VM.PropertyChanged += VM_PropertyChanged;
+        }
+
+        private void VM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
+            if (e.PropertyName == "GroupBeingEdited") {
+                var group = VM.GroupBeingEdited;
+                if (group > 0) {
+                    if (!(TopPanelArea.Child is GroupTopPanel)) TopPanelArea.Child = new GroupTopPanel();
+                    var panel = (GroupTopPanel)TopPanelArea.Child;
+                    if (panel.DataContext != VM.Groups[group - 1]) panel.DataContext = VM.Groups[group - 1];
+                }
+                else TopPanelArea.Child = new HomeTopPanel();
+            }
         }
 
         private void HomeCmdExecuted(object sender, ExecutedRoutedEventArgs e)
