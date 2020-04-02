@@ -13,6 +13,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ResourceDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <local:MotorPanelDarkeningConverter x:Key="DarkeningConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -55,14 +56,8 @@
                     </Grid>
                     <ProgressBar Grid.Column="1" Background="#FF534F4F" Foreground="#FFC3BABA" BorderBrush="#00BCBCBC" Value="30" Orientation="Vertical"/>
                 </Grid>
-                <Rectangle Grid.RowSpan="2" Fill="Black" Opacity="0.6">
-                    <Rectangle.Visibility>
-                        <MultiBinding Converter="{StaticResource DarkeningConverter}">
-                            <Binding RelativeSource="{RelativeSource Self}"/>
-                            <Binding Path="MyValue"/>
-                        </MultiBinding>
-                    </Rectangle.Visibility>
-                </Rectangle>
+                <!--<Rectangle Grid.RowSpan="2" Fill="Black" Opacity="0.6" Visibility="{Binding Path=DataContext, Converter={StaticResource DarkeningConverter} }">-->
+                <Rectangle Grid.RowSpan="2" Fill="Black" Opacity="0.6" Visibility="{Binding Path=Index, Converter={StaticResource DarkeningConverter}, ConverterParameter=Index}" />
             </Grid>
         </Border>
     </Viewbox>

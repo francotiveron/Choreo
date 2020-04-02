@@ -29,5 +29,7 @@ namespace Choreo
         }
         public List<Motor> Motors { get; private set; }
         public List<Group> Groups { get; private set; }
+
+        public int GroupBeingEdited => 2;
     }
 }

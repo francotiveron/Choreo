@@ -52,7 +52,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>18B2F6A4F6F928FA85AB93867330389E133D1597</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>1598A8E78F2B80FDC172EB9F4C16E75B911F1819</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>Choreo_TemporaryKey.pfx</ManifestKeyFile>

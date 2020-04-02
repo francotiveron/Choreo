@@ -10,7 +10,8 @@
         WindowStyle="None" 
         ResizeMode="NoResize" 
         Topmost="True" 
-        Style="{DynamicResource WinAll}" >
+        Style="{DynamicResource WinAll}" 
+        DataContext="{Binding Source={x:Static local:Globals.VM}}">
     <!--WindowState="Maximized"-->
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static local:MainWindow.HomeCmd}" Executed="HomeCmdExecuted" CanExecute="HomeCmdCanExecute"/>

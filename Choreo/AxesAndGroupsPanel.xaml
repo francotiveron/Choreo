@@ -35,7 +35,7 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <local:MotorPanel Grid.Row="0" Grid.Column="0"/>
+                <local:MotorPanel Grid.Row="0" Grid.Column="0" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[0]}"/>
                 <local:MotorPanel Grid.Row="0" Grid.Column="1"/>
                 <local:MotorPanel Grid.Row="0" Grid.Column="2"/>
                 <local:MotorPanel Grid.Row="0" Grid.Column="3"/>

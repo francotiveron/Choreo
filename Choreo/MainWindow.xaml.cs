@@ -28,7 +28,6 @@ namespace Choreo
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = VM;
         }
 
         private void HomeCmdExecuted(object sender, ExecutedRoutedEventArgs e)

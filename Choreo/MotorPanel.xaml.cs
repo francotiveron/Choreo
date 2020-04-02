@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -129,20 +130,13 @@ namespace Choreo
         #endregion
     }
 
-    public class MotorPanelDarkeningConverter: IMultiValueConverter {
-
-        public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+    public class MotorPanelDarkeningConverter: IValueConverter {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            decimal Amount = 0;
-            decimal Discount = 0;
-            string TotalAmount = string.Empty;
-            Amount = (values[0] != null && values[0] != DependencyProperty.UnsetValue) ? System.Convert.ToDecimal(values[0]) : 0;
-            Discount = (values[0] != null && values[1] != DependencyProperty.UnsetValue) ? System.Convert.ToDecimal(values[1]) : 0;
-            TotalAmount = System.Convert.ToString(Amount - Discount);
-            return TotalAmount;
+            return null;
         }
 
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
