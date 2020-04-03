@@ -24,7 +24,6 @@ namespace Choreo
         }
 
         private string name;
-
         public string Name {
             get {
                 if (name == null) return $"Group {Index + 1}";

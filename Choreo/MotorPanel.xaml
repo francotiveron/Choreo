@@ -7,7 +7,7 @@
              xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
-             d:DesignHeight="390" d:DesignWidth="320" Style="{DynamicResource WinAll}" MouseDown="UserControl_MouseDown" MouseMove="UserControl_MouseMove" MouseUp="UserControl_MouseUp" OpacityMask="Black">
+             d:DesignHeight="390" d:DesignWidth="320" Style="{DynamicResource WinAll}" MouseDown="UserControl_MouseDown" MouseMove="UserControl_MouseMove" MouseUp="UserControl_MouseUp">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -63,7 +63,9 @@
                         <MultiBinding Converter="{StaticResource DarkeningConverter}" FallbackValue="Hidden">
                             <Binding/>
                             <Binding Source="{x:Static local:Globals.VM}" Path="GroupBeingEdited"/>
+                            <Binding Source="{x:Static local:Globals.VM}" Path="PresetBeingEdited"/>
                             <Binding Path="Group"/>
+                            <Binding Path="PresetTouches"/>
                         </MultiBinding>
                     </Rectangle.Visibility>
                 </Rectangle>

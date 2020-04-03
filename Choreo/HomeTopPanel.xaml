@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="90" d:DesignWidth="1920" Style="{DynamicResource WinAll}">
     <UserControl.Resources>
-        <Style x:Key="buttonStyle" TargetType="Button">
+        <Style x:Key="ChangePageButtonStyle" TargetType="Button">
 
             <Setter Property="OverridesDefaultStyle" Value="True" />
             <Setter Property="Background" Value="{x:Null}" />
@@ -35,9 +35,16 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <local:CurrentPageBoolConverter x:Key="CurrentPageBoolConverter"/>
+        <local:CurrentPageVisibilityConverter x:Key="CurrentPageVisibilityConverter"/>
     </UserControl.Resources>
     <Grid>
+        <Grid.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="ResourceDictionary.xaml"/>
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+        </Grid.Resources>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>
@@ -46,7 +53,14 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Image Source="VerendusLogo.png"/>
-            <Button x:Name="MainMenu" Grid.Column="3" Template="{DynamicResource ButtonControlTemplateMainMenu}">
+            <Button x:Name="MainMenu" Grid.Column="3" Template="{StaticResource MainMenuButtonControlTemplate}">
+                <Button.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.MergedDictionaries>
+                            <ResourceDictionary Source="ResourceDictionary.xaml"/>
+                        </ResourceDictionary.MergedDictionaries>
+                    </ResourceDictionary>
+                </Button.Resources>
                 <Button.ContextMenu>
                     <ContextMenu>
                         <Button x:Name="ExitButton" Content="Exit" Click="ExitButton_Click"/>
@@ -59,24 +73,24 @@
                         <RowDefinition Height="10*"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Button Content="Home" Style="{StaticResource buttonStyle}" Command="{x:Static local:MainWindow.HomeCmd}"/>
-                    <Rectangle Fill="Blue" Grid.Row="1" Margin="0" Visibility="{Binding CurrentPage, Converter={StaticResource CurrentPageBoolConverter}, ConverterParameter=Home}"/>
+                    <Button Content="Home" Style="{StaticResource ChangePageButtonStyle}" Command="{x:Static local:MainWindow.HomeCmd}"/>
+                    <Rectangle Fill="Blue" Grid.Row="1" Margin="0" Visibility="{Binding CurrentPage, Converter={StaticResource CurrentPageVisibilityConverter}, ConverterParameter=Home}"/>
                 </Grid>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="10*"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Button Content="Cueing" Style="{StaticResource buttonStyle}" Command="{x:Static local:MainWindow.CueingCmd}"/>
-                    <Rectangle Fill="Blue" Grid.Row="1" Margin="0" Visibility="{Binding CurrentPage, Converter={StaticResource CurrentPageBoolConverter}, ConverterParameter=Cueing }"/>
+                    <Button Content="Cueing" Style="{StaticResource ChangePageButtonStyle}" Command="{x:Static local:MainWindow.CueingCmd}"/>
+                    <Rectangle Fill="Blue" Grid.Row="1" Margin="0" Visibility="{Binding CurrentPage, Converter={StaticResource CurrentPageVisibilityConverter}, ConverterParameter=Cueing }"/>
                 </Grid>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="10*"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Button Content="Show" Style="{StaticResource buttonStyle}" Command="{x:Static local:MainWindow.ShowCmd}"/>
-                    <Rectangle Fill="Blue" Grid.Row="1" Margin="0" Visibility="{Binding CurrentPage, Converter={StaticResource CurrentPageBoolConverter}, ConverterParameter=Show }"/>
+                    <Button Content="Show" Style="{StaticResource ChangePageButtonStyle}" Command="{x:Static local:MainWindow.ShowCmd}"/>
+                    <Rectangle Fill="Blue" Grid.Row="1" Margin="0" Visibility="{Binding CurrentPage, Converter={StaticResource CurrentPageVisibilityConverter}, ConverterParameter=Show }"/>
                 </Grid>
             </StackPanel>
         </Grid>

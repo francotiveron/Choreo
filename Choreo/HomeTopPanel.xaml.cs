@@ -30,7 +30,7 @@ namespace Choreo
             Application.Current.Shutdown();
         }
     }
-    public class CurrentPageBoolConverter : IValueConverter
+    public class CurrentPageVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

@@ -27,6 +27,11 @@ namespace Choreo {
         }
         public static void SaveMotors() { foreach (Motor m in VM.Motors) Save(m); }
         public static void LoadMotors() { foreach (Motor m in VM.Motors) Load(m); }
+        public static void SaveGroups() {  }
+        public static void LoadGroups() {  }
+        public static void SavePresets() { }
+        public static void LoadPresets() { }
+        public static void SaveAll() {}
         public static void LoadAll() {
             LoadMotors();
         } 

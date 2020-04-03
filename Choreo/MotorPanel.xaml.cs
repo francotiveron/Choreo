@@ -14,11 +14,9 @@ namespace Choreo
 {
     public partial class MotorPanel : UserControl
     {
-        DispatcherTimer gestureTimer;
         public MotorPanel()
         {
             InitializeComponent();
-            gestureTimer = new DispatcherTimer(TimeSpan.FromSeconds(5), DispatcherPriority.Normal, GestureTimeout, Dispatcher.CurrentDispatcher) { Tag = this };
         }
         public bool IsMotor => DataContext is Motor;
         public bool IsGroup => DataContext is Group;
@@ -35,16 +33,6 @@ namespace Choreo
             }
         }
         double gestureStart;
-
-        private static void GestureTimeout(object sender, EventArgs e)
-        {
-            var panel = (MotorPanel)((DispatcherTimer)sender).Tag;
-            if (panel.Gesture)
-            {
-                panel.StopGesture();
-                if (panel.IsGroup) VM.BeginGroupEditing(panel.Index);
-            }
-        }
 
         private void Border_ManipulationStarted(object sender, ManipulationStartedEventArgs e)
         {
@@ -63,19 +51,22 @@ namespace Choreo
 
         private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                if (VM.IsGroupEditing) {
-                    if (IsMotor) {
-                        var m = DataContext as Motor;
+            if (e.LeftButton != MouseButtonState.Pressed) return;
+
+            if (VM.IsEditing) {
+                if (IsMotor) {
+                    var m = DataContext as Motor;
+                    if (VM.IsGroupEditing) {
                         if (m.Group == 0) m.Group = VM.GroupBeingEdited;
                         else
                         if (m.Group == VM.GroupBeingEdited) m.Group = 0;
+                        return;
                     }
-                    return;
+                    else
+                    if (VM.IsPresetEditing) VM.Presets[VM.PresetBeingEdited - 1].ToggleMotor(m);
                 }
-                else StartGesture(e.GetPosition(this));
             }
+            else StartGesture(e.GetPosition(this));
         }
 
         private void UserControl_MouseMove(object sender, MouseEventArgs e)
@@ -93,17 +84,24 @@ namespace Choreo
             StopGesture();
         }
 
+        private void PushTimeout() {
+            if (Gesture) {
+                StopGesture();
+                if (IsGroup && !VM.IsEditing) VM.BeginGroupEditing(Index);
+            }
+        }
+
         private void StartGesture(Point p)
         {
-            gestureStart = p.X;
-            gestureTimer.Interval = TimeSpan.FromSeconds(5);
-            gestureTimer.Start();
-            Gesture = true;
+            if (PushTimer.Start(PushTimeout)) {
+                Gesture = true;
+                gestureStart = p.X;
+            }
         }
 
         private void StopGesture()
         {
-            gestureTimer.Stop();
+            PushTimer.Stop();
             Gesture = false;
         }
 
@@ -123,10 +121,17 @@ namespace Choreo
     public class MotorPanelDarkeningConverter: IMultiValueConverter {
         public object Convert(object[] value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (VM.GroupBeingEdited > 0) {
+            if (VM.IsGroupEditing) {
                 switch (value[0]) {
                     case Motor m: return m.Group == VM.GroupBeingEdited ? Visibility.Hidden : Visibility.Visible;
                     case Group g: return g.Index + 1 == VM.GroupBeingEdited ? Visibility.Hidden : Visibility.Visible;
+                }
+            }
+            else
+            if (VM.IsPresetEditing) {
+                switch (value[0]) {
+                    case Motor m: return VM.Presets[VM.PresetBeingEdited - 1].ContainsMotor(m.Index) ? Visibility.Hidden : Visibility.Visible;
+                    default: return Visibility.Visible;
                 }
             }
 

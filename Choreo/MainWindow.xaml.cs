@@ -41,6 +41,16 @@ namespace Choreo
                 }
                 else TopPanelArea.Child = new HomeTopPanel();
             }
+            else
+            if (e.PropertyName == "PresetBeingEdited") {
+                var preset = VM.PresetBeingEdited;
+                if (preset > 0) {
+                    if (!(TopPanelArea.Child is PresetTopPanel)) TopPanelArea.Child = new PresetTopPanel();
+                    var panel = (PresetTopPanel)TopPanelArea.Child;
+                    if (panel.DataContext != VM.Presets[preset - 1]) panel.DataContext = VM.Presets[preset - 1];
+                }
+                else TopPanelArea.Child = new HomeTopPanel();
+            }
         }
 
         private void HomeCmdExecuted(object sender, ExecutedRoutedEventArgs e)

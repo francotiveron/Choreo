@@ -9,6 +9,7 @@ using System.Windows.Media;
 
 namespace Choreo
 {
+    
     public class Motor: PropertyChangedNotifier
     {
         public Motor(int index) { Index = index; }
@@ -40,12 +41,32 @@ namespace Choreo
             }
         }
 
+        //int preset;
+        //public int Preset {
+        //    get => preset;
+        //    set {
+        //        preset = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
+
         public Color Color {
             get {
                 if (group == 0) return Colors.Gray;
                 return Choreo.Group.GroupColors[Group - 1];
             }
         }
+
+        int presetTouches;
+        public int PresetTouches {
+            get => presetTouches;
+            set {
+                presetTouches = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public void PresetTouch() => ++PresetTouches;
 
     }
 }

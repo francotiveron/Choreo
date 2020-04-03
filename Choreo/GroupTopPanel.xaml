@@ -10,10 +10,10 @@
         <DockPanel.Background>
             <SolidColorBrush Color="{Binding Color, FallbackValue=DarkGreen}"/>
         </DockPanel.Background>
-        <Label Content="Edit Group" Margin="10,0" Padding="20,0" VerticalAlignment="Center"/>
-        <TextBlock Text="{Binding Name, FallbackValue=Group X}" VerticalAlignment="Center" Margin="10,0" Padding="20,0"/>
-        <Button x:Name="GroupEditSaveButton" Content="SAVE" DockPanel.Dock="Right" HorizontalAlignment="Right" Height="90" VerticalAlignment="Bottom" Click="Button_Click"/>
-        <Button x:Name="GroupEditClearButton" Content="CLEAR" DockPanel.Dock="Right" HorizontalAlignment="Right" Click="Button_Click"/>
-        <Button x:Name="GroupEditCancelButton" Content="CANCEL" DockPanel.Dock="Right" HorizontalAlignment="Right" Click="Button_Click"/>
+        <Label Content="Edit Group" Style="{StaticResource TopBarLabelStyle}" />
+        <TextBlock Text="{Binding Name, FallbackValue=Group X}" Style="{StaticResource TopBarTextBlockStyle}" />
+        <Button x:Name="GroupEditSaveButton" Content="SAVE" Style="{StaticResource TopBarCommandButtonStyle}"  Click="Button_Click"/>
+        <Button x:Name="GroupEditClearButton" Content="CLEAR" Style="{StaticResource TopBarCommandButtonStyle}" Click="Button_Click"/>
+        <Button x:Name="GroupEditCancelButton" Content="CANCEL" Style="{StaticResource TopBarCommandButtonStyle}" Click="Button_Click"/>
     </DockPanel>
 </UserControl>

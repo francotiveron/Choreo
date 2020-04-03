@@ -129,10 +129,15 @@
       <DependentUpon>MotorStatusIndicator.xaml</DependentUpon>
     </Compile>
     <Compile Include="Plc.cs" />
+    <Compile Include="Preset.cs" />
     <Compile Include="PresetBottomPanel.xaml.cs">
       <DependentUpon>PresetBottomPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PresetTopPanel.xaml.cs">
+      <DependentUpon>PresetTopPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PropertyChangedNotifier.cs" />
+    <Compile Include="PushTimer.cs" />
     <Compile Include="ShowPage.xaml.cs">
       <DependentUpon>ShowPage.xaml</DependentUpon>
     </Compile>
@@ -183,6 +188,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PresetBottomPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PresetTopPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
