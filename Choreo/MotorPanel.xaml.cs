@@ -63,7 +63,7 @@ namespace Choreo
                         return;
                     }
                     else
-                    if (VM.IsPresetEditing) VM.Presets[VM.PresetBeingEdited - 1].ToggleMotor(m);
+                    if (VM.IsPresetEditing) VM.Presets[VM.PresetBeingEdited - 1].Toggle(m);
                 }
             }
             else StartGesture(e.GetPosition(this));

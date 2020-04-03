@@ -33,33 +33,42 @@ namespace Choreo
         public bool IsEditing => IsGroupEditing || IsPresetEditing;
         #region Group Editing
         int groupBeingEdited;
+        HashSet<Motor> editedGroupMotorsInitial;
         public int GroupBeingEdited {
             get => groupBeingEdited;
             set { groupBeingEdited = value; OnPropertyChanged(); }
         }
         public bool IsGroupEditing => GroupBeingEdited > 0;
-        public void BeginGroupEditing(int group) => GroupBeingEdited = group + 1;
-        public void EndGroupEditing() => GroupBeingEdited = 0;
+        public void BeginGroupEditing(int group) {
+            GroupBeingEdited = group + 1;
+            editedGroupMotorsInitial = Motors.Where(m => m.Group == GroupBeingEdited).ToHashSet();
+        }
+        public void EndGroupEditing() {
+            editedGroupMotorsInitial = null;
+            GroupBeingEdited = 0;
+        }
         public void GroupEditSave() {
             var group = Groups[GroupBeingEdited - 1];
-            group.Motors.Clear();
-            for (int i = 0; i < Motors.Count; i++)
-                if (Motors[i].Group == GroupBeingEdited)
-                    group.Motors.Add(i);
-            SaveMotors();
-            SaveGroups();
+            var motorsToSave =
+                from m in Motors
+                where 
+                    m.Group == GroupBeingEdited && !editedGroupMotorsInitial.Contains(m)
+                    ||
+                    m.Group == 0 && editedGroupMotorsInitial.Contains(m)
+                select m;
+
+            foreach (var m in motorsToSave) Save(m);
             EndGroupEditing();
         }
-        public void GroupEditClear() { foreach (Motor m in Motors.Where(m => m.Group == GroupBeingEdited)) m.Group = 0; }
+        public void GroupEditClear() { foreach (var m in Motors.Where(m => m.Group == GroupBeingEdited)) m.Group = 0; }
         public void GroupEditCancel() {
             var group = Groups[GroupBeingEdited - 1];
-            var groupSet = new HashSet<int>(group.Motors);
-            var motorSet = new HashSet<int>(Motors.Where(m => m.Group == GroupBeingEdited).Select(m => m.Index));
-            var motorsToSet = groupSet.Except(motorSet);
-            var motorsToReset = motorSet.Except(groupSet);
+            var editedGroupMotorsCurrent = new HashSet<Motor>(Motors.Where(m => m.Group == GroupBeingEdited));
+            var motorsToReset = editedGroupMotorsCurrent.Except(editedGroupMotorsInitial);
+            var motorsToSet = editedGroupMotorsInitial.Except(editedGroupMotorsCurrent);
 
-            foreach (int i in motorsToSet) Motors[i].Group = GroupBeingEdited;
-            foreach (int i in motorsToReset) Motors[i].Group = 0;
+            foreach (var m in motorsToSet) m.Group = GroupBeingEdited;
+            foreach (var m in motorsToReset) m.Group = 0;
             EndGroupEditing();
         }
         #endregion
@@ -79,10 +88,14 @@ namespace Choreo
         }
         public void EndPresetEditing() => PresetBeingEdited = 0;
         public void PresetEditSave() {
-            SavePresets();
+            Save(Presets[PresetBeingEdited - 1]);
             EndPresetEditing();
         }
-        public void PresetEditClear() { Presets[PresetBeingEdited - 1].Clear(); }
+        public void PresetEditClear() {
+            var keys = Presets[PresetBeingEdited - 1].MotorPositions.Keys.ToList();
+            Presets[PresetBeingEdited - 1].MotorPositions.Clear();
+            foreach (var key in keys) Motors[key].PresetTouch();
+        }
         public void PresetEditCancel() {
             var preset = Presets[PresetBeingEdited - 1];
             preset.MotorPositions.Clear();

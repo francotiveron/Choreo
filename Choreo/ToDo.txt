@@ -1,9 +1,9 @@
 ﻿+ Darken motor
 + Group logic
 + Settings persistence
++ Preset logic
 - Motor Settings Window
 - Motor move window
-- Preset logic
 - Cueing creation logic/window
 - Edit Cue window
 - Show window

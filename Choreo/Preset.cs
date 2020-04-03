@@ -20,17 +20,15 @@ namespace Choreo {
 
         }
 
-        Dictionary<int, float> MotorPositions = new Dictionary<int, float>();
+        public Dictionary<int, float> MotorPositions = new Dictionary<int, float>();
 
         public bool ContainsMotor(int motorIndex) => MotorPositions.ContainsKey(motorIndex);
 
-        public bool ToggleMotor(Motor motor) {
+        public bool Toggle(Motor motor) {
             if (ContainsMotor(motor.Index))MotorPositions.Remove(motor.Index);
             else MotorPositions[motor.Index] = motor.Position;
             motor.PresetTouch();
             return ContainsMotor(motor.Index);
         }
-
-        public void Clear() => MotorPositions.Clear();
     }
 }
