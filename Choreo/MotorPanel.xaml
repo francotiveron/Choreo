@@ -30,34 +30,7 @@
                     </Border.Background>
                     <TextBlock Text="{Binding Name, FallbackValue=Motor X}" TextAlignment="Center" VerticalAlignment="Center"/>
                 </Border>
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="9*"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="3*"/>
-                            <RowDefinition Height="3*"/>
-                            <RowDefinition Height="2*"/>
-                        </Grid.RowDefinitions>
-                        <StackPanel VerticalAlignment="Center">
-                            <Label Content="Position" VerticalAlignment="Bottom" Foreground="#FFD1BFBF" FontSize="28" FontWeight="Bold"/>
-                            <Label x:Name="Position" Content="{Binding Position, FallbackValue=13\' - 4.5\'\'}"/>
-                        </StackPanel>
-                        <StackPanel Grid.Row="1" VerticalAlignment="Center">
-                            <Label Content="Load" VerticalAlignment="Bottom" Foreground="#FFD1BFBF" FontSize="28" FontWeight="Bold"/>
-                            <DockPanel d:LayoutOverrides="VerticalAlignment, LeftPosition, RightPosition">
-                                <Label x:Name="Load" Content="13' - 4.5''"/>
-                                <Label DockPanel.Dock="Right" Content="LBS" HorizontalAlignment="Center"/>
-                            </DockPanel>
-                        </StackPanel>
-                        <local:MotorStatusIndicator Grid.Row="2"/>
-                    </Grid>
-                    <ProgressBar Grid.Column="1" Background="#FF534F4F" Foreground="#FFC3BABA" BorderBrush="#00BCBCBC" Value="30" Orientation="Vertical"/>
-                </Grid>
-                <!--<Rectangle Grid.RowSpan="2" Fill="Black" Opacity="0.6" Visibility="{Binding Path=., Converter={StaticResource DarkeningConverter}, FallbackValue=Hidden}"/>-->
-                <!--<Rectangle Grid.RowSpan="2" Fill="Black" Opacity="0.6" Visibility="{Binding Path=Index, Converter={StaticResource DarkeningConverter}, ConverterParameter=Index}" />-->
+                <local:MotorStatusPanel Grid.Row="1"/>
                 <Rectangle Grid.RowSpan="2" Fill="Black" Opacity="0.6">
                     <Rectangle.Visibility>
                         <MultiBinding Converter="{StaticResource DarkeningConverter}" FallbackValue="Hidden">

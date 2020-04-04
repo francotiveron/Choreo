@@ -125,8 +125,17 @@
     <Compile Include="HomeTopPanel.xaml.cs">
       <DependentUpon>HomeTopPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MotorSettingsPage.xaml.cs">
+      <DependentUpon>MotorSettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MotorSettingsTopPanel.xaml.cs">
+      <DependentUpon>MotorSettingsTopPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MotorStatusIndicator.xaml.cs">
       <DependentUpon>MotorStatusIndicator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MotorStatusPanel.xaml.cs">
+      <DependentUpon>MotorStatusPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Plc.cs" />
     <Compile Include="Preset.cs" />
@@ -183,7 +192,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MotorSettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MotorSettingsTopPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MotorStatusIndicator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MotorStatusPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

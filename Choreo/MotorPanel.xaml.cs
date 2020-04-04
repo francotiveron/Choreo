@@ -87,7 +87,11 @@ namespace Choreo
         private void PushTimeout() {
             if (Gesture) {
                 StopGesture();
-                if (IsGroup && !VM.IsEditing) VM.BeginGroupEditing(Index);
+                if (!VM.IsEditing) {
+                    if (IsGroup) VM.BeginGroupEditing(Index);
+                    //else
+                    //if (IsMotor) VM.BeginMotorSettingsEditing(Index);
+                }
             }
         }
 

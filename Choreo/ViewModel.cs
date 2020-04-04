@@ -31,7 +31,16 @@ namespace Choreo
         }
 
         public bool IsEditing => IsGroupEditing || IsPresetEditing;
-        #region Group Editing
+
+        #region ******************Motor Settings Editing******************
+        int motorBeingEdited;
+        public int MotorBeingEdited {
+            get => motorBeingEdited;
+            set { motorBeingEdited = value; OnPropertyChanged(); }
+        }
+        #endregion
+
+        #region ******************Group Editing******************
         int groupBeingEdited;
         HashSet<Motor> editedGroupMotorsInitial;
         public int GroupBeingEdited {
@@ -73,7 +82,7 @@ namespace Choreo
         }
         #endregion
 
-        #region Preset Editing
+        #region ******************Preset Editing******************
         int presetBeingEdited;
         public int PresetBeingEdited {
             get => presetBeingEdited;

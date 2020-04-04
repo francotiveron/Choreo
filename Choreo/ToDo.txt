@@ -2,7 +2,7 @@
 + Group logic
 + Settings persistence
 + Preset logic
-- Motor Settings Window
+* Motor Settings Window
 - Motor move window
 - Cueing creation logic/window
 - Edit Cue window
