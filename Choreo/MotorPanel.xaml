@@ -19,7 +19,7 @@
 
     <Viewbox Stretch="Fill">
         <Border BorderThickness="5" Height="390" Width="320" IsManipulationEnabled="True" ManipulationStarted="Border_ManipulationStarted" ManipulationDelta="Border_ManipulationDelta" ManipulationCompleted="Border_ManipulationCompleted">
-            <Grid Background="#FF3E3B3B">
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition Height="5*"/>

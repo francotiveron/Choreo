@@ -21,5 +21,9 @@ namespace Choreo {
         public MotorSettingsTopPanel() {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e) {
+            Globals.VM.EndMotorSettingsEditing();
+        }
     }
 }

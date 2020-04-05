@@ -18,7 +18,7 @@
         <CommandBinding Command="{x:Static local:MainWindow.CueingCmd}" Executed="CueingCmdExecuted" CanExecute="CueingCmdCanExecute"/>
         <CommandBinding Command="{x:Static local:MainWindow.ShowCmd}" Executed="ShowCmdExecuted" CanExecute="ShowCmdCanExecute"/>
     </Window.CommandBindings>
-    <Grid x:Name="MainGrid">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="25*"/>

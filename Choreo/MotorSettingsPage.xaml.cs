@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Dynamic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using static Choreo.Globals;
 
 namespace Choreo {
     /// <summary>
@@ -20,6 +11,20 @@ namespace Choreo {
     public partial class MotorSettingsPage : UserControl {
         public MotorSettingsPage() {
             InitializeComponent();
+        }
+
+        public static void SetEditingItem(object item) {
+            switch(item) {
+                case Motor m: VM.MotorSettingsBeingEdited = m.Index + 1; break;
+            }
+        }
+    }
+
+    public class EditDataItemSetter: DynamicObject {
+        public override bool TryInvoke(InvokeBinder binder, object[] args, out object result) {
+            MotorSettingsPage.SetEditingItem(args[0]);
+            result = null;
+            return true;
         }
     }
 }

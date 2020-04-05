@@ -89,8 +89,8 @@ namespace Choreo
                 StopGesture();
                 if (!VM.IsEditing) {
                     if (IsGroup) VM.BeginGroupEditing(Index);
-                    //else
-                    //if (IsMotor) VM.BeginMotorSettingsEditing(Index);
+                    else
+                    if (IsMotor) VM.BeginMotorSettingsEditing(Index);
                 }
             }
         }

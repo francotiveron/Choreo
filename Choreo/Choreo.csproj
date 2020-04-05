@@ -110,9 +110,16 @@
     <Compile Include="AxesAndGroupsPanel.xaml.cs">
       <DependentUpon>AxesAndGroupsPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SelectPad.xaml.cs">
+      <DependentUpon>SelectPad.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Configuration.cs" />
     <Compile Include="CueingPage.xaml.cs">
       <DependentUpon>CueingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataItem.cs" />
+    <Compile Include="DataItemUI.xaml.cs">
+      <DependentUpon>DataItemUI.xaml</DependentUpon>
     </Compile>
     <Compile Include="Globals.cs" />
     <Compile Include="GroupTopPanel.xaml.cs">
@@ -125,11 +132,17 @@
     <Compile Include="HomeTopPanel.xaml.cs">
       <DependentUpon>HomeTopPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Keyad.xaml.cs">
+      <DependentUpon>Keyad.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MotorSettingsPage.xaml.cs">
       <DependentUpon>MotorSettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MotorSettingsTopPanel.xaml.cs">
       <DependentUpon>MotorSettingsTopPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MotorSettingsWindow.xaml.cs">
+      <DependentUpon>MotorSettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MotorStatusIndicator.xaml.cs">
       <DependentUpon>MotorStatusIndicator.xaml</DependentUpon>
@@ -160,7 +173,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SelectPad.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CueingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataItemUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -175,6 +196,10 @@
     <Page Include="HomeTopPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Keyad.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -197,6 +222,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MotorSettingsTopPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MotorSettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="Choreo.DataItemUI"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Choreo"
+             mc:Ignorable="d" 
+              MouseDown="UserControl_MouseDown"
+             d:DesignHeight="100" d:DesignWidth="300" Style="{DynamicResource WinAll}" Background="#333333">
+    <UserControl.Resources>
+        <local:DataItemStatusColorConverter x:Key="StatusConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <Label 
+                Content="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:DataItemUI}, Path=Title, FallbackValue=Label}"
+                Style="{StaticResource DataItemLabelStyle}"
+            />
+            <Grid Grid.Row="1" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Path=., TargetNullValue=Value}" Style="{StaticResource DataItemDataStyle}"/>
+                <Label 
+                    Grid.Column="1"
+                    Content="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:DataItemUI}, Path=MU, FallbackValue=MU}"
+                    Style="{StaticResource MeasuringUnitStyle}"
+                />
+            </Grid>
+        </Grid>
+        <Rectangle Grid.Row="1">
+            <Rectangle.Fill>
+                <SolidColorBrush>
+                    <SolidColorBrush.Color>
+                        <Binding Path="Status" Converter="{StaticResource StatusConverter}" FallbackValue="Gray"/>
+                    </SolidColorBrush.Color>
+                </SolidColorBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+
+    </Grid>
+</UserControl>

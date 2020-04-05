@@ -13,7 +13,20 @@ namespace Choreo
     public class Motor: PropertyChangedNotifier
     {
         public Motor(int index) { Index = index; }
-        public float Position => 3.5F;
+
+        float position;
+        [DataItem]
+        public float Position {
+            get => position;
+            set { position = value; OnPropertyChanged(); }
+        }
+
+        float load;
+        [DataItem("LBS")]
+        public float Load {
+            get => load;
+            set { load = value; OnPropertyChanged(); }
+        }
 
         private bool isOK;
         public bool IsOK {
@@ -22,6 +35,7 @@ namespace Choreo
         }
 
         string name;
+        [DataItem(title:"Axle Name")]
         public string Name {
             get {
                 if (name == null) return $"Motor {Index + 1}";
@@ -41,15 +55,6 @@ namespace Choreo
             }
         }
 
-        //int preset;
-        //public int Preset {
-        //    get => preset;
-        //    set {
-        //        preset = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
-
         public Color Color {
             get {
                 if (group == 0) return Colors.Gray;
@@ -67,6 +72,14 @@ namespace Choreo
         }
 
         public void PresetTouch() => ++PresetTouches;
+
+        private float setPosition;
+        [DataItem(edit:true)]
+        public float SetPosition {
+            get => setPosition;
+            set { setPosition = value; OnPropertyChanged(); }
+        }
+
 
     }
 }

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
-             d:DesignHeight="340" d:DesignWidth="320" Style="{DynamicResource WinAll}">
+             d:DesignHeight="340" d:DesignWidth="320" Style="{DynamicResource WinAll}" Background="#333333">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="9*"/>
@@ -18,22 +18,15 @@
                     <RowDefinition Height="3*"/>
                     <RowDefinition Height="2*"/>
                 </Grid.RowDefinitions>
-                <StackPanel VerticalAlignment="Center">
-                    <Label Content="Position" VerticalAlignment="Bottom" Foreground="#FFD1BFBF" FontSize="28" FontWeight="Bold"/>
-                    <Label x:Name="Position" Content="{Binding Position, FallbackValue=13\' - 4.5\'\'}"/>
-                </StackPanel>
-                <StackPanel Grid.Row="1" VerticalAlignment="Center" >
-                    <Label Content="Load" Foreground="#FFD1BFBF" FontSize="28" FontWeight="Bold"/>
-                    <DockPanel d:LayoutOverrides="VerticalAlignment, LeftPosition, RightPosition">
-                        <Grid>
-                            <Label x:Name="Load" Content="13' - 4.5''" d:LayoutOverrides="Width"/>
-                            <Label Content="LBS" HorizontalAlignment="Right" />
-                        </Grid>
-                    </DockPanel>
-                </StackPanel>
+                <local:DataItemUI DataContext="{Binding Path=Position}"/>
+                <local:DataItemUI Grid.Row="1" DataContext="{Binding Path=Load}"/>
                 <local:MotorStatusIndicator Grid.Row="2"/>
             </Grid>
         </Viewbox>
-        <ProgressBar Grid.Column="1" Background="#FF534F4F" Foreground="#FFC3BABA" BorderBrush="#00BCBCBC" Value="30" Orientation="Vertical"/>
+        <ProgressBar Grid.Column="1" Foreground="#FFC3BABA" BorderBrush="#00BCBCBC" Value="30" Orientation="Vertical">
+            <ProgressBar.Background>
+                <SolidColorBrush Color="#FF534F4F"/>
+            </ProgressBar.Background>
+        </ProgressBar>
     </Grid>
 </UserControl>

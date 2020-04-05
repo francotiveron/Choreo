@@ -6,6 +6,9 @@
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1280" Style="{DynamicResource WinAll}">
+    <UserControl.Resources>
+        <local:EditDataItemSetter x:Key="EditItemSetter"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -16,6 +19,10 @@
                 <TextBlock Text="CURRENT POSITION &amp; LOAD" Margin="20"/>
             </Viewbox>
             <local:MotorStatusPanel Margin="10"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1">
+            <local:DataItemUI DataContext="{Binding Path=Name}" SourceCollection="{Binding Source={x:Static local:Globals.VM}, Path=Motors}" CustomSetter="{StaticResource EditItemSetter}"/>
+            <local:DataItemUI DataContext="{Binding Path=SetPosition}"/>
         </StackPanel>
 
     </Grid>

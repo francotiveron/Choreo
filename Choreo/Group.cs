@@ -15,10 +15,10 @@ namespace Choreo
         public static readonly Color[] GroupColors = { Colors.Red, Colors.Blue, Colors.Purple, Colors.Orange, Colors.DarkCyan, Colors.Green, Colors.Brown, Colors.Magenta };
         public Group(int index) { Index = index; }
 
-        //public HashSet<int> Motors = new HashSet<int>();
-
         public bool Contains(int motorIndex) => VM.Motors.Any(m => m.Group == Index);
-        public float Position => 3.5F;
+        public float Position => 32.1F;
+        public float Load => 2214F;
+
 
         private bool isOK;
         public bool IsOK {
