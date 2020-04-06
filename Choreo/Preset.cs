@@ -21,6 +21,7 @@ namespace Choreo {
         }
 
         public Dictionary<int, float> MotorPositions = new Dictionary<int, float>();
+        public Dictionary<int, float> GroupPositions = new Dictionary<int, float>();
 
         public bool ContainsMotor(int motorIndex) => MotorPositions.ContainsKey(motorIndex);
 
