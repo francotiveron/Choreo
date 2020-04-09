@@ -17,15 +17,26 @@ namespace Choreo
         }
 
         private void VM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
-            if (e.PropertyName == "MotorSettingsBeingEdited") {
-                var motorIndex = VM.MotorSettingsBeingEdited;
+            if (e.PropertyName == "MotorBeingEdited") {
+                var motorIndex = VM.MotorBeingEdited;
                 if (motorIndex > 0 && MainWindow is MainWindow) {
-                    var newWindow = new MotorSettingsWindow();
+                    var newWindow = new MotorWindow();
                     newWindow.DataContext = VM.Motors[motorIndex - 1];
                     ChangeWindow(newWindow);
                 }
                 else
-                if (motorIndex == 0 && MainWindow is MotorSettingsWindow) ChangeWindow(new MainWindow());
+                if (motorIndex == 0 && MainWindow is MotorWindow) ChangeWindow(new MainWindow());
+            }
+            else
+            if (e.PropertyName == "CueBeingEdited") {
+                var cueIndex = VM.CueBeingEdited;
+                if (cueIndex > 0 && MainWindow is MainWindow) {
+                    var newWindow = new CueWindow();
+                    newWindow.DataContext = VM.Cues[cueIndex - 1];
+                    ChangeWindow(newWindow);
+                }
+                else
+                if (cueIndex == 0 && MainWindow is CueWindow) ChangeWindow(new MainWindow());
             }
         }
 

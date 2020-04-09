@@ -30,7 +30,7 @@
     <ProductName>Choreo UI App</ProductName>
     <PublisherName>Franco Tiveron</PublisherName>
     <SuiteName>Choreo</SuiteName>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationRevision>2</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -111,8 +111,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Alert.cs" />
     <Compile Include="AxesAndGroupsPanel.xaml.cs">
       <DependentUpon>AxesAndGroupsPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cue.cs" />
+    <Compile Include="CuePage.xaml.cs">
+      <DependentUpon>CuePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CueTopPanel.xaml.cs">
+      <DependentUpon>CueTopPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CueWindow.xaml.cs">
+      <DependentUpon>CueWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="SelectPad.xaml.cs">
       <DependentUpon>SelectPad.xaml</DependentUpon>
@@ -139,14 +150,14 @@
     <Compile Include="Keyad.xaml.cs">
       <DependentUpon>Keyad.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MotorSettingsPage.xaml.cs">
-      <DependentUpon>MotorSettingsPage.xaml</DependentUpon>
+    <Compile Include="MotorPage.xaml.cs">
+      <DependentUpon>MotorPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MotorSettingsTopPanel.xaml.cs">
-      <DependentUpon>MotorSettingsTopPanel.xaml</DependentUpon>
+    <Compile Include="MotorTopPanel.xaml.cs">
+      <DependentUpon>MotorTopPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MotorSettingsWindow.xaml.cs">
-      <DependentUpon>MotorSettingsWindow.xaml</DependentUpon>
+    <Compile Include="MotorWindow.xaml.cs">
+      <DependentUpon>MotorWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MotorStatusIndicator.xaml.cs">
       <DependentUpon>MotorStatusIndicator.xaml</DependentUpon>
@@ -174,6 +185,18 @@
       <DependentUpon>TestWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="AxesAndGroupsPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CuePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CueTopPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CueWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -221,15 +244,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MotorSettingsPage.xaml">
+    <Page Include="MotorPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MotorSettingsTopPanel.xaml">
+    <Page Include="MotorTopPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MotorSettingsWindow.xaml">
+    <Page Include="MotorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

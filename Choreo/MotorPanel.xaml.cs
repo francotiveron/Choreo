@@ -53,18 +53,21 @@ namespace Choreo
         {
             if (e.LeftButton != MouseButtonState.Pressed) return;
 
-            if (VM.IsEditing) {
-                if (IsMotor) {
-                    var m = DataContext as Motor;
-                    if (VM.IsGroupEditing) {
-                        if (m.Group == 0) m.Group = VM.GroupBeingEdited;
-                        else
-                        if (m.Group == VM.GroupBeingEdited) m.Group = 0;
+            if (VM.IsGroupEditing && DataContext is Motor m) {
+                if (m.Group == 0) {
+                    if (m.IsPreset) {
+                        Alert.Info("Motors already in Presets cannot be grouped", "Motor in Preset");
                         return;
                     }
-                    else
-                    if (VM.IsPresetEditing) VM.Presets[VM.PresetBeingEdited - 1].Toggle(m);
+                    m.Group = VM.GroupBeingEdited;
                 }
+                else
+                if (m.Group == VM.GroupBeingEdited) m.Group = 0;
+                return;
+            }
+            else
+            if (VM.IsPresetEditing) { 
+                if (!(DataContext is Motor mm) || !mm.IsGrouped) VM.Presets[VM.PresetBeingEdited - 1].Toggle(DataContext); 
             }
             else StartGesture(e.GetPosition(this));
         }
@@ -90,7 +93,7 @@ namespace Choreo
                 if (!VM.IsEditing) {
                     if (IsGroup) VM.BeginGroupEditing(Index);
                     else
-                    if (IsMotor) VM.BeginMotorSettingsEditing(Index);
+                    if (IsMotor) VM.BeginMotorEditing(Index);
                 }
             }
         }
@@ -133,9 +136,10 @@ namespace Choreo
             }
             else
             if (VM.IsPresetEditing) {
+                var preset = VM.Presets[VM.PresetBeingEdited - 1];
                 switch (value[0]) {
-                    case Motor m: return VM.Presets[VM.PresetBeingEdited - 1].ContainsMotor(m.Index) ? Visibility.Hidden : Visibility.Visible;
-                    default: return Visibility.Visible;
+                    case Motor m: return preset.ContainsMotor(m.Index) ? Visibility.Hidden : Visibility.Visible;
+                    case Group g: return preset.ContainsGroup(g.Index) ? Visibility.Hidden : Visibility.Visible;
                 }
             }
 

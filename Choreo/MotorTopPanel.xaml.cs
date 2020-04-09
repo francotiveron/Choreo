@@ -23,7 +23,7 @@ namespace Choreo {
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) {
-            Globals.VM.EndMotorSettingsEditing();
+            Globals.VM.EndMotorEditing();
         }
     }
 }

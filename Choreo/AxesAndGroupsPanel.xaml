@@ -74,5 +74,8 @@
             </Grid>
         </Grid>
         <ProgressBar Grid.Column="1" Background="#FF8D8585" Foreground="#FFC7D4CA" BorderBrush="{x:Null}" Orientation="Vertical"/>
+        <Viewbox Grid.Column="1" Stretch="Uniform" VerticalAlignment="Top">
+            <Label Content="Jog Vel."/>
+        </Viewbox>
     </Grid>
 </UserControl>

@@ -38,6 +38,7 @@ namespace Choreo {
         }
         private void DataItemUI_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e) {
             var binding = BindingOperations.GetBinding(this, DataContextProperty);
+            if (binding == null) return;
             var parentDC = Parent.GetValue(FrameworkElement.DataContextProperty);
             var type = parentDC.GetType();
             var property = binding.Path.Path;
@@ -109,6 +110,13 @@ namespace Choreo {
         public static readonly DependencyProperty CustomSetterProperty =
             DependencyProperty.Register("CustomSetter", typeof(DynamicObject), typeof(DataItemUI));
 
+        public string FieldName {
+            get { return (string)GetValue(FieldNameProperty); }
+            set { SetValue(FieldNameProperty, value); }
+        }
+
+        public static readonly DependencyProperty FieldNameProperty =
+            DependencyProperty.Register("FieldName", typeof(string), typeof(DataItemUI));
         #endregion
 
     }

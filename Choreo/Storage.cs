@@ -24,17 +24,25 @@ namespace Choreo {
         public static void Save(Preset preset) {
             var value = string.Join(";", preset.MotorPositions.Select(kv => $"{kv.Key},{kv.Value}"));
             Write($@"Presets\[{preset.Index}]", "MotorPositions", value);
+            value = string.Join(";", preset.GroupPositions.Select(kv => $"{kv.Key},{kv.Value}"));
+            Write($@"Presets\[{preset.Index}]", "GroupPositions", value);
         }
         public static void Load(Motor motor) {
             var value = Read($@"Motors\[{motor.Index}]", "Group");
             if (value is int group) motor.Group = group;
         }
         public static void Load(Preset preset) {
-            var value = Read($@"Presets\[{preset.Index}]", "MotorPositions");
-            if (value is string s) {
-                var kvs = s.Split(';').Select(kv => kv.Split(',')).Select(kv => (int.Parse(kv[0]), float.Parse(kv[1])));
+            var value = Read($@"Presets\[{preset.Index}]", "MotorPositions") as string;
+            if (value is string) {
+                var kvs = value.Split(';').Select(kv => kv.Split(',')).Select(kv => (int.Parse(kv[0]), double.Parse(kv[1])));
                 preset.MotorPositions.Clear();
                 foreach (var (index, position) in kvs) preset.MotorPositions[index] = position;
+            }
+            value = Read($@"Presets\[{preset.Index}]", "GroupPositions") as string;
+            if (value is string) {
+                var kvs = value.Split(';').Select(kv => kv.Split(',')).Select(kv => (int.Parse(kv[0]), double.Parse(kv[1])));
+                preset.GroupPositions.Clear();
+                foreach (var (index, position) in kvs) preset.GroupPositions[index] = position;
             }
         }
         static void Iterate<T>(IEnumerable<T> collection, MethodInfo action) { foreach (var item in collection) action.Invoke(null, new object[] { item }); }

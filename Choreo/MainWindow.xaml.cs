@@ -28,6 +28,7 @@ namespace Choreo
         public MainWindow()
         {
             InitializeComponent();
+            SelectPage();
             VM.PropertyChanged += VM_PropertyChanged;
         }
 
@@ -51,39 +52,32 @@ namespace Choreo
                 }
                 else TopPanelArea.Child = new HomeTopPanel();
             }
+            else
+            if (e.PropertyName == "CurrentMainWindowPage")
+                SelectPage();
         }
 
-        private void HomeCmdExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            VM.CurrentPage = Pages.Home;
-            PageArea.Child = new HomePage();
+        void SelectPage() {
+            switch(VM.CurrentMainWindowPage) {
+                case MainWindowPages.Home:
+                    PageArea.Child = new HomePage();
+                    break;
+
+                case MainWindowPages.Cueing:
+                    PageArea.Child = new CueingPage();
+                    break;
+
+                case MainWindowPages.Show:
+                    PageArea.Child = new ShowPage();
+                    break;
+            }
         }
 
-        private void HomeCmdCanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = VM.CurrentPage != Pages.Home;
-        }
-
-        private void CueingCmdExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            VM.CurrentPage = Pages.Cueing;
-            PageArea.Child = new CueingPage();
-        }
-
-        private void CueingCmdCanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = VM.CurrentPage != Pages.Cueing;
-        }
-
-        private void ShowCmdExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            VM.CurrentPage = Pages.Show;
-            PageArea.Child = new ShowPage();
-        }
-
-        private void ShowCmdCanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = VM.CurrentPage != Pages.Show;
-        }
+        private void HomeCmdExecuted(object sender, ExecutedRoutedEventArgs e) => VM.CurrentMainWindowPage = MainWindowPages.Home;
+        private void HomeCmdCanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = VM.CurrentMainWindowPage != MainWindowPages.Home;
+        private void CueingCmdExecuted(object sender, ExecutedRoutedEventArgs e) => VM.CurrentMainWindowPage = MainWindowPages.Cueing;
+        private void CueingCmdCanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = VM.CurrentMainWindowPage != MainWindowPages.Cueing;
+        private void ShowCmdExecuted(object sender, ExecutedRoutedEventArgs e) => VM.CurrentMainWindowPage = MainWindowPages.Show;
+        private void ShowCmdCanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = VM.CurrentMainWindowPage != MainWindowPages.Show;
     }
 }

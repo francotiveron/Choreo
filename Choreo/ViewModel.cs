@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using static Choreo.Storage;
@@ -12,35 +13,36 @@ using static System.Linq.Enumerable;
 namespace Choreo
 {
     using Cfg = Configuration;
-    public enum Pages { Home, Cueing, Show };
+    public enum MainWindowPages { Home, Cueing, Show };
     public class ViewModel: PropertyChangedNotifier
     {
         public ViewModel() {
-            CurrentPage = Pages.Home;
+            CurrentMainWindowPage = MainWindowPages.Home;
             Plc = PlcFactory.New(Cfg.PLCId); 
         }
         public List<Motor> Motors { get; } = new List<Motor>(Range(0, 16).Select(i => new Motor(i)));
         public List<Group> Groups { get; } = new List<Group>(Range(0, 8).Select(i => new Group(i)));
         public List<Preset> Presets { get; } = new List<Preset>(Range(0, 8).Select(i => new Preset(i)));
+        public List<Cue> Cues { get; } = new List<Cue>();
         public IPlc Plc { get; private set; }
 
-        Pages currentPage;
-        public Pages CurrentPage {
-            get => currentPage;
-            set { currentPage = value; OnPropertyChanged(); }
+        MainWindowPages currentMainWindowPage;
+        public MainWindowPages CurrentMainWindowPage {
+            get => currentMainWindowPage;
+            set { currentMainWindowPage = value; OnPropertyChanged(); }
         }
 
         public bool IsEditing => IsGroupEditing || IsPresetEditing;
 
         #region ******************Motor Settings Editing******************
-        int motorSettingsBeingEdited;
-        public int MotorSettingsBeingEdited {
-            get => motorSettingsBeingEdited;
-            set { motorSettingsBeingEdited = value; OnPropertyChanged(); }
+        int motorBeingEdited;
+        public int MotorBeingEdited {
+            get => motorBeingEdited;
+            set { motorBeingEdited = value; OnPropertyChanged(); }
         }
-        public bool IsMotorSettingsEditing => MotorSettingsBeingEdited > 0;
-        public void BeginMotorSettingsEditing(int index) => MotorSettingsBeingEdited = index + 1;
-        public void EndMotorSettingsEditing() => MotorSettingsBeingEdited = 0;
+        public bool IsMotorEditing => MotorBeingEdited > 0;
+        public void BeginMotorEditing(int index) => MotorBeingEdited = index + 1;
+        public void EndMotorEditing() => MotorBeingEdited = 0;
         #endregion
 
         #region ******************Group Editing******************
@@ -93,7 +95,7 @@ namespace Choreo
         }
         public bool IsPresetEditing => PresetBeingEdited > 0;
 
-        List<KeyValuePair<int, float>> presetMotorsBackup;
+        List<KeyValuePair<int, double>> presetMotorsBackup;
         public void BeginPresetEditing(int preset) {
             PresetBeingEdited = preset + 1;
             presetMotorsBackup = Presets[preset].MotorPositions.ToList();
@@ -114,6 +116,24 @@ namespace Choreo
             foreach (var kv in presetMotorsBackup) preset.MotorPositions[kv.Key] = kv.Value;
             presetMotorsBackup = null;
             EndPresetEditing();
+        }
+        #endregion
+
+        #region ******************Cueing******************
+        int cueBeingEdited;
+        public int CueBeingEdited {
+            get => cueBeingEdited;
+            set { cueBeingEdited = value; OnPropertyChanged(); }
+        }
+        public void BeginCueEditing(int cue) {
+            CueBeingEdited = cue + 1;
+        }
+        public void EndCueEditing() => CueBeingEdited = 0;
+        public void CueEditSave() {
+            EndCueEditing();
+        }
+        public void CueEditCancel() {
+            EndCueEditing();
         }
         #endregion
     }

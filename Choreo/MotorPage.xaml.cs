@@ -15,8 +15,12 @@ namespace Choreo {
 
         public static void SetEditingItem(object item) {
             switch(item) {
-                case Motor m: VM.MotorSettingsBeingEdited = m.Index + 1; break;
+                case Motor m: VM.MotorBeingEdited = m.Index + 1; break;
             }
+        }
+
+        private void ResetGroupButton_Click(object sender, RoutedEventArgs e) {
+            VM.Motors[VM.MotorBeingEdited - 1].Group = 0;
         }
     }
 

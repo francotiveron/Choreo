@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
-              MouseDown="UserControl_MouseDown"
-             d:DesignHeight="100" d:DesignWidth="300" Style="{DynamicResource WinAll}" Background="#333333">
+             MouseDown="UserControl_MouseDown"
+             d:DesignHeight="100" d:DesignWidth="300" Style="{StaticResource WinAll}" Background="#333333">
     <UserControl.Resources>
         <local:DataItemStatusColorConverter x:Key="StatusConverter"/>
     </UserControl.Resources>
@@ -20,8 +20,8 @@
                 <RowDefinition Height="2*"/>
                 <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
-            <Label 
-                Content="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:DataItemUI}, Path=Title, FallbackValue=Label}"
+            <Label
+                Content="{Binding Title, FallbackValue=Label, RelativeSource={RelativeSource AncestorType={x:Type local:DataItemUI}, Mode=FindAncestor}}"
                 Style="{StaticResource DataItemLabelStyle}"
             />
             <Grid Grid.Row="1" >
@@ -29,21 +29,17 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="{Binding Path=., TargetNullValue=Value}" Style="{StaticResource DataItemDataStyle}"/>
+                <TextBlock Text="{Binding ., TargetNullValue=Value}" Style="{StaticResource DataItemDataStyle}"/>
                 <Label 
-                    Grid.Column="1"
-                    Content="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:DataItemUI}, Path=MU, FallbackValue=MU}"
-                    Style="{StaticResource MeasuringUnitStyle}"
+                        Grid.Column="1"
+                        Content="{Binding MU, FallbackValue=MU, RelativeSource={RelativeSource AncestorType={x:Type local:DataItemUI}, Mode=FindAncestor}}"
+                        Style="{StaticResource MeasuringUnitStyle}"
                 />
             </Grid>
         </Grid>
         <Rectangle Grid.Row="1">
             <Rectangle.Fill>
-                <SolidColorBrush>
-                    <SolidColorBrush.Color>
-                        <Binding Path="Status" Converter="{StaticResource StatusConverter}" FallbackValue="Gray"/>
-                    </SolidColorBrush.Color>
-                </SolidColorBrush>
+                <SolidColorBrush Color="{Binding Status, Converter={StaticResource StatusConverter}, FallbackValue=Gray}"/>
             </Rectangle.Fill>
         </Rectangle>
 

@@ -2,8 +2,8 @@
 + Group logic
 + Settings persistence
 + Preset logic
-* Motor Settings Window
-- Motor move window
++ Motor Settings Window
+* Motor move window
 - Cueing creation logic/window
 - Edit Cue window
 - Show window
@@ -14,3 +14,6 @@
 - Jog velocity slide management
 - Motor position bar movement
 - Clarify meaning of arrows in motor pos bar
+- Settings values Data validation
+- Disable group change in motor settings for grouped motors
+- Disable (darken) Min Acc and Min Dec data items in motor settings form
