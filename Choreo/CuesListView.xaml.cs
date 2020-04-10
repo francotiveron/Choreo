@@ -24,5 +24,18 @@ namespace Choreo {
             VM.DeleteCue(cue.Index);
             e.Handled = true;
         }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            SelectedCue = e.AddedItems[0] as Cue;
+        }
+
+        public Cue SelectedCue {
+            get { return (Cue)GetValue(SelectedCueProperty); }
+            set { SetValue(SelectedCueProperty, value); }
+        }
+
+        public static readonly DependencyProperty SelectedCueProperty =
+            DependencyProperty.Register("SelectedCue", typeof(Cue), typeof(CuesListView));
+
     }
 }
