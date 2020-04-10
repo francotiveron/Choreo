@@ -114,11 +114,13 @@ namespace Choreo
 
         private void GestureLeft()
         {
+            VM.BeginMotionEditing(true, DataContext);
             Gesture = false;
         }
 
         private void GestureRight()
         {
+            VM.BeginMotionEditing(false, DataContext);
             Gesture = false;
         }
 

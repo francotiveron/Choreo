@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
-             d:DesignHeight="340" d:DesignWidth="320" Style="{DynamicResource WinAll}" Background="#333333">
+             d:DesignHeight="340" d:DesignWidth="320" Style="{StaticResource WinAll}" Background="#333333">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="9*"/>

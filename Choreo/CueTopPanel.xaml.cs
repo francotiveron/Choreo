@@ -20,6 +20,10 @@ namespace Choreo {
                 case "CueEditCancelButton":
                     VM.CueEditCancel();
                     break;
+                case "CueAddRowSaveButton":
+                    var cue = VM.Cues[VM.CueBeingEdited - 1];
+                    cue.Rows.Add(new CueRow(cue));
+                    break;
             }
         }
     }

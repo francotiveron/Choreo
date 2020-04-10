@@ -3,9 +3,9 @@
 + Settings persistence
 + Preset logic
 + Motor Settings Window
++ Cueing creation logic/window
++ Edit Cue window
 * Motor move window
-- Cueing creation logic/window
-- Edit Cue window
 - Show window
 - Cue execution logic	
 - Motor Lock for group

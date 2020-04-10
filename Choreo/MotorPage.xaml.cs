@@ -8,8 +8,8 @@ namespace Choreo {
     /// <summary>
     /// Interaction logic for MotorSettingsPage.xaml
     /// </summary>
-    public partial class MotorSettingsPage : UserControl {
-        public MotorSettingsPage() {
+    public partial class MotorPage : UserControl {
+        public MotorPage() {
             InitializeComponent();
         }
 
@@ -26,7 +26,7 @@ namespace Choreo {
 
     public class EditDataItemSetter: DynamicObject {
         public override bool TryInvoke(InvokeBinder binder, object[] args, out object result) {
-            MotorSettingsPage.SetEditingItem(args[0]);
+            MotorPage.SetEditingItem(args[0]);
             result = null;
             return true;
         }

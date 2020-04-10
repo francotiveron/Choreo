@@ -39,7 +39,7 @@ namespace Choreo {
         private void DataItemUI_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e) {
             var binding = BindingOperations.GetBinding(this, DataContextProperty);
             if (binding == null) return;
-            var parentDC = Parent.GetValue(FrameworkElement.DataContextProperty);
+            var parentDC = (Parent ?? TemplatedParent).GetValue(FrameworkElement.DataContextProperty);
             var type = parentDC.GetType();
             var property = binding.Path.Path;
             var pi = type.GetProperty(property);

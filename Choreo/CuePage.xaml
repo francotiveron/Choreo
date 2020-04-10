@@ -6,34 +6,16 @@
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1280" Style="{DynamicResource WinAll}">
-    <StackPanel>
-        <DockPanel>
-            <local:DataItemUI DataContext="{Binding Index}"/>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <DockPanel VerticalAlignment="Top">
+            <local:DataItemUI DataContext="{Binding Number}"/>
             <local:DataItemUI DataContext="{Binding Name}"/>
             <CheckBox/>
         </DockPanel>
-        <ListView Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFFDFDFD" ItemsSource="{Binding Rows}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn>
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <local:DataItemUI DataContext="{Binding Target}"/>
-                                    <!--<Label Content="{Binding Target}"/>
-                                    <Button Content="poppo"/>-->
-                                </StackPanel>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn/>
-                    <GridViewColumn/>
-                    <GridViewColumn/>
-                    <GridViewColumn/>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Button x:Name="AddRowButton" Content="Add Row" Click="AddRowButton_Click"/>
-    </StackPanel>
+        <local:CueRowListView Grid.Row="1"/>
+    </Grid>
 </UserControl>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -23,7 +24,8 @@ namespace Choreo
         public List<Motor> Motors { get; } = new List<Motor>(Range(0, 16).Select(i => new Motor(i)));
         public List<Group> Groups { get; } = new List<Group>(Range(0, 8).Select(i => new Group(i)));
         public List<Preset> Presets { get; } = new List<Preset>(Range(0, 8).Select(i => new Preset(i)));
-        public List<Cue> Cues { get; } = new List<Cue>();
+        public ObservableCollection<Cue> Cues { get; } = new ObservableCollection<Cue>();
+        public Motion Motion { get; } = new Motion();
         public IPlc Plc { get; private set; }
 
         MainWindowPages currentMainWindowPage;
@@ -130,10 +132,43 @@ namespace Choreo
         }
         public void EndCueEditing() => CueBeingEdited = 0;
         public void CueEditSave() {
+            Save(Cues[CueBeingEdited - 1]);
             EndCueEditing();
         }
         public void CueEditCancel() {
+            Load(Cues[CueBeingEdited - 1]);
             EndCueEditing();
+        }
+        public void DeleteCue(int cueIndex) {
+            var cue = Cues[cueIndex];
+            Delete(cue);
+            Cues.Remove(cue);
+            foreach (var c in Cues) c.RefreshIndex();
+        }
+        internal void DeleteCueRow(int rowIndex) {
+            var cue = Cues[CueBeingEdited -1];
+            var row = cue.Rows[rowIndex];
+            //Delete(cue, row);
+            cue.Rows.Remove(row);
+        }
+        #endregion
+
+        #region Motion
+
+        private bool motionEditing;
+
+        public bool MotionEditing {
+            get { return motionEditing; }
+            set { motionEditing = value; OnPropertyChanged(); }
+        }
+
+        public void BeginMotionEditing(bool relative, object hook) {
+            Motion.Hook = hook;
+            Motion.Relative = relative;
+            MotionEditing = true;
+        }
+        public void EndMotionEditing() {
+            MotionEditing = false;
         }
         #endregion
     }

@@ -38,6 +38,16 @@ namespace Choreo
                 else
                 if (cueIndex == 0 && MainWindow is CueWindow) ChangeWindow(new MainWindow());
             }
+            else
+            if (e.PropertyName == "MotionEditing") {
+                var cueIndex = VM.CueBeingEdited;
+                if (VM.MotionEditing && MainWindow is MainWindow) {
+                    var newWindow = new MotionWindow();
+                    ChangeWindow(newWindow);
+                }
+                else
+                if (!VM.MotionEditing && MainWindow is MotionWindow) ChangeWindow(new MainWindow());
+            }
         }
 
         private void ChangeWindow(Window newWindow) {

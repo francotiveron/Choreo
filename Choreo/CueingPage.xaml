@@ -5,42 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="1280" Style="{DynamicResource WinAll}">
+             d:DesignHeight="800" d:DesignWidth="1280" Style="{StaticResource WinAll}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         <DockPanel>
             <Label DockPanel.Dock="Left" Content="Cueing"/>
             <Button x:Name="NewCueButton" DockPanel.Dock="Right" Content="Create New Cue" HorizontalAlignment="Right" Click="NewCueButton_Click"/>
         </DockPanel>
-        <!--<ListView Grid.Row="1" ItemsSource="{Binding Cues}">-->
-        <ListView Grid.Row="1" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
-            <ListView.View>
-                <GridView AllowsColumnReorder="False">
-                    <GridView.ColumnHeaderContainerStyle>
-                        <Style TargetType="GridViewColumnHeader">
-                            <Setter Property="Background" Value="{x:Null}"/>
-                            <Setter Property="Foreground" Value="White"/>
-                        </Style>
-                    </GridView.ColumnHeaderContainerStyle>
-                    <GridViewColumn DisplayMemberBinding="{Binding Index}" Header="Number"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Duration}" Header="Duration"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name"/>
-                    <GridViewColumn>
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Content="---"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
-            <!--<ListView.Items>
-                <local:Cue Index="1" Duration="0.1:20" Name="Pippo"/>
-            </ListView.Items>-->
-        </ListView>
-
+        <local:CuesListView Grid.Row="1"/>
     </Grid>
 </UserControl>

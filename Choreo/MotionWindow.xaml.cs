@@ -10,20 +10,15 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Choreo {
     /// <summary>
-    /// Interaction logic for MotorSettingsTopPanel.xaml
+    /// Interaction logic for MotionWindow.xaml
     /// </summary>
-    public partial class MotorTopPanel : UserControl {
-        public MotorTopPanel() {
+    public partial class MotionWindow : Window {
+        public MotionWindow() {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e) {
-            Globals.VM.EndMotorEditing();
         }
     }
 }

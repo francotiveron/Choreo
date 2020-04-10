@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Choreo.MotorTopPanel"
+﻿<UserControl x:Class="Choreo.MotionTopPanel"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,9 +6,9 @@
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
              d:DesignHeight="90" d:DesignWidth="1920" Style="{DynamicResource WinAll}">
-    <DockPanel Background="#FF0D2A4D">
-        <Label Content="Motor Settings" Style="{StaticResource TopBarLabelStyle}" />
-        <TextBlock Text="{Binding Name, FallbackValue=Motor X}" Style="{StaticResource TopBarTextBlockStyle}" />
+    <DockPanel Background="#FF8F0570">
+        <Label Content="Motion" Style="{StaticResource TopBarLabelStyle}"/>
+        <TextBlock DataContext="{Binding Hook}" Text="{Binding Name, FallbackValue=Hook X}" Style="{StaticResource TopBarTextBlockStyle}"/>
         <Button Content="X" Click="Button_Click" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFFDFBFB" HorizontalAlignment="Right" Padding="50,1"/>
     </DockPanel>
 </UserControl>
