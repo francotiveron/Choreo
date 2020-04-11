@@ -131,7 +131,6 @@
     <Compile Include="CueWindow.xaml.cs">
       <DependentUpon>CueWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ModeableListView.cs" />
     <Compile Include="Motion.cs" />
     <Compile Include="MotionPage.xaml.cs">
       <DependentUpon>MotionPage.xaml</DependentUpon>
@@ -196,9 +195,6 @@
       <DependentUpon>ShowPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Storage.cs" />
-    <Compile Include="TestUC.xaml.cs">
-      <DependentUpon>TestUC.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModel.cs" />
     <Compile Include="Motor.cs" />
     <Compile Include="TestWindow.xaml.cs">
@@ -317,10 +313,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ShowPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="TestUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

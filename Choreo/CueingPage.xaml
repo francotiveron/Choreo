@@ -18,6 +18,6 @@
             <Label DockPanel.Dock="Left" Content="Cueing"/>
             <Button x:Name="NewCueButton" DockPanel.Dock="Right" Content="Create New Cue" HorizontalAlignment="Right" Click="NewCueButton_Click"/>
         </DockPanel>
-        <local:CuesListView Grid.Row="1" IsEditable="True"/>
+        <local:CuesListView Grid.Row="1"/>
     </Grid>
 </UserControl>
