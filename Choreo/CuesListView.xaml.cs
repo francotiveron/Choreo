@@ -6,7 +6,7 @@ namespace Choreo {
     /// <summary>
     /// Interaction logic for CuesListView.xaml
     /// </summary>
-    public partial class CuesListView : UserControl {
+    public partial class CuesListView : ModeableListView {
         public CuesListView() {
             InitializeComponent();
         }
@@ -26,12 +26,12 @@ namespace Choreo {
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            SelectedCue = e.AddedItems[0] as Cue;
+            SelectedCue = e.AddedItems.Count > 0 ? e.AddedItems[0] as Cue : null;
         }
 
         public Cue SelectedCue {
-            get { return (Cue)GetValue(SelectedCueProperty); }
-            set { SetValue(SelectedCueProperty, value); }
+            get { return (Cue)base.GetValue(SelectedCueProperty); }
+            set { base.SetValue(SelectedCueProperty, value); }
         }
 
         public static readonly DependencyProperty SelectedCueProperty =

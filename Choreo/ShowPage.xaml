@@ -17,8 +17,8 @@
         </Grid.ColumnDefinitions>
 
         <Label Content="Show"/>
-        <local:CuesListView x:Name="CueList" Grid.Row="1"/>
+        <local:CuesListView x:Name="CueList" Grid.Row="1" IsEditable="False"/>
         <!--<local:CueRowListView Grid.Row="1" Grid.Column="1" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Cues[0]}"/>-->
-        <local:CueRowListView Grid.Row="1" Grid.Column="1" DataContext="{Binding ElementName=CueList, Path=SelectedCue}"/>
+        <local:CueRowListView Grid.Row="1" Grid.Column="1" DataContext="{Binding ElementName=CueList, Path=SelectedCue}" IsEditable="False"/>
     </Grid>
 </UserControl>
