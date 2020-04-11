@@ -131,6 +131,7 @@
     <Compile Include="CueWindow.xaml.cs">
       <DependentUpon>CueWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ModeableListView.cs" />
     <Compile Include="Motion.cs" />
     <Compile Include="MotionPage.xaml.cs">
       <DependentUpon>MotionPage.xaml</DependentUpon>

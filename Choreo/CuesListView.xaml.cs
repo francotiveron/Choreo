@@ -6,7 +6,7 @@ namespace Choreo {
     /// <summary>
     /// Interaction logic for CuesListView.xaml
     /// </summary>
-    public partial class CuesListView : UserControl {
+    public partial class CuesListView : ModeableListView {
         public CuesListView() {
             InitializeComponent();
         }
