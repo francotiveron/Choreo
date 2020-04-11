@@ -111,6 +111,9 @@ namespace Choreo
             var keys = Presets[PresetBeingEdited - 1].MotorPositions.Keys.ToList();
             Presets[PresetBeingEdited - 1].MotorPositions.Clear();
             foreach (var key in keys) Motors[key].PresetTouch();
+            keys = Presets[PresetBeingEdited - 1].GroupPositions.Keys.ToList();
+            Presets[PresetBeingEdited - 1].GroupPositions.Clear();
+            foreach (var key in keys) Groups[key].PresetTouch();
         }
         public void PresetEditCancel() {
             var preset = Presets[PresetBeingEdited - 1];

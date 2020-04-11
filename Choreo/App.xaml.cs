@@ -15,7 +15,6 @@ namespace Choreo
         public App() {
             VM.PropertyChanged += VM_PropertyChanged; ;
         }
-
         private void VM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
             if (e.PropertyName == "MotorBeingEdited") {
                 var motorIndex = VM.MotorBeingEdited;

@@ -16,8 +16,19 @@ namespace Choreo
         public Group(int index) { Index = index; }
 
         public bool Contains(int motorIndex) => VM.Motors.Any(m => m.Group == Index);
-        public double Position => 32.1F;
-        public double Load => 2214F;
+        double position;
+        [DataItem]
+        public double Position {
+            get => position;
+            set { position = value; OnPropertyChanged(); }
+        }
+
+        double load;
+        [DataItem("lbs")]
+        public double Load {
+            get => load;
+            set { load = value; OnPropertyChanged(); }
+        }
 
 
         bool isOK;

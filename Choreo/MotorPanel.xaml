@@ -7,14 +7,9 @@
              xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
-             d:DesignHeight="390" d:DesignWidth="320" Style="{DynamicResource WinAll}" MouseDown="UserControl_MouseDown" MouseMove="UserControl_MouseMove" MouseUp="UserControl_MouseUp">
+             d:DesignHeight="390" d:DesignWidth="320" MouseDown="UserControl_MouseDown" MouseMove="UserControl_MouseMove" MouseUp="UserControl_MouseUp">
     <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="ResourceDictionary.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-            <local:MotorPanelDarkeningConverter x:Key="DarkeningConverter"/>
-        </ResourceDictionary>
+        <local:MotorPanelDarkeningConverter x:Key="DarkeningConverter"/>
     </UserControl.Resources>
 
     <Viewbox Stretch="Fill">
@@ -26,7 +21,7 @@
                 </Grid.RowDefinitions>
                 <Border>
                     <Border.Background>
-                        <SolidColorBrush Color="{Binding Color, FallbackValue=LightGray}"/>
+                        <SolidColorBrush Color="{Binding Color, FallbackValue=DarkGray}"/>
                     </Border.Background>
                     <TextBlock Text="{Binding Name, FallbackValue=Motor X}" TextAlignment="Center" VerticalAlignment="Center"/>
                 </Border>

@@ -60,7 +60,7 @@ namespace Choreo
 
         public Color Color {
             get {
-                if (group == 0) return Colors.Gray;
+                if (Group == 0) return Colors.DarkGray;
                 return Choreo.Group.GroupColors[Group - 1];
             }
         }

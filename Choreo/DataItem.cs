@@ -8,7 +8,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 
 namespace Choreo {
-	public class DataItemStatusColorConverter : IValueConverter {
+	public class StatusColorConverter : IValueConverter {
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
 			return Colors.Yellow;
 		}

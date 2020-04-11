@@ -5,15 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
-             d:DesignHeight="90" d:DesignWidth="1920" Style="{DynamicResource WinAll}">
+             d:DesignHeight="60" d:DesignWidth="1080">
     <UserControl.Resources>
         <Style x:Key="ChangePageButtonStyle" TargetType="Button">
-
             <Setter Property="OverridesDefaultStyle" Value="True" />
             <Setter Property="Background" Value="{x:Null}" />
             <Setter Property="Foreground" Value="White" />
             <Setter Property="Margin" Value="10,1"/>
-
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -26,25 +24,23 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-
             <Style.Triggers>
                 <Trigger Property="IsEnabled" Value="False">
                     <Setter Property="Opacity" Value="1"/>
                     <Setter Property="Foreground" Value="Blue"/>
-                    <Setter Property="Background" Value="{x:Null}"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
         <local:CurrentPageVisibilityConverter x:Key="CurrentPageVisibilityConverter"/>
     </UserControl.Resources>
     <Grid>
-        <Grid.Resources>
+        <!--<Grid.Resources>
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
                     <ResourceDictionary Source="ResourceDictionary.xaml"/>
                 </ResourceDictionary.MergedDictionaries>
             </ResourceDictionary>
-        </Grid.Resources>
+        </Grid.Resources>-->
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>
@@ -74,7 +70,7 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Button Content="Home" Style="{StaticResource ChangePageButtonStyle}" Command="{x:Static local:MainWindow.HomeCmd}"/>
-                    <Rectangle Fill="Blue" Grid.Row="1" Margin="0" Visibility="{Binding CurrentPage, Converter={StaticResource CurrentPageVisibilityConverter}, ConverterParameter=Home}"/>
+                    <Rectangle Fill="Blue" Grid.Row="1" Margin="0" Visibility="{Binding CurrentMainWindowPage, Converter={StaticResource CurrentPageVisibilityConverter}, ConverterParameter=Home}"/>
                 </Grid>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -82,7 +78,7 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Button Content="Cueing" Style="{StaticResource ChangePageButtonStyle}" Command="{x:Static local:MainWindow.CueingCmd}"/>
-                    <Rectangle Fill="Blue" Grid.Row="1" Margin="0" Visibility="{Binding CurrentPage, Converter={StaticResource CurrentPageVisibilityConverter}, ConverterParameter=Cueing }"/>
+                    <Rectangle Fill="Blue" Grid.Row="1" Margin="0" Visibility="{Binding CurrentMainWindowPage, Converter={StaticResource CurrentPageVisibilityConverter}, ConverterParameter=Cueing }"/>
                 </Grid>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -90,7 +86,7 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Button Content="Show" Style="{StaticResource ChangePageButtonStyle}" Command="{x:Static local:MainWindow.ShowCmd}"/>
-                    <Rectangle Fill="Blue" Grid.Row="1" Margin="0" Visibility="{Binding CurrentPage, Converter={StaticResource CurrentPageVisibilityConverter}, ConverterParameter=Show }"/>
+                    <Rectangle Fill="Blue" Grid.Row="1" Margin="0" Visibility="{Binding CurrentMainWindowPage, Converter={StaticResource CurrentPageVisibilityConverter}, ConverterParameter=Show }"/>
                 </Grid>
             </StackPanel>
         </Grid>

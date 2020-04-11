@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
-             d:DesignHeight="90" d:DesignWidth="1920" Style="{DynamicResource WinAll}">
+             d:DesignHeight="60" d:DesignWidth="1280">
     <DockPanel Background="#FF0D2A4D">
         <Label Content="Motor Settings" Style="{StaticResource TopBarLabelStyle}" />
         <TextBlock Text="{Binding Name, FallbackValue=Motor X}" Style="{StaticResource TopBarTextBlockStyle}" />

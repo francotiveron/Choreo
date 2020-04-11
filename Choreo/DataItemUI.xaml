@@ -6,14 +6,11 @@
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
              MouseDown="UserControl_MouseDown"
-             d:DesignHeight="100" d:DesignWidth="300" Style="{StaticResource WinAll}" Background="#333333">
-    <UserControl.Resources>
-        <local:DataItemStatusColorConverter x:Key="StatusConverter"/>
-    </UserControl.Resources>
+             Background="#333333">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20*"/>
-            <RowDefinition/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid>
             <Grid.RowDefinitions>
@@ -21,7 +18,7 @@
                 <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
             <Label
-                Content="{Binding Title, FallbackValue=Label, RelativeSource={RelativeSource AncestorType={x:Type local:DataItemUI}, Mode=FindAncestor}}"
+                Content="{Binding Title, FallbackValue=Title, RelativeSource={RelativeSource AncestorType={x:Type local:DataItemUI}, Mode=FindAncestor}}"
                 Style="{StaticResource DataItemLabelStyle}"
             />
             <Grid Grid.Row="1" >
@@ -39,7 +36,7 @@
         </Grid>
         <Rectangle Grid.Row="1">
             <Rectangle.Fill>
-                <SolidColorBrush Color="{Binding Status, Converter={StaticResource StatusConverter}, FallbackValue=Gray}"/>
+                <SolidColorBrush Color="{Binding Status, Converter={StaticResource StatusColorConverter}, FallbackValue=Gray}"/>
             </Rectangle.Fill>
         </Rectangle>
 

@@ -6,11 +6,7 @@
         xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
         xmlns:local="clr-namespace:Choreo"
         mc:Ignorable="d"
-        Height="800" Width="1280" 
-        WindowStyle="None" 
-        ResizeMode="NoResize" 
-        Topmost="True" 
-        Style="{StaticResource WinAll}" 
+        Style="{StaticResource {x:Type Window}}"
         DataContext="{Binding Source={x:Static local:Globals.VM}}">
     <!--WindowState="Maximized"-->
     <Window.CommandBindings>

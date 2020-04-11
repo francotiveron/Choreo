@@ -5,22 +5,29 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
-             d:DesignHeight="340" d:DesignWidth="320" Style="{StaticResource WinAll}" Background="#333333">
+             d:DesignHeight="340" d:DesignWidth="320" Background="#333333">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="9*"/>
-            <ColumnDefinition/>
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Viewbox Stretch="Fill">
             <Grid Height="340" Width="288">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="3*"/>
-                    <RowDefinition Height="3*"/>
-                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="12*"/>
+                    <RowDefinition Height="12*"/>
+                    <RowDefinition Height="8*"/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
                 <local:DataItemUI DataContext="{Binding Path=Position}"/>
                 <local:DataItemUI Grid.Row="1" DataContext="{Binding Path=Load}"/>
                 <local:MotorStatusIndicator Grid.Row="2"/>
+                <Rectangle Grid.Row="3">
+                    <Rectangle.Fill>
+                        <SolidColorBrush Color="{Binding Status, Converter={StaticResource StatusColorConverter}, FallbackValue=Gray}"/>
+                    </Rectangle.Fill>
+                </Rectangle>
+
             </Grid>
         </Viewbox>
         <ProgressBar Grid.Column="1" Foreground="#FFC3BABA" BorderBrush="#00BCBCBC" Value="30" Orientation="Vertical">

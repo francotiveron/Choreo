@@ -5,8 +5,8 @@
 + Motor Settings Window
 + Cueing creation logic/window
 + Edit Cue window
-* Motor move window
-- Show window
++ Motor move window
++ Show window
 - Cue execution logic	
 - Motor Lock for group
 - Motor out of place function/dialog

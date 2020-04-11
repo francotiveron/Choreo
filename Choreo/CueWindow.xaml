@@ -5,11 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Choreo"
         mc:Ignorable="d"
-        Height="800" Width="1280" 
-        WindowStyle="None" 
-        ResizeMode="NoResize" 
-        Topmost="True" 
-        Style="{DynamicResource WinAll}" >
+        Style="{StaticResource {x:Type Window}}"
+        >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
