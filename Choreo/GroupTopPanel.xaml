@@ -10,8 +10,8 @@
         <DockPanel.Background>
             <SolidColorBrush Color="{Binding Color, FallbackValue=DarkGreen}"/>
         </DockPanel.Background>
-        <Label Content="Edit Group" Style="{StaticResource TopBarLabelStyle}" />
-        <TextBlock Text="{Binding Name, FallbackValue=Group X}" Style="{StaticResource TopBarTextBlockStyle}" />
+        <Label Content="Edit Group" />
+        <Label Content="{Binding Name, FallbackValue=Group X}" FontWeight="Bold"/>
         <Button x:Name="GroupEditSaveButton" Content="SAVE" Style="{StaticResource TopBarCommandButtonStyle}"  Click="Button_Click"/>
         <Button x:Name="GroupEditClearButton" Content="CLEAR" Style="{StaticResource TopBarCommandButtonStyle}" Click="Button_Click"/>
         <Button x:Name="GroupEditCancelButton" Content="CANCEL" Style="{StaticResource TopBarCommandButtonStyle}" Click="Button_Click"/>

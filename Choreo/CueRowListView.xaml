@@ -30,10 +30,10 @@
                             <ColumnDefinition Style="{StaticResource HideableGridColumnStyle}"/>
                         </Grid.ColumnDefinitions>
                         <Label x:Name="Target" Content="{Binding Target}" MouseUp="FieldLabel_MouseUp"/>
-                        <Label Content="{Binding Velocity}" Grid.Column="1"/>
-                        <Label Content="{Binding Acceleration}" Grid.Column="2"/>
-                        <Label Content="{Binding Deceleration}" Grid.Column="2"/>
-                        <Button x:Name="DeleteRowButton" Content="DELETE" Click="DeleteRowButton_Click" Grid.Column="3"/>
+                        <Label Content="{Binding Velocity}" Grid.Column="1" MouseUp="FieldLabel_MouseUp"/>
+                        <Label Content="{Binding Acceleration}" Grid.Column="2" MouseUp="FieldLabel_MouseUp"/>
+                        <Label Content="{Binding Deceleration}" Grid.Column="3" MouseUp="FieldLabel_MouseUp"/>
+                        <Button x:Name="DeleteRowButton" Content="DELETE" Click="DeleteRowButton_Click" Grid.Column="4"/>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
