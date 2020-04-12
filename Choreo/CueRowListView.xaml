@@ -7,7 +7,80 @@
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1080">
     <Grid>
-        <ListView Background="{x:Null}" BorderBrush="{x:Null}" ItemsSource="{Binding Rows}" SelectionMode="Single" ScrollViewer.VerticalScrollBarVisibility="Visible" Grid.Row="1">
+        <ListView ItemsSource="{Binding Rows}" 
+                  Background="{x:Null}" 
+                  BorderBrush="{x:Null}" 
+                  Foreground="White" 
+                  HorizontalContentAlignment="Stretch"
+                  VerticalAlignment="Top"
+                  >
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Style="{StaticResource HideableGridColumnStyle}"/>
+                            <ColumnDefinition Style="{StaticResource HideableGridColumnStyle}"/>
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="Target" Content="{Binding Target}" MouseUp="FieldLabel_MouseUp"/>
+                        <Label Content="{Binding Velocity}" Grid.Column="1"/>
+                        <Label Content="{Binding Acceleration}" Grid.Column="2"/>
+                        <Label Content="{Binding Deceleration}" Grid.Column="2"/>
+                        <Button x:Name="DeleteRowButton" Content="DELETE" Click="DeleteRowButton_Click" Grid.Column="3"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.Template>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Style="{StaticResource HideableGridColumnStyle}"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="BorderThickness" Value="1" />
+                                    <Setter Property="BorderBrush" Value="LightGray" />
+                                    <Setter Property="Background" Value="DarkGray" />
+                                </Style>
+                            </Grid.Resources>
+                            <Border Grid.Column="0" >
+                                <Label>Target</Label>
+                            </Border>
+                            <Border Grid.Column="1" >
+                                <Label>Velocity</Label>
+                            </Border>
+                            <Border Grid.Column="2" >
+                                <Label>Acceleration</Label>
+                            </Border>
+                            <Border Grid.Column="3" >
+                                <Label>Deceleration</Label>
+                            </Border>
+                        </Grid>
+                        <ScrollViewer Grid.Row="1" >
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </Grid>
+                </ControlTemplate>
+            </ListView.Template>
+        </ListView>
+
+        <!--<ListView Background="{x:Null}" BorderBrush="{x:Null}" ItemsSource="{Binding Rows}" SelectionMode="Single" ScrollViewer.VerticalScrollBarVisibility="Visible" Grid.Row="1">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -26,6 +99,6 @@
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
-        </ListView>
+        </ListView>-->
     </Grid>
 </UserControl>

@@ -19,6 +19,6 @@
                 </Style>
             </Ellipse.Style>
         </Ellipse>
-        <TextBlock Text="Failure" Margin="4,0,0,0" VerticalAlignment="Center"/>
+        <Label Content="Failure" Margin="4,0,0,0" VerticalAlignment="Center"/>
     </StackPanel>
 </UserControl>

@@ -131,6 +131,10 @@
     <Compile Include="CueWindow.xaml.cs">
       <DependentUpon>CueWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Input\Pad.cs" />
+    <Compile Include="Input\NumericPad.xaml.cs">
+      <DependentUpon>NumericPad.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ModeableListView.cs" />
     <Compile Include="Motion.cs" />
     <Compile Include="MotionPage.xaml.cs">
@@ -163,9 +167,6 @@
     <Compile Include="Group.cs" />
     <Compile Include="HomeTopPanel.xaml.cs">
       <DependentUpon>HomeTopPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Keyad.xaml.cs">
-      <DependentUpon>Keyad.xaml</DependentUpon>
     </Compile>
     <Compile Include="MotorPage.xaml.cs">
       <DependentUpon>MotorPage.xaml</DependentUpon>
@@ -225,6 +226,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Input\NumericPad.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MotionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -260,10 +265,6 @@
     <Page Include="HomeTopPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
-    </Page>
-    <Page Include="Keyad.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

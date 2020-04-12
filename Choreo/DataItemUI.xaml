@@ -39,6 +39,5 @@
                 <SolidColorBrush Color="{Binding Status, Converter={StaticResource StatusColorConverter}, FallbackValue=Gray}"/>
             </Rectangle.Fill>
         </Rectangle>
-
     </Grid>
 </UserControl>

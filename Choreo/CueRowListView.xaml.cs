@@ -16,5 +16,22 @@ namespace Choreo {
             VM.DeleteCueRow(row.Index);
             e.Handled = true;
         }
+
+        private void FieldLabel_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+            //var label = sender as Label;
+            //var x = label.GetBindingExpression(Label.ContentProperty);
+
+            Edit(sender);
+        }
+        //{
+            //var label = sender as Label;
+            //var field = label.Name;
+            //Window pad = null;
+            //switch(field) {
+            //    case "Target":
+            //        pad = new Keypad
+
+            //}
+        //}
     }
 }

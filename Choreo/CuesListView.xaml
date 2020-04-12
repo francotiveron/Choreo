@@ -30,9 +30,9 @@
                             <ColumnDefinition Style="{StaticResource HideableGridColumnStyle}"/>
                             <ColumnDefinition Style="{StaticResource HideableGridColumnStyle}"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock TextWrapping="Wrap" Text="{Binding Number}"/>
-                        <TextBlock TextWrapping="Wrap" Text="{Binding Duration}" Grid.Column="1"/>
-                        <TextBlock TextWrapping="Wrap" Text="{Binding Name}" Grid.Column="2"/>
+                        <Label Content="{Binding Number}"/>
+                        <Label Content="{Binding Duration}" Grid.Column="1"/>
+                        <Label Content="{Binding Name}" Grid.Column="2"/>
                         <Button x:Name="CueEditButton" Content="EDIT" Click="CueEditButton_Click" Grid.Column="3"/>
                         <Button x:Name="CueDeleteButton" Content="DELETE" Click="CueDeleteButton_Click" Grid.Column="4"/>
                     </Grid>
@@ -54,10 +54,6 @@
                                 <ColumnDefinition Style="{StaticResource HideableGridColumnStyle}"/>
                             </Grid.ColumnDefinitions>
                             <Grid.Resources>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="Margin" Value="5,0" />
-                                    <Setter Property="Foreground" Value="White" />
-                                </Style>
                                 <Style TargetType="Border">
                                     <Setter Property="BorderThickness" Value="1" />
                                     <Setter Property="BorderBrush" Value="LightGray" />
@@ -65,13 +61,13 @@
                                 </Style>
                             </Grid.Resources>
                             <Border Grid.Column="0" >
-                                <TextBlock>Number</TextBlock>
+                                <Label>Number</Label>
                             </Border>
                             <Border Grid.Column="1" >
-                                <TextBlock>Duration</TextBlock>
+                                <Label>Duration</Label>
                             </Border>
                             <Border Grid.Column="2" >
-                                <TextBlock>Name</TextBlock>
+                                <Label>Name</Label>
                             </Border>
                         </Grid>
                         <ScrollViewer Grid.Row="1" >

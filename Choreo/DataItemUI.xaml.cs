@@ -1,21 +1,11 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Dynamic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using static Choreo.Globals;
 
 namespace Choreo {
     public partial class DataItemUI {
@@ -24,8 +14,9 @@ namespace Choreo {
             DataContextChanged += DataItemUI_DataContextChanged;
         }
 
-        Func<object> Getter;
-        dynamic Setter;
+        //Func<object> Getter;
+        //dynamic Setter;
+        bool editable;
         class SetterType: DynamicObject {
             Action<object> setter;
             public SetterType(Action<object> setter) => this.setter = setter;
@@ -39,45 +30,45 @@ namespace Choreo {
         private void DataItemUI_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e) {
             var binding = BindingOperations.GetBinding(this, DataContextProperty);
             if (binding == null) return;
-            var parentDC = (Parent ?? TemplatedParent).GetValue(FrameworkElement.DataContextProperty);
+            var parentDC = (Parent ?? TemplatedParent).GetValue(DataContextProperty);
             var type = parentDC.GetType();
             var property = binding.Path.Path;
             var pi = type.GetProperty(property);
             var attr = pi.GetCustomAttribute<DataItemAttribute>();
 
-            Getter = () => pi.GetValue(parentDC);
+            //Getter = () => pi.GetValue(parentDC);
 
             if (attr != null) {
-                if (attr.Title == null) Title = property;
-                else Title = attr.Title;
+                Title = attr.Title ?? property;
                 MU = attr.MU;
-                Setter = null;
-                if (attr.Edit || CustomSetter != null) {
-                    if (CustomSetter == null) {
-                        Setter = new SetterType(
-                            (value) => {
-                                value = Convert.ChangeType(value, pi.PropertyType);
-                                pi.SetValue(parentDC, value);
-                            });
-                    }
-                    else Setter = CustomSetter;
-                }
+                editable = attr.Edit;
+                //Setter = null;
+                //if (attr.Edit || CustomSetter != null) {
+                //    if (CustomSetter == null) {
+                //        Setter = new SetterType(
+                //            (value) => {
+                //                value = Convert.ChangeType(value, pi.PropertyType);
+                //                pi.SetValue(parentDC, value);
+                //            });
+                //    }
+                //    else Setter = CustomSetter;
+                //}
             }
         }
 
-        void UserControl_MouseDown(object sender, MouseButtonEventArgs e) => Edit();
+        void UserControl_MouseDown(object sender, MouseButtonEventArgs e) { if (editable) Edit(this); }
 
-        void Edit() {
-            if (Setter == null) return;
-            var pad = SourceCollection == null ? (Window)new Keypad(this) : (Window)new SelectPad(this); 
-            if (pad.ShowDialog().Value) Setter(pad.Tag);
-        }
+        //void Edit() {
+        //    if (Setter == null) return;
+        //    var pad = SourceCollection == null ? (Window)new Keypad(this) : (Window)new SelectPad(this);
+        //    if (pad.ShowDialog().Value) Setter(pad.Tag);
+        //}
 
-        public string FormattedValue {
-            get {
-                return Getter().ToString();
-            }
-        }
+        //public string FormattedValue {
+        //    get {
+        //        return Getter().ToString();
+        //    }
+        //}
 
         #region Dependency Properties
         public string Title {

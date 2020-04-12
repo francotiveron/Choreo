@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Choreo.Input;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Choreo
 {
     static class Globals {
         public static ViewModel VM { get; } = new ViewModel();
-
         static Globals() => Storage.LoadAll();
+        public static void Edit(object o) => Pad.Edit(o);
     }
 }

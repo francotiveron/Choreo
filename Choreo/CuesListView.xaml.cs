@@ -26,7 +26,7 @@ namespace Choreo {
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            SelectedCue = e.AddedItems[0] as Cue;
+            SelectedCue = e.AddedItems.Count > 0 ? e.AddedItems[0] as Cue : null;
         }
 
         public Cue SelectedCue {
