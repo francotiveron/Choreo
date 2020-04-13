@@ -97,12 +97,13 @@ namespace Choreo {
         public static void SaveCues() => Save(VM.Cues);
         public static void LoadCues() {
             VM.Cues.Clear();
-            var cuesRoot = root.OpenSubKey("Cues");
-            foreach (var cueId in cuesRoot.GetSubKeyNames()) {
-                var cue = new Cue(cueId);
-                var cueRoot = cuesRoot.OpenSubKey(cueId);
-                LoadCue(cue, cueRoot);
-                VM.Cues.Add(cue);
+            if (root.OpenSubKey("Cues") is RegistryKey cuesRoot) {
+                foreach (var cueId in cuesRoot.GetSubKeyNames()) {
+                    var cue = new Cue(cueId);
+                    var cueRoot = cuesRoot.OpenSubKey(cueId);
+                    LoadCue(cue, cueRoot);
+                    VM.Cues.Add(cue);
+                }
             }
         }
         public static void SaveAll() {
