@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Microsoft.Xaml.Behaviors.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Choreo.Globals;
 
 namespace Choreo {
     public class Motion: PropertyChangedNotifier {
@@ -20,14 +22,19 @@ namespace Choreo {
         }
 
         double relativeSetpoint;
-        [DataItem(edit: true)]
+        [DataItem(edit: true, title:"Relative Setpoint")]
         public double RelativeSetpoint {
             get { return relativeSetpoint; }
-            set { relativeSetpoint = value; OnPropertyChanged(); }
+            set { relativeSetpoint = value; OnPropertyChanged(); if (value > 2.0) RelativeSetpointStatus = DataStates.Warning; else RelativeSetpointStatus = DataStates.OK; }
+        }
+        private DataStates relativeSetpointStatus;
+        public DataStates RelativeSetpointStatus {
+            get { return relativeSetpointStatus; }
+            set { relativeSetpointStatus = value; OnPropertyChanged(); }
         }
 
         double absoluteSetpoint;
-        [DataItem(edit: true)]
+        [DataItem(edit: true, title: "Absolute Setpoint")]
         public double AbsoluteSetpoint {
             get { return absoluteSetpoint; }
             set { absoluteSetpoint = value; OnPropertyChanged(); }

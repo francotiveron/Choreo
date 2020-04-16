@@ -7,37 +7,35 @@
              xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
-             d:DesignHeight="390" d:DesignWidth="320" MouseDown="UserControl_MouseDown" MouseMove="UserControl_MouseMove" MouseUp="UserControl_MouseUp">
+             d:DesignHeight="170" d:DesignWidth="130" MouseDown="UserControl_MouseDown" MouseMove="UserControl_MouseMove" MouseUp="UserControl_MouseUp">
     <UserControl.Resources>
         <local:MotorPanelDarkeningConverter x:Key="DarkeningConverter"/>
     </UserControl.Resources>
 
-    <Viewbox Stretch="Fill">
-        <Border BorderThickness="5" Height="390" Width="320" IsManipulationEnabled="True" ManipulationStarted="Border_ManipulationStarted" ManipulationDelta="Border_ManipulationDelta" ManipulationCompleted="Border_ManipulationCompleted">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition Height="5*"/>
-                </Grid.RowDefinitions>
-                <Border>
-                    <Border.Background>
-                        <SolidColorBrush Color="{Binding Color, FallbackValue=DarkGray}"/>
-                    </Border.Background>
-                    <Label Content="{Binding Name, FallbackValue=Motor X}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </Border>
-                <local:MotorStatusPanel Grid.Row="1"/>
-                <Rectangle Grid.RowSpan="2" Fill="Black" Opacity="0.6">
-                    <Rectangle.Visibility>
-                        <MultiBinding Converter="{StaticResource DarkeningConverter}" FallbackValue="Hidden">
-                            <Binding/>
-                            <Binding Source="{x:Static local:Globals.VM}" Path="GroupBeingEdited"/>
-                            <Binding Source="{x:Static local:Globals.VM}" Path="PresetBeingEdited"/>
-                            <Binding Path="Group"/>
-                            <Binding Path="PresetTouches"/>
-                        </MultiBinding>
-                    </Rectangle.Visibility>
-                </Rectangle>
-            </Grid>
-        </Border>
-    </Viewbox>
+    <Border BorderThickness="5" IsManipulationEnabled="True" ManipulationStarted="Border_ManipulationStarted" ManipulationDelta="Border_ManipulationDelta" ManipulationCompleted="Border_ManipulationCompleted">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
+            <Border>
+                <Border.Background>
+                    <SolidColorBrush Color="{Binding Color, FallbackValue=DarkGray}"/>
+                </Border.Background>
+                <Label Content="{Binding Name, FallbackValue=Motor X}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <local:MotorStatusPanel Grid.Row="1"/>
+            <Rectangle Grid.RowSpan="2" Fill="Black" Opacity="0.6">
+                <Rectangle.Visibility>
+                    <MultiBinding Converter="{StaticResource DarkeningConverter}" FallbackValue="Hidden">
+                        <Binding/>
+                        <Binding Source="{x:Static local:Globals.VM}" Path="GroupBeingEdited"/>
+                        <Binding Source="{x:Static local:Globals.VM}" Path="PresetBeingEdited"/>
+                        <Binding Path="Group"/>
+                        <Binding Path="PresetTouches"/>
+                    </MultiBinding>
+                </Rectangle.Visibility>
+            </Rectangle>
+        </Grid>
+    </Border>
 </UserControl>

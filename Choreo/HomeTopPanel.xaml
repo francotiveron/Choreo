@@ -6,41 +6,7 @@
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
              d:DesignHeight="60" d:DesignWidth="1080">
-    <UserControl.Resources>
-        <Style x:Key="ChangePageButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
-            <Setter Property="OverridesDefaultStyle" Value="True" />
-            <Setter Property="Background" Value="{x:Null}" />
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="Margin" Value="10,1"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Grid Background="{TemplateBinding Background}">
-                            <ContentPresenter
-                                      Content="{TemplateBinding Content}"
-                                      HorizontalAlignment="Center" 
-                                      VerticalAlignment="Center" />
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Opacity" Value="1"/>
-                    <Setter Property="Foreground" Value="Blue"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <local:CurrentPageVisibilityConverter x:Key="CurrentPageVisibilityConverter"/>
-    </UserControl.Resources>
     <Grid>
-        <!--<Grid.Resources>
-            <ResourceDictionary>
-                <ResourceDictionary.MergedDictionaries>
-                    <ResourceDictionary Source="ResourceDictionary.xaml"/>
-                </ResourceDictionary.MergedDictionaries>
-            </ResourceDictionary>
-        </Grid.Resources>-->
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>

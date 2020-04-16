@@ -19,7 +19,7 @@
             </Border.Child>
         </Border>
         <Border Grid.Row="1" Name="PageArea">
-            <local:MotionPage/>
+            <local:MotionPageV2/>
         </Border>
     </Grid>
 </Window>

@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections;
+using System.Diagnostics;
 using System.Dynamic;
+using System.Globalization;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Shapes;
 using static Choreo.Globals;
 
 namespace Choreo {
@@ -17,24 +21,42 @@ namespace Choreo {
         //Func<object> Getter;
         //dynamic Setter;
         bool editable;
-        class SetterType: DynamicObject {
-            Action<object> setter;
-            public SetterType(Action<object> setter) => this.setter = setter;
+        //class SetterType: DynamicObject {
+        //    Action<object> setter;
+        //    public SetterType(Action<object> setter) => this.setter = setter;
 
-            public override bool TryInvoke(InvokeBinder binder, object[] args, out object result) {
-                setter(args[0]);
-                result = null;
-                return true;
-            }
-        }
+        //    public override bool TryInvoke(InvokeBinder binder, object[] args, out object result) {
+        //        setter(args[0]);
+        //        result = null;
+        //        return true;
+        //    }
+        //}
+        object dc;
+        PropertyInfo pi;
+        DependencyObject focusScope = null;
         private void DataItemUI_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e) {
             var binding = BindingOperations.GetBinding(this, DataContextProperty);
             if (binding == null) return;
-            var parentDC = (Parent ?? TemplatedParent).GetValue(DataContextProperty);
-            var type = parentDC.GetType();
+
+            dc = (Parent ?? TemplatedParent).GetValue(DataContextProperty);
+            var type = dc.GetType();
             var property = binding.Path.Path;
-            var pi = type.GetProperty(property);
+            pi = type.GetProperty(property);
             var attr = pi.GetCustomAttribute<DataItemAttribute>();
+            
+            var x = StatusCoverRectangle.GetBindingExpression(Shape.FillProperty);
+            binding = new Binding($"{property}Status");
+            binding.Source = dc;
+            binding.Converter = x.ParentBinding.Converter;
+            binding.ConverterParameter = StatusCoverRectangle;
+            StatusCoverRectangle.SetBinding(Shape.FillProperty, binding);
+
+            x = StatusBottomLine.GetBindingExpression(Shape.FillProperty);
+            binding = new Binding($"{property}Status");
+            binding.Source = dc;
+            binding.Converter = x.ParentBinding.Converter;
+            binding.ConverterParameter = StatusBottomLine;
+            StatusBottomLine.SetBinding(Shape.FillProperty, binding);
 
             //Getter = () => pi.GetValue(parentDC);
 
@@ -54,9 +76,30 @@ namespace Choreo {
                 //    else Setter = CustomSetter;
                 //}
             }
+
+            for(DependencyObject vis = this; vis != null; vis = VisualTreeHelper.GetParent(vis))
+                if (vis.GetValue(FocusManager.IsFocusScopeProperty) is bool b && b) {
+                    focusScope = vis;
+                    break;
+                }
         }
 
-        void UserControl_MouseDown(object sender, MouseButtonEventArgs e) { if (editable) Edit(this); }
+        void Set(object v) => pi.SetValue(dc, v);
+
+        void Set(string v) {
+            object value = Convert.ChangeType(v, pi.PropertyType);
+            Set(value);
+        }
+        public string StrVal {
+            get => Value.Content.ToString();
+            set => Set(value);
+        }
+
+        void UserControl_MouseDown(object sender, MouseButtonEventArgs e) {
+            if (Focusable && focusScope != null) FocusManager.SetFocusedElement(focusScope, this);
+            //Debug.Print($"{Name} IsFocused = {IsFocused}"); 
+            /*if (editable) Edit(this);*/ 
+        }
 
         //void Edit() {
         //    if (Setter == null) return;
@@ -108,8 +151,82 @@ namespace Choreo {
 
         public static readonly DependencyProperty FieldNameProperty =
             DependencyProperty.Register("FieldName", typeof(string), typeof(DataItemUI));
+
+        public DataItemUI EditOrderNext {
+            get { return (DataItemUI)GetValue(EditOrderNextProperty); }
+            set { SetValue(EditOrderNextProperty, value); }
+        }
+
+        public static readonly DependencyProperty EditOrderNextProperty =
+            DependencyProperty.Register("EditOrderNext", typeof(DataItemUI), typeof(DataItemUI));
+
+        public DataItemUI EditOrderPrev {
+            get { return (DataItemUI)GetValue(EditOrderPrevProperty); }
+            set { SetValue(EditOrderPrevProperty, value); }
+        }
+
+        public static readonly DependencyProperty EditOrderPrevProperty =
+            DependencyProperty.Register("EditOrderPrev", typeof(DataItemUI), typeof(DataItemUI));
+
+        public DataItemUI EditOrderUp {
+            get { return (DataItemUI)GetValue(EditOrderUpProperty); }
+            set { SetValue(EditOrderUpProperty, value); }
+        }
+
+        public static readonly DependencyProperty EditOrderUpProperty =
+            DependencyProperty.Register("EditOrderUp", typeof(DataItemUI), typeof(DataItemUI));
+
+        public DataItemUI EditOrderDn {
+            get { return (DataItemUI)GetValue(EditOrderDnProperty); }
+            set { SetValue(EditOrderDnProperty, value); }
+        }
+
+        public static readonly DependencyProperty EditOrderDnProperty =
+            DependencyProperty.Register("EditOrderDn", typeof(DataItemUI), typeof(DataItemUI));
+
+
         #endregion
 
+    }
+
+    public class StatusBrushConverter : IValueConverter {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            DataStates status = (DataStates)value;
+            var color = Colors.Gray;
+            var opacity = 0.0;
+
+            switch(status) {
+                case DataStates.Warning:
+                    color = Colors.Yellow;
+                    opacity = 0.4;
+                    break;
+                case DataStates.Error:
+                    color = Colors.Red;
+                    opacity = 0.4;
+                    break;
+            }
+            var brush = new SolidColorBrush(color);
+            if (parameter is Rectangle r && r.Name == "StatusCoverRectangle") brush.Opacity = opacity;
+
+            return brush;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+            throw new NotImplementedException();
+        }
+    }
+
+    [System.AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
+    sealed class DataItemAttribute : Attribute {
+        public DataItemAttribute(string mu = null, string title = null, bool edit = false) {
+            Title = title;
+            MU = mu;
+            Edit = edit;
+        }
+
+        public string Title { get; private set; }
+        public string MU { get; private set; }
+        public bool Edit { get; private set; }
     }
 }
 

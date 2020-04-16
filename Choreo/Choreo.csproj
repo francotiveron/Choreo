@@ -140,11 +140,17 @@
     <Compile Include="MotionPage.xaml.cs">
       <DependentUpon>MotionPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MotionPageV2.xaml.cs">
+      <DependentUpon>MotionPageV2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MotionTopPanel.xaml.cs">
       <DependentUpon>MotionTopPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="MotionWindow.xaml.cs">
       <DependentUpon>MotionWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Input\NumericPad1.xaml.cs">
+      <DependentUpon>NumericPad1.xaml</DependentUpon>
     </Compile>
     <Compile Include="SelectPad.xaml.cs">
       <DependentUpon>SelectPad.xaml</DependentUpon>
@@ -153,7 +159,6 @@
     <Compile Include="CueingPage.xaml.cs">
       <DependentUpon>CueingPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DataItem.cs" />
     <Compile Include="DataItemUI.xaml.cs">
       <DependentUpon>DataItemUI.xaml</DependentUpon>
     </Compile>
@@ -234,11 +239,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MotionPageV2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MotionTopPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MotionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Input\NumericPad1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
-             d:DesignHeight="50" d:DesignWidth="200">
+             d:DesignHeight="32" d:DesignWidth="108">
     <StackPanel Orientation="Horizontal" d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition">
-        <Ellipse VerticalAlignment="Center" Width="40" Height="40" Margin="2,0,0,0">
+        <Ellipse VerticalAlignment="Center" Width="20" Height="20" Margin="2,0,0,0">
             <Ellipse.Style>
                 <Style TargetType="{x:Type Ellipse}">
                     <Setter Property="Fill" Value="Red"/>
@@ -19,6 +19,6 @@
                 </Style>
             </Ellipse.Style>
         </Ellipse>
-        <Label Content="Failure" Margin="4,0,0,0" VerticalAlignment="Center"/>
+        <Label Content="Failure" VerticalAlignment="Center" HorizontalAlignment="Left"/>
     </StackPanel>
 </UserControl>

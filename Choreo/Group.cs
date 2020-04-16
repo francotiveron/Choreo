@@ -40,7 +40,7 @@ namespace Choreo
         string name;
         public string Name {
             get {
-                if (name == null) return $"Group {Index + 1}";
+                if (name == null) return $"Group {Index + 1:00}";
                 return name;
             }
             set { name = value; OnPropertyChanged(); }

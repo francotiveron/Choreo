@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="Choreo.Input.NumericPad1"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Choreo"
+             mc:Ignorable="d"
+             Background="#333333"
+             d:DesignHeight="250" d:DesignWidth="200">
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="{x:Type Button}">
+                <Setter Property="Background" Value="{x:Null}"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontSize" Value="{StaticResource DefaultFontSize}"/>
+            </Style>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" x:Name="ValueTextBox" Background="{x:Null}" Foreground="yellow" Text="0" MaxLines="1" FontSize="30" MaxLength="10" BorderThickness="3" TextAlignment="Right" />
+        <Button Click="Button_Click" Grid.Row="1" Grid.Column="0" x:Name="NUM7" Content="7"/>
+        <Button Click="Button_Click"  Grid.Row="1" Grid.Column="1" x:Name="NUM8" Content="8"/>
+        <Button Click="Button_Click"  Grid.Row="1" Grid.Column="2" x:Name="NUM9" Content="9"/>
+        <Button Click="Button_Click"  Grid.Row="1" Grid.Column="3" x:Name="UP" Content="U"/>
+        <Button Click="Button_Click"  Grid.Row="2" Grid.Column="0" x:Name="NUM4" Content="4"/>
+        <Button Click="Button_Click"  Grid.Row="2" Grid.Column="1" x:Name="NUM5" Content="5"/>
+        <Button Click="Button_Click"  Grid.Row="2" Grid.Column="2" x:Name="NUM6" Content="6"/>
+        <Button Click="Button_Click"  Grid.Row="2" Grid.Column="3" x:Name="DN" Content="D"/>
+        <Button Click="Button_Click"  Grid.Row="3" Grid.Column="0" x:Name="NUM1" Content="1"/>
+        <Button Click="Button_Click"  Grid.Row="3" Grid.Column="1" x:Name="NUM2" Content="2"/>
+        <Button Click="Button_Click"  Grid.Row="3" Grid.Column="2" x:Name="NUM3" Content="3"/>
+        <Button Click="Button_Click"  Grid.Row="3" Grid.Column="3" x:Name="AND" Content="&amp;"/>
+        <Button Click="Button_Click"  Grid.Row="4" Grid.Column="0" x:Name="PM" Content="+/-"/>
+        <Button Click="Button_Click"  Grid.Row="4" Grid.Column="1" x:Name="NUM0" Content="0"/>
+        <Button Click="Button_Click"  Grid.Row="4" Grid.Column="2" x:Name="DOT" Content="."/>
+        <Button Click="Button_Click"  Grid.Row="4" Grid.Column="3" x:Name="SAVE" Content="SAVE" />
+        <Button Click="Button_Click"  Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" x:Name="PREV" Content="PREV" Background="#222222"/>
+        <Button Click="Button_Click"  Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" x:Name="NEXT" Content="NEXT" Background="#222222"/>
+    </Grid>
+</UserControl>

@@ -22,6 +22,13 @@ namespace Choreo
             set { position = value; OnPropertyChanged(); }
         }
 
+        private int positionStatus;
+        public int PositionStatus {
+            get { return positionStatus; }
+            set { positionStatus = value; OnPropertyChanged(); }
+        }
+
+
         double load;
         [DataItem("lbs")]
         public double Load {
@@ -39,7 +46,7 @@ namespace Choreo
         [DataItem(title:"Axis Name")]
         public string Name {
             get {
-                if (name == null) return $"Motor {Index + 1}";
+                if (name == null) return $"Motor {Index + 1:00}";
                 return name;
             }
             set { name = value; OnPropertyChanged(); }

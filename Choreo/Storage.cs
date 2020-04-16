@@ -9,7 +9,7 @@ using static Choreo.Globals;
 
 namespace Choreo {
     public static class Storage {
-        static RegistryKey root = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Verendus\Choreo\Settings");
+        static RegistryKey root = Registry.CurrentUser.CreateSubKey($@"SOFTWARE\Verendus\Choreo\{Assembly.GetExecutingAssembly().GetName().Version}\Settings");
         static void Write(string element, string setting, object value) {
             var key = root.CreateSubKey(element);
             if (value != null) key.SetValue(setting, value);
