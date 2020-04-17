@@ -136,6 +136,9 @@
       <DependentUpon>NumericPad.xaml</DependentUpon>
     </Compile>
     <Compile Include="ModeableListView.cs" />
+    <Compile Include="MotAndGroUI.xaml.cs">
+      <DependentUpon>MotAndGroUI.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Motion.cs" />
     <Compile Include="MotionPage.xaml.cs">
       <DependentUpon>MotionPage.xaml</DependentUpon>
@@ -232,6 +235,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Input\NumericPad.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MotAndGroUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -390,6 +397,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Hrs.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\ArrowUp.PNG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

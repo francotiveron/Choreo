@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Markup;
 using static Choreo.Globals;
 
 namespace Choreo {
@@ -15,7 +17,7 @@ namespace Choreo {
             InitializeCheckGrids();
             FocusManager.AddGotFocusHandler(this, Focus);
         }
-        private void UserControl_Loaded(object sender, RoutedEventArgs e) => FocusManager.SetFocusedElement(EditableElementsGrid, RelativeSetpoint);
+        private void UserControl_Loaded(object sender, RoutedEventArgs e) => FocusManager.SetFocusedElement(EditableElementsGrid, Velocity);
 
         private void Focus(object sender, RoutedEventArgs e) {
             if (e.OriginalSource is DataItemUI diui)
@@ -44,6 +46,7 @@ namespace Choreo {
             MotorsCheckGrid.Children.Clear();
             for (int i = 0; i < 16; i++) {
                 var cb = CreateCheckBox(VM.Motors[i], i, $"Motors[{i}]", i == hook);
+                cb.Tag = "Motor";
                 MotorsCheckGrid.Children.Add(cb);
             }
         }
@@ -52,6 +55,7 @@ namespace Choreo {
             GroupsCheckGrid.Children.Clear();
             for (int i = 0; i < 8; i++) {
                 var cb = CreateCheckBox(VM.Groups[i], i, $"Groups[{i}]", i == hook);
+                cb.Tag = "Group";
                 GroupsCheckGrid.Children.Add(cb);
             }
         }
@@ -68,19 +72,57 @@ namespace Choreo {
             b = new Binding(binding);
             cb.SetBinding(CheckBox.IsCheckedProperty, b);
             cb.IsEnabled = !disabled;
+            cb.Click += Cb_Click;
             return cb;
+        }
+
+        private void Cb_Click(object sender, RoutedEventArgs e) {
+            Control c = null;
+            switch(((CheckBox)sender).Tag) {
+                case "Motor":
+                    c = MaG.Motors;
+                    break;
+                case "Group":
+                    c = MaG.Groups;
+                    break;
+            }
+            c.GetBindingExpression(ContentProperty).UpdateTarget();
         }
 
         private void NumPad_PadEvent(object sender, Input.NumericPad1.PadEventArgs e) {
             DataItemUI diui = null;
 
             switch (e.Name) {
-                case "NEXT": diui = e.DataItem.EditOrderNext; break;
-                case "PREV": diui = e.DataItem.EditOrderPrev; break;
-                case "UP": diui = e.DataItem.EditOrderUp; break;
-                case "DN": diui = e.DataItem.EditOrderDn; break;
+                case "NEXT":
+                    for (diui = e.DataItem.EditOrderNext; diui != e.DataItem && !diui.IsEnabled; diui = diui.EditOrderNext);
+                    break;
+                case "PREV":
+                    for (diui = e.DataItem.EditOrderPrev; diui != e.DataItem && !diui.IsEnabled; diui = diui.EditOrderPrev) ;
+                    break;
+                case "UP": 
+                    for (diui = e.DataItem.EditOrderUp; diui != e.DataItem && !diui.IsEnabled; diui = diui.EditOrderUp) ;
+                    break;
+                case "DN": 
+                    for (diui = e.DataItem.EditOrderDn; diui != e.DataItem && !diui.IsEnabled; diui = diui.EditOrderDn) ;
+                    break;
             }
             FocusManager.SetFocusedElement(EditableElementsGrid, diui);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e) {
+            Relative = sender == MoveRelativeButton;
+            FocusManager.SetFocusedElement(EditableElementsGrid, Relative ? RelativeSetpoint : AbsoluteSetPoint);
+        }
+
+        bool Relative {
+            get {
+                var motion = DataContext as Motion;
+                return motion.Relative;
+            }
+            set {
+                var motion = DataContext as Motion;
+                motion.Relative = value;
+            }
         }
     }
 }

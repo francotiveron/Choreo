@@ -5,10 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
         xmlns:local="clr-namespace:Choreo"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Style="{StaticResource {x:Type Window}}"
         DataContext="{Binding Source={x:Static local:Globals.VM}}">
-    <!--WindowState="Maximized"-->
+    <Window.Resources>
+        <sys:Double x:Key="DataItemLabelFontSize">20.0</sys:Double>
+        <sys:Double x:Key="DataItemValueFontSize">24.0</sys:Double>
+    </Window.Resources>
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static local:MainWindow.HomeCmd}" Executed="HomeCmdExecuted" CanExecute="HomeCmdCanExecute"/>
         <CommandBinding Command="{x:Static local:MainWindow.CueingCmd}" Executed="CueingCmdExecuted" CanExecute="CueingCmdCanExecute"/>

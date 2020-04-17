@@ -28,6 +28,8 @@ namespace Choreo
         public MainWindow()
         {
             InitializeComponent();
+            DataItemUI.ValueFontSize = Resources["DataItemValueFontSize"];
+            DataItemUI.LabelFontSize = Resources["DataItemLabelFontSize"];
             SelectPage();
             VM.PropertyChanged += VM_PropertyChanged;
         }

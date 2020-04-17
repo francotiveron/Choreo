@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Dynamic;
 using System.Globalization;
 using System.Reflection;
+using System.Reflection.Emit;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -43,7 +44,7 @@ namespace Choreo {
             var property = binding.Path.Path;
             pi = type.GetProperty(property);
             var attr = pi.GetCustomAttribute<DataItemAttribute>();
-            
+
             var x = StatusCoverRectangle.GetBindingExpression(Shape.FillProperty);
             binding = new Binding($"{property}Status");
             binding.Source = dc;
@@ -77,11 +78,12 @@ namespace Choreo {
                 //}
             }
 
-            for(DependencyObject vis = this; vis != null; vis = VisualTreeHelper.GetParent(vis))
-                if (vis.GetValue(FocusManager.IsFocusScopeProperty) is bool b && b) {
-                    focusScope = vis;
-                    break;
-                }
+            focusScope = this.FindWPFTreeUp((depo) => depo.GetValue(FocusManager.IsFocusScopeProperty) is bool b && b);
+            //for(DependencyObject vis = this; vis != null; vis = VisualTreeHelper.GetParent(vis))
+            //    if (vis.GetValue(FocusManager.IsFocusScopeProperty) is bool b && b) {
+            //        focusScope = vis;
+            //        break;
+            //    }
         }
 
         void Set(object v) => pi.SetValue(dc, v);
@@ -95,6 +97,16 @@ namespace Choreo {
             set => Set(value);
         }
 
+        private void UserControl_Loaded(object sender, RoutedEventArgs e) {
+            if (ValueFontSize != null) Value.SetValue(FontSizeProperty, ValueFontSize);
+            if (LabelFontSize != null) {
+                Label.SetValue(FontSizeProperty, LabelFontSize);
+                Unit.SetValue(FontSizeProperty, LabelFontSize);
+            }
+        }
+
+        static public object ValueFontSize { get; set; }
+        static public object LabelFontSize { get; set; }
         void UserControl_MouseDown(object sender, MouseButtonEventArgs e) {
             if (Focusable && focusScope != null) FocusManager.SetFocusedElement(focusScope, this);
             //Debug.Print($"{Name} IsFocused = {IsFocused}"); 
@@ -186,7 +198,6 @@ namespace Choreo {
 
 
         #endregion
-
     }
 
     public class StatusBrushConverter : IValueConverter {
@@ -209,6 +220,17 @@ namespace Choreo {
             if (parameter is Rectangle r && r.Name == "StatusCoverRectangle") brush.Opacity = opacity;
 
             return brush;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+            throw new NotImplementedException();
+        }
+    }
+
+
+    public class DataItemEnablingConverter : IValueConverter {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            return (Visibility)value == Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {

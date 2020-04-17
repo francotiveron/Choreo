@@ -33,11 +33,23 @@
         <Button Click="Button_Click" Grid.Row="1" Grid.Column="0" x:Name="NUM7" Content="7"/>
         <Button Click="Button_Click"  Grid.Row="1" Grid.Column="1" x:Name="NUM8" Content="8"/>
         <Button Click="Button_Click"  Grid.Row="1" Grid.Column="2" x:Name="NUM9" Content="9"/>
-        <Button Click="Button_Click"  Grid.Row="1" Grid.Column="3" x:Name="UP" Content="U"/>
+        <Button Click="Button_Click"  Grid.Row="1" Grid.Column="3" x:Name="UP">
+            <Image Source="/Choreo;component/Pictures/ArrowUp.PNG" Margin="10"/>
+        </Button>
         <Button Click="Button_Click"  Grid.Row="2" Grid.Column="0" x:Name="NUM4" Content="4"/>
         <Button Click="Button_Click"  Grid.Row="2" Grid.Column="1" x:Name="NUM5" Content="5"/>
         <Button Click="Button_Click"  Grid.Row="2" Grid.Column="2" x:Name="NUM6" Content="6"/>
-        <Button Click="Button_Click"  Grid.Row="2" Grid.Column="3" x:Name="DN" Content="D"/>
+        <Button Click="Button_Click"  Grid.Row="2" Grid.Column="3" x:Name="DN" RenderTransformOrigin="0.5,0.5">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="-1" ScaleX="1"/>
+                    <SkewTransform AngleY="0" AngleX="0"/>
+                    <RotateTransform Angle="0"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Button.RenderTransform>
+            <Image Source="/Choreo;component/Pictures/ArrowUp.PNG" Margin="10"/>
+        </Button>
         <Button Click="Button_Click"  Grid.Row="3" Grid.Column="0" x:Name="NUM1" Content="1"/>
         <Button Click="Button_Click"  Grid.Row="3" Grid.Column="1" x:Name="NUM2" Content="2"/>
         <Button Click="Button_Click"  Grid.Row="3" Grid.Column="2" x:Name="NUM3" Content="3"/>

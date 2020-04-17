@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
              MouseDown="UserControl_MouseDown"
-             d:DesignHeight="49" d:DesignWidth="108"
+             Loaded="UserControl_Loaded"
+             d:DesignHeight="50" d:DesignWidth="100"
             >
     <UserControl.Style>
         <Style TargetType="{x:Type UserControl}">
@@ -28,7 +29,7 @@
                 <RowDefinition Height="5*"/>
                 <RowDefinition Height="6*"/>
             </Grid.RowDefinitions>
-            <Label HorizontalAlignment="Left"
+            <Label x:Name="Label" HorizontalAlignment="Left"
                     Content="{Binding Title, FallbackValue=Title, RelativeSource={RelativeSource AncestorType={x:Type local:DataItemUI}, Mode=FindAncestor}}"
                     Style="{StaticResource DataItemLabelStyle}" Margin="5,0,0,0"
             />
@@ -37,8 +38,8 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Label x:Name="Value" Content="{Binding ., TargetNullValue=Value}" Padding="0" Margin="5,0,0,0"/>
-                <Label 
+                <Label x:Name="Value" Content="{Binding ., TargetNullValue=Value}" Padding="0" Margin="5,0,0,0" Style="{StaticResource DataItemDataStyle}"/>
+                <Label x:Name="Unit"
                         Grid.Column="1"
                         Content="{Binding MU, FallbackValue=MU, RelativeSource={RelativeSource AncestorType={x:Type local:DataItemUI}, Mode=FindAncestor}}"
                         Style="{StaticResource MeasuringUnitStyle}"

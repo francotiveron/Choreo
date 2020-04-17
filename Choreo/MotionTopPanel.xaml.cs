@@ -11,6 +11,10 @@ namespace Choreo {
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e) => VM.MotionEditing = false;
+        private void Button_Click(object sender, RoutedEventArgs e) {
+            if (sender == MotionCancelButton) VM.MotionEditing = false;
+            else
+            if (sender == MotionSaveButton) ;
+        }
     }
 }

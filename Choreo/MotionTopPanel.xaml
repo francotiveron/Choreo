@@ -9,6 +9,7 @@
     <DockPanel Background="#FF8F0570">
         <Label Content="Motion" />
         <Label DataContext="{Binding Hook}" Content="{Binding Name, FallbackValue=Hook X}" FontWeight="Bold"/>
-        <Button Content="X" Click="Button_Click" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFFDFBFB" HorizontalAlignment="Right" Padding="50,1"/>
+        <Button x:Name="MotionCancelButton" Content="CANCEL" Style="{StaticResource TopBarCommandButtonStyle}" Click="Button_Click"/>
+        <Button x:Name="MotionSaveButton" Content="SAVE" Style="{StaticResource TopBarCommandButtonStyle}"  Click="Button_Click"/>
     </DockPanel>
 </UserControl>

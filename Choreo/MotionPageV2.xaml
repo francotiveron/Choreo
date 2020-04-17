@@ -17,7 +17,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid x:Name="EditableElementsGrid" FocusManager.IsFocusScope="True">
+        <Grid x:Name="EditableElementsGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="70"/>
                 <RowDefinition Height="120" />
@@ -36,9 +36,21 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Viewbox Stretch="Uniform">
-                        <Button Content="MOVE RELATIVE" Style="{StaticResource ChangePageButtonStyle}"/>
+                        <Button x:Name="MoveRelativeButton" Content="MOVE RELATIVE" Style="{StaticResource ChangePageButtonStyle}" Click="Button_Click"/>
                     </Viewbox>
-                    <Rectangle Fill="Blue" Grid.Row="1" Margin="0" Visibility="{Binding CurrentMainWindowPage, ConverterParameter=Home, Converter={StaticResource CurrentPageVisibilityConverter}}"/>
+                    <!--<Rectangle Fill="Blue" Grid.Row="1" Margin="0" Visibility="{Binding CurrentMainWindowPage, ConverterParameter=Home, Converter={StaticResource CurrentPageVisibilityConverter}}"/>-->
+                    <Rectangle x:Name="MoveRelativeIndicator" Fill="Blue" Grid.Row="1" Margin="0">
+                        <Rectangle.Style>
+                            <Style TargetType="Rectangle">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Relative}" Value="False">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
                 </Grid>
                 <Grid Grid.Column="1" >
                     <Grid.RowDefinitions>
@@ -46,69 +58,85 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Viewbox Stretch="Uniform">
-                        <Button Content="MOVE ABSOLUTE" Style="{StaticResource ChangePageButtonStyle}"/>
+                        <Button x:Name="MoveAbsoluteButton" Content="MOVE ABSOLUTE" Style="{StaticResource ChangePageButtonStyle}" Click="Button_Click"/>
                     </Viewbox>
-                    <Rectangle Fill="Blue" Grid.Row="1" Margin="0" Visibility="{Binding CurrentMainWindowPage, ConverterParameter=Home, Converter={StaticResource CurrentPageVisibilityConverter}}"/>
+                    <!--<Rectangle Fill="Blue" Grid.Row="1" Margin="0" Visibility="{Binding CurrentMainWindowPage, ConverterParameter=Home, Converter={StaticResource CurrentPageVisibilityConverter}}"/>-->
+                    <Rectangle x:Name="MoveAbsoluteIndicator" Fill="Blue" Grid.Row="1" Margin="0">
+                        <Rectangle.Style>
+                            <Style TargetType="Rectangle">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Relative}" Value="True">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
                 </Grid>
             </Grid>
-            <Grid Margin="5,10" Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <local:DataItemUI Grid.Column="0" Margin="5,0" x:Name="RelativeSetpoint" DataContext="{Binding RelativeSetpoint}" Focusable="True"
-                        EditOrderNext="{Binding ElementName=AbsoluteSetPoint}" 
-                        EditOrderPrev="{Binding ElementName=Deceleration}" 
-                        EditOrderUp="{Binding ElementName=Acceleration}" 
-                        EditOrderDn="{Binding ElementName=Acceleration}" 
-                />
-                <local:DataItemUI x:Name="AbsoluteSetPoint" Grid.Column="1" DataContext="{Binding AbsoluteSetpoint}" Margin="5,0" Focusable="True" 
-                    EditOrderNext="{Binding ElementName=Acceleration}" 
-                    EditOrderPrev="{Binding ElementName=RelativeSetpoint}" 
-                    EditOrderUp="{Binding ElementName=Deceleration}" 
-                    EditOrderDn="{Binding ElementName=Deceleration}" 
-                />
+            <Grid Margin="5,10,5,5" Grid.Row="1" Grid.RowSpan="2" FocusManager.IsFocusScope="True">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <local:DataItemUI Grid.Column="0" Margin="5,0" x:Name="RelativeSetpoint" DataContext="{Binding RelativeSetpoint}" Focusable="True"
+                            EditOrderNext="{Binding ElementName=AbsoluteSetPoint}" 
+                            EditOrderPrev="{Binding ElementName=Deceleration}" 
+                            EditOrderUp="{Binding ElementName=Acceleration}" 
+                            EditOrderDn="{Binding ElementName=Acceleration}"
+                            IsEnabled="{Binding ElementName=MoveRelativeIndicator, Path=Visibility, Converter={StaticResource DataItemEnablingConverter}, ConverterParameter=Relative}"
+                        />
+                    <local:DataItemUI x:Name="AbsoluteSetPoint" Grid.Column="1" DataContext="{Binding AbsoluteSetpoint}" Margin="5,0" Focusable="True" 
+                            EditOrderNext="{Binding ElementName=Acceleration}" 
+                            EditOrderPrev="{Binding ElementName=RelativeSetpoint}" 
+                            EditOrderUp="{Binding ElementName=Deceleration}" 
+                            EditOrderDn="{Binding ElementName=Deceleration}" 
+                            IsEnabled="{Binding ElementName=MoveAbsoluteIndicator, Path=Visibility, Converter={StaticResource DataItemEnablingConverter}, ConverterParameter=Absolute}"
+                        />
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <local:DataItemUI x:Name="Acceleration" Grid.Column="0" DataContext="{Binding Acceleration}" Margin="5,0" Focusable="True" 
+                            EditOrderNext="{Binding ElementName=Velocity}" 
+                            EditOrderPrev="{Binding ElementName=AbsoluteSetPoint}" 
+                            EditOrderUp="{Binding ElementName=RelativeSetpoint}" 
+                            EditOrderDn="{Binding ElementName=RelativeSetpoint}" 
+                        />
+                    <local:DataItemUI x:Name="Velocity" Grid.Column="1" DataContext="{Binding Velocity}" Margin="5,0" Focusable="True" 
+                            EditOrderNext="{Binding ElementName=Deceleration}" 
+                            EditOrderPrev="{Binding ElementName=Acceleration}" 
+                            EditOrderUp="{Binding ElementName=RelativeSetpoint}" 
+                            EditOrderDn="{Binding ElementName=AbsoluteSetPoint}" 
+                        />
+                    <local:DataItemUI x:Name="Deceleration" Grid.Column="2" DataContext="{Binding Deceleration}" Margin="5,0" Focusable="True" 
+                            EditOrderNext="{Binding ElementName=RelativeSetpoint}" 
+                            EditOrderPrev="{Binding ElementName=Velocity}" 
+                            EditOrderUp="{Binding ElementName=AbsoluteSetPoint}" 
+                            EditOrderDn="{Binding ElementName=AbsoluteSetPoint}" 
+                        />
+                </Grid>
             </Grid>
-            <Grid Margin="5" Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <local:DataItemUI x:Name="Acceleration" Grid.Column="0" DataContext="{Binding Acceleration}" Margin="5,0" Focusable="True" 
-                    EditOrderNext="{Binding ElementName=Velocity}" 
-                    EditOrderPrev="{Binding ElementName=AbsoluteSetPoint}" 
-                    EditOrderUp="{Binding ElementName=RelativeSetpoint}" 
-                    EditOrderDn="{Binding ElementName=RelativeSetpoint}" 
-                />
-                <local:DataItemUI x:Name="Velocity" Grid.Column="1" DataContext="{Binding Velocity}" Margin="5,0" Focusable="True" 
-                    EditOrderNext="{Binding ElementName=Deceleration}" 
-                    EditOrderPrev="{Binding ElementName=Acceleration}" 
-                    EditOrderUp="{Binding ElementName=RelativeSetpoint}" 
-                    EditOrderDn="{Binding ElementName=AbsoluteSetPoint}" 
-                />
-                <local:DataItemUI x:Name="Deceleration" Grid.Column="2" DataContext="{Binding Deceleration}" Margin="5,0" Focusable="True" 
-                    EditOrderNext="{Binding ElementName=RelativeSetpoint}" 
-                    EditOrderPrev="{Binding ElementName=Velocity}" 
-                    EditOrderUp="{Binding ElementName=AbsoluteSetPoint}" 
-                    EditOrderDn="{Binding ElementName=AbsoluteSetPoint}" 
-                />
-            </Grid>
-            <local:DataItemUI Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="6" Margin="5" DataContext="{Binding Deceleration}"/>
+            <local:MotAndGroUI x:Name="MaG" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="6" Margin="5"/>
         </Grid>
         <Grid Grid.Column="1" DataContext="{Binding Hook}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="70"/>
-                <RowDefinition Height="120"/>
+                <RowDefinition Height="120" />
                 <RowDefinition Height="120"/>
                 <RowDefinition Height="120"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="10*"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Row="0" Grid.ColumnSpan="2" >
+            <Grid Grid.Row="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="10*"/>
                     <RowDefinition/>
@@ -118,23 +146,19 @@
                 </Viewbox>
                 <Rectangle Grid.Row="1"/>
             </Grid>
-            <Grid Margin="5,10" Grid.Row="1">
+            <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <local:DataItemUI Grid.Column="0" DataContext="{Binding Path=Position}" Margin="5,0"/>
-                <local:DataItemUI Grid.Column="1" DataContext="{Binding Path=Load}" Margin="5,0"/>
+                <local:DataItemUI Grid.Column="0" DataContext="{Binding Position}"/>
+                <local:DataItemUI Grid.Column="1" DataContext="{Binding Load}" />
             </Grid>
-            <Grid Margin="5,10" Grid.Row="2">
+            <Grid Grid.Row="2">
                 <local:MotorStatusIndicator/>
             </Grid>
-            <local:DataItemUI Margin="5" Grid.Row="3" DataContext="{Binding Group}"/>
-            <ProgressBar Grid.Column="1" Grid.Row ="1" Grid.RowSpan="3" Foreground="#FFC3BABA" BorderBrush="#00BCBCBC" Value="30" Orientation="Vertical">
-                <ProgressBar.Background>
-                    <SolidColorBrush Color="#FF534F4F"/>
-                </ProgressBar.Background>
-            </ProgressBar>
+            <local:DataItemUI DataContext="{Binding Group}" Grid.Row="3" Margin="5"/>
+            <ProgressBar Foreground="#FFC3BABA" BorderBrush="#00BCBCBC" Value="30" Orientation="Vertical" Background="#FF534F4F" Margin="333,70,0,24"/>
         </Grid>
         <StackPanel Grid.Column="2">
             <inp:NumericPad1 x:Name="NumPad" Margin="20,20,20,5" Height="400" PadEvent="NumPad_PadEvent" />

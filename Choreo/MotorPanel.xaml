@@ -22,7 +22,7 @@
                 <Border.Background>
                     <SolidColorBrush Color="{Binding Color, FallbackValue=DarkGray}"/>
                 </Border.Background>
-                <Label Content="{Binding Name, FallbackValue=Motor X}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Label Content="{Binding Name, FallbackValue=Motor X}" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
             <local:MotorStatusPanel Grid.Row="1"/>
             <Rectangle Grid.RowSpan="2" Fill="Black" Opacity="0.6">

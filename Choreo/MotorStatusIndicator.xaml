@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Choreo"
+             Loaded="UserControl_Loaded"
              mc:Ignorable="d" 
              d:DesignHeight="32" d:DesignWidth="108">
     <StackPanel Orientation="Horizontal" d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition">
@@ -19,6 +19,6 @@
                 </Style>
             </Ellipse.Style>
         </Ellipse>
-        <Label Content="Failure" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+        <Label x:Name="Status" Content="Failure" Style="{StaticResource DataItemDataStyle}"/>
     </StackPanel>
 </UserControl>

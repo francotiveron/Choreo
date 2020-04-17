@@ -8,6 +8,8 @@ namespace Choreo {
     public partial class MotorWindow : Window {
         public MotorWindow() {
             InitializeComponent();
+            DataItemUI.ValueFontSize = Resources["DataItemValueFontSize"];
+            DataItemUI.LabelFontSize = Resources["DataItemLabelFontSize"];
             VM.PropertyChanged += VM_PropertyChanged;
         }
         private void VM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
