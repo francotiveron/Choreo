@@ -12,7 +12,7 @@ namespace Choreo {
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) {
-            if (sender == MotionCancelButton) VM.MotionEditing = false;
+            if (sender == MotionCancelButton) VM.EndMotionEditing();
             else
             if (sender == MotionSaveButton) ;
         }

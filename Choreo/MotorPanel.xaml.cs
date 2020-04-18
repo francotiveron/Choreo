@@ -93,7 +93,7 @@ namespace Choreo
                 if (!VM.IsEditing) {
                     if (IsGroup) VM.BeginGroupEditing(Index);
                     else
-                    if (IsMotor) VM.BeginMotorEditing(Index);
+                    if (IsMotor) VM.BeginMotorSettingsEditing(Index);
                 }
             }
         }

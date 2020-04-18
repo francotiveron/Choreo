@@ -17,7 +17,10 @@ namespace Choreo {
             InitializeCheckGrids();
             FocusManager.AddGotFocusHandler(this, Focus);
         }
-        private void UserControl_Loaded(object sender, RoutedEventArgs e) => FocusManager.SetFocusedElement(EditableElementsGrid, Velocity);
+        private void UserControl_Loaded(object sender, RoutedEventArgs e) {
+            if (((Motion)DataContext).Hook is Group) HookGrid.Children.Remove(AxisGroup);
+            FocusManager.SetFocusedElement(EditableElementsGrid, Velocity);
+        }
 
         private void Focus(object sender, RoutedEventArgs e) {
             if (e.OriginalSource is DataItemUI diui)

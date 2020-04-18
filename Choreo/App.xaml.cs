@@ -16,8 +16,8 @@ namespace Choreo
             VM.PropertyChanged += VM_PropertyChanged; ;
         }
         private void VM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
-            if (e.PropertyName == "MotorBeingEdited") {
-                var motorIndex = VM.MotorBeingEdited;
+            if (e.PropertyName == "MotorSettingsBeingEdited") {
+                var motorIndex = VM.MotorSettingsBeingEdited;
                 if (motorIndex > 0 && MainWindow is MainWindow) {
                     var newWindow = new MotorWindow();
                     newWindow.DataContext = VM.Motors[motorIndex - 1];
@@ -58,13 +58,44 @@ namespace Choreo
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            base.OnStartup(e);
             MainWindow = new MainWindow();
             MainWindow.Show();
             PresentationTraceSources.Refresh();
             PresentationTraceSources.DataBindingSource.Listeners.Add(new ConsoleTraceListener());
             PresentationTraceSources.DataBindingSource.Listeners.Add(new DebugTraceListener());
             PresentationTraceSources.DataBindingSource.Switch.Level = SourceLevels.Warning | SourceLevels.Error;
-            base.OnStartup(e);
+            SetupExceptionHandling();
+        }
+        private void SetupExceptionHandling() {
+            AppDomain.CurrentDomain.UnhandledException += (s, e) =>
+                LogUnhandledException((Exception)e.ExceptionObject, "AppDomain.CurrentDomain.UnhandledException");
+
+            DispatcherUnhandledException += (s, e) =>
+            {
+                LogUnhandledException(e.Exception, "Application.Current.DispatcherUnhandledException");
+                e.Handled = true;
+            };
+
+            TaskScheduler.UnobservedTaskException += (s, e) =>
+            {
+                LogUnhandledException(e.Exception, "TaskScheduler.UnobservedTaskException");
+                e.SetObserved();
+            };
+        }
+
+        private void LogUnhandledException(Exception exception, string source) {
+            string message = $"Unhandled exception ({source})";
+            try {
+                System.Reflection.AssemblyName assemblyName = System.Reflection.Assembly.GetExecutingAssembly().GetName();
+                message = string.Format("Unhandled exception in {0} v{1}", assemblyName.Name, assemblyName.Version);
+            }
+            catch (Exception ex) {
+                Logger.Error(ex, "Exception in LogUnhandledException");
+            }
+            finally {
+                Logger.Error(exception, message);
+            }
         }
     }
 

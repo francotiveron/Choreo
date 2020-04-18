@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static Choreo.Globals;
 
 namespace Choreo {
     /// <summary>
@@ -23,7 +24,9 @@ namespace Choreo {
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) {
-            Globals.VM.EndMotorEditing();
+            if (sender == MotorCancelButton) VM.EndMotorSettingsEditing();
+            else
+            if (sender == MotorSaveButton) ;
         }
     }
 }

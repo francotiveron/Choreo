@@ -7,6 +7,7 @@ using System.Windows.Media;
 namespace Choreo
 {
     public static class Globals {
+        public static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         public static ViewModel VM { get; } = new ViewModel();
         static Globals() => Storage.LoadAll();
         public static void Edit(object o) => Pad.Edit(o);

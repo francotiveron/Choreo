@@ -39,7 +39,7 @@
                         <Button x:Name="MoveRelativeButton" Content="MOVE RELATIVE" Style="{StaticResource ChangePageButtonStyle}" Click="Button_Click"/>
                     </Viewbox>
                     <!--<Rectangle Fill="Blue" Grid.Row="1" Margin="0" Visibility="{Binding CurrentMainWindowPage, ConverterParameter=Home, Converter={StaticResource CurrentPageVisibilityConverter}}"/>-->
-                    <Rectangle x:Name="MoveRelativeIndicator" Fill="Blue" Grid.Row="1" Margin="0">
+                    <Rectangle x:Name="MoveRelativeIndicator" Fill="Blue" Grid.Row="1" Margin="5,0">
                         <Rectangle.Style>
                             <Style TargetType="Rectangle">
                                 <Setter Property="Visibility" Value="Visible"/>
@@ -61,7 +61,7 @@
                         <Button x:Name="MoveAbsoluteButton" Content="MOVE ABSOLUTE" Style="{StaticResource ChangePageButtonStyle}" Click="Button_Click"/>
                     </Viewbox>
                     <!--<Rectangle Fill="Blue" Grid.Row="1" Margin="0" Visibility="{Binding CurrentMainWindowPage, ConverterParameter=Home, Converter={StaticResource CurrentPageVisibilityConverter}}"/>-->
-                    <Rectangle x:Name="MoveAbsoluteIndicator" Fill="Blue" Grid.Row="1" Margin="0">
+                    <Rectangle x:Name="MoveAbsoluteIndicator" Fill="Blue" Grid.Row="1" Margin="5,0">
                         <Rectangle.Style>
                             <Style TargetType="Rectangle">
                                 <Setter Property="Visibility" Value="Visible"/>
@@ -126,9 +126,13 @@
                         />
                 </Grid>
             </Grid>
-            <local:MotAndGroUI x:Name="MaG" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="6" Margin="5"/>
+            <local:MotAndGroUI x:Name="MaG" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="6" Margin="5,5,10,5"/>
         </Grid>
-        <Grid Grid.Column="1" DataContext="{Binding Hook}">
+        <Grid x:Name="HookGrid" Grid.Column="1" DataContext="{Binding Hook}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="70"/>
                 <RowDefinition Height="120" />
@@ -146,7 +150,7 @@
                 </Viewbox>
                 <Rectangle Grid.Row="1"/>
             </Grid>
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1" Margin="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
@@ -157,8 +161,8 @@
             <Grid Grid.Row="2">
                 <local:MotorStatusIndicator/>
             </Grid>
-            <local:DataItemUI DataContext="{Binding Group}" Grid.Row="3" Margin="5"/>
-            <ProgressBar Foreground="#FFC3BABA" BorderBrush="#00BCBCBC" Value="30" Orientation="Vertical" Background="#FF534F4F" Margin="333,70,0,24"/>
+            <local:DataItemUI x:Name="AxisGroup" DataContext="{Binding Group}" Grid.Row="3" Margin="5"/>
+            <ProgressBar Foreground="#FFC3BABA" BorderBrush="#00BCBCBC" Value="70" Orientation="Vertical" Background="#FF534F4F" Margin="5" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3"/>
         </Grid>
         <StackPanel Grid.Column="2">
             <inp:NumericPad1 x:Name="NumPad" Margin="20,20,20,5" Height="400" PadEvent="NumPad_PadEvent" />

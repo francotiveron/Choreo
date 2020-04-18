@@ -33,13 +33,13 @@ namespace Choreo {
         }
         public static void Load(Preset preset) {
             var value = Read($@"Presets\[{preset.Index}]", "MotorPositions") as string;
-            if (value is string) {
+            if (value is string && !string.IsNullOrWhiteSpace(value)) {
                 var kvs = value.Split(';').Select(kv => kv.Split(',')).Select(kv => (int.Parse(kv[0]), double.Parse(kv[1])));
                 preset.MotorPositions.Clear();
                 foreach (var (index, position) in kvs) preset.MotorPositions[index] = position;
             }
             value = Read($@"Presets\[{preset.Index}]", "GroupPositions") as string;
-            if (value is string) {
+            if (value is string && !string.IsNullOrWhiteSpace(value)) {
                 var kvs = value.Split(';').Select(kv => kv.Split(',')).Select(kv => (int.Parse(kv[0]), double.Parse(kv[1])));
                 preset.GroupPositions.Clear();
                 foreach (var (index, position) in kvs) preset.GroupPositions[index] = position;

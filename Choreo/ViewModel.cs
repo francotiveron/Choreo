@@ -36,15 +36,15 @@ namespace Choreo
 
         public bool IsEditing => IsGroupEditing || IsPresetEditing;
 
-        #region ******************Motor Settings Editing******************
-        int motorBeingEdited;
-        public int MotorBeingEdited {
-            get => motorBeingEdited;
-            set { motorBeingEdited = value; OnPropertyChanged(); }
+        #region ******************Settings Editing******************
+        int motorSettingsBeingEdited;
+        public int MotorSettingsBeingEdited {
+            get => motorSettingsBeingEdited;
+            set { motorSettingsBeingEdited = value; OnPropertyChanged(); }
         }
-        public bool IsMotorEditing => MotorBeingEdited > 0;
-        public void BeginMotorEditing(int index) => MotorBeingEdited = index + 1;
-        public void EndMotorEditing() => MotorBeingEdited = 0;
+        public bool IsMotorSettingsEditing => MotorSettingsBeingEdited > 0;
+        public void BeginMotorSettingsEditing(int index) => MotorSettingsBeingEdited = index + 1;
+        public void EndMotorSettingsEditing() => MotorSettingsBeingEdited = 0;
         #endregion
 
         #region ******************Group Editing******************

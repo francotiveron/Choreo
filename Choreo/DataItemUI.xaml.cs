@@ -202,6 +202,7 @@ namespace Choreo {
 
     public class StatusBrushConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            if (value == null) return null;
             DataStates status = (DataStates)value;
             var color = Colors.Gray;
             var opacity = 0.0;

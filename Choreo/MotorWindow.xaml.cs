@@ -13,7 +13,7 @@ namespace Choreo {
             VM.PropertyChanged += VM_PropertyChanged;
         }
         private void VM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
-            if (e.PropertyName == "MotorSettingsBeingEdited" && VM.IsMotorEditing) DataContext = VM.Motors[VM.MotorBeingEdited - 1];
+            if (e.PropertyName == "MotorSettingsBeingEdited" && VM.IsMotorSettingsEditing) DataContext = VM.Motors[VM.MotorSettingsBeingEdited - 1];
         }
     }
 }

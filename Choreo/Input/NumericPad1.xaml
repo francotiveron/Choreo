@@ -12,7 +12,7 @@
             <Style TargetType="{x:Type Button}">
                 <Setter Property="Background" Value="{x:Null}"/>
                 <Setter Property="Foreground" Value="White"/>
-                <Setter Property="FontSize" Value="{StaticResource DefaultFontSize}"/>
+                <Setter Property="FontSize" Value="30"/>
             </Style>
         </Grid.Resources>
         <Grid.ColumnDefinitions>
