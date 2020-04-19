@@ -11,10 +11,10 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <DockPanel VerticalAlignment="Top">
-            <local:DataItemUI DataContext="{Binding Number}"/>
-            <local:DataItemUI DataContext="{Binding Name}"/>
-            <CheckBox/>
+        <DockPanel VerticalAlignment="Top" >
+            <local:DataItemUI DataContext="{Binding Number}" Margin="5,10"/>
+            <local:DataItemUI DataContext="{Binding Name}" Margin="5,10"/>
+            <CheckBox HorizontalAlignment="Right" VerticalAlignment="Center" VerticalContentAlignment="Center" Content="Display Cue in Show"/>
         </DockPanel>
         <local:CueRowListView Grid.Row="1"/>
     </Grid>

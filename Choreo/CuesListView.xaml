@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="1080">
+             d:DesignHeight="760" d:DesignWidth="1080">
     <Grid>
         <ListView ItemsSource="{Binding Cues}" 
                   Background="{x:Null}" 
@@ -17,24 +17,53 @@
                   >
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
-                    
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
+                        <Grid.Resources>
+                            <Style TargetType="Label">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="FontSize" Value="32"/>
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="HorizontalAlignment" Value="Left"/>
+                            </Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="{x:Null}"/>
+                                <Setter Property="BorderBrush" Value="{x:Null}"/>
+                            </Style>
+                        </Grid.Resources>
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="150"/>
                             <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Style="{StaticResource HideableGridColumnStyle}"/>
-                            <ColumnDefinition Style="{StaticResource HideableGridColumnStyle}"/>
+                            <ColumnDefinition Width="150" Style="{StaticResource HideableGridColumnStyle}"/>
+                            <ColumnDefinition Width="150" Style="{StaticResource HideableGridColumnStyle}"/>
                         </Grid.ColumnDefinitions>
-                        <Label Content="{Binding Number}"/>
-                        <Label Content="{Binding Duration}" Grid.Column="1"/>
+                        <Label Content="{Binding Number}" ContentStringFormat="00" />
+                        <Label Content="{Binding Duration}" Grid.Column="1" ContentStringFormat="mm\:ss" />
                         <Label Content="{Binding Name}" Grid.Column="2"/>
-                        <Button x:Name="CueEditButton" Content="EDIT" Click="CueEditButton_Click" Grid.Column="3"/>
-                        <Button x:Name="CueDeleteButton" Content="DELETE" Click="CueDeleteButton_Click" Grid.Column="4"/>
+                        <!--<Button x:Name="CueEditButton" Content="EDIT" Click="CueEditButton_Click" Grid.Column="3"/>-->
+                        <Button x:Name="CueEditButton" 
+                                Grid.Column="3"
+                                Click="CueEditButton_Click" 
+                                Margin="5" 
+                                Background="Blue" 
+                                BorderBrush="{x:Null}" 
+                                Foreground="{x:Null}">
+                            <Image Source="Pictures/Pen.png" Height="50"/>
+                        </Button>
+                        <Button x:Name="CueDeleteButton" 
+                                Grid.Column="4"
+                                Click="CueDeleteButton_Click" 
+                                Margin="5" 
+                                Background="#FFBB1010" 
+                                BorderBrush="{x:Null}" 
+                                Foreground="{x:Null}">
+                            <Image Source="Pictures/TrashBin.png" Height="50"/>
+                        </Button>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -47,18 +76,23 @@
                         </Grid.RowDefinitions>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Style="{StaticResource HideableGridColumnStyle}"/>
-                                <ColumnDefinition Style="{StaticResource HideableGridColumnStyle}"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="150" Style="{StaticResource HideableGridColumnStyle}"/>
+                                <ColumnDefinition Width="150" Style="{StaticResource HideableGridColumnStyle}"/>
                             </Grid.ColumnDefinitions>
                             <Grid.Resources>
                                 <Style TargetType="Border">
-                                    <Setter Property="BorderThickness" Value="1" />
-                                    <Setter Property="BorderBrush" Value="LightGray" />
-                                    <Setter Property="Background" Value="DarkGray" />
+                                    <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                    <Setter Property="BorderBrush" Value="White" />
+                                    <Setter Property="Background" Value="{x:Null}" />
                                 </Style>
+                                <Style TargetType="Label">
+                                    <Setter Property="Foreground" Value="White"/>
+                                    <Setter Property="FontSize" Value="24"/>
+                                    <Setter Property="HorizontalAlignment" Value="Left"/>
+                                </Style>                            
                             </Grid.Resources>
                             <Border Grid.Column="0" >
                                 <Label>Number</Label>
@@ -68,6 +102,10 @@
                             </Border>
                             <Border Grid.Column="2" >
                                 <Label>Name</Label>
+                            </Border>
+                            <Border Grid.Column="3" >
+                            </Border>
+                            <Border Grid.Column="4" >
                             </Border>
                         </Grid>
                         <ScrollViewer Grid.Row="1" >

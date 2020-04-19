@@ -14,9 +14,16 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <DockPanel>
+        <DockPanel Margin="20">
             <Label DockPanel.Dock="Left" Content="Cueing"/>
-            <Button x:Name="NewCueButton" DockPanel.Dock="Right" Content="Create New Cue" HorizontalAlignment="Right" Click="NewCueButton_Click"/>
+            <Button x:Name="NewCueButton" 
+                    DockPanel.Dock="Right" 
+                    Content="Create New Cue" 
+                    HorizontalAlignment="Right" 
+                    Click="NewCueButton_Click" 
+                    Style="{StaticResource TopBarCommandButtonStyle}"
+                    Background="Green"
+                    />
         </DockPanel>
         <local:CuesListView Grid.Row="1" IsEditable="True"/>
     </Grid>

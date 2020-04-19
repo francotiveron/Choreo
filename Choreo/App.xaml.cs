@@ -59,13 +59,13 @@ namespace Choreo
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            MainWindow = new MainWindow();
-            MainWindow.Show();
             PresentationTraceSources.Refresh();
             PresentationTraceSources.DataBindingSource.Listeners.Add(new ConsoleTraceListener());
             PresentationTraceSources.DataBindingSource.Listeners.Add(new DebugTraceListener());
             PresentationTraceSources.DataBindingSource.Switch.Level = SourceLevels.Warning | SourceLevels.Error;
             SetupExceptionHandling();
+            MainWindow = new MainWindow();
+            MainWindow.Show();
         }
         private void SetupExceptionHandling() {
             AppDomain.CurrentDomain.UnhandledException += (s, e) =>

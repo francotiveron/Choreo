@@ -1,11 +1,11 @@
-﻿<UserControl x:Class="Choreo.CueRowListView"
+﻿<local:ModeableListView x:Class="Choreo.CueRowListView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="1080">
+             d:DesignHeight="760" d:DesignWidth="1080">
     <Grid>
         <ListView ItemsSource="{Binding Rows}" 
                   Background="{x:Null}" 
@@ -16,12 +16,24 @@
                   >
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
-
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
+                        <Grid.Resources>
+                            <Style TargetType="Label">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="FontSize" Value="32"/>
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="HorizontalAlignment" Value="Left"/>
+                            </Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="{x:Null}"/>
+                                <Setter Property="BorderBrush" Value="{x:Null}"/>
+                            </Style>
+                        </Grid.Resources>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
@@ -54,9 +66,14 @@
                             </Grid.ColumnDefinitions>
                             <Grid.Resources>
                                 <Style TargetType="Border">
-                                    <Setter Property="BorderThickness" Value="1" />
-                                    <Setter Property="BorderBrush" Value="LightGray" />
-                                    <Setter Property="Background" Value="DarkGray" />
+                                    <Setter Property="BorderThickness" Value="0,0,0,1" />
+                                    <Setter Property="BorderBrush" Value="White" />
+                                    <Setter Property="Background" Value="{x:Null}" />
+                                </Style>
+                                <Style TargetType="Label">
+                                    <Setter Property="Foreground" Value="White"/>
+                                    <Setter Property="FontSize" Value="24"/>
+                                    <Setter Property="HorizontalAlignment" Value="Left"/>
                                 </Style>
                             </Grid.Resources>
                             <Border Grid.Column="0" >
@@ -101,4 +118,4 @@
             </ListView.ItemTemplate>
         </ListView>-->
     </Grid>
-</UserControl>
+</local:ModeableListView>
