@@ -12,7 +12,6 @@ namespace Choreo {
             InitializeComponent();
             Owner = GetWindow(diui = ui);
             DataContext = this;
-            Items = diui.SourceCollection;
         }
 
         public IEnumerable Items { get; }

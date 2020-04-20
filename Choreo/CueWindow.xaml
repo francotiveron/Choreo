@@ -9,8 +9,8 @@
         Style="{StaticResource {x:Type Window}}"
         >
     <Window.Resources>
-        <sys:Double x:Key="DataItemLabelFontSize">24.0</sys:Double>
-        <sys:Double x:Key="DataItemValueFontSize">36.0</sys:Double>
+        <sys:Double x:Key="DataItemLabelFontSize">16.0</sys:Double>
+        <sys:Double x:Key="DataItemValueFontSize">20.0</sys:Double>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>

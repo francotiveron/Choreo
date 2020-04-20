@@ -28,12 +28,17 @@ namespace Choreo.Input {
             switch(but.Name) {
                 case "NEXT":
                 case "PREV":
-                case "UP":
-                case "DN":
+                    if (DataItem != null) DataItem.StrVal = Value;
                     PadEvent?.Invoke(this, new PadEventArgs { Name = but.Name, DataItem = DataItem }); ;
                     break;
-                case "SAVE":
-                    if (DataItem != null) DataItem.StrVal = Value;
+                case "BKSP":
+                    Value = Value.Substring(0, Math.Max(Value.Length - 1, 0));
+                    break;
+                case "CLR":
+                    Value = string.Empty;
+                    break;
+                case "RST":
+                    Value = DataItem.StrVal;
                     break;
                 case "PM":
                     if (Value.Length > 0) {

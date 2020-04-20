@@ -4,18 +4,35 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Choreo"
+             xmlns:inp="clr-namespace:Choreo.Input"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1280">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <DockPanel VerticalAlignment="Top" >
-            <local:DataItemUI DataContext="{Binding Number}" Margin="5,10"/>
-            <local:DataItemUI DataContext="{Binding Name}" Margin="5,10"/>
-            <CheckBox HorizontalAlignment="Right" VerticalAlignment="Center" VerticalContentAlignment="Center" Content="Display Cue in Show"/>
+            <local:DataItemUI DataContext="{Binding Number}" Margin="5,10" DockPanel.Dock="Left"/>
+            <CheckBox HorizontalAlignment="Right" VerticalAlignment="Center" VerticalContentAlignment="Center" Content="Display Cue in Show" DockPanel.Dock="Right"/>
+            <local:DataItemUI DataContext="{Binding Name}" Margin="5,10" DockPanel.Dock="Right" />
         </DockPanel>
-        <local:CueRowListView Grid.Row="1"/>
+        <Line Grid.Row="1" Stroke="White" />
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Border x:Name="EditableElementsGrid" FocusManager.IsFocusScope="True" Grid.RowSpan="2">
+                <local:CueRowListView x:Name="CueRowListView" IsEditable="True"/>
+            </Border>
+            <inp:NumericPad1 x:Name="NumPad" Grid.Column="1" Margin="30,10,10,10" PadEvent="NumPad_PadEvent"/>
+        </Grid>
     </Grid>
 </UserControl>

@@ -17,7 +17,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid x:Name="EditableElementsGrid">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="70"/>
                 <RowDefinition Height="120" />
@@ -75,7 +75,7 @@
                     </Rectangle>
                 </Grid>
             </Grid>
-            <Grid Margin="5,10,5,5" Grid.Row="1" Grid.RowSpan="2" FocusManager.IsFocusScope="True">
+            <Grid x:Name="EditableElementsGrid" Margin="5,10,5,5" Grid.Row="1" Grid.RowSpan="2" FocusManager.IsFocusScope="True">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
@@ -88,15 +88,11 @@
                     <local:DataItemUI Grid.Column="0" Margin="5,0" x:Name="RelativeSetpoint" DataContext="{Binding RelativeSetpoint}" Focusable="True"
                             EditOrderNext="{Binding ElementName=AbsoluteSetPoint}" 
                             EditOrderPrev="{Binding ElementName=Deceleration}" 
-                            EditOrderUp="{Binding ElementName=Acceleration}" 
-                            EditOrderDn="{Binding ElementName=Acceleration}"
                             IsEnabled="{Binding ElementName=MoveRelativeIndicator, Path=Visibility, Converter={StaticResource DataItemEnablingConverter}, ConverterParameter=Relative}"
                         />
                     <local:DataItemUI x:Name="AbsoluteSetPoint" Grid.Column="1" DataContext="{Binding AbsoluteSetpoint}" Margin="5,0" Focusable="True" 
                             EditOrderNext="{Binding ElementName=Acceleration}" 
                             EditOrderPrev="{Binding ElementName=RelativeSetpoint}" 
-                            EditOrderUp="{Binding ElementName=Deceleration}" 
-                            EditOrderDn="{Binding ElementName=Deceleration}" 
                             IsEnabled="{Binding ElementName=MoveAbsoluteIndicator, Path=Visibility, Converter={StaticResource DataItemEnablingConverter}, ConverterParameter=Absolute}"
                         />
                 </Grid>
@@ -109,20 +105,14 @@
                     <local:DataItemUI x:Name="Acceleration" Grid.Column="0" DataContext="{Binding Acceleration}" Margin="5,0" Focusable="True" 
                             EditOrderNext="{Binding ElementName=Velocity}" 
                             EditOrderPrev="{Binding ElementName=AbsoluteSetPoint}" 
-                            EditOrderUp="{Binding ElementName=RelativeSetpoint}" 
-                            EditOrderDn="{Binding ElementName=RelativeSetpoint}" 
                         />
                     <local:DataItemUI x:Name="Velocity" Grid.Column="1" DataContext="{Binding Velocity}" Margin="5,0" Focusable="True" 
                             EditOrderNext="{Binding ElementName=Deceleration}" 
                             EditOrderPrev="{Binding ElementName=Acceleration}" 
-                            EditOrderUp="{Binding ElementName=RelativeSetpoint}" 
-                            EditOrderDn="{Binding ElementName=AbsoluteSetPoint}" 
                         />
                     <local:DataItemUI x:Name="Deceleration" Grid.Column="2" DataContext="{Binding Deceleration}" Margin="5,0" Focusable="True" 
                             EditOrderNext="{Binding ElementName=RelativeSetpoint}" 
                             EditOrderPrev="{Binding ElementName=Velocity}" 
-                            EditOrderUp="{Binding ElementName=AbsoluteSetPoint}" 
-                            EditOrderDn="{Binding ElementName=AbsoluteSetPoint}" 
                         />
                 </Grid>
             </Grid>

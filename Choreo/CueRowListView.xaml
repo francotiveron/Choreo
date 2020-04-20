@@ -1,4 +1,4 @@
-﻿<local:ModeableListView x:Class="Choreo.CueRowListView"
+﻿<local:ModeableListView x:Name="modeableListView" x:Class="Choreo.CueRowListView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="760" d:DesignWidth="1080">
     <Grid>
-        <ListView ItemsSource="{Binding Rows}" 
+        <ListView x:Name="listView" ItemsSource="{Binding Rows}" 
                   Background="{x:Null}" 
                   BorderBrush="{x:Null}" 
                   Foreground="White" 
@@ -16,80 +16,41 @@
                   >
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
+                    <Setter Property="Focusable" Value="False"/>
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
-                        <Grid.Resources>
-                            <Style TargetType="Label">
-                                <Setter Property="Foreground" Value="White"/>
-                                <Setter Property="FontSize" Value="32"/>
-                                <Setter Property="Padding" Value="0"/>
-                                <Setter Property="VerticalAlignment" Value="Center"/>
-                                <Setter Property="HorizontalAlignment" Value="Left"/>
-                            </Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Background" Value="{x:Null}"/>
-                                <Setter Property="BorderBrush" Value="{x:Null}"/>
-                            </Style>
-                        </Grid.Resources>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Style="{StaticResource HideableGridColumnStyle}"/>
+                            <ColumnDefinition Width="6*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Style="{StaticResource HideableGridColumnStyle}"/>
                         </Grid.ColumnDefinitions>
-                        <Label x:Name="Target" Content="{Binding Target}" MouseUp="FieldLabel_MouseUp"/>
-                        <Label Content="{Binding Velocity}" Grid.Column="1" MouseUp="FieldLabel_MouseUp"/>
-                        <Label Content="{Binding Acceleration}" Grid.Column="2" MouseUp="FieldLabel_MouseUp"/>
-                        <Label Content="{Binding Deceleration}" Grid.Column="3" MouseUp="FieldLabel_MouseUp"/>
-                        <Button x:Name="DeleteRowButton" Content="DELETE" Click="DeleteRowButton_Click" Grid.Column="4"/>
+                        <local:MotAndGroUI x:Name="MaG" Margin="5" Focusable="True"/>
+                        <local:DataItemUI x:Name="Target" Grid.Column="1" DataContext="{Binding Target}" Margin="5" Focusable="True" EditOrderNext="{Binding ElementName=Velocity}" EditOrderPrev="{Binding ElementName=Deceleration}"/>
+                        <local:DataItemUI x:Name="Velocity" Grid.Column="2" DataContext="{Binding Velocity}" Margin="5" Focusable="True" EditOrderNext="{Binding ElementName=Acceleration}" EditOrderPrev="{Binding ElementName=Target}"/>
+                        <local:DataItemUI x:Name="Acceleration" Grid.Column="3" DataContext="{Binding Acceleration}" Margin="5" Focusable="True" EditOrderNext="{Binding ElementName=Deceleration}" EditOrderPrev="{Binding ElementName=Velocity}"/>
+                        <local:DataItemUI x:Name="Deceleration" Grid.Column="4" DataContext="{Binding Deceleration}" Margin="5"  Focusable="True" EditOrderNext="{Binding ElementName=Target}" EditOrderPrev="{Binding ElementName=Acceleration}"/>
+                        <Button x:Name="CueRowDeleteRowButton" 
+                                Grid.Column="5"
+                                Click="CueRowDeleteButton_Click" 
+                                Margin="5" 
+                                Background="#FFBB1010" 
+                                BorderBrush="{x:Null}" 
+                                Foreground="{x:Null}">
+                            <Image Source="Pictures/TrashBin.png" Height="50"/>
+                        </Button>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
             <ListView.Template>
                 <ControlTemplate>
                     <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Style="{StaticResource HideableGridColumnStyle}"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.Resources>
-                                <Style TargetType="Border">
-                                    <Setter Property="BorderThickness" Value="0,0,0,1" />
-                                    <Setter Property="BorderBrush" Value="White" />
-                                    <Setter Property="Background" Value="{x:Null}" />
-                                </Style>
-                                <Style TargetType="Label">
-                                    <Setter Property="Foreground" Value="White"/>
-                                    <Setter Property="FontSize" Value="24"/>
-                                    <Setter Property="HorizontalAlignment" Value="Left"/>
-                                </Style>
-                            </Grid.Resources>
-                            <Border Grid.Column="0" >
-                                <Label>Target</Label>
-                            </Border>
-                            <Border Grid.Column="1" >
-                                <Label>Velocity</Label>
-                            </Border>
-                            <Border Grid.Column="2" >
-                                <Label>Acceleration</Label>
-                            </Border>
-                            <Border Grid.Column="3" >
-                                <Label>Deceleration</Label>
-                            </Border>
-                        </Grid>
-                        <ScrollViewer Grid.Row="1" >
+                        <ScrollViewer>
                             <ItemsPresenter />
                         </ScrollViewer>
                     </Grid>

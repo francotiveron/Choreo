@@ -16,32 +16,32 @@ namespace Choreo {
         }
         public Guid Id { get; }
         public int Index => cue.Rows.IndexOf(this);
-        public List<int> Motors { get; private set; }
-        public List<int> Groups { get; private set; }
+        public bool[] Motors { get; } = new bool[16];
+        public bool[] Groups { get; } = new bool[8];
 
         double target;
-        [DataItem(edit:true)]
+        [DataItem]
         public double Target {
             get { return target; }
             set { target = value; OnPropertyChanged(); }
         }
 
         double velocity;
-        [DataItem(edit: true)]
+        [DataItem(mu: "fpm")]
         public double Velocity {
             get { return velocity; }
             set { velocity = value; OnPropertyChanged(); }
         }
 
         double acceleration;
-        [DataItem(edit: true)]
+        [DataItem]
         public double Acceleration {
             get { return acceleration; }
             set { acceleration = value; OnPropertyChanged(); }
         }
 
         double deceleration;
-        [DataItem(edit: true)]
+        [DataItem]
         public double Deceleration {
             get { return deceleration; }
             set { deceleration = value; OnPropertyChanged(); }
@@ -54,7 +54,7 @@ namespace Choreo {
         public Guid Id { get; }
 
         public string name;
-        [DataItem(title: "Cue Name", edit: true)]
+        [DataItem(title: "Cue Name")]
         public string Name {
             get => name == null ? string.Empty : name;
             set { name = value; OnPropertyChanged(); }

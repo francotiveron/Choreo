@@ -24,9 +24,17 @@ namespace Choreo {
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) {
-            if (sender == MotorCancelButton) VM.EndMotorSettingsEditing();
+            if (sender == MotorCancelButton) {
+                if (VM.IsMotorSettingsEditing) VM.MotorSettingsEditCancel();
+                else
+                if (VM.IsGroupSettingsEditing) VM.GroupSettingsEditCancel();
+            }
             else
-            if (sender == MotorSaveButton) ;
+            if (sender == MotorSaveButton) {
+                if (VM.IsMotorSettingsEditing) VM.MotorSettingsEditSave();
+                else
+                if (VM.IsGroupSettingsEditing) VM.GroupSettingsEditSave();
+            }
         }
     }
 }

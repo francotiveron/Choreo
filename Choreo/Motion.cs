@@ -22,7 +22,7 @@ namespace Choreo {
         }
 
         double relativeSetpoint;
-        [DataItem(edit: true, title:"Relative Setpoint")]
+        [DataItem(title:"Relative Setpoint")]
         public double RelativeSetpoint {
             get { return relativeSetpoint; }
             set { relativeSetpoint = value; OnPropertyChanged(); if (value > 2.0) RelativeSetpointStatus = DataStates.Warning; else RelativeSetpointStatus = DataStates.OK; }
@@ -34,28 +34,28 @@ namespace Choreo {
         }
 
         double absoluteSetpoint;
-        [DataItem(edit: true, title: "Absolute Setpoint")]
+        [DataItem(title: "Absolute Setpoint")]
         public double AbsoluteSetpoint {
             get { return absoluteSetpoint; }
             set { absoluteSetpoint = value; OnPropertyChanged(); }
         }
 
         double velocity;
-        [DataItem(edit: true)]
+        [DataItem]
         public double Velocity {
             get { return velocity; }
             set { velocity = value; OnPropertyChanged(); }
         }
 
         double acceleration;
-        [DataItem(edit: true)]
+        [DataItem]
         public double Acceleration {
             get { return acceleration; }
             set { acceleration = value; OnPropertyChanged(); }
         }
 
         double deceleration;
-        [DataItem(edit: true)]
+        [DataItem]
         public double Deceleration {
             get { return deceleration; }
             set { deceleration = value; OnPropertyChanged(); }

@@ -1,0 +1,99 @@
+﻿<UserControl x:Class="Choreo.MotorPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Choreo"
+             xmlns:inp="clr-namespace:Choreo.Input"
+             mc:Ignorable="d" 
+             d:DesignHeight="740" d:DesignWidth="1280" Loaded="UserControl_Loaded">
+    <!--<UserControl.Resources>
+        <local:EditDataItemSetter x:Key="EditItemSetter"/>
+    </UserControl.Resources>-->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel VerticalAlignment="Top">
+            <Viewbox Stretch="Fill">
+                <Label Content="CURRENT POSITION &amp; LOAD" Margin="20"/>
+            </Viewbox>
+            <local:MotorStatusPanel Margin="10"/>
+            <local:DataItemUI Margin="5" DataContext="{Binding Rotations}"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Margin="5" x:Name="EditableElementsGrid"  FocusManager.IsFocusScope="True">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <!--<local:DataItemUI Margin="5" DataContext="{Binding Name}" SourceCollection="{Binding Motors, Source={x:Static local:Globals.VM}}"/>-->
+                <local:DataItemUI Margin="5" DataContext="{Binding Name}"/>
+                <!--<local:DataItemUI Margin="5" Grid.Column="1" DataContext="{Binding Group}" SourceCollection="{Binding Groups, Source={x:Static local:Globals.VM}}"/>-->
+                <local:DataItemUI Margin="5" Grid.Column="1" DataContext="{Binding Group}"/>
+                <!--<Button x:Name="ResetGroupButton" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Right" Content="R" Margin="0,10,10,0" Click="ResetGroupButton_Click" />-->
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <local:DataItemUI x:Name="SetPosition" Margin="5" DataContext="{Binding SetPosition}" EditOrderNext="{Binding ElementName=SoftUp, Mode=OneWay}" EditOrderPrev="{Binding ElementName=LoadOffs, Mode=OneWay}" Focusable="True" />
+                <Button Grid.Column="1" Content="SAVE NEW POSITON" Style="{StaticResource TopBarCommandButtonStyle}"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <local:DataItemUI x:Name="SoftUp" Margin="5" DataContext="{Binding SoftUp}" Focusable="True" EditOrderNext="{Binding ElementName=SoftDn, Mode=OneWay}" EditOrderPrev="{Binding ElementName=SetPosition, Mode=OneWay}"/>
+                <local:DataItemUI x:Name="SoftDn" Grid.Column="1" Margin="5" DataContext="{Binding SoftDn}" EditOrderNext="{Binding ElementName=MaxAcc, Mode=OneWay}" EditOrderPrev="{Binding ElementName=SoftUp, Mode=OneWay}" Focusable="True"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <local:DataItemUI x:Name="MinAcc" Margin="5" DataContext="{Binding MinAcc}" IsEnabled="False"/>
+                <local:DataItemUI x:Name="MaxAcc" Grid.Column="1" Margin="5" DataContext="{Binding MaxAcc}" EditOrderNext="{Binding ElementName=DefAcc, Mode=OneWay}" EditOrderPrev="{Binding ElementName=SoftDn, Mode=OneWay}" Focusable="True"/>
+                <local:DataItemUI x:Name="DefAcc" Grid.Column="2" Margin="5" DataContext="{Binding DefAcc}" EditOrderNext="{Binding ElementName=MinVel, Mode=OneWay}" EditOrderPrev="{Binding ElementName=MaxAcc, Mode=OneWay}" Focusable="True"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <local:DataItemUI x:Name="MinVel" Margin="5" DataContext="{Binding MinVel}" EditOrderNext="{Binding ElementName=MaxVel, Mode=OneWay}" EditOrderPrev="{Binding ElementName=DefAcc, Mode=OneWay}" Focusable="True"/>
+                <local:DataItemUI x:Name="MaxVel" Grid.Column="1" Margin="5" DataContext="{Binding MaxVel}" EditOrderNext="{Binding ElementName=DefVel, Mode=OneWay}" EditOrderPrev="{Binding ElementName=MinVel, Mode=OneWay}" Focusable="True"/>
+                <local:DataItemUI x:Name="DefVel" Grid.Column="2" Margin="5" DataContext="{Binding DefVel}" EditOrderNext="{Binding ElementName=MaxDec, Mode=OneWay}" EditOrderPrev="{Binding ElementName=MaxVel, Mode=OneWay}" Focusable="True"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <local:DataItemUI x:Name="MinDec" Margin="5" DataContext="{Binding MinDec}" IsEnabled="False"/>
+                <local:DataItemUI x:Name="MaxDec" Grid.Column="1" Margin="5" DataContext="{Binding MaxDec}" EditOrderNext="{Binding ElementName=DefDec, Mode=OneWay}" EditOrderPrev="{Binding ElementName=DefVel, Mode=OneWay}" Focusable="True"/>
+                <local:DataItemUI x:Name="DefDec" Grid.Column="2" Margin="5" DataContext="{Binding DefDec}" EditOrderNext="{Binding ElementName=MinLoad, Mode=OneWay}" EditOrderPrev="{Binding ElementName=MaxDec, Mode=OneWay}" Focusable="True"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <local:DataItemUI x:Name="MinLoad" Margin="5" DataContext="{Binding MinLoad}" EditOrderNext="{Binding ElementName=MaxLoad, Mode=OneWay}" EditOrderPrev="{Binding ElementName=DefDec, Mode=OneWay}" Focusable="True"/>
+                <local:DataItemUI x:Name="MaxLoad" Grid.Column="1" Margin="5" DataContext="{Binding MaxLoad}" EditOrderNext="{Binding ElementName=LoadOffs, Mode=OneWay}" EditOrderPrev="{Binding ElementName=MinLoad, Mode=OneWay}" Focusable="True"/>
+                <local:DataItemUI x:Name="LoadOffs" Grid.Column="2" Margin="5" DataContext="{Binding LoadOffs}" EditOrderNext="{Binding ElementName=SetPosition, Mode=OneWay}" EditOrderPrev="{Binding ElementName=MaxLoad, Mode=OneWay}" Focusable="True"/>
+            </Grid>
+        </StackPanel>
+        <StackPanel Grid.Column="2">
+            <inp:NumericPad1 x:Name="NumPad" Margin="20,20,20,5" Height="400" PadEvent="NumPad_PadEvent" />
+        </StackPanel>
+    </Grid>
+</UserControl>

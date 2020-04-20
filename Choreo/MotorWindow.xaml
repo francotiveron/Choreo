@@ -23,7 +23,7 @@
             </Border.Child>
         </Border>
         <Border Grid.Row="1" Name="PageArea">
-            <local:MotGroSettingsPage/>
+            <local:MotorPage/>
         </Border>
     </Grid>
 </Window>

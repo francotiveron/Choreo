@@ -1,31 +1,16 @@
-﻿using System;
-using System.Globalization;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Input;
-using System.Windows.Markup;
 using static Choreo.Globals;
 
 namespace Choreo {
     /// <summary>
-    /// Interaction logic for MotionPageV2.xaml
+    /// Interaction logic for MotorAndGroupSelectorPanel.xaml
     /// </summary>
-    public partial class MotionPageV2 : UserControl {
-        public MotionPageV2() {
+    public partial class MotorAndGroupSelectorPanel : UserControl {
+        public MotorAndGroupSelectorPanel() {
             InitializeComponent();
             InitializeCheckGrids();
-            FocusManager.AddGotFocusHandler(this, Focus);
-        }
-        private void UserControl_Loaded(object sender, RoutedEventArgs e) {
-            if (((Motion)DataContext).Hook is Group) HookGrid.Children.Remove(AxisGroup);
-            FocusManager.SetFocusedElement(EditableElementsGrid, Velocity);
-        }
-
-        private void Focus(object sender, RoutedEventArgs e) {
-            if (e.OriginalSource is DataItemUI diui)
-                NumPad.DataItem = diui;
-            e.Handled = true;
         }
 
         private void InitializeCheckGrids() {
@@ -75,13 +60,13 @@ namespace Choreo {
             b = new Binding(binding);
             cb.SetBinding(CheckBox.IsCheckedProperty, b);
             cb.IsEnabled = !disabled;
-            cb.Click += Cb_Click;
+            //cb.Click += Cb_Click;
             return cb;
         }
 
         private void Cb_Click(object sender, RoutedEventArgs e) {
             Control c = null;
-            switch(((CheckBox)sender).Tag) {
+            switch (((CheckBox)sender).Tag) {
                 case "Motor":
                     c = MaG.Motors;
                     break;
@@ -92,22 +77,5 @@ namespace Choreo {
             c.GetBindingExpression(ContentProperty).UpdateTarget();
         }
 
-        private void NumPad_PadEvent(object sender, Input.NumericPad1.PadEventArgs e) => FocusManager.SetFocusedElement(EditableElementsGrid, e.DataItem.Navigate(e.Name));
-
-        private void Button_Click(object sender, RoutedEventArgs e) {
-            Relative = sender == MoveRelativeButton;
-            FocusManager.SetFocusedElement(EditableElementsGrid, Relative ? RelativeSetpoint : AbsoluteSetPoint);
-        }
-
-        bool Relative {
-            get {
-                var motion = DataContext as Motion;
-                return motion.Relative;
-            }
-            set {
-                var motion = DataContext as Motion;
-                motion.Relative = value;
-            }
-        }
     }
 }

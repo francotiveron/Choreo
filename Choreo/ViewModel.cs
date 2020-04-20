@@ -36,7 +36,7 @@ namespace Choreo
 
         public bool IsEditing => IsGroupEditing || IsPresetEditing;
 
-        #region ******************Settings Editing******************
+        #region ******************Motor and Group Settings Editing******************
         int motorSettingsBeingEdited;
         public int MotorSettingsBeingEdited {
             get => motorSettingsBeingEdited;
@@ -45,9 +45,34 @@ namespace Choreo
         public bool IsMotorSettingsEditing => MotorSettingsBeingEdited > 0;
         public void BeginMotorSettingsEditing(int index) => MotorSettingsBeingEdited = index + 1;
         public void EndMotorSettingsEditing() => MotorSettingsBeingEdited = 0;
+        public void MotorSettingsEditCancel() {
+            Load(Motors[MotorSettingsBeingEdited - 1]);
+            EndMotorSettingsEditing();
+        }
+        public void MotorSettingsEditSave() {
+            Save(Motors[MotorSettingsBeingEdited - 1]);
+            EndMotorSettingsEditing();
+        }
+
+        int groupSettingsBeingEdited;
+        public int GroupSettingsBeingEdited {
+            get => groupSettingsBeingEdited;
+            set { groupSettingsBeingEdited = value; OnPropertyChanged(); }
+        }
+        public bool IsGroupSettingsEditing => GroupSettingsBeingEdited > 0;
+        public void BeginGroupSettingsEditing(int index) => GroupSettingsBeingEdited = index + 1;
+        public void EndGroupSettingsEditing() => GroupSettingsBeingEdited = 0;
+        public void GroupSettingsEditCancel() {
+            Load(Groups[GroupSettingsBeingEdited - 1]);
+            EndGroupSettingsEditing();
+        }
+        public void GroupSettingsEditSave() {
+            Save(Groups[GroupSettingsBeingEdited - 1]);
+            EndGroupSettingsEditing();
+        }
         #endregion
 
-        #region ******************Group Editing******************
+        #region ******************Group grouping Editing******************
         int groupBeingEdited;
         HashSet<Motor> editedGroupMotorsInitial;
         public int GroupBeingEdited {
@@ -59,7 +84,7 @@ namespace Choreo
             GroupBeingEdited = group + 1;
             editedGroupMotorsInitial = Motors.Where(m => m.Group == GroupBeingEdited).ToHashSet();
         }
-        public void EndGroupEditing() {
+        void EndGroupEditing() {
             editedGroupMotorsInitial = null;
             GroupBeingEdited = 0;
         }
@@ -73,8 +98,9 @@ namespace Choreo
                     m.Group == 0 && editedGroupMotorsInitial.Contains(m)
                 select m;
 
-            foreach (var m in motorsToSave) Save(m);
+            foreach (var m in motorsToSave) SaveGroup(m);
             EndGroupEditing();
+            BeginGroupSettingsEditing(group.Index);
         }
         public void GroupEditClear() { foreach (var m in Motors.Where(m => m.Group == GroupBeingEdited)) m.Group = 0; }
         public void GroupEditCancel() {
@@ -174,5 +200,10 @@ namespace Choreo
             MotionEditing = false;
         }
         #endregion
+    }
+
+    [System.AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
+    sealed class PersistentAttribute : Attribute {
+        public PersistentAttribute() {}
     }
 }

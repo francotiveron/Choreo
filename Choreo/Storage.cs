@@ -14,17 +14,38 @@ namespace Choreo {
             var key = root.CreateSubKey(element);
             if (value != null) key.SetValue(setting, value);
         }
+        static void Write(string element, object obj) {
+            var key = root.CreateSubKey(element);
+            foreach(var pi in obj.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
+                if (null != pi.GetCustomAttribute<PersistentAttribute>())
+                    if (pi.GetValue(obj) is object value && value != null)
+                        key.SetValue(pi.Name, value);
+        }
         static object Read(string element, string setting) {
             var key = root.OpenSubKey(element);
             return key?.GetValue(setting);
         }
-        public static void Save(Motor motor) {
+        static void Read(string element, object obj) {
+            if (root.OpenSubKey(element) is RegistryKey key) {
+                foreach (var pi in obj.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
+                    if (null != pi.GetCustomAttribute<PersistentAttribute>())
+                        if (key.GetValue(pi.Name) is object value && value != null) {
+                            var typed = Convert.ChangeType(value, pi.PropertyType);
+                            pi.SetValue(obj, typed);
+                        }
+            }
+        }
+        public static void SaveGroup(Motor motor) {
             Write($@"Motors\[{motor.Index}]", "Group", motor.Group);
         }
-        public static void Load(Motor motor) {
+        public static void LoadGroup(Motor motor) {
             var value = Read($@"Motors\[{motor.Index}]", "Group");
             if (value is int group) motor.Group = group;
         }
+        public static void Save(Motor motor) => Write($@"Motors\[{motor.Index}]", motor);
+        public static void Load(Motor motor) => Read($@"Motors\[{motor.Index}]", motor);
+        public static void Save(Group group) => Write($@"Groups\[{group.Index}]", group);
+        public static void Load(Group group) => Read($@"Groups\[{group.Index}]", group);
         public static void Save(Preset preset) {
             var value = string.Join(";", preset.MotorPositions.Select(kv => $"{kv.Key},{kv.Value}"));
             Write($@"Presets\[{preset.Index}]", "MotorPositions", value);
@@ -92,6 +113,8 @@ namespace Choreo {
         }
         public static void SaveMotors() => Save(VM.Motors);
         public static void LoadMotors() => Load(VM.Motors);
+        public static void SaveGroups() => Save(VM.Groups);
+        public static void LoadGroups() => Load(VM.Groups);
         public static void SavePresets() => Save(VM.Presets);
         public static void LoadPresets() => Load(VM.Presets);
         public static void SaveCues() => Save(VM.Cues);
@@ -108,11 +131,13 @@ namespace Choreo {
         }
         public static void SaveAll() {
             SaveMotors();
+            SaveGroups();
             SavePresets();
             SaveCues();
         }
         public static void LoadAll() {
             LoadMotors();
+            LoadGroups();
             LoadPresets();
             LoadCues();
         } 

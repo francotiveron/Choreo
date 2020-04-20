@@ -14,9 +14,18 @@
                   SelectionChanged="ListView_SelectionChanged" 
                   HorizontalContentAlignment="Stretch"
                   VerticalAlignment="Top"
+                  AlternationCount="2"
                   >
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
+                    <Style.Triggers>
+                        <Trigger Property="ItemsControl.AlternationIndex"  Value="0">
+                            <Setter Property="Background" Value="#222222" />
+                        </Trigger>
+                        <Trigger Property="ItemsControl.AlternationIndex"  Value="1">
+                            <Setter Property="Background" Value="#444444" />
+                        </Trigger>
+                    </Style.Triggers>
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
@@ -30,10 +39,10 @@
                                 <Setter Property="VerticalAlignment" Value="Center"/>
                                 <Setter Property="HorizontalAlignment" Value="Left"/>
                             </Style>
-                            <Style TargetType="Button">
+                            <!--<Style TargetType="Button">
                                 <Setter Property="Background" Value="{x:Null}"/>
                                 <Setter Property="BorderBrush" Value="{x:Null}"/>
-                            </Style>
+                            </Style>-->
                         </Grid.Resources>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="150"/>

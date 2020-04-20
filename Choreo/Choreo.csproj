@@ -163,6 +163,9 @@
     <Compile Include="Input\NumericPad1.xaml.cs">
       <DependentUpon>NumericPad1.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MotorAndGroupSelectorPanel.xaml.cs">
+      <DependentUpon>MotorAndGroupSelectorPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SelectPad.xaml.cs">
       <DependentUpon>SelectPad.xaml</DependentUpon>
     </Compile>
@@ -184,8 +187,8 @@
     <Compile Include="HomeTopPanel.xaml.cs">
       <DependentUpon>HomeTopPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MotGroSettingsPage.xaml.cs">
-      <DependentUpon>MotGroSettingsPage.xaml</DependentUpon>
+    <Compile Include="MotorPage.xaml.cs">
+      <DependentUpon>MotorPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MotorTopPanel.xaml.cs">
       <DependentUpon>MotorTopPanel.xaml</DependentUpon>
@@ -270,6 +273,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MotorAndGroupSelectorPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SelectPad.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -310,7 +317,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MotGroSettingsPage.xaml">
+    <Page Include="MotorPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -368,6 +375,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Pictures\clear.png" />
+    <Resource Include="Pictures\reset.png" />
+    <Resource Include="Pictures\backspace.png" />
     <Resource Include="Pictures\Pen.png" />
     <Resource Include="Pictures\TrashBin.png" />
     <Resource Include="Pictures\Delete.png" />
@@ -414,9 +424,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Hrs.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Pictures\ArrowUp.PNG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

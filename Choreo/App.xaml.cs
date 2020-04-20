@@ -27,6 +27,17 @@ namespace Choreo
                 if (motorIndex == 0 && MainWindow is MotorWindow) ChangeWindow(new MainWindow());
             }
             else
+            if (e.PropertyName == "GroupSettingsBeingEdited") {
+                var groupIndex = VM.GroupSettingsBeingEdited;
+                if (groupIndex > 0 && MainWindow is MainWindow) {
+                    var newWindow = new MotorWindow();
+                    newWindow.DataContext = VM.Groups[groupIndex - 1];
+                    ChangeWindow(newWindow);
+                }
+                else
+                if (groupIndex == 0 && MainWindow is MotorWindow) ChangeWindow(new MainWindow());
+            }
+            else
             if (e.PropertyName == "CueBeingEdited") {
                 var cueIndex = VM.CueBeingEdited;
                 if (cueIndex > 0 && MainWindow is MainWindow) {
@@ -88,7 +99,7 @@ namespace Choreo
             string message = $"Unhandled exception ({source})";
             try {
                 System.Reflection.AssemblyName assemblyName = System.Reflection.Assembly.GetExecutingAssembly().GetName();
-                message = string.Format("Unhandled exception in {0} v{1}", assemblyName.Name, assemblyName.Version);
+                message = string.Format("Unhandled exception in {0} v{1}\nStackTrace:\n{2}", assemblyName.Name, assemblyName.Version, exception.StackTrace);
             }
             catch (Exception ex) {
                 Logger.Error(ex, "Exception in LogUnhandledException");

@@ -17,3 +17,4 @@
 - Settings values Data validation
 - Disable group change in motor settings for grouped motors
 - Disable (darken) Min Acc and Min Dec data items in motor settings form
+- CleanUp classes (e.g. SelectPad and cmoments)
