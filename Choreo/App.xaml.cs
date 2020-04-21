@@ -13,7 +13,9 @@ namespace Choreo
     public partial class App : Application
     {
         public App() {
-            VM.PropertyChanged += VM_PropertyChanged; ;
+            VM.PropertyChanged += VM_PropertyChanged;
+            QuickConverter.EquationTokenizer.AddNamespace(typeof(object));
+            QuickConverter.EquationTokenizer.AddNamespace(typeof(System.Windows.Visibility));
         }
         private void VM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
             if (e.PropertyName == "MotorSettingsBeingEdited") {
@@ -50,7 +52,6 @@ namespace Choreo
             }
             else
             if (e.PropertyName == "MotionEditing") {
-                var cueIndex = VM.CueBeingEdited;
                 if (VM.MotionEditing && MainWindow is MainWindow) {
                     var newWindow = new MotionWindow();
                     ChangeWindow(newWindow);

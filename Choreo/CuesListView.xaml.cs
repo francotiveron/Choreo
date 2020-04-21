@@ -25,17 +25,17 @@ namespace Choreo {
             e.Handled = true;
         }
 
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            SelectedCue = e.AddedItems.Count > 0 ? e.AddedItems[0] as Cue : null;
-        }
+        //private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+        //    SelectedCue = e.AddedItems.Count > 0 ? e.AddedItems[0] as Cue : null;
+        //}
 
-        public Cue SelectedCue {
-            get { return (Cue)GetValue(SelectedCueProperty); }
-            set { SetValue(SelectedCueProperty, value); }
-        }
+        //public Cue SelectedCue {
+        //    get { return (Cue)GetValue(SelectedCueProperty); }
+        //    set { SetValue(SelectedCueProperty, value); }
+        //}
 
-        public static readonly DependencyProperty SelectedCueProperty =
-            DependencyProperty.Register("SelectedCue", typeof(Cue), typeof(CuesListView));
+        //public static readonly DependencyProperty SelectedCueProperty =
+        //    DependencyProperty.Register("SelectedCue", typeof(Cue), typeof(CuesListView));
 
     }
 }

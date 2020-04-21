@@ -8,31 +8,39 @@
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1280">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <DockPanel VerticalAlignment="Top" >
-            <local:DataItemUI DataContext="{Binding Number}" Margin="5,10" DockPanel.Dock="Left"/>
-            <CheckBox HorizontalAlignment="Right" VerticalAlignment="Center" VerticalContentAlignment="Center" Content="Display Cue in Show" DockPanel.Dock="Right"/>
-            <local:DataItemUI DataContext="{Binding Name}" Margin="5,10" DockPanel.Dock="Right" />
-        </DockPanel>
-        <Line Grid.Row="1" Stroke="White" />
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Grid.RowSpan="2" x:Name="EditableElementsGrid" FocusManager.IsFocusScope="True" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <DockPanel VerticalAlignment="Top">
+                <local:DataItemUI DataContext="{Binding Number}" Margin="5,10" DockPanel.Dock="Left"/>
+                <local:DataItemUI x:Name="CueName" DataContext="{Binding Name}" Margin="5,10" DockPanel.Dock="Right" Focusable="True" />
+            </DockPanel>
+            <Grid Grid.Row="1">
+                <local:CueRowListView x:Name="CueRowListView" IsEditable="True"/>
+            </Grid>
+        </Grid>
+
+        <CheckBox HorizontalAlignment="Center" Grid.Column="1" Content="Display Cue in Show" DockPanel.Dock="Right" IsChecked="{Binding Show}"/>
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <inp:NumericPad1 x:Name="NumPad" Margin="10" PadEvent="NumPad_PadEvent"/>
+        </StackPanel>
+        <Grid Grid.Row="1" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-
-            <Border x:Name="EditableElementsGrid" FocusManager.IsFocusScope="True" Grid.RowSpan="2">
-                <local:CueRowListView x:Name="CueRowListView" IsEditable="True"/>
-            </Border>
-            <inp:NumericPad1 x:Name="NumPad" Grid.Column="1" Margin="30,10,10,10" PadEvent="NumPad_PadEvent"/>
+            <inp:MaGSelectionPopup x:Name="MaGSelect" Grid.Row="1" Grid.ColumnSpan="2" MaGEvent="MaGSelect_MaGEvent"/>
+            <inp:AlphaNumericPad x:Name="AlNumPad" Grid.Row="1" Grid.ColumnSpan="2" AlNumEvent="AlNumPad_AlNumEvent"/>
         </Grid>
     </Grid>
 </UserControl>

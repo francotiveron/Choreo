@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Configuration;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,6 +21,7 @@ namespace Choreo.Input {
     public partial class NumericPad1 : UserControl {
         public NumericPad1() {
             InitializeComponent();
+            IsEnabled = DataItem != null;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) {
@@ -73,7 +75,11 @@ namespace Choreo.Input {
             get => dataItem;
             set {
                 dataItem = value;
-                Value = dataItem.StrVal;
+                if (dataItem == null) IsEnabled = false;
+                else {
+                    IsEnabled = true;
+                    Value = dataItem.StrVal;
+                }
             }
         }
     }

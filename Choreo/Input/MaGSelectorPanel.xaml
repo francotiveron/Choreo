@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="Choreo.Input.MaGSelectorPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Choreo"
+             mc:Ignorable="d" 
+             d:DesignHeight="250" d:DesignWidth="1080">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="MotorsCheckGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Axis/Motor" Grid.ColumnSpan="4"/>
+            <CheckBox Content="Motor 01" Grid.Row="1" Grid.Column="0"/>
+            <CheckBox Content="Motor 02" Grid.Row="2" Grid.Column="0"/>
+            <CheckBox Content="Motor 03" Grid.Row="3" Grid.Column="0"/>
+            <CheckBox Content="Motor 04" Grid.Row="4" Grid.Column="0"/>
+            <CheckBox Content="Motor 05" Grid.Row="1" Grid.Column="1"/>
+            <CheckBox Content="Motor 06" Grid.Row="2" Grid.Column="1"/>
+            <CheckBox Content="Motor 07" Grid.Row="3" Grid.Column="1"/>
+            <CheckBox Content="Motor 08" Grid.Row="4" Grid.Column="1"/>
+            <CheckBox Content="Motor 09" Grid.Row="1" Grid.Column="2"/>
+            <CheckBox Content="Motor 10" Grid.Row="2" Grid.Column="2"/>
+            <CheckBox Content="Motor 11" Grid.Row="3" Grid.Column="2"/>
+            <CheckBox Content="Motor 12" Grid.Row="4" Grid.Column="2"/>
+            <CheckBox Content="Motor 13" Grid.Row="1" Grid.Column="3"/>
+            <CheckBox Content="Motor 14" Grid.Row="2" Grid.Column="3"/>
+            <CheckBox Content="Motor 15" Grid.Row="3" Grid.Column="3"/>
+            <CheckBox Content="Motor 16" Grid.Row="4" Grid.Column="3"/>
+        </Grid>
+        <Grid Grid.Column="1" x:Name="GroupsCheckGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Groups" Grid.ColumnSpan="2"/>
+            <CheckBox Content="Group 01" Grid.Row="1" Grid.Column="0"/>
+            <CheckBox Content="Group 02" Grid.Row="2" Grid.Column="0"/>
+            <CheckBox Content="Group 03" Grid.Row="3" Grid.Column="0"/>
+            <CheckBox Content="Group 04" Grid.Row="4" Grid.Column="0"/>
+            <CheckBox Content="Group 05" Grid.Row="1" Grid.Column="1"/>
+            <CheckBox Content="Group 06" Grid.Row="2" Grid.Column="1"/>
+            <CheckBox Content="Group 07" Grid.Row="3" Grid.Column="1"/>
+            <CheckBox Content="Group 08" Grid.Row="4" Grid.Column="1"/>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -175,10 +175,10 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <CheckBox Content="Motor 01" VerticalContentAlignment="Center" Margin="0" Padding="0" IsChecked="{Binding Motors[0]}" HorizontalAlignment="Center"/>
-                <CheckBox Grid.Column="1" Content="Motor 05" VerticalContentAlignment="Center" />
-                <CheckBox Grid.Column="2" Content="Motor 09" VerticalContentAlignment="Center" />
-                <CheckBox Grid.Column="3" Content="Motor 13" VerticalContentAlignment="Center" />
+                <CheckBox Content="Motor 01" IsChecked="{Binding Motors[0]}" />
+                <CheckBox Grid.Column="1" Content="Motor 05" />
+                <CheckBox Grid.Column="2" Content="Motor 09" />
+                <CheckBox Grid.Column="3" Content="Motor 13" />
             </Grid>
             <Grid Grid.Column="1" x:Name="GroupsCheckGrid">
                 <Grid.RowDefinitions>

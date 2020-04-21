@@ -1,0 +1,115 @@
+﻿<UserControl x:Class="Choreo.Input.AlphaNumericPad"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Choreo.Input"
+             mc:Ignorable="d" 
+             Background="#333333"
+             d:DesignHeight="400" d:DesignWidth="1080">
+    <Grid x:Name="MainGrid">
+        <Grid.Resources>
+            <Style TargetType="{x:Type Button}">
+                <Setter Property="Background" Value="{x:Null}"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontSize" Value="30"/>
+            </Style>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Button Click="Button_Click" Grid.Row="0" Grid.Column="0" x:Name="ESC" Content="ESC"/>
+        <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="5" x:Name="ValueTextBox" Background="{x:Null}" Foreground="yellow" Text="???" MaxLines="1" FontSize="30" MaxLength="30" BorderThickness="3" TextAlignment="Left" />
+        <Button Click="Button_Click" Grid.Row="0" Grid.Column="6" x:Name="CAPSLOCK">
+            <Button.Template>
+                <ControlTemplate>
+                    <Grid Background="{TemplateBinding Property=Background}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.Resources>
+                            <Style TargetType="Label">
+                                <Setter Property="FontSize" Value="24"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="Margin" Value="0"/>
+                            </Style>
+                        </Grid.Resources>
+                        <Label Content="CAPS" VerticalAlignment="Bottom"/>
+                        <Label Grid.Row="1" Content="LOCK" VerticalAlignment="Top"/>
+                    </Grid>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button Click="Button_Click" Grid.Row="0" Grid.Column="7" x:Name="RST">
+            <Image Source="/Choreo;component/Pictures/reset.PNG" Margin="3" />
+        </Button>
+        <Button Click="Button_Click" Grid.Row="0" Grid.Column="8" x:Name="CLR">
+            <Image Source="/Choreo;component/Pictures/clear.PNG" />
+        </Button>
+        <Button Click="Button_Click"  Grid.Row="0" Grid.Column="9" x:Name="BKSP">
+            <Image Source="/Choreo;component/Pictures/backspace.png" Margin="3"/>
+        </Button>
+        <Button Click="Button_Click" Grid.Row="1" Grid.Column="0" x:Name="NUM1" Content="1"/>
+        <Button Click="Button_Click" Grid.Row="1" Grid.Column="1" x:Name="NUM2" Content="2"/>
+        <Button Click="Button_Click" Grid.Row="1" Grid.Column="2" x:Name="NUM3" Content="3"/>
+        <Button Click="Button_Click" Grid.Row="1" Grid.Column="3" x:Name="NUM4" Content="4"/>
+        <Button Click="Button_Click" Grid.Row="1" Grid.Column="4" x:Name="NUM5" Content="5"/>
+        <Button Click="Button_Click" Grid.Row="1" Grid.Column="5" x:Name="NUM6" Content="6"/>
+        <Button Click="Button_Click" Grid.Row="1" Grid.Column="6" x:Name="NUM7" Content="7"/>
+        <Button Click="Button_Click" Grid.Row="1" Grid.Column="7" x:Name="NUM8" Content="8"/>
+        <Button Click="Button_Click" Grid.Row="1" Grid.Column="8" x:Name="NUM9" Content="9"/>
+        <Button Click="Button_Click" Grid.Row="1" Grid.Column="9" x:Name="NUM0" Content="0"/>
+
+        <Button Click="Button_Click" Grid.Row="2" Grid.Column="0" x:Name="ALPQ" Content="Q"/>
+        <Button Click="Button_Click" Grid.Row="2" Grid.Column="1" x:Name="ALPW" Content="W"/>
+        <Button Click="Button_Click" Grid.Row="2" Grid.Column="2" x:Name="ALPE" Content="E"/>
+        <Button Click="Button_Click" Grid.Row="2" Grid.Column="3" x:Name="ALPR" Content="R"/>
+        <Button Click="Button_Click" Grid.Row="2" Grid.Column="4" x:Name="ALPT" Content="T"/>
+        <Button Click="Button_Click" Grid.Row="2" Grid.Column="5" x:Name="ALPY" Content="Y"/>
+        <Button Click="Button_Click" Grid.Row="2" Grid.Column="6" x:Name="ALPU" Content="U"/>
+        <Button Click="Button_Click" Grid.Row="2" Grid.Column="7" x:Name="ALPI" Content="I"/>
+        <Button Click="Button_Click" Grid.Row="2" Grid.Column="8" x:Name="ALPO" Content="O"/>
+        <Button Click="Button_Click" Grid.Row="2" Grid.Column="9" x:Name="ALPP" Content="P"/>
+
+        <Button Click="Button_Click" Grid.Row="3" Grid.Column="0" x:Name="ALPA" Content="A"/>
+        <Button Click="Button_Click" Grid.Row="3" Grid.Column="1" x:Name="ALPS" Content="S"/>
+        <Button Click="Button_Click" Grid.Row="3" Grid.Column="2" x:Name="ALPD" Content="D"/>
+        <Button Click="Button_Click" Grid.Row="3" Grid.Column="3" x:Name="ALPF" Content="F"/>
+        <Button Click="Button_Click" Grid.Row="3" Grid.Column="4" x:Name="ALPG" Content="G"/>
+        <Button Click="Button_Click" Grid.Row="3" Grid.Column="5" x:Name="ALPH" Content="H"/>
+        <Button Click="Button_Click" Grid.Row="3" Grid.Column="6" x:Name="ALPJ" Content="J"/>
+        <Button Click="Button_Click" Grid.Row="3" Grid.Column="7" x:Name="ALPK" Content="K"/>
+        <Button Click="Button_Click" Grid.Row="3" Grid.Column="8" x:Name="ALPL" Content="L"/>
+
+        <Button Click="Button_Click" Grid.Row="4" Grid.Column="0" x:Name="ALPZ" Content="Z"/>
+        <Button Click="Button_Click" Grid.Row="4" Grid.Column="1" x:Name="ALPX" Content="X"/>
+        <Button Click="Button_Click" Grid.Row="4" Grid.Column="2" x:Name="ALPC" Content="C"/>
+        <Button Click="Button_Click" Grid.Row="4" Grid.Column="5" x:Name="ALPV" Content="V"/>
+        <Button Click="Button_Click" Grid.Row="4" Grid.Column="6" x:Name="ALPB" Content="B"/>
+        <Button Click="Button_Click" Grid.Row="4" Grid.Column="7" x:Name="ALPN" Content="N"/>
+        <Button Click="Button_Click" Grid.Row="4" Grid.Column="8" x:Name="ALPM" Content="M"/>
+        <Button Click="Button_Click" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" x:Name="SPC" Content="[SPACE BAR]"/>
+        <Button Click="Button_Click" Grid.Row="3" Grid.Column="9" Grid.RowSpan="2" x:Name="ENTER">
+            <Image Source="/Choreo;component/Pictures/Enter.PNG" Margin="3" />
+        </Button>
+    </Grid>
+</UserControl>

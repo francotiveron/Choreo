@@ -4,15 +4,35 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Choreo"
-             mc:Ignorable="d"
              Background="#333333"
+             mc:Ignorable="d"
              d:DesignHeight="250" d:DesignWidth="200">
     <Grid>
         <Grid.Resources>
-            <Style TargetType="{x:Type Button}">
-                <Setter Property="Background" Value="{x:Null}"/>
-                <Setter Property="Foreground" Value="White"/>
-                <Setter Property="FontSize" Value="30"/>
+            <Style TargetType="Button">
+                <Setter Property="OverridesDefaultStyle" Value="True" />
+                <Setter Property="Background" Value="{x:Null}" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="FontSize" Value="36" />
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter x:Name="MyContentPresenter" 
+                                          Content="{TemplateBinding Content}"
+                                          HorizontalAlignment="Center" 
+                                          VerticalAlignment="Center" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Foreground" Value="Gray"/>
+                    </Trigger>
+                </Style.Triggers>
             </Style>
         </Grid.Resources>
         <Grid.ColumnDefinitions>
@@ -30,23 +50,23 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" x:Name="ValueTextBox" Background="{x:Null}" Foreground="yellow" Text="0" MaxLines="1" FontSize="30" MaxLength="10" BorderThickness="3" TextAlignment="Right" />
-        <Button Click="Button_Click" Grid.Row="1" Grid.Column="0" x:Name="NUM7" Content="7"/>
+        <Button Click="Button_Click" Grid.Row="1" Grid.Column="0" x:Name="NUM7" Content="7" />
         <Button Click="Button_Click"  Grid.Row="1" Grid.Column="1" x:Name="NUM8" Content="8"/>
         <Button Click="Button_Click"  Grid.Row="1" Grid.Column="2" x:Name="NUM9" Content="9"/>
         <Button Click="Button_Click"  Grid.Row="1" Grid.Column="3" x:Name="BKSP">
-            <Image Source="/Choreo;component/Pictures/backspace.png" Margin="3"/>
+            <Image Source="/Choreo;component/Pictures/backspace.png" Margin="10"/>
         </Button>
         <Button Click="Button_Click"  Grid.Row="2" Grid.Column="0" x:Name="NUM4" Content="4"/>
         <Button Click="Button_Click"  Grid.Row="2" Grid.Column="1" x:Name="NUM5" Content="5"/>
         <Button Click="Button_Click"  Grid.Row="2" Grid.Column="2" x:Name="NUM6" Content="6"/>
         <Button Click="Button_Click"  Grid.Row="2" Grid.Column="3" x:Name="CLR">
-            <Image Source="/Choreo;component/Pictures/clear.PNG" />
+            <Image Source="/Choreo;component/Pictures/clear.PNG" Margin="5"/>
         </Button>
         <Button Click="Button_Click"  Grid.Row="3" Grid.Column="0" x:Name="NUM1" Content="1"/>
         <Button Click="Button_Click"  Grid.Row="3" Grid.Column="1" x:Name="NUM2" Content="2"/>
         <Button Click="Button_Click"  Grid.Row="3" Grid.Column="2" x:Name="NUM3" Content="3"/>
         <Button Click="Button_Click"  Grid.Row="3" Grid.Column="3" x:Name="RST">
-            <Image Source="/Choreo;component/Pictures/reset.PNG" Margin="3" />
+            <Image Source="/Choreo;component/Pictures/reset.PNG" Margin="10" />
         </Button>
         <Button Click="Button_Click"  Grid.Row="4" Grid.Column="0" x:Name="PM" Content="+/-"/>
         <Button Click="Button_Click"  Grid.Row="4" Grid.Column="1" x:Name="NUM0" Content="0"/>

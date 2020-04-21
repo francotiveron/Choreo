@@ -1,11 +1,12 @@
-﻿<local:ModeableListView x:Class="Choreo.CuesListView"
+﻿<UserControl x:Class="Choreo.ShowCueList"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:qc="clr-namespace:QuickConverter;assembly=QuickConverter"
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
-             d:DesignHeight="760" d:DesignWidth="1080">
+             d:DesignHeight="760" d:DesignWidth="540">
     <Grid>
         <ListView ItemsSource="{Binding Cues}" 
                   Background="{x:Null}" 
@@ -38,40 +39,19 @@
                                 <Setter Property="VerticalAlignment" Value="Center"/>
                                 <Setter Property="HorizontalAlignment" Value="Left"/>
                             </Style>
-                            <!--<Style TargetType="Button">
-                                <Setter Property="Background" Value="{x:Null}"/>
-                                <Setter Property="BorderBrush" Value="{x:Null}"/>
-                            </Style>-->
                         </Grid.Resources>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="150"/>
-                            <ColumnDefinition Width="150"/>
                             <ColumnDefinition/>
-                            <ColumnDefinition Style="{StaticResource HideableGridColumnStyle}"/>
-                            <ColumnDefinition Style="{StaticResource HideableGridColumnStyle}"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Label Content="{Binding Number}" ContentStringFormat="00" />
-                        <Label Content="{Binding Duration}" Grid.Column="1" ContentStringFormat="mm\:ss" />
-                        <Label Content="{Binding Name}" Grid.Column="2"/>
-                        <!--<Button x:Name="CueEditButton" Content="EDIT" Click="CueEditButton_Click" Grid.Column="3"/>-->
-                        <Button x:Name="CueEditButton" 
-                                Grid.Column="3"
-                                Click="CueEditButton_Click" 
-                                Margin="5" 
-                                Background="Blue" 
-                                BorderBrush="{x:Null}" 
-                                Foreground="{x:Null}">
-                            <Image Source="Pictures/Pen.png" Height="50"/>
-                        </Button>
-                        <Button x:Name="CueDeleteButton" 
-                                Grid.Column="4"
-                                Click="CueDeleteButton_Click" 
-                                Margin="5" 
-                                Background="#FFBB1010" 
-                                BorderBrush="{x:Null}" 
-                                Foreground="{x:Null}">
-                            <Image Source="Pictures/TrashBin.png" Height="50"/>
-                        </Button>
+                        <Label Content="{Binding Name}" Grid.Column="1"/>
+                        <Label Content="{Binding Duration}" Grid.Column="2" ContentStringFormat="mm\:ss" />
+                        <!--<Label Grid.Column="3" Content="{qc:Binding '$P ? \'Enabled\' : \'Disabled\'', P={Binding Enabled}}"/>-->
+                        <Label Grid.Column="3" Content="{Binding Path=Enabled, Converter={qc:QuickConverter '$P ? \'Enabled\' : \'Disabled\''}}"/>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -84,11 +64,11 @@
                         </Grid.RowDefinitions>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Style="{StaticResource HideableGridColumnStyle}"/>
-                                <ColumnDefinition Style="{StaticResource HideableGridColumnStyle}"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Grid.Resources>
                                 <Style TargetType="Border">
@@ -100,20 +80,22 @@
                                     <Setter Property="Foreground" Value="White"/>
                                     <Setter Property="FontSize" Value="24"/>
                                     <Setter Property="HorizontalAlignment" Value="Left"/>
-                                </Style>                            
+                                </Style>
                             </Grid.Resources>
                             <Border Grid.Column="0" >
                                 <Label>Number</Label>
                             </Border>
                             <Border Grid.Column="1" >
-                                <Label>Duration</Label>
-                            </Border>
-                            <Border Grid.Column="2" >
                                 <Label>Name</Label>
                             </Border>
+                            <Border Grid.Column="2" >
+                                <Label>Duration</Label>
+                            </Border>
                             <Border Grid.Column="3" >
+                                <Label>Status</Label>
                             </Border>
                             <Border Grid.Column="4" >
+                                <Label>Runtime</Label>
                             </Border>
                         </Grid>
                         <ScrollViewer Grid.Row="1" >
@@ -122,6 +104,6 @@
                     </Grid>
                 </ControlTemplate>
             </ListView.Template>
-       </ListView>
+        </ListView>
     </Grid>
-</local:ModeableListView>
+</UserControl>
