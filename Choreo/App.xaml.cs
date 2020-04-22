@@ -13,6 +13,11 @@ namespace Choreo
     public partial class App : Application
     {
         public App() {
+            var fc = new FeetInchesConvert(1.0);
+            fc.TryParse("3\"", out var r);
+
+
+
             VM.PropertyChanged += VM_PropertyChanged;
             QuickConverter.EquationTokenizer.AddNamespace(typeof(object));
             QuickConverter.EquationTokenizer.AddNamespace(typeof(System.Windows.Visibility));
