@@ -31,6 +31,6 @@ namespace Choreo {
         }
 
         public static readonly DependencyProperty SelectedCueProperty =
-            DependencyProperty.Register("SelectedCue", typeof(Cue), typeof(CuesListView));
+            DependencyProperty.Register("SelectedCue", typeof(Cue), typeof(ShowCueList));
     }
 }

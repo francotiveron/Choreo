@@ -1,21 +1,22 @@
-﻿<UserControl x:Class="Choreo.ShowCueList"
+﻿<UserControl x:Class="Choreo.ShowCueRowList"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:qc="clr-namespace:QuickConverter;assembly=QuickConverter"
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
              d:DesignHeight="760" d:DesignWidth="540">
+    <UserControl.Resources>
+        <local:CueRowMaGToStringConverter x:Key="CueRowMaGToStringConverter"/>
+    </UserControl.Resources>
     <Grid>
-        <ListView ItemsSource="{Binding Cues}" 
+        <ListView ItemsSource="{Binding Rows}" 
                   Background="{x:Null}" 
                   BorderBrush="{x:Null}" 
                   Foreground="White" 
                   HorizontalContentAlignment="Stretch"
                   VerticalAlignment="Top"
                   AlternationCount="2"
-                  SelectionChanged="ListView_SelectionChanged"
                   >
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
@@ -37,24 +38,24 @@
                         <Grid.Resources>
                             <Style TargetType="Label">
                                 <Setter Property="Foreground" Value="White"/>
-                                <Setter Property="FontSize" Value="18"/>
+                                <Setter Property="FontSize" Value="20"/>
                                 <Setter Property="Padding" Value="0"/>
                                 <Setter Property="VerticalAlignment" Value="Center"/>
                                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
                             </Style>
                         </Grid.Resources>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="70"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
                             <ColumnDefinition Width="100"/>
                             <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
-                        <Label Content="{Binding Number}" ContentStringFormat="00" />
-                        <Label Content="{Binding Name}" Grid.Column="1"/>
-                        <Label Content="{Binding Duration}" Grid.Column="2" ContentStringFormat="mm\:ss" />
-                        <!--<Label Grid.Column="3" Content="{qc:Binding '$P ? \'Enabled\' : \'Disabled\'', P={Binding Enabled}}"/>-->
-                        <Label Grid.Column="3" Content="{Binding Path=Enabled, Converter={qc:QuickConverter '$P ? \'Enabled\' : \'Disabled\''}}"/>
+                        <Label Content="{Binding Converter={StaticResource CueRowMaGToStringConverter}}" ContentStringFormat="00" />
+                        <Label Content="{Binding Target}" Grid.Column="1"/>
+                        <Label Content="{Binding Acceleration}" Grid.Column="2"/>
+                        <Label Content="{Binding Velocity}" Grid.Column="3"/>
+                        <Label Content="{Binding Deceleration}" Grid.Column="4"/>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -67,25 +68,25 @@
                         </Grid.RowDefinitions>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="70"/>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="100"/>
                             </Grid.ColumnDefinitions>
                             <Grid.Resources>
                                 <Style TargetType="Label">
                                     <Setter Property="Foreground" Value="White"/>
-                                    <Setter Property="FontSize" Value="20"/>
-                                    <Setter Property="Padding" Value="0"/>
+                                    <Setter Property="FontSize" Value="18"/>
                                     <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                    <Setter Property="Padding" Value="0"/>
                                 </Style>
                             </Grid.Resources>
-                            <Label Grid.Column="0" Content="Num"/>
-                            <Label Grid.Column="1" Content="Name"/>
-                            <Label Grid.Column="2" Content="Duration"/>
-                            <Label Grid.Column="3" Content="Status"/>
-                            <Label Grid.Column="4" Content="Runtime"/>
+                            <Label>Axis/Group</Label>
+                            <Label Grid.Column="1">Target</Label>
+                            <Label Grid.Column="2">Acceleration</Label>
+                            <Label Grid.Column="3">Velocity</Label>
+                            <Label Grid.Column="4">Deceleration</Label>
                         </Grid>
                         <ScrollViewer Grid.Row="1" >
                             <ItemsPresenter />

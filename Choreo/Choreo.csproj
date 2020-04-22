@@ -224,6 +224,9 @@
     <Compile Include="ShowCueList.xaml.cs">
       <DependentUpon>ShowCueList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ShowCueRowList.xaml.cs">
+      <DependentUpon>ShowCueRowList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ShowPage.xaml.cs">
       <DependentUpon>ShowPage.xaml</DependentUpon>
     </Compile>
@@ -370,6 +373,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ShowCueList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ShowCueRowList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
