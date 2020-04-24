@@ -30,7 +30,7 @@ namespace Choreo.Input {
             switch(but.Name) {
                 case "NEXT":
                 case "PREV":
-                    if (DataItem != null) DataItem.StrVal = Value;
+                    if (DataItem != null) StrVal = Value;
                     PadEvent?.Invoke(this, new PadEventArgs { Name = but.Name, DataItem = DataItem }); ;
                     break;
                 case "BKSP":
@@ -40,7 +40,7 @@ namespace Choreo.Input {
                     Value = string.Empty;
                     break;
                 case "RST":
-                    Value = DataItem.StrVal;
+                    Value = StrVal;
                     break;
                 case "PM":
                     if (Value.Length > 0) {
@@ -49,7 +49,10 @@ namespace Choreo.Input {
                     }
                     break;
                 case "DOT":
-                    if (!Value.Contains('.')) Value = Value + '.';
+                    if (!Value.Contains('.') && char.IsDigit(Value.Last())) Value = Value + '.';
+                    break;
+                case "FEET":
+                    if (!Value.Contains("'") && DataItem.IsPosition && int.TryParse(Value, out _)) Value = Value + "'";
                     break;
                 default:
                     if (but.Name.StartsWith("NUM")) Value += but.Content;
@@ -78,9 +81,13 @@ namespace Choreo.Input {
                 if (dataItem == null) IsEnabled = false;
                 else {
                     IsEnabled = true;
-                    Value = dataItem.StrVal;
+                    Value = StrVal;
                 }
             }
+        }
+        string StrVal {
+            get => dataItem.StrVal.Replace("\"", string.Empty);
+            set => DataItem.StrVal = value;
         }
     }
 }

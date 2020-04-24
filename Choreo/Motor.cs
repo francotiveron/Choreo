@@ -15,11 +15,16 @@ namespace Choreo
     {
         public Motor(int index) { Index = index; }
 
+        public double Rotations {
+            get => Position / FeetPerRotation;
+            set => Position = value * FeetPerRotation;
+        }
+
         double position;
         [DataItem]
         public double Position {
             get => position;
-            set { position = value; OnPropertyChanged(); }
+            private set { position = value; OnPropertyChanged(); }
         }
         private int positionStatus;
         public int PositionStatus {
@@ -188,11 +193,11 @@ namespace Choreo
             set { loadOffs = value; OnPropertyChanged(); }
         }
 
-        double rotations;
-        [DataItem("lbs", "Motor Rotations"), Persistent]
-        public double Rotations {
-            get => rotations;
-            set { rotations = value; OnPropertyChanged(); }
+        double feetPerRotation = 1.0;
+        [DataItem("ft", "Feet/Rotation"), Persistent]
+        public double FeetPerRotation {
+            get => feetPerRotation;
+            set { feetPerRotation = value <= 0.0 ? 1.0 : value; OnPropertyChanged(); }
         }
         #endregion
     }

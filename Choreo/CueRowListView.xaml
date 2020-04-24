@@ -31,7 +31,7 @@
                             <ColumnDefinition Style="{StaticResource HideableGridColumnStyle}"/>
                         </Grid.ColumnDefinitions>
                         <local:MotAndGroUI x:Name="MaG" Margin="5" Focusable="True"/>
-                        <local:DataItemUI x:Name="Target" Grid.Column="1" DataContext="{Binding Target}" Margin="5" Focusable="True" EditOrderNext="{Binding ElementName=Velocity}" EditOrderPrev="{Binding ElementName=Deceleration}"/>
+                        <local:DataItemUI x:Name="Target" Grid.Column="1" DataContext="{Binding Target, Converter={StaticResource PositionConverter}}" Margin="5" Focusable="True" EditOrderNext="{Binding ElementName=Velocity}" EditOrderPrev="{Binding ElementName=Deceleration}"/>
                         <local:DataItemUI x:Name="Velocity" Grid.Column="2" DataContext="{Binding Velocity}" Margin="5" Focusable="True" EditOrderNext="{Binding ElementName=Acceleration}" EditOrderPrev="{Binding ElementName=Target}"/>
                         <local:DataItemUI x:Name="Acceleration" Grid.Column="3" DataContext="{Binding Acceleration}" Margin="5" Focusable="True" EditOrderNext="{Binding ElementName=Deceleration}" EditOrderPrev="{Binding ElementName=Velocity}"/>
                         <local:DataItemUI x:Name="Deceleration" Grid.Column="4" DataContext="{Binding Deceleration}" Margin="5"  Focusable="True" EditOrderNext="{Binding ElementName=Target}" EditOrderPrev="{Binding ElementName=Acceleration}"/>

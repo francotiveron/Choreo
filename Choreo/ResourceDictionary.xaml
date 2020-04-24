@@ -10,6 +10,7 @@
     <local:StatusBrushConverter x:Key="StatusBrushConverter"/>
     <local:DataItemEnablingConverter x:Key="DataItemEnablingConverter"/>
     <local:PresetBottomPanelButtonColorConverter x:Key="PresetBottomPanelButtonColorConverter"/>
+    <local:PositionConverter x:Key="PositionConverter"/>
 
     <Style TargetType="{x:Type Window}">
         <Setter Property="Background" Value="{StaticResource DefaultBackgroundBrush}"/>

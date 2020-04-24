@@ -16,6 +16,12 @@ namespace Choreo
         public Group(int index) { Index = index; }
 
         public bool Contains(int motorIndex) => VM.Motors.Any(m => m.Group == Index);
+
+        public double Rotations {
+            get => Position / FeetPerRotation;
+            set => Position = value * FeetPerRotation;
+        }
+
         double position;
         [DataItem]
         public double Position {
@@ -159,11 +165,11 @@ namespace Choreo
             set { loadOffs = value; OnPropertyChanged(); }
         }
 
-        double rotations;
-        [DataItem("lbs", "Motor Rotations"), Persistent]
-        public double Rotations {
-            get => rotations;
-            set { rotations = value; OnPropertyChanged(); }
+        double feetPerRotation = 1.0;
+        [DataItem("ft", "Feet/Rotation"), Persistent]
+        public double FeetPerRotation {
+            get => feetPerRotation;
+            set { feetPerRotation = value <= 0.0 ? 1.0: value; OnPropertyChanged(); }
         }
         #endregion
     }

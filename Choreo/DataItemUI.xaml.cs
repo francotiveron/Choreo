@@ -22,9 +22,13 @@ namespace Choreo {
         object dc;
         PropertyInfo pi;
         DependencyObject focusScope = null;
+        public bool IsPosition { get; private set; }
+
         private void DataItemUI_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e) {
             var binding = BindingOperations.GetBinding(this, DataContextProperty);
             if (binding == null) return;
+
+            IsPosition = binding.Converter == Application.Current.Resources["PositionConverter"];
 
             dc = (Parent ?? TemplatedParent).GetValue(DataContextProperty);
             var type = dc.GetType();
@@ -57,7 +61,15 @@ namespace Choreo {
         void Set(object v) => pi.SetValue(dc, v);
 
         void Set(string v) {
-            object value = Convert.ChangeType(v, pi.PropertyType);
+            object value = null;
+            if (IsPosition) {
+                if (FeetInchesConvert.TryParse(v, out double? feet)) value = feet;
+            }
+            else {
+                value = Convert.ChangeType(v, pi.PropertyType);
+                if (value is double dv) value = Math.Round(dv, 3);
+            }
+
             Set(value);
         }
         public string StrVal {
@@ -186,10 +198,20 @@ namespace Choreo {
         }
     }
 
-
     public class DataItemEnablingConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             return (Visibility)value == Visibility.Visible;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class PositionConverter : IValueConverter {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            var feet = (double)value;
+            return FeetInchesConvert.ToString(feet);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {

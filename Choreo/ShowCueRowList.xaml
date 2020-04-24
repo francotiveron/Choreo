@@ -52,7 +52,7 @@
                             <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="{Binding Converter={StaticResource CueRowMaGToStringConverter}}" ContentStringFormat="00" />
-                        <Label Content="{Binding Target}" Grid.Column="1"/>
+                        <Label Content="{Binding Target, Converter={StaticResource PositionConverter}}" Grid.Column="1"/>
                         <Label Content="{Binding Acceleration}" Grid.Column="2"/>
                         <Label Content="{Binding Velocity}" Grid.Column="3"/>
                         <Label Content="{Binding Deceleration}" Grid.Column="4"/>

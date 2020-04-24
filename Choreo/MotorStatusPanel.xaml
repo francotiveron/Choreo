@@ -18,7 +18,7 @@
                 <RowDefinition Height="8*"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <local:DataItemUI DataContext="{Binding Position}"/>
+            <local:DataItemUI DataContext="{Binding Position, Converter={StaticResource PositionConverter}}"/>
             <local:DataItemUI Grid.Row="1" DataContext="{Binding Load}"/>
             <local:MotorStatusIndicator Grid.Row="2"/>
             <Rectangle Grid.Row="3" Fill="{Binding Status, Converter={StaticResource StatusBrushConverter}, FallbackValue=Gray}"/>

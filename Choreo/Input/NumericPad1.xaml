@@ -49,7 +49,21 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" x:Name="ValueTextBox" Background="{x:Null}" Foreground="yellow" Text="0" MaxLines="1" FontSize="30" MaxLength="10" BorderThickness="3" TextAlignment="Right" />
+        <TextBox 
+            Grid.Row="0" 
+            Grid.Column="0" 
+            Grid.ColumnSpan="4" 
+            x:Name="ValueTextBox" 
+            Background="{x:Null}" 
+            Foreground="yellow" 
+            Text="0" 
+            MaxLines="1" 
+            FontSize="30" 
+            MaxLength="10" 
+            BorderThickness="3" 
+            TextAlignment="Right" 
+            IsReadOnly="True"
+            />
         <Button Click="Button_Click" Grid.Row="1" Grid.Column="0" x:Name="NUM7" Content="7" />
         <Button Click="Button_Click"  Grid.Row="1" Grid.Column="1" x:Name="NUM8" Content="8"/>
         <Button Click="Button_Click"  Grid.Row="1" Grid.Column="2" x:Name="NUM9" Content="9"/>
