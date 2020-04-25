@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,7 +25,7 @@ namespace Choreo
         public static RoutedCommand HomeCmd = new RoutedCommand();
         public static RoutedCommand CueingCmd = new RoutedCommand();
         public static RoutedCommand ShowCmd = new RoutedCommand();
-
+       
         public MainWindow()
         {
             InitializeComponent();
@@ -33,6 +34,13 @@ namespace Choreo
             SelectPage();
             VM.PropertyChanged += VM_PropertyChanged;
         }
+
+        protected override void OnClosing(CancelEventArgs e) {
+            VM.PropertyChanged -= VM_PropertyChanged;
+            base.OnClosing(e);
+        }
+
+        ~MainWindow() {}
 
         private void VM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
             if (e.PropertyName == "GroupBeingEdited") {

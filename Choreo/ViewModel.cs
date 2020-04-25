@@ -1,40 +1,39 @@
-﻿using System;
+﻿using Choreo.TwinCAT;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
 using static Choreo.Storage;
 using static System.Linq.Enumerable;
 
-namespace Choreo
-{
-    using Cfg = Configuration;
+namespace Choreo {
     public enum MainWindowPages { Home, Cueing, Show };
     public class ViewModel: PropertyChangedNotifier
     {
         public ViewModel() {
             CurrentMainWindowPage = MainWindowPages.Home;
-            Plc = PlcFactory.New(Cfg.PLCId); 
         }
+
         public List<Motor> Motors { get; } = new List<Motor>(Range(0, 16).Select(i => new Motor(i)));
+
         public List<Group> Groups { get; } = new List<Group>(Range(0, 8).Select(i => new Group(i)));
         public List<Preset> Presets { get; } = new List<Preset>(Range(0, 8).Select(i => new Preset(i)));
         public ObservableCollection<Cue> Cues { get; } = new ObservableCollection<Cue>();
         public Motion Motion { get; } = new Motion();
-        public IPlc Plc { get; private set; }
 
-        MainWindowPages currentMainWindowPage;
-        public MainWindowPages CurrentMainWindowPage {
-            get => currentMainWindowPage;
-            set { currentMainWindowPage = value; OnPropertyChanged(); }
+        #region Runtime Properties
+        private bool moveActive;
+        public bool MoveActive {
+            get { return moveActive; }
+            set { moveActive = value; OnPropertyChanged(); }
         }
 
-        public bool IsEditing => IsGroupEditing || IsPresetEditing;
+        private bool cueLoaded;
+        public bool CueLoaded {
+            get { return cueLoaded; }
+            set { cueLoaded = value; OnPropertyChanged(); }
+        }
+        #endregion
 
         #region ******************Motor and Group Settings Editing******************
         int motorSettingsBeingEdited;
@@ -182,7 +181,7 @@ namespace Choreo
         }
         #endregion
 
-        #region Motion
+        #region ***********************Motion***************************
 
         private bool motionEditing;
 
@@ -199,6 +198,22 @@ namespace Choreo
         public void EndMotionEditing() {
             MotionEditing = false;
         }
+
+        internal void SaveMotionEditing() {
+            Motion.Upload();
+            MotionEditing = false;
+        }
+
+        #endregion
+
+        #region Other Properties
+        MainWindowPages currentMainWindowPage;
+        public MainWindowPages CurrentMainWindowPage {
+            get => currentMainWindowPage;
+            set { currentMainWindowPage = value; OnPropertyChanged(); }
+        }
+        public bool IsEditing => IsGroupEditing || IsPresetEditing;
+
         #endregion
     }
 

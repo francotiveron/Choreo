@@ -1,4 +1,5 @@
 ﻿using Choreo.Input;
+using Choreo.TwinCAT;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -6,11 +7,17 @@ using System.Windows.Media;
 
 namespace Choreo
 {
+    using Cfg = Configuration;
     public static class Globals {
         public static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
-        public static ViewModel VM { get; } = new ViewModel();
-        static Globals() => Storage.LoadAll();
-        public static void Edit(object o) => Pad.Edit(o);
+        public static ViewModel VM { get; private set; }
+        public static IPlc Plc { get; private set; }
+        static Globals() {
+            VM = new ViewModel();
+            Storage.LoadAll();
+            Plc = PlcFactory.New(Cfg.PLCId);
+            Plc.Init();
+        }
         public enum DataStates { OK, Warning, Error };
         //public static object FindWPFTreeUp(this DependencyObject start, Func<DependencyObject, bool> selector, Func<DependencyObject, object> mapper) {
         //    for (DependencyObject depo = start; depo != null; depo = VisualTreeHelper.GetParent(depo)) if (selector(depo)) return mapper(depo);

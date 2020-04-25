@@ -62,6 +62,8 @@ namespace Choreo
         }
         public void PresetTouch() => ++PresetTouches;
         public int Index { get; set; }
+        public int Number => Index + 1;
+
         public Color Color => GroupColors[Index];
 
         #region Settings

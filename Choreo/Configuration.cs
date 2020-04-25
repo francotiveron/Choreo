@@ -8,6 +8,6 @@ namespace Choreo
 {
     static class Configuration
     {
-        public static string PLCId = "DEMO";
+        public static string PLCId = "Local";
     }
 }

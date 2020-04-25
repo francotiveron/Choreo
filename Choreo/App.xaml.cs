@@ -66,6 +66,9 @@ namespace Choreo
             MainWindow = newWindow;
             newWindow.Show();
             oldWindow.Close();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
         }
 
         protected override void OnStartup(StartupEventArgs e)

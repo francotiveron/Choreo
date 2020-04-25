@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:qc="clr-namespace:QuickConverter;assembly=QuickConverter"
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1080">
@@ -35,22 +36,70 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <local:MotorPanel Grid.Row="0" Grid.Column="0" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[0]}"/>
-                <local:MotorPanel Grid.Row="0" Grid.Column="1" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[1]}"/>
-                <local:MotorPanel Grid.Row="0" Grid.Column="2" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[2]}"/>
-                <local:MotorPanel Grid.Row="0" Grid.Column="3" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[3]}"/>
-                <local:MotorPanel Grid.Row="0" Grid.Column="4" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[4]}"/>
-                <local:MotorPanel Grid.Row="0" Grid.Column="5" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[5]}"/>
-                <local:MotorPanel Grid.Row="0" Grid.Column="6" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[6]}"/>
-                <local:MotorPanel Grid.Row="0" Grid.Column="7" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[7]}"/>
-                <local:MotorPanel Grid.Row="1" Grid.Column="0" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[8]}"/>
-                <local:MotorPanel Grid.Row="1" Grid.Column="1" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[9]}"/>
-                <local:MotorPanel Grid.Row="1" Grid.Column="2" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[10]}"/>
-                <local:MotorPanel Grid.Row="1" Grid.Column="3" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[11]}"/>
-                <local:MotorPanel Grid.Row="1" Grid.Column="4" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[12]}"/>
-                <local:MotorPanel Grid.Row="1" Grid.Column="5" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[13]}"/>
-                <local:MotorPanel Grid.Row="1" Grid.Column="6" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[14]}"/>
-                <local:MotorPanel Grid.Row="1" Grid.Column="7" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[15]}"/>
+                <local:MotorPanel Grid.Row="0" Grid.Column="0" 
+                    DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[0]}" 
+                    Visibility="{qc:Binding '$P ? Visibility.Visible : Visibility.Collapsed', P={Binding IsPresent}}"
+                />
+                <local:MotorPanel Grid.Row="0" Grid.Column="1" 
+                    DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[1]}"
+                    Visibility="{qc:Binding '$P ? Visibility.Visible : Visibility.Collapsed', P={Binding IsPresent}}"
+                />
+                <local:MotorPanel Grid.Row="0" Grid.Column="2" 
+                    DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[2]}" 
+                    Visibility="{qc:Binding '$P ? Visibility.Visible : Visibility.Collapsed', P={Binding IsPresent}}"
+                />
+                <local:MotorPanel Grid.Row="0" Grid.Column="3" 
+                    DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[3]}"
+                    Visibility="{qc:Binding '$P ? Visibility.Visible : Visibility.Collapsed', P={Binding IsPresent}}"
+                />
+                <local:MotorPanel Grid.Row="0" Grid.Column="4" 
+                    DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[4]}" 
+                    Visibility="{qc:Binding '$P ? Visibility.Visible : Visibility.Collapsed', P={Binding IsPresent}}"
+                />
+                <local:MotorPanel Grid.Row="0" Grid.Column="5" 
+                    DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[5]}"
+                    Visibility="{qc:Binding '$P ? Visibility.Visible : Visibility.Collapsed', P={Binding IsPresent}}"
+                />
+                <local:MotorPanel Grid.Row="0" Grid.Column="6" 
+                    DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[6]}" 
+                    Visibility="{qc:Binding '$P ? Visibility.Visible : Visibility.Collapsed', P={Binding IsPresent}}"
+                />
+                <local:MotorPanel Grid.Row="0" Grid.Column="7" 
+                    DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[7]}"
+                    Visibility="{qc:Binding '$P ? Visibility.Visible : Visibility.Collapsed', P={Binding IsPresent}}"
+                />
+                <local:MotorPanel Grid.Row="1" Grid.Column="0" 
+                    DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[8]}" 
+                    Visibility="{qc:Binding '$P ? Visibility.Visible : Visibility.Collapsed', P={Binding IsPresent}}"
+                />
+                <local:MotorPanel Grid.Row="1" Grid.Column="1" 
+                    DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[9]}"
+                    Visibility="{qc:Binding '$P ? Visibility.Visible : Visibility.Collapsed', P={Binding IsPresent}}"
+                />
+                <local:MotorPanel Grid.Row="1" Grid.Column="2" 
+                    DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[10]}" 
+                    Visibility="{qc:Binding '$P ? Visibility.Visible : Visibility.Collapsed', P={Binding IsPresent}}"
+                />
+                <local:MotorPanel Grid.Row="1" Grid.Column="3" 
+                    DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[11]}"
+                    Visibility="{qc:Binding '$P ? Visibility.Visible : Visibility.Collapsed', P={Binding IsPresent}}"
+                />
+                <local:MotorPanel Grid.Row="1" Grid.Column="4" 
+                    DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[12]}"
+                    Visibility="{qc:Binding '$P ? Visibility.Visible : Visibility.Collapsed', P={Binding IsPresent}}"
+                />
+                <local:MotorPanel Grid.Row="1" Grid.Column="5" 
+                    DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[13]}"
+                    Visibility="{qc:Binding '$P ? Visibility.Visible : Visibility.Collapsed', P={Binding IsPresent}}"
+                />
+                <local:MotorPanel Grid.Row="1" Grid.Column="6" 
+                    DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[14]}"
+                    Visibility="{qc:Binding '$P ? Visibility.Visible : Visibility.Collapsed', P={Binding IsPresent}}"
+                />
+                <local:MotorPanel Grid.Row="1" Grid.Column="7" 
+                    DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Motors[15]}"
+                    Visibility="{qc:Binding '$P ? Visibility.Visible : Visibility.Collapsed', P={Binding IsPresent}}"
+                />
             </Grid>
             <Grid Grid.Row ="3" x:Name="AxisGroupsGrid">
                 <Grid.ColumnDefinitions>

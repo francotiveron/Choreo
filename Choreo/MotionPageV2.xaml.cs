@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,6 +18,7 @@ namespace Choreo {
             InitializeCheckGrids();
             FocusManager.AddGotFocusHandler(this, Focus);
         }
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e) {
             if (((Motion)DataContext).Hook is Group) HookGrid.Children.Remove(AxisGroup);
             FocusManager.SetFocusedElement(EditableElementsGrid, Velocity);
