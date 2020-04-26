@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Choreo.TwinCAT;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -18,9 +19,9 @@ namespace Choreo {
             set => Position = value * FeetPerRotation;
         }
 
-        #region Runtime Properties
+        #region Runtime+PLC Properties
         double position;
-        [DataItem]
+        [DataItem, Plc("Act_Pos")]
         public double Position {
             get => position;
             private set { position = value; OnPropertyChanged(); }
@@ -32,7 +33,7 @@ namespace Choreo {
         }
 
         double load;
-        [DataItem("lbs")]
+        [DataItem("lbs"), Plc]
         public double Load {
             get => load;
             set { load = value; OnPropertyChanged(); }
@@ -43,49 +44,60 @@ namespace Choreo {
             set { loadStatus = value; OnPropertyChanged(); }
         }
 
-        bool isOK;
-        public bool IsOK {
-            get => isOK;
-            set { isOK = value; OnPropertyChanged(); }
+        [Plc("Min_Load")]
+        public double LoadMin {
+            set => MinLoad = value;
+        }
+
+        [Plc("Max_Load")]
+        public double LoadMax {
+            set => MaxLoad = value;
         }
 
         double moveVal;
+        [Plc("Move_Val")]
         public double MoveVal {
             get => moveVal;
             set { moveVal = value; OnPropertyChanged(); }
         }
 
         double accel;
+        [Plc]
         public double Accel {
             get => accel;
             set { accel = value; OnPropertyChanged(); }
         }
 
         double decel;
+        [Plc]
         public double Decel {
             get => decel;
             set { decel = value; OnPropertyChanged(); }
         }
 
         double velocity;
+        [Plc]
         public double Velocity {
             get => velocity;
             set { velocity = value; OnPropertyChanged(); }
         }
 
         bool mAEnable;
+        [Plc("MA_Enable")]
         public bool MAEnable {
             get => mAEnable;
             set { mAEnable = value; OnPropertyChanged(); }
         }
 
         bool mREnable;
+        [Plc("MR_Enable")]
         public bool MREnable {
             get => mREnable;
             set { mREnable = value; OnPropertyChanged(); }
         }
 
         bool jogUpEnable;
+        [Plc("Jog_Up_Enable")]
         public bool JogUpEnable {
             get => jogUpEnable;
             set { jogUpEnable = value; OnPropertyChanged(); }
@@ -93,93 +105,114 @@ namespace Choreo {
 
 
         bool jogDnEnable;
+        [Plc("Jog_Dn_Enable")]
         public bool JogDnEnable {
             get => jogDnEnable;
             set { jogDnEnable = value; OnPropertyChanged(); }
         }
 
         bool fwdLim;
+        [Plc("Fwd_Lim")]
         public bool FwdLim {
             get => fwdLim;
             set { fwdLim = value; OnPropertyChanged(); }
         }
 
         bool revLim;
+        [Plc("Rev_Lim")]
         public bool RevLim {
             get => revLim;
             set { revLim = value; OnPropertyChanged(); }
         }
 
         bool fwdUltLim;
+        [Plc("Fwd_Ult_Lim")]
         public bool FwdUltLim {
             get => fwdUltLim;
             set { fwdUltLim = value; OnPropertyChanged(); }
         }
 
         bool revUltLim;
+        [Plc("Rev_Ult_Lim")]
         public bool RevUltLim {
             get => revUltLim;
             set { revUltLim = value; OnPropertyChanged(); }
         }
 
         bool overLoad;
+        [Plc("Over_Load")]
         public bool OverLoad {
             get => overLoad;
             set { overLoad = value; OnPropertyChanged(); }
         }
 
         bool underLoad;
+        [Plc("Under_Load")]
         public bool UnderLoad {
             get => underLoad;
             set { underLoad = value; OnPropertyChanged(); }
         }
 
         bool driveStatus;
+        [Plc("Drive_Status")]
         public bool DriveStatus {
             get => driveStatus;
             set { driveStatus = value; OnPropertyChanged(); }
         }
 
         bool moveComplete;
+        [Plc("Move_Complete")]
         public bool MoveComplete {
             get => moveComplete;
             set { moveComplete = value; OnPropertyChanged(); }
         }
 
         bool userEnable;
+        [Plc("User_Enable")]
         public bool UserEnable {
             get => userEnable;
             set { userEnable = value; OnPropertyChanged(); }
         }
 
         bool eSStatus;
+        [Plc("ES_Status")]
         public bool ESStatus {
             get => eSStatus;
             set { eSStatus = value; OnPropertyChanged(); }
         }
 
         bool active;
+        [Plc]
         public bool Active {
             get => active;
             set { active = value; OnPropertyChanged(); }
         }
 
         bool present;
+        [Plc]
         public bool Present {
             get => present;
             set { present = value; OnPropertyChanged(); }
         }
 
         double calibrationValue;
+        [Plc("Calibration_Value")]
         public double CalibrationValue {
             get => calibrationValue;
             set { calibrationValue = value; OnPropertyChanged(); }
         }
 
         bool calibrationSave;
+        [Plc("Calibration_Save")]
         public bool CalibrationSave {
             get => calibrationSave;
             set { calibrationSave = value; OnPropertyChanged(); }
+        }
+
+        bool isOK;
+        public bool IsOK {
+            get => isOK;
+            set { isOK = value; OnPropertyChanged(); }
         }
         #endregion
 

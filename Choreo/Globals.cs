@@ -16,7 +16,7 @@ namespace Choreo
             VM = new ViewModel();
             Storage.LoadAll();
             Plc = PlcFactory.New(Cfg.PLCId);
-            Plc.Init();
+            //Plc.Init();
         }
         public enum DataStates { OK, Warning, Error };
         //public static object FindWPFTreeUp(this DependencyObject start, Func<DependencyObject, bool> selector, Func<DependencyObject, object> mapper) {

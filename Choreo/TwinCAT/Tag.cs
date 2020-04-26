@@ -1,35 +1,35 @@
 ﻿using System;
+using System.Windows.Forms;
 using TwinCAT.Ads.Reactive;
 using TwinCAT.TypeSystem;
 using static Choreo.Globals;
 
 namespace Choreo.TwinCAT {
     public interface ITag {
-        string Path { get; }
-        void Write(object value);
-        object Read();
+        ISymbol Symbol { get; set; }
         void Push(object value);
     }
     
     public class Tag: ITag {
-        public Tag(string path, Action<object> pusher = null) { 
-            Path = $"GVL.{path}";
+        public Tag(Action<object> pusher = null) { 
             Pusher = pusher;
         }
-
-        public string Path { get; private set; }
+        public ISymbol Symbol { get; set; }
         public Action<object> Pusher { get; private set; }
 
         public virtual void Push(object value) {
             Pusher?.Invoke(value);
         }
 
-        public virtual object Read() {
-            throw new NotImplementedException();
+        public static string GetKey(string typeName, string propName, int? number = null) {
+            if (number.HasValue) return $"{typeName}_{number:00}_{propName}";
+            else return $"{typeName}_{propName}";
         }
-
-        public virtual void Write(object value) {
-            throw new NotImplementedException();
+        public static string GetKey(object obj, string propName) {
+            var type = obj.GetType();
+            var numberPi = type.GetProperty("Number");
+            int? number = (int?)numberPi?.GetValue(obj);
+            return GetKey(type.Name, propName, number);
         }
     }
 }

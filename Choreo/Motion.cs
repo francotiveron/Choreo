@@ -60,9 +60,5 @@ namespace Choreo {
             get { return deceleration; }
             set { deceleration = value; OnPropertyChanged(); }
         }
-
-        public void Upload() {
-
-        }
     }
 }

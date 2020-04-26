@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using static Choreo.Storage;
+using static Choreo.Globals;
 using static System.Linq.Enumerable;
 
 namespace Choreo {
@@ -23,12 +24,14 @@ namespace Choreo {
 
         #region Runtime Properties
         private bool moveActive;
+        [Plc("Move_Active")]
         public bool MoveActive {
             get { return moveActive; }
             set { moveActive = value; OnPropertyChanged(); }
         }
 
         private bool cueLoaded;
+        [Plc("Cue_loaded")]
         public bool CueLoaded {
             get { return cueLoaded; }
             set { cueLoaded = value; OnPropertyChanged(); }
@@ -200,7 +203,7 @@ namespace Choreo {
         }
 
         internal void SaveMotionEditing() {
-            Motion.Upload();
+            Plc.Upload(Motion);
             MotionEditing = false;
         }
 
