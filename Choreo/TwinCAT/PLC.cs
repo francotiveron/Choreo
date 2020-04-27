@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
-using System.Security.Cryptography;
-using System.Windows.Threading;
+using System.Threading;
 using TwinCAT;
 using TwinCAT.Ads;
 using TwinCAT.Ads.Reactive;
@@ -12,6 +11,7 @@ using TwinCAT.Ads.SumCommand;
 using TwinCAT.Ads.TypeSystem;
 using TwinCAT.TypeSystem;
 using static Choreo.Globals;
+using Cfg = Choreo.Configuration;
 
 namespace Choreo.TwinCAT {
     public interface IPlc {
@@ -20,22 +20,24 @@ namespace Choreo.TwinCAT {
 
     static public class PlcFactory
     {
-        public static IPlc New(string Id)
+        public static IPlc New(string Id = null)
         {
-            if (Id.ToLower() == "demo") return new MockPlc();
-            return new AdsPlc().Init();
+            if (Id?.ToLower() == "demo") return new MockPlc();
+            return new AdsPlc(Cfg.PlcAmsNetId, Cfg.PlcAmsPort).Init();
         }
     }
     
     class AdsPlc: PropertyChangedNotifier, IPlc
     {
-        AdsSession adsSession = new AdsSession(AmsNetId.Local, 851);
+        AdsSession adsSession;
         IDisposable notificationSubscription;
         IObserver<ValueChangedArgs> symbolNotificationObserver;
-        DispatcherTimer monitorTimer;
+        Timer monitorTimer;
         TagCollection tags;
 
-        public AdsPlc() { }
+        public AdsPlc(AmsNetId amsNetId, AmsPort amsPort) {
+            adsSession = new AdsSession(amsNetId, (int)amsPort);
+        }
 
         AdsConnection Connection => adsSession.Connection;
         public AdsPlc Init()
@@ -49,75 +51,86 @@ namespace Choreo.TwinCAT {
         }
 
 
-        bool isOn;
-        public bool IsOn { 
-            get => isOn; 
-            private set { isOn = value; OnPropertyChanged(); } 
+        bool isConnectionOK;
+        bool IsConnectionOK {
+            get => isConnectionOK;
+            set { isConnectionOK = value; OnPropertyChanged("IsOn"); }
         }
+
+        bool areSymbolsOK;
+        bool AreSymbolsOK {
+            get => areSymbolsOK;
+            set { areSymbolsOK = value; OnPropertyChanged("IsOn"); }
+        }
+
+        public bool IsOn => IsConnectionOK && AreSymbolsOK;
 
         #region Monitor
         void StartMonitor() {
-            monitorTimer = new DispatcherTimer();
-            monitorTimer.Interval = TimeSpan.FromSeconds(1.0);
-            monitorTimer.Tick += (_sender, _ea) => Monitor();
-            monitorTimer.Start();
+            monitorTimer = new Timer(Monitor, null, 1000, Timeout.Infinite);
         }
 
-        void Monitor() {
-            try {
-                bool val = (bool)Connection.ReadSymbol("GVL.Watchdog_OK", typeof(bool), false);
-                IsOn = IsOn || Setup();
-            }
-            catch {
-                if (IsOn) {
-                    notificationSubscription.Dispose();
-                    IsOn = false;
+        void Monitor(object state) {
+            monitorTimer.Change(Timeout.Infinite, Timeout.Infinite);
+            
+            bool IsHealthy() {
+                if (Connection.State == ConnectionState.Connected) {
+                    try {
+                        bool val = (bool)Connection.ReadSymbol("GVL.Watchdog_OK", typeof(bool), false);
+                        return true;
+                    }
+                    catch { return false; }
                 }
-            }
-        }
-
-        bool Setup() {
-            void Hook() {
-                Connection.AdsStateChanged += Conn_AdsStateChanged;
-                Connection.AdsNotificationError += Conn_AdsNotificationError;
-                Connection.AdsSymbolVersionChanged += Conn_AdsSymbolVersionChanged;
+                return false;
             }
 
-            void Unhook() {
-                Connection.AdsStateChanged -= Conn_AdsStateChanged;
-                Connection.AdsNotificationError -= Conn_AdsNotificationError;
-                Connection.AdsSymbolVersionChanged -= Conn_AdsSymbolVersionChanged;
-                IsOn = false;
-            }
+            var healthy = IsHealthy();
 
-            try {
+            if (IsConnectionOK && !healthy) {
                 Unhook();
-                tags.Symbols = SymbolLoaderFactory.Create(Connection, SymbolLoaderSettings.Default).Symbols;
-                Hook();
-                return SetupNotifications();
+                IsConnectionOK = false;
             }
-            catch { Unhook(); }
-            return false;
+            else
+            if (!IsConnectionOK && healthy) {
+                Hook();
+                IsConnectionOK = true;
+            }
+
+            if (IsConnectionOK && !AreSymbolsOK) SetupSymbolsAndNotifications();
+
+            monitorTimer.Change(1000, Timeout.Infinite);
         }
 
-        bool SetupNotifications() {
-            notificationSubscription?.Dispose();
-            SymbolCollection notificationSymbols = new SymbolCollection(tags.Select(tag => tag.Symbol));
-            notificationSubscription = notificationSymbols.WhenValueChangedAnnotated().Subscribe(symbolNotificationObserver);
-
-            return true;
+        void Unhook() {
+            Connection.AdsStateChanged -= Conn_AdsStateChanged;
+            Connection.AdsNotificationError -= Conn_AdsNotificationError;
+            Connection.AdsSymbolVersionChanged -= Conn_AdsSymbolVersionChanged;
         }
+
+        void Hook() {
+            Connection.AdsStateChanged += Conn_AdsStateChanged;
+            Connection.AdsNotificationError += Conn_AdsNotificationError;
+            Connection.AdsSymbolVersionChanged += Conn_AdsSymbolVersionChanged;
+        }
+
         #endregion
 
         #region Notifications
+        void SetupSymbolsAndNotifications() {
+            try {
+                notificationSubscription?.Dispose();
+                tags.Symbols = SymbolLoaderFactory.Create(Connection, SymbolLoaderSettings.Default).Symbols;
+                SymbolCollection notificationSymbols = new SymbolCollection(tags.Select(tag => tag.Symbol));
+                notificationSubscription = notificationSymbols.WhenValueChangedAnnotated().Subscribe(symbolNotificationObserver);
+                AreSymbolsOK = true;
+            }
+            catch { }
+        }
         private void OnSymbolNotification(ValueChangedArgs vca) => tags[vca.Symbol].Push(vca.Value);
         #endregion
 
         #region Events
-        private void Conn_AdsSymbolVersionChanged(object sender, EventArgs e)
-        {
-            IsOn = Setup();
-        }
+        private void Conn_AdsSymbolVersionChanged(object sender, EventArgs e) => AreSymbolsOK = false;
 
         private void Conn_AdsNotificationError(object sender, AdsNotificationErrorEventArgs e)
         {
@@ -127,7 +140,9 @@ namespace Choreo.TwinCAT {
         {
         }
 
-        private void Session_ConnectionStateChanged(object sender, ConnectionStateChangedEventArgs e) => IsOn &= e.NewState == ConnectionState.Connected;
+        private void Session_ConnectionStateChanged(object sender, ConnectionStateChangedEventArgs e) 
+        { 
+        }
         #endregion
 
         #region IPlc Implementation

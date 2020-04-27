@@ -22,5 +22,23 @@ namespace Choreo.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Local")]
+        public global::TwinCAT.Ads.AmsNetId AmsNetId {
+            get {
+                return ((global::TwinCAT.Ads.AmsNetId)(this["AmsNetId"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("PlcRuntime1")]
+        public global::TwinCAT.Ads.AmsPort AmsPort {
+            get {
+                return ((global::TwinCAT.Ads.AmsPort)(this["AmsPort"]));
+            }
+        }
     }
 }

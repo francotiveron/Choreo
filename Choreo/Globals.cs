@@ -7,7 +7,6 @@ using System.Windows.Media;
 
 namespace Choreo
 {
-    using Cfg = Configuration;
     public static class Globals {
         public static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         public static ViewModel VM { get; private set; }
@@ -15,14 +14,10 @@ namespace Choreo
         static Globals() {
             VM = new ViewModel();
             Storage.LoadAll();
-            Plc = PlcFactory.New(Cfg.PLCId);
-            //Plc.Init();
+            Plc = PlcFactory.New();
         }
         public enum DataStates { OK, Warning, Error };
-        //public static object FindWPFTreeUp(this DependencyObject start, Func<DependencyObject, bool> selector, Func<DependencyObject, object> mapper) {
-        //    for (DependencyObject depo = start; depo != null; depo = VisualTreeHelper.GetParent(depo)) if (selector(depo)) return mapper(depo);
-        //    return null;
-        //}
+
         public static object FindWPFTreeUp(this DependencyObject start, Func<DependencyObject, bool> selector, Func<DependencyObject, object> mapper) {
             for (DependencyObject depo = start; depo != null; depo = GetParentObject(depo)) if (selector(depo)) return mapper(depo);
             return null;

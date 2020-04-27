@@ -7,6 +7,7 @@
 + Edit Cue window
 + Motor move window
 + Show window
++ Disable (darken) Min Acc and Min Dec data items in motor settings form
 - Cue execution logic	
 - Motor Lock for group
 - Motor out of place function/dialog
@@ -16,5 +17,4 @@
 - Clarify meaning of arrows in motor pos bar
 - Settings values Data validation
 - Disable group change in motor settings for grouped motors
-- Disable (darken) Min Acc and Min Dec data items in motor settings form
 - CleanUp classes (e.g. SelectPad and cmoments)

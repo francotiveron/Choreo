@@ -208,6 +208,7 @@
     <Compile Include="MotorStatusPanel.xaml.cs">
       <DependentUpon>MotorStatusPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="TwinCAT\Plc.cs" />
     <Compile Include="Preset.cs" />
     <Compile Include="PresetBottomPanel.xaml.cs">
@@ -420,6 +421,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+    <None Include="Plc.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
