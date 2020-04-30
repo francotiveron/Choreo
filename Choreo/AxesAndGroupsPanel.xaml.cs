@@ -1,20 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
+using static Choreo.Globals;
 
-namespace Choreo
-{
+namespace Choreo {
     /// <summary>
     /// Interaction logic for AxisCentralPanel.xaml
     /// </summary>
@@ -24,5 +11,10 @@ namespace Choreo
         {
             InitializeComponent();
         }
+        private void JogVelSlider_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e) {
+            Plc.Upload(JogVelSlider.Value);
+        }
+
+        private void ClearButton_Click(object sender, System.Windows.RoutedEventArgs e) => Plc.ClearMotionAndJog();
     }
 }

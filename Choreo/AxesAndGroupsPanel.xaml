@@ -6,13 +6,13 @@
              xmlns:qc="clr-namespace:QuickConverter;assembly=QuickConverter"
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="1080">
+             d:DesignHeight="600" d:DesignWidth="1080" FontSize="24">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="24*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Grid>
+        <Grid Margin="0,0,10,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="10*"/>
@@ -20,6 +20,7 @@
                 <RowDefinition Height="5*"/>
             </Grid.RowDefinitions>
             <Label Content="Axis Monitor" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+            <Button Content="Clear" x:Name="ClearButton" Click="ClearButton_Click" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" Padding="10,0" Background="Blue"/>
             <Label Content="Axis Groups" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
             <Grid Grid.Row ="1" x:Name="AxisMonitorGrid">
                 <Grid.RowDefinitions>
@@ -122,9 +123,47 @@
                 <local:MotorPanel Grid.Row="0" Grid.Column="7" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Groups[7]}"/>
             </Grid>
         </Grid>
-        <ProgressBar Grid.Column="1" Background="#FF8D8585" Foreground="#FFC7D4CA" BorderBrush="{x:Null}" Orientation="Vertical"/>
-        <Viewbox Grid.Column="1" Stretch="Uniform" VerticalAlignment="Top">
-            <Label Content="Jog Vel."/>
-        </Viewbox>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="15*"/>
+            </Grid.RowDefinitions>
+            <Viewbox Grid.Row="0" Stretch="Uniform" VerticalAlignment="Bottom">
+                <Label Content="{Binding ElementName=JogVelSlider, Path=Value}" ContentStringFormat="00%"/>
+            </Viewbox>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Slider 
+                    x:Name="JogVelSlider" 
+                    Grid.Column="0" 
+                    Foreground="White" 
+                    Background="#333333" 
+                    BorderBrush="#FFF90505" 
+                    Maximum="1" 
+                    Orientation="Vertical" 
+                    TickFrequency="0.1" 
+                    TickPlacement="TopLeft" 
+                    Cursor="Hand" 
+                    Thumb.DragCompleted="JogVelSlider_DragCompleted" 
+                    BorderThickness="2" 
+                    Focusable="False" 
+                    LargeChange="0.1" 
+                    SmallChange="0.01"
+                    Value="{Binding JogVelocity, Mode=OneWay}"
+                    />
+                <ProgressBar 
+                    Grid.Column="1" 
+                    Background="{x:Null}" 
+                    Foreground="Crimson" 
+                    BorderBrush="{x:Null}" 
+                    Maximum="1"
+                    Orientation="Vertical" 
+                    Value="{Binding ElementName=JogVelSlider, Path=Value, TargetNullValue=0.5}"
+                    />
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>

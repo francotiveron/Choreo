@@ -15,9 +15,20 @@ namespace Choreo {
             CurrentMainWindowPage = MainWindowPages.Home;
         }
 
-        public List<Motor> Motors { get; } = new List<Motor>(Range(0, 16).Select(i => new Motor(i)));
+        public void Init() {
+            var mg = new ushort[16];
+            Plc.GetMotorsGroup(ref mg);
+            foreach (var m in VM.Motors) m.Group = mg[m.Index];
+        }
 
+        public List<Motor> Motors { get; } = new List<Motor>(Range(0, 16).Select(i => new Motor(i)));
         public List<Group> Groups { get; } = new List<Group>(Range(0, 8).Select(i => new Group(i)));
+        public IEnumerable<Axis> Axes {
+            get {
+                foreach (var m in Motors) yield return m;
+                foreach (var g in Groups) yield return g;
+            }
+        }
         public List<Preset> Presets { get; } = new List<Preset>(Range(0, 8).Select(i => new Preset(i)));
         public ObservableCollection<Cue> Cues { get; } = new ObservableCollection<Cue>();
         public Motion Motion { get; } = new Motion();
@@ -36,6 +47,13 @@ namespace Choreo {
             get { return cueLoaded; }
             set { cueLoaded = value; OnPropertyChanged(); }
         }
+
+        private double jogVelocity;
+        [Plc("Jog_Velocity")]
+        public double JogVelocity {
+            get { return jogVelocity; }
+            set { jogVelocity = value / 100.0; OnPropertyChanged(); }
+        }
         #endregion
 
         #region ******************Motor and Group Settings Editing******************
@@ -52,6 +70,7 @@ namespace Choreo {
             EndMotorSettingsEditing();
         }
         public void MotorSettingsEditSave() {
+            Plc.Upload(Motors[MotorSettingsBeingEdited - 1]);
             Save(Motors[MotorSettingsBeingEdited - 1]);
             EndMotorSettingsEditing();
         }
@@ -69,6 +88,7 @@ namespace Choreo {
             EndGroupSettingsEditing();
         }
         public void GroupSettingsEditSave() {
+            Plc.Upload(Groups[GroupSettingsBeingEdited - 1]);
             Save(Groups[GroupSettingsBeingEdited - 1]);
             EndGroupSettingsEditing();
         }
@@ -92,15 +112,13 @@ namespace Choreo {
         }
         public void GroupEditSave() {
             var group = Groups[GroupBeingEdited - 1];
-            var motorsToSave =
-                from m in Motors
-                where 
-                    m.Group == GroupBeingEdited && !editedGroupMotorsInitial.Contains(m)
-                    ||
-                    m.Group == 0 && editedGroupMotorsInitial.Contains(m)
-                select m;
 
-            foreach (var m in motorsToSave) SaveGroup(m);
+            ushort bitmap = 0;
+            for (ushort i = 0, mask = 1; i < VM.Motors.Count; i++, mask <<= 1)
+                if (VM.Motors[i].Group == group.Number)
+                    bitmap |= mask;
+
+            if (!Plc.SaveGroupMotors(group.Index, bitmap)) GroupEditCancel();
             EndGroupEditing();
             BeginGroupSettingsEditing(group.Index);
         }

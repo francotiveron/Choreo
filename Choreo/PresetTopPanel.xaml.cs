@@ -22,6 +22,9 @@ namespace Choreo {
                 case "PresetEditClearButton":
                     VM.PresetEditClear();
                     break;
+                case "PresetRenameButton":
+                    VM.PresetEditClear();
+                    break;
             }
         }
     }

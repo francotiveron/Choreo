@@ -14,7 +14,7 @@ namespace Choreo.TwinCAT {
 
         public TagCollection() {
             BuildTags(VM);
-            foreach (var motor in VM.Motors) BuildTags(motor);
+            foreach (var axis in VM.Axes) BuildTags(axis);
         }
 
         void BuildTags(object obj) {
@@ -32,6 +32,11 @@ namespace Choreo.TwinCAT {
                     case Motor m:
                         path = $"GVL.Axis_{m.Number:00}_{_.plc.Path ?? _.pi.Name}";
                         key = Tag.GetKey(nameof(Motor), _.pi.Name, m.Number);
+                        break;
+
+                    case Group g:
+                        path = $"GVL.Axis_{(g.Number + 16):00}_{_.plc.Path ?? _.pi.Name}";
+                        key = Tag.GetKey(nameof(Group), _.pi.Name, g.Number);
                         break;
                 }
 
@@ -66,7 +71,8 @@ namespace Choreo.TwinCAT {
 
         public ITag this[string path] => tags[path];
         public ITag this[ISymbol symbol] => tags[symbol.InstancePath];
-        public ITag this[object obj, string propName] => tags[pathMap[Tag.GetKey(obj, propName)]];
+        public ITag this[object obj, string propName] => tags[PathOf(obj, propName)];
+        public string PathOf(object obj, string propName) => pathMap[Tag.GetKey(obj, propName)];
     }
 
 }

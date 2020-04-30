@@ -9,6 +9,7 @@ namespace Choreo {
     {
         public Preset(int index) { Index = index; }
         public int Index { get; set; }
+        public int Number => Index + 1;
 
         private string name;
         public string Name {
@@ -25,6 +26,8 @@ namespace Choreo {
 
         public bool ContainsMotor(int motorIndex) => MotorPositions.ContainsKey(motorIndex);
         public bool ContainsGroup(int groupIndex) => GroupPositions.ContainsKey(groupIndex);
+
+        public bool IsEmpty => MotorPositions.Count == 0 && GroupPositions.Count == 0;
 
         public bool Toggle(object element) {
             switch(element) {

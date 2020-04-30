@@ -3,22 +3,30 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             Loaded="UserControl_Loaded"
              mc:Ignorable="d" 
              d:DesignHeight="32" d:DesignWidth="108">
-    <StackPanel Orientation="Horizontal" d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition">
+    <StackPanel Orientation="Horizontal">
+        <!--<Ellipse VerticalAlignment="Center" Width="20" Height="20" Margin="2,0,0,0" Fill="{Binding Converter={StaticResource MotorStatusConverter}, FallbackValue=Red}"/>
+        <Label Style="{StaticResource DataItemDataStyle}" Content="{Binding Converter={StaticResource MotorStatusConverter}, FallbackValue=Status}"/>-->
         <Ellipse VerticalAlignment="Center" Width="20" Height="20" Margin="2,0,0,0">
-            <Ellipse.Style>
-                <Style TargetType="{x:Type Ellipse}">
-                    <Setter Property="Fill" Value="Red"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsOK}" Value="True">
-                            <Setter Property="Fill" Value="Lime"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Ellipse.Style>
+            <Ellipse.Fill >
+                <MultiBinding Converter="{StaticResource MotorStatusConverter}" FallbackValue="Red">
+                    <Binding Path="."/>
+                    <Binding Path="AxisStatus"/>
+                </MultiBinding>
+            </Ellipse.Fill>
         </Ellipse>
-        <Label x:Name="Status" Content="Failure" Style="{StaticResource DataItemDataStyle}"/>
+        <Label Style="{StaticResource DataItemDataStyle}" FontSize="16">
+            <Label.Content>
+                <MultiBinding Converter="{StaticResource MotorStatusConverter}" FallbackValue="Status">
+                    <Binding Path="."/>
+                    <Binding Path="MoveVal"/>
+                    <Binding Path="MAEnable"/>
+                    <Binding Path="MREnable"/>
+                    <Binding Path="JogUpEnable"/>
+                    <Binding Path="JogDnEnable"/>
+                </MultiBinding>
+            </Label.Content>
+        </Label>
     </StackPanel>
 </UserControl>

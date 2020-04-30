@@ -15,6 +15,8 @@ namespace Choreo {
         public bool[] Motors { get; } = new bool[16];
         public bool[] Groups { get; } = new bool[8];
 
+        public bool Contains(Axis ax) => (ax is Motor ? Motors : Groups)[ax.Index];
+
         private bool relative;
         public bool Relative {
             get { return relative; }
@@ -25,13 +27,10 @@ namespace Choreo {
         [DataItem(title:"Relative Setpoint")]
         public double RelativeSetpoint {
             get { return relativeSetpoint; }
-            set { relativeSetpoint = value; OnPropertyChanged(); if (value > 2.0) RelativeSetpointStatus = DataStates.Warning; else RelativeSetpointStatus = DataStates.OK; }
+            set { relativeSetpoint = value; OnPropertyChanged(); }
         }
-        private DataStates relativeSetpointStatus;
-        public DataStates RelativeSetpointStatus {
-            get { return relativeSetpointStatus; }
-            set { relativeSetpointStatus = value; OnPropertyChanged(); }
-        }
+
+        public DataItemUI.States RelativeSetpointStatus => DataItemUI.States.OK;
 
         double absoluteSetpoint;
         [DataItem(title: "Absolute Setpoint")]

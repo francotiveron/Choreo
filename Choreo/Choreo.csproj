@@ -30,7 +30,7 @@
     <ProductName>Choreo UI App</ProductName>
     <PublisherName>Franco Tiveron</PublisherName>
     <SuiteName>Choreo</SuiteName>
-    <ApplicationRevision>7</ApplicationRevision>
+    <ApplicationRevision>10</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -122,10 +122,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Alert.cs" />
     <Compile Include="AxesAndGroupsPanel.xaml.cs">
       <DependentUpon>AxesAndGroupsPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Axis.cs" />
     <Compile Include="Cue.cs" />
     <Compile Include="CuePage.xaml.cs">
       <DependentUpon>CuePage.xaml</DependentUpon>
@@ -149,14 +149,16 @@
     <Compile Include="Input\MaGSelectionPopup.xaml.cs">
       <DependentUpon>MaGSelectionPopup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Logging\ExceptionPopup.xaml.cs">
+      <DependentUpon>ExceptionPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Logging\Logging.cs" />
+    <Compile Include="Logging\Popup.cs" />
     <Compile Include="ModeableListView.cs" />
     <Compile Include="MotAndGroUI.xaml.cs">
       <DependentUpon>MotAndGroUI.xaml</DependentUpon>
     </Compile>
     <Compile Include="Motion.cs" />
-    <Compile Include="MotionPage.xaml.cs">
-      <DependentUpon>MotionPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MotionPageV2.xaml.cs">
       <DependentUpon>MotionPageV2.xaml</DependentUpon>
     </Compile>
@@ -231,6 +233,9 @@
     <Compile Include="Storage.cs" />
     <Compile Include="TwinCAT\Tag.cs" />
     <Compile Include="TwinCAT\TagCollection.cs" />
+    <Compile Include="UserControl1.xaml.cs">
+      <DependentUpon>UserControl1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel.cs" />
     <Compile Include="Motor.cs" />
     <Compile Include="TestWindow.xaml.cs">
@@ -268,11 +273,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MotAndGroUI.xaml">
+    <Page Include="Logging\ExceptionPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MotionPage.xaml">
+    <Page Include="MotAndGroUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -384,6 +389,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserControl1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MotorPanel.xaml.cs">
@@ -402,6 +411,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Pictures\GreenArrowsDn.png" />
+    <Resource Include="Pictures\GreenArrowsUp.png" />
     <Resource Include="Pictures\Enter.png" />
     <Resource Include="Pictures\clear.png" />
     <Resource Include="Pictures\reset.png" />

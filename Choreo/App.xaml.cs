@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using static Choreo.Globals;
 
 namespace Choreo
@@ -15,7 +16,8 @@ namespace Choreo
         public App() {
             VM.PropertyChanged += VM_PropertyChanged;
             QuickConverter.EquationTokenizer.AddNamespace(typeof(object));
-            QuickConverter.EquationTokenizer.AddNamespace(typeof(System.Windows.Visibility));
+            QuickConverter.EquationTokenizer.AddNamespace(typeof(Visibility));
+            QuickConverter.EquationTokenizer.AddNamespace(typeof(Brush));
         }
         private void VM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
             if (e.PropertyName == "MotorSettingsBeingEdited") {
@@ -106,10 +108,10 @@ namespace Choreo
                 message = string.Format("Unhandled exception in {0} v{1}\nStackTrace:\n{2}", assemblyName.Name, assemblyName.Version, exception.StackTrace);
             }
             catch (Exception ex) {
-                Logger.Error(ex, "Exception in LogUnhandledException");
+                Log.Error(ex, "Exception in LogUnhandledException");
             }
             finally {
-                Logger.Error(exception, message);
+                Log.Error(exception, message);
             }
         }
     }

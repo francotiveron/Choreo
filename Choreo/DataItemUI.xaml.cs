@@ -15,6 +15,7 @@ using static Choreo.Globals;
 
 namespace Choreo {
     public partial class DataItemUI {
+        public enum States { OK, Warning, Error };
         public DataItemUI() {
             InitializeComponent();
             DataContextChanged += DataItemUI_DataContextChanged;
@@ -137,22 +138,6 @@ namespace Choreo {
 
         public static readonly DependencyProperty MUProperty = DependencyProperty.Register("MU", typeof(string), typeof(DataItemUI));
 
-        //public ICollection SourceCollection {
-        //    get { return (ICollection)GetValue(SourceCollectionProperty); }
-        //    set { SetValue(SourceCollectionProperty, value); }
-        //}
-
-        //public static readonly DependencyProperty SourceCollectionProperty =
-        //    DependencyProperty.Register("SourceCollection", typeof(ICollection), typeof(DataItemUI));
-
-        //public string FieldName {
-        //    get { return (string)GetValue(FieldNameProperty); }
-        //    set { SetValue(FieldNameProperty, value); }
-        //}
-
-        //public static readonly DependencyProperty FieldNameProperty =
-        //    DependencyProperty.Register("FieldName", typeof(string), typeof(DataItemUI));
-
         public DataItemUI EditOrderNext {
             get { return (DataItemUI)GetValue(EditOrderNextProperty); }
             set { SetValue(EditOrderNextProperty, value); }
@@ -174,20 +159,23 @@ namespace Choreo {
     public class StatusBrushConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             if (value == null) return null;
-            DataStates status = (DataStates)value;
-            var color = Colors.Gray;
+            DataItemUI.States status = (DataItemUI.States)value;
+            var color = Colors.Transparent;
             var opacity = 0.0;
 
             switch(status) {
-                case DataStates.Warning:
+                case DataItemUI.States.Warning:
                     color = Colors.Yellow;
                     opacity = 0.4;
                     break;
-                case DataStates.Error:
+                case DataItemUI.States.Error:
                     color = Colors.Red;
                     opacity = 0.4;
                     break;
             }
+
+            if (opacity == 0.0) return null;
+
             var brush = new SolidColorBrush(color);
             if (parameter is Rectangle r && r.Name == "StatusCoverRectangle") brush.Opacity = opacity;
 

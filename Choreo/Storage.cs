@@ -50,13 +50,13 @@ namespace Choreo {
         }
 
         #region Motors
-        public static void SaveGroup(Motor motor) {
-            Write($@"Motors\[{motor.Index}]", "Group", motor.Group);
-        }
-        public static void LoadGroup(Motor motor) {
-            var value = Read($@"Motors\[{motor.Index}]", "Group");
-            if (value is int group) motor.Group = group;
-        }
+        //public static void SaveGroup(Motor motor) {
+        //    Write($@"Motors\[{motor.Index}]", "Group", motor.Group);
+        //}
+        //public static void LoadGroup(Motor motor) {
+        //    var value = Read($@"Motors\[{motor.Index}]", "Group");
+        //    if (value is int group) motor.Group = group;
+        //}
         public static void Save(Motor motor) => Write($@"Motors\[{motor.Index}]", motor);
         public static void Load(Motor motor) => Read($@"Motors\[{motor.Index}]", motor);
         public static void SaveMotors() => Save(VM.Motors);

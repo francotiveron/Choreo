@@ -5,10 +5,33 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
-             d:DesignHeight="134" d:DesignWidth="120" Background="#333333">
+             d:DesignHeight="134" d:DesignWidth="120">
+    <UserControl.Resources>
+        <LinearGradientBrush x:Key="JogDnBrush" EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+            <GradientStop Color="#FF181F1A"/>
+            <GradientStop Color="#FF406C4B" Offset="1"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="JogUpBrush" EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+            <GradientStop Color="#FF406C4B"/>
+            <GradientStop Color="#FF181F1A" Offset="1"/>
+        </LinearGradientBrush>
+        <SolidColorBrush x:Key="NoJog" Color="#333333"/>
+        <local:UpDnArrowVisibilityConverter x:Key="UpDnArrowVisibilityConverter"/>
+        <local:AxisStatusBrushConverter x:Key="AxisStatusBrushConverter"/>
+    </UserControl.Resources>
+    <UserControl.Background>
+        <MultiBinding Converter="{StaticResource AxisStatusBrushConverter}" FallbackValue="#333333">
+            <Binding Path="."/>
+            <Binding Source="{StaticResource JogUpBrush}" />
+            <Binding Source="{StaticResource JogDnBrush}" />
+            <Binding Source="{StaticResource NoJog}" />
+            <Binding Path="JogUpEnable"/>
+            <Binding Path="JogDnEnable"/>
+        </MultiBinding>
+    </UserControl.Background>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="9*"/>
+            <ColumnDefinition Width="7*"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid>
@@ -21,9 +44,42 @@
             <local:DataItemUI DataContext="{Binding Position, Converter={StaticResource PositionConverter}}"/>
             <local:DataItemUI Grid.Row="1" DataContext="{Binding Load}"/>
             <local:MotorStatusIndicator Grid.Row="2"/>
-            <Rectangle Grid.Row="3" Fill="{Binding Status, Converter={StaticResource StatusBrushConverter}, FallbackValue=Gray}"/>
-
+            <Rectangle x:Name="StatusRectangle" Grid.Row="3">
+                <Rectangle.Fill>
+                    <MultiBinding Converter="{StaticResource AxisStatusBrushConverter}" ConverterParameter="Rectangle">
+                        <Binding Path="."/>
+                        <Binding Path="MAEnable"/>
+                        <Binding Path="MREnable"/>
+                        <Binding Path="JogUpEnable"/>
+                        <Binding Path="JogDnEnable"/>
+                    </MultiBinding>
+                </Rectangle.Fill>
+            </Rectangle>
         </Grid>
         <ProgressBar Grid.Column="1" Foreground="#FFC3BABA" BorderBrush="#00BCBCBC" Value="30" Orientation="Vertical" Background="#FF534F4F"/>
+        <Image Grid.Column="1" Source="Pictures/GreenArrowsUp.png" Stretch="Fill">
+            <Image.Visibility>
+                <MultiBinding Converter="{StaticResource UpDnArrowVisibilityConverter}" ConverterParameter="Up" FallbackValue="Visibility.Visible">
+                    <Binding Path="."/>
+                    <Binding Path="Position"/>
+                    <Binding Path="MAEnable"/>
+                    <Binding Path="MREnable"/>
+                    <Binding Path="JogUpEnable"/>
+                    <Binding Path="JogDnEnable"/>
+                </MultiBinding>
+            </Image.Visibility>
+        </Image>
+        <Image Grid.Column="1" Source="Pictures/GreenArrowsDn.png" Stretch="Fill">
+            <Image.Visibility>
+                <MultiBinding Converter="{StaticResource UpDnArrowVisibilityConverter}" ConverterParameter="Dn" FallbackValue="Visibility.Visible">
+                    <Binding Path="."/>
+                    <Binding Path="Position"/>
+                    <Binding Path="MAEnable"/>
+                    <Binding Path="MREnable"/>
+                    <Binding Path="JogUpEnable"/>
+                    <Binding Path="JogDnEnable"/>
+                </MultiBinding>
+            </Image.Visibility>
+        </Image>
     </Grid>
 </UserControl>

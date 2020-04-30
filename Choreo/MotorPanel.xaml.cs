@@ -29,10 +29,10 @@ namespace Choreo
             get => gesture;
             set {
                 gesture = value;
-                Mouse.OverrideCursor = gesture ? Cursors.ScrollWE : null;
+                Mouse.OverrideCursor = gesture ? Cursors.ScrollAll : null;
             }
         }
-        double gestureStart;
+        double gestureStartX, gestureStartY;
 
         private void Border_ManipulationStarted(object sender, ManipulationStartedEventArgs e)
         {
@@ -56,7 +56,7 @@ namespace Choreo
             if (VM.IsGroupEditing && DataContext is Motor m) {
                 if (m.Group == 0) {
                     if (m.IsPreset) {
-                        Alert.Info("Motors already in Presets cannot be grouped", "Motor in Preset");
+                        Log.Alert("Motors already in Presets cannot be grouped", "Motor in Preset");
                         return;
                     }
                     m.Group = VM.GroupBeingEdited;
@@ -77,8 +77,14 @@ namespace Choreo
             if (Gesture)
             {
                 var x = e.GetPosition(this).X;
-                if ((x - gestureStart) < -10.0) GestureLeft();
-                if ((x - gestureStart) > 10.0) GestureRight();
+                var y = e.GetPosition(this).Y;
+                if ((x - gestureStartX) < -10.0) GestureLeft();
+                else
+                if ((x - gestureStartX) > 10.0) GestureRight();
+                else
+                if ((y - gestureStartY) < -10.0) GestureUp();
+                else
+                if ((y - gestureStartY) > 10.0) GestureDn();
             }
         }
 
@@ -102,7 +108,8 @@ namespace Choreo
         {
             if (PushTimer.Start(PushTimeout)) {
                 Gesture = true;
-                gestureStart = p.X;
+                gestureStartX = p.X;
+                gestureStartY = p.Y;
             }
         }
 
@@ -121,6 +128,24 @@ namespace Choreo
         private void GestureRight()
         {
             VM.BeginMotionEditing(false, DataContext);
+            Gesture = false;
+        }
+
+        private void GestureUp() {
+            var axis = (Axis)DataContext;
+            if (!axis.JogUpEnable) {
+                if (axis.JogDnEnable) Plc.Jog(axis, 0);
+                else Plc.Jog(axis, 1);
+            }
+            Gesture = false;
+        }
+
+        private void GestureDn() {
+            var axis = (Axis)DataContext;
+            if (!axis.JogDnEnable) {
+                if (axis.JogUpEnable) Plc.Jog(axis, 0);
+                else Plc.Jog(axis, -1);
+            }
             Gesture = false;
         }
 
