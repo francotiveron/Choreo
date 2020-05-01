@@ -14,7 +14,7 @@
             <Label Content="{Binding off, Converter={qc:QuickConverter '$P ? \'Fixed\' : \'Error\''}}"/>
             <Label Content="{Binding message, FallbackValue=Message}"/>
         </DockPanel>
-        <TextBlock Text="{Binding x.Message, FallbackValue=xMessage}" DockPanel.Dock="Top" Padding="10" /> 
+        <TextBlock Text="{Binding x.Message, FallbackValue=xMessage}" DockPanel.Dock="Top" TextWrapping="WrapWithOverflow" Padding="10" /> 
         <TextBlock Text="{Binding x.StackTrace, FallbackValue=StackTrace}" TextWrapping="WrapWithOverflow" Padding="10"/>
     </DockPanel>
 </local:Popup>

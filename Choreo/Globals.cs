@@ -9,11 +9,11 @@ using System.Windows.Media;
 namespace Choreo
 {
     public static class Globals {
-        public static Logging.Logging Log { get; private set; }
+        public static ChoreoLogger Log { get; private set; }
         public static ViewModel VM { get; private set; }
         public static IPlc Plc { get; private set; }
         static Globals() {
-            Log = new Logging.Logging();
+            Log = ChoreoLogger.GetLogging();
             VM = new ViewModel();
             Storage.LoadAll();
             Plc = PlcFactory.New();

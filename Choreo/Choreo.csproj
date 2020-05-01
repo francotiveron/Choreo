@@ -153,7 +153,7 @@
     <Compile Include="Logging\ExceptionPopup.xaml.cs">
       <DependentUpon>ExceptionPopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Logging\Logging.cs" />
+    <Compile Include="Logging\ChoreoLogger.cs" />
     <Compile Include="Logging\Popup.cs" />
     <Compile Include="ModeableListView.cs" />
     <Compile Include="MotAndGroUI.xaml.cs">

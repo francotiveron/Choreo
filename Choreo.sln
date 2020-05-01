@@ -5,16 +5,27 @@ VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Choreo", "Choreo\Choreo.csproj", "{E2CE80D1-C8AC-4881-9474-A9A865DF46FB}"
 EndProject
+Project("{840C416C-B8F3-42BC-B0DD-F6BB14C9F8CB}") = "ChoreoSetup", "ChoreoSetup\ChoreoSetup.aiproj", "{1A566158-8EF1-4F5D-8CD9-213554CC4955}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		All|Any CPU = All|Any CPU
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E2CE80D1-C8AC-4881-9474-A9A865DF46FB}.All|Any CPU.ActiveCfg = Release|Any CPU
+		{E2CE80D1-C8AC-4881-9474-A9A865DF46FB}.All|Any CPU.Build.0 = Release|Any CPU
 		{E2CE80D1-C8AC-4881-9474-A9A865DF46FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E2CE80D1-C8AC-4881-9474-A9A865DF46FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2CE80D1-C8AC-4881-9474-A9A865DF46FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2CE80D1-C8AC-4881-9474-A9A865DF46FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A566158-8EF1-4F5D-8CD9-213554CC4955}.All|Any CPU.ActiveCfg = DefaultBuild
+		{1A566158-8EF1-4F5D-8CD9-213554CC4955}.All|Any CPU.Build.0 = DefaultBuild
+		{1A566158-8EF1-4F5D-8CD9-213554CC4955}.Debug|Any CPU.ActiveCfg = DefaultBuild
+		{1A566158-8EF1-4F5D-8CD9-213554CC4955}.Debug|Any CPU.Build.0 = DefaultBuild
+		{1A566158-8EF1-4F5D-8CD9-213554CC4955}.Release|Any CPU.ActiveCfg = DefaultBuild
+		{1A566158-8EF1-4F5D-8CD9-213554CC4955}.Release|Any CPU.Build.0 = DefaultBuild
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

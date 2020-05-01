@@ -78,19 +78,11 @@ namespace Choreo.TwinCAT {
 
         void Monitor(object state) {
             monitorTimer.Change(Timeout.Infinite, Timeout.Infinite);
-            
-            bool IsHealthy() {
-                if (Connection.State == ConnectionState.Connected) {
-                    try {
-                        bool val = (bool)Connection.ReadSymbol("GVL.Watchdog_OK", typeof(bool), false);
-                        return true;
-                    }
-                    catch { return false; }
-                }
-                return false;
-            }
 
-            var healthy = IsHealthy();
+            var healthy = 
+                Connection.State == ConnectionState.Connected 
+                && 
+                Log.ExOnce(() => (bool)Connection.ReadSymbol("GVL.Watchdog_OK", typeof(bool), false), "Unhealthy PLC Connection");
 
             if (IsConnectionOK && !healthy) {
                 Unhook();
