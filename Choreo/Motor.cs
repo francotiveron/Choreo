@@ -65,6 +65,7 @@ namespace Choreo {
 
         public override Color Color {
             get {
+                if (Active) return Colors.Lime;
                 if (Group == 0) return Colors.DarkGray;
                 return Choreo.Group.GroupColors[Group - 1];
             }

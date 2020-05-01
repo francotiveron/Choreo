@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using TwinCAT.Ads;
+using TwinCAT.TypeSystem;
 using static Choreo.Globals;
 
 namespace Choreo {
@@ -79,12 +80,33 @@ namespace Choreo {
             set => Set(value);
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e) {
+        public bool StandAlone { get; set; }
+
+        void UserControl_Loaded(object sender, RoutedEventArgs e) {
             if (ValueFontSize != null) Value.SetValue(FontSizeProperty, ValueFontSize);
             if (LabelFontSize != null) {
                 Label.SetValue(FontSizeProperty, LabelFontSize);
                 Unit.SetValue(FontSizeProperty, LabelFontSize);
             }
+            UpdateBackground();
+        }
+
+        void UpdateBackground() {
+            Brush brush = null;
+
+            if (IsFocused) brush = (Brush)Application.Current.Resources["DataItemFocusedBackground"];
+            else if (Focusable || StandAlone) brush = (Brush)Application.Current.Resources["DataItemUnfocusedBackground"];
+
+            Background = brush;
+        }
+        protected override void OnGotFocus(RoutedEventArgs e) {
+            base.OnGotFocus(e);
+            UpdateBackground();
+        }
+
+        protected override void OnLostFocus(RoutedEventArgs e) {
+            base.OnLostFocus(e);
+            UpdateBackground();
         }
 
         static public object ValueFontSize { get; set; }
@@ -156,7 +178,24 @@ namespace Choreo {
         #endregion
     }
 
-    public class StatusBrushConverter : IValueConverter {
+    //public class DataItemBackgroundConverter : IMultiValueConverter {
+    //    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
+    //        var control = (DataItemUI)values[0];
+    //        var isFocused = (bool)values[1];
+
+    //        if (isFocused) return Application.Current.Resources["DataItemFocusedBackground"];
+    //        else {
+    //            if (control.Focusable) return Application.Current.Resources["DataItemUnfocusedBackground"];
+    //            else return null;
+    //        }
+    //    }
+
+    //    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) {
+    //        throw new NotImplementedException();
+    //    }
+    //}
+
+    public class DataItemStatusBrushConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             if (value == null) return null;
             DataItemUI.States status = (DataItemUI.States)value;

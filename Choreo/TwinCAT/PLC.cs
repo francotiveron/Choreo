@@ -24,6 +24,7 @@ namespace Choreo.TwinCAT {
         bool GetMotorsGroup(ref ushort[] motorGroups);
         bool ClearMotionAndJog();
         void Jog(Axis axis, int direction);
+        void Calibrate(Axis axis);
     }
 
     static public class PlcFactory
@@ -259,6 +260,13 @@ namespace Choreo.TwinCAT {
         }
 
         public bool ClearMotionAndJog() => PlcMethod()?.Invoke() == 0;
+
+        public void Calibrate(Axis axis) {
+            var pathVal = tags.PathOf(axis, nameof(Axis.CalibrationRotations));
+            var pathSet = tags.PathOf(axis, nameof(Axis.CalibrationSave));
+            Connection.WriteSymbol(pathVal, axis.CalibrationRotations, false);
+            Connection.WriteSymbol(pathSet, true, false);
+        }
 
         #endregion
     }

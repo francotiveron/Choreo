@@ -35,7 +35,8 @@ namespace Choreo {
 
         private void NumPad_PadEvent(object sender, Input.NumericPad1.PadEventArgs e) => FocusManager.SetFocusedElement(EditableElementsGrid, e.DataItem.Navigate(e.Name));
 
-}
+        private void SaveNewPositionButton_Click(object sender, RoutedEventArgs e) => Plc.Calibrate(DataContext as Axis);
+    }
 
     //public class EditDataItemSetter: DynamicObject {
     //    public override bool TryInvoke(InvokeBinder binder, object[] args, out object result) {

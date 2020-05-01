@@ -411,6 +411,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="TwinCAT\UIFB.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Resource Include="Pictures\GreenArrowsDn.png" />
     <Resource Include="Pictures\GreenArrowsUp.png" />
     <Resource Include="Pictures\Enter.png" />

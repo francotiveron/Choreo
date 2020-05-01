@@ -49,7 +49,7 @@ namespace Choreo.Input {
                     }
                     break;
                 case "DOT":
-                    if (!Value.Contains('.') && char.IsDigit(Value.Last())) Value = Value + '.';
+                    if (!Value.Contains('.') && Value != "" && char.IsDigit(Value.Last())) Value = Value + '.';
                     break;
                 case "FEET":
                     if (!Value.Contains("'") && DataItem.IsPosition && int.TryParse(Value, out _)) Value = Value + "'";

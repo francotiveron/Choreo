@@ -10,9 +10,11 @@ namespace Choreo {
 
         const double f2i = 12.0;
         public static (int feet, double inches) FeetInches(double feet) {
-            var intFeet = (int)Math.Floor(feet);
-            var inches = (feet - intFeet) * f2i;
-            return (intFeet, inches);
+            var abs = Math.Abs(feet);
+            var sgn = Math.Sign(feet);
+            var intFeet = (int)Math.Floor(abs);
+            var inches = (abs - intFeet) * f2i;
+            return (sgn * intFeet, inches);
         }
         public static double Feet(int feet, double inches) => feet + inches / f2i;
         public static string ToString(double feet) {

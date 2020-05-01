@@ -10,7 +10,12 @@ namespace Choreo {
         //public bool Contains(int motorIndex) => VM.Motors[.Any(m => m.Group == Index);
 
         #region UI Properties
-        public override Color Color => GroupColors[Index];
+        public override Color Color {
+            get {
+                if (Active) return Colors.Lime;
+                return GroupColors[Index];
+            }
+        }
         public bool IsPreset => VM.Presets.Any(p => p.ContainsGroup(Index));
         #endregion
     }

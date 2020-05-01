@@ -29,9 +29,9 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <!--<local:DataItemUI Margin="5" DataContext="{Binding Name}" SourceCollection="{Binding Motors, Source={x:Static local:Globals.VM}}"/>-->
-                <local:DataItemUI Margin="5" DataContext="{Binding Name}"/>
+                <local:DataItemUI Margin="5" DataContext="{Binding Name}" Focusable="True"/>
                 <!--<local:DataItemUI Margin="5" Grid.Column="1" DataContext="{Binding Group}" SourceCollection="{Binding Groups, Source={x:Static local:Globals.VM}}"/>-->
-                <local:DataItemUI Margin="5" Grid.Column="1" DataContext="{Binding Group}"/>
+                <local:DataItemUI Margin="5" Grid.Column="1" DataContext="{Binding Group}" StandAlone="True"/>
                 <!--<Button x:Name="ResetGroupButton" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Right" Content="R" Margin="0,10,10,0" Click="ResetGroupButton_Click" />-->
             </Grid>
             <Grid>
@@ -43,12 +43,27 @@
                 <local:DataItemUI 
                     x:Name="SetPosition" 
                     Margin="5" 
-                    DataContext="{Binding SetPosition, Converter={StaticResource PositionConverter}}" 
+                    DataContext="{Binding CalibrationValue, Converter={StaticResource PositionConverter}}" 
                     EditOrderNext="{Binding ElementName=FeetPerRotation, Mode=OneWay}" 
                     EditOrderPrev="{Binding ElementName=LoadOffs, Mode=OneWay}" 
                     Focusable="True" />
                 <local:DataItemUI x:Name="FeetPerRotation" Grid.Column="1" Margin="5" DataContext="{Binding FeetPerRotation}" EditOrderNext="{Binding ElementName=SoftUp, Mode=OneWay}" EditOrderPrev="{Binding ElementName=SetPosition, Mode=OneWay}" Focusable="True" />
-                <Button Grid.Column="2" Content="SAVE NEW POSITON" Style="{StaticResource TopBarCommandButtonStyle}" FontSize="20"/>
+                <Button x:Name="SaveNewPositionButton" Grid.Column="2" FontSize="16" Click="SaveNewPositionButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource TopBarCommandButtonStyle}">
+                            <Setter Property="Background" Value="{x:Null}"/>
+                            <Setter Property="Content" Value="SAVE NEW POSITION"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding CalibrationSave}" Value="True">
+                                    <Setter Property="Background" Value="Crimson"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding CalibrationSave}" Value="True">
+                                    <Setter Property="Content" Value="SAVING NEW POSITION"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
             </Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -77,7 +92,7 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <local:DataItemUI x:Name="MinAcc" Margin="5" DataContext="{Binding MinAcc}" IsEnabled="False"/>
+                <local:DataItemUI x:Name="MinAcc" Margin="5" DataContext="{Binding MinAcc}" IsEnabled="False" StandAlone="True"/>
                 <local:DataItemUI x:Name="MaxAcc" Grid.Column="1" Margin="5" DataContext="{Binding MaxAcc}" EditOrderNext="{Binding ElementName=DefAcc, Mode=OneWay}" EditOrderPrev="{Binding ElementName=SoftDn, Mode=OneWay}" Focusable="True"/>
                 <local:DataItemUI x:Name="DefAcc" Grid.Column="2" Margin="5" DataContext="{Binding DefAcc}" EditOrderNext="{Binding ElementName=MinVel, Mode=OneWay}" EditOrderPrev="{Binding ElementName=MaxAcc, Mode=OneWay}" Focusable="True"/>
             </Grid>
@@ -97,7 +112,7 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <local:DataItemUI x:Name="MinDec" Margin="5" DataContext="{Binding MinDec}" IsEnabled="False"/>
+                <local:DataItemUI x:Name="MinDec" Margin="5" DataContext="{Binding MinDec}" IsEnabled="False" StandAlone="True"/>
                 <local:DataItemUI x:Name="MaxDec" Grid.Column="1" Margin="5" DataContext="{Binding MaxDec}" EditOrderNext="{Binding ElementName=DefDec, Mode=OneWay}" EditOrderPrev="{Binding ElementName=DefVel, Mode=OneWay}" Focusable="True"/>
                 <local:DataItemUI x:Name="DefDec" Grid.Column="2" Margin="5" DataContext="{Binding DefDec}" EditOrderNext="{Binding ElementName=MinLoad, Mode=OneWay}" EditOrderPrev="{Binding ElementName=MaxDec, Mode=OneWay}" Focusable="True"/>
             </Grid>

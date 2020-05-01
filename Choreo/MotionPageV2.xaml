@@ -7,9 +7,6 @@
              xmlns:inp="clr-namespace:Choreo.Input"
              mc:Ignorable="d" 
              d:DesignHeight="760" d:DesignWidth="1280" Loaded="UserControl_Loaded">
-    <UserControl.Resources>
-        <SolidColorBrush x:Key="DefaultDataItemUIBackground" Color="#777777"/>
-    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="8*"/>
@@ -150,13 +147,13 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <local:DataItemUI Grid.Column="0" Margin="0,0,5,0" DataContext="{Binding Position, Converter={StaticResource PositionConverter}}"/>
-                <local:DataItemUI Grid.Column="1" DataContext="{Binding Load}" />
+                <local:DataItemUI Grid.Column="0" Margin="0,0,5,0" DataContext="{Binding Position, Converter={StaticResource PositionConverter}}" StandAlone="True"/>
+                <local:DataItemUI Grid.Column="1" DataContext="{Binding Load}" StandAlone="True" />
             </Grid>
             <Grid Grid.Row="2" Margin="5,3,0,5">
-                <local:MotorStatusIndicator/>
+                <local:MotorStatusIndicator Background="#333333"/>
             </Grid>
-            <local:DataItemUI Grid.Row="3" Margin="5,5,0,0" x:Name="AxisGroup" DataContext="{Binding Group}"/>
+            <local:DataItemUI Grid.Row="3" Margin="5,5,0,0" x:Name="AxisGroup" DataContext="{Binding Group}" StandAlone="True"/>
             <ProgressBar Foreground="#FFC3BABA" BorderBrush="#00BCBCBC" Value="70" Orientation="Vertical" Background="#FF534F4F" Margin="5,10,0,0" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3"/>
         </Grid>
         <StackPanel Grid.Column="2">

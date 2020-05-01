@@ -15,18 +15,21 @@
             <GradientStop Color="#FF406C4B"/>
             <GradientStop Color="#FF181F1A" Offset="1"/>
         </LinearGradientBrush>
-        <SolidColorBrush x:Key="NoJog" Color="#333333"/>
+        <SolidColorBrush x:Key="DefaultBrush" Color="#333333"/>
+        <SolidColorBrush x:Key="MoveBrush" Color="Lime" Opacity="0.5"/>
         <local:UpDnArrowVisibilityConverter x:Key="UpDnArrowVisibilityConverter"/>
         <local:AxisStatusBrushConverter x:Key="AxisStatusBrushConverter"/>
     </UserControl.Resources>
     <UserControl.Background>
         <MultiBinding Converter="{StaticResource AxisStatusBrushConverter}" FallbackValue="#333333">
             <Binding Path="."/>
+            <Binding Source="{StaticResource DefaultBrush}" />
             <Binding Source="{StaticResource JogUpBrush}" />
             <Binding Source="{StaticResource JogDnBrush}" />
-            <Binding Source="{StaticResource NoJog}" />
+            <Binding Source="{StaticResource MoveBrush}" />
             <Binding Path="JogUpEnable"/>
             <Binding Path="JogDnEnable"/>
+            <Binding Path="Active"/>
         </MultiBinding>
     </UserControl.Background>
     <Grid>
@@ -56,7 +59,21 @@
                 </Rectangle.Fill>
             </Rectangle>
         </Grid>
-        <ProgressBar Grid.Column="1" Foreground="#FFC3BABA" BorderBrush="#00BCBCBC" Value="30" Orientation="Vertical" Background="#FF534F4F"/>
+        <ProgressBar Grid.Column="1" BorderBrush="#777777" Value="30" Orientation="Vertical" Background="#111111" >
+            <ProgressBar.Style>
+                <Style TargetType="ProgressBar">
+                    <Setter Property="Foreground" Value="DarkGray"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Active}" Value="True" >
+                            <Setter Property="Foreground" Value="Lime"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ProgressBar.Style>
+            <!--<ProgressBar.Foreground>
+                <SolidColorBrush Color="{Binding Color, FallbackValue=DarkGray}"/>
+            </ProgressBar.Foreground>-->
+        </ProgressBar>
         <Image Grid.Column="1" Source="Pictures/GreenArrowsUp.png" Stretch="Fill">
             <Image.Visibility>
                 <MultiBinding Converter="{StaticResource UpDnArrowVisibilityConverter}" ConverterParameter="Up" FallbackValue="Visibility.Visible">

@@ -1,0 +1,281 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://www.plcopen.org/xml/tc6_0200">
+  <fileHeader companyName="Beckhoff Automation GmbH" productName="TwinCAT PLC Control" productVersion="3.5.13.20" creationDateTime="2020-05-01T09:38:16.9613047" />
+  <contentHeader name="Choereo" modificationDateTime="2020-05-01T09:38:16.9683049">
+    <coordinateInfo>
+      <fbd>
+        <scaling x="1" y="1" />
+      </fbd>
+      <ld>
+        <scaling x="1" y="1" />
+      </ld>
+      <sfc>
+        <scaling x="1" y="1" />
+      </sfc>
+    </coordinateInfo>
+    <addData>
+      <data name="http://www.3s-software.com/plcopenxml/projectinformation" handleUnknown="implementation">
+        <ProjectInformation />
+      </data>
+    </addData>
+  </contentHeader>
+  <types>
+    <dataTypes />
+    <pous>
+      <pou name="UIFB" pouType="functionBlock">
+        <interface>
+          <addData>
+            <data name="http://www.3s-software.com/plcopenxml/accessmodifiers" handleUnknown="implementation">
+              <AccessModifiers Final="true" />
+            </data>
+          </addData>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml" />
+          </ST>
+        </body>
+        <addData>
+          <data name="http://www.3s-software.com/plcopenxml/method" handleUnknown="implementation">
+            <Method name="GetMotorsGroup" ObjectId="38c4a61e-6324-42b4-8b5f-b00629d3731a">
+              <interface>
+                <returnType>
+                  <DINT />
+                </returnType>
+                <outputVars>
+                  <variable name="res">
+                    <type>
+                      <array>
+                        <dimension lower="0" upper="15" />
+                        <baseType>
+                          <INT />
+                        </baseType>
+                      </array>
+                    </type>
+                  </variable>
+                </outputVars>
+                <localVars>
+                  <variable name="ptr">
+                    <type>
+                      <pointer>
+                        <baseType>
+                          <BOOL />
+                        </baseType>
+                      </pointer>
+                    </type>
+                  </variable>
+                  <variable name="im">
+                    <type>
+                      <INT />
+                    </type>
+                  </variable>
+                  <variable name="ig">
+                    <type>
+                      <INT />
+                    </type>
+                  </variable>
+                </localVars>
+                <addData>
+                  <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                    <Attributes>
+                      <Attribute Name="TcRpcEnable" Value="" />
+                    </Attributes>
+                  </data>
+                </addData>
+              </interface>
+              <body>
+                <ST>
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml">ptr := ADR(GVL.Group_01_Axis_01);
+MEMSET(destAddr:=ADR(res[0]), fillByte:=0, n:=SIZEOF(res));
+FOR ig := 1 TO 8 DO
+	FOR im := 0 TO 15 DO
+		IF ptr^ THEN
+			IF res[im] &lt;&gt; 0 THEN
+				ptr^ := 0;
+			ELSE
+				res[im] := ig;
+			END_IF
+		END_IF
+		ptr := ptr + 1;
+	END_FOR
+END_FOR
+
+GetMotorsGroup := 0;
+RETURN;
+</xhtml>
+                </ST>
+              </body>
+              <InterfaceAsPlainText>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml">{attribute 'TcRpcEnable'}
+METHOD PUBLIC GetMotorsGroup : DINT
+VAR_OUTPUT
+	res: ARRAY[0..15] OF INT;
+END_VAR
+VAR
+	ptr: POINTER TO BOOL;
+	im, ig:INT;
+END_VAR
+</xhtml>
+              </InterfaceAsPlainText>
+              <addData />
+            </Method>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/method" handleUnknown="implementation">
+            <Method name="SaveGroupMotors" ObjectId="e8380bac-f404-4054-b975-f938c50ea23a">
+              <interface>
+                <returnType>
+                  <DINT />
+                </returnType>
+                <inputVars>
+                  <variable name="Group">
+                    <type>
+                      <INT />
+                    </type>
+                  </variable>
+                  <variable name="Bitmap">
+                    <type>
+                      <WORD />
+                    </type>
+                  </variable>
+                </inputVars>
+                <localVars>
+                  <variable name="ptr">
+                    <type>
+                      <pointer>
+                        <baseType>
+                          <BOOL />
+                        </baseType>
+                      </pointer>
+                    </type>
+                  </variable>
+                  <variable name="i">
+                    <type>
+                      <INT />
+                    </type>
+                  </variable>
+                </localVars>
+                <addData>
+                  <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                    <Attributes>
+                      <Attribute Name="TcRpcEnable" Value="" />
+                    </Attributes>
+                  </data>
+                </addData>
+              </interface>
+              <body>
+                <ST>
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml">ptr := ADR(GVL.Group_01_Axis_01) + Group * 16;
+
+FOR i := 0 TO 15 DO
+	ptr^ := (Bitmap AND 1) &lt;&gt; 0;
+	ptr := ptr + 1;
+	Bitmap := SHR(Bitmap, 1);
+END_FOR
+
+SaveGroupMotors := 0;
+RETURN;</xhtml>
+                </ST>
+              </body>
+              <InterfaceAsPlainText>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml">{attribute 'TcRpcEnable'}
+METHOD PUBLIC SaveGroupMotors : DINT
+VAR_INPUT
+	Group:INT;
+	Bitmap:WORD;
+END_VAR
+VAR
+	ptr: POINTER TO BOOL;
+	i:INT;
+END_VAR
+</xhtml>
+              </InterfaceAsPlainText>
+              <addData />
+            </Method>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/method" handleUnknown="implementation">
+            <Method name="ClearMotionAndJog" ObjectId="11ef4a45-0560-43fe-bb9d-e74b80ded0b2">
+              <interface>
+                <returnType>
+                  <DINT />
+                </returnType>
+                <addData>
+                  <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                    <Attributes>
+                      <Attribute Name="TcRpcEnable" Value="" />
+                    </Attributes>
+                  </data>
+                </addData>
+              </interface>
+              <body>
+                <ST>
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml">GVL.Axis_01_MA_Enable := GVL.Axis_01_MR_Enable := GVL.Axis_01_Jog_Up_Enable := GVL.Axis_01_Jog_Dn_Enable := 
+GVL.Axis_02_MA_Enable := GVL.Axis_02_MR_Enable := GVL.Axis_02_Jog_Up_Enable := GVL.Axis_02_Jog_Dn_Enable := 
+GVL.Axis_03_MA_Enable := GVL.Axis_03_MR_Enable := GVL.Axis_03_Jog_Up_Enable := GVL.Axis_03_Jog_Dn_Enable := 
+GVL.Axis_04_MA_Enable := GVL.Axis_04_MR_Enable := GVL.Axis_04_Jog_Up_Enable := GVL.Axis_04_Jog_Dn_Enable := 
+GVL.Axis_05_MA_Enable := GVL.Axis_05_MR_Enable := GVL.Axis_05_Jog_Up_Enable := GVL.Axis_05_Jog_Dn_Enable := 
+GVL.Axis_06_MA_Enable := GVL.Axis_06_MR_Enable := GVL.Axis_06_Jog_Up_Enable := GVL.Axis_06_Jog_Dn_Enable := 
+GVL.Axis_07_MA_Enable := GVL.Axis_07_MR_Enable := GVL.Axis_07_Jog_Up_Enable := GVL.Axis_07_Jog_Dn_Enable := 
+GVL.Axis_08_MA_Enable := GVL.Axis_08_MR_Enable := GVL.Axis_08_Jog_Up_Enable := GVL.Axis_08_Jog_Dn_Enable := 
+GVL.Axis_09_MA_Enable := GVL.Axis_09_MR_Enable := GVL.Axis_09_Jog_Up_Enable := GVL.Axis_09_Jog_Dn_Enable := 
+GVL.Axis_10_MA_Enable := GVL.Axis_10_MR_Enable := GVL.Axis_10_Jog_Up_Enable := GVL.Axis_10_Jog_Dn_Enable := 
+GVL.Axis_11_MA_Enable := GVL.Axis_11_MR_Enable := GVL.Axis_11_Jog_Up_Enable := GVL.Axis_11_Jog_Dn_Enable := 
+GVL.Axis_12_MA_Enable := GVL.Axis_12_MR_Enable := GVL.Axis_12_Jog_Up_Enable := GVL.Axis_12_Jog_Dn_Enable := 
+GVL.Axis_13_MA_Enable := GVL.Axis_13_MR_Enable := GVL.Axis_13_Jog_Up_Enable := GVL.Axis_13_Jog_Dn_Enable := 
+GVL.Axis_14_MA_Enable := GVL.Axis_14_MR_Enable := GVL.Axis_14_Jog_Up_Enable := GVL.Axis_14_Jog_Dn_Enable := 
+GVL.Axis_15_MA_Enable := GVL.Axis_15_MR_Enable := GVL.Axis_15_Jog_Up_Enable := GVL.Axis_15_Jog_Dn_Enable := 
+GVL.Axis_16_MA_Enable := GVL.Axis_16_MR_Enable := GVL.Axis_16_Jog_Up_Enable := GVL.Axis_16_Jog_Dn_Enable := 
+GVL.Axis_17_MA_Enable := GVL.Axis_17_MR_Enable := GVL.Axis_17_Jog_Up_Enable := GVL.Axis_17_Jog_Dn_Enable := 
+GVL.Axis_18_MA_Enable := GVL.Axis_18_MR_Enable := GVL.Axis_18_Jog_Up_Enable := GVL.Axis_18_Jog_Dn_Enable := 
+GVL.Axis_19_MA_Enable := GVL.Axis_19_MR_Enable := GVL.Axis_19_Jog_Up_Enable := GVL.Axis_19_Jog_Dn_Enable := 
+GVL.Axis_20_MA_Enable := GVL.Axis_20_MR_Enable := GVL.Axis_20_Jog_Up_Enable := GVL.Axis_20_Jog_Dn_Enable := 
+GVL.Axis_21_MA_Enable := GVL.Axis_21_MR_Enable := GVL.Axis_21_Jog_Up_Enable := GVL.Axis_21_Jog_Dn_Enable := 
+GVL.Axis_22_MA_Enable := GVL.Axis_22_MR_Enable := GVL.Axis_22_Jog_Up_Enable := GVL.Axis_22_Jog_Dn_Enable := 
+GVL.Axis_23_MA_Enable := GVL.Axis_23_MR_Enable := GVL.Axis_23_Jog_Up_Enable := GVL.Axis_23_Jog_Dn_Enable := 
+GVL.Axis_24_MA_Enable := GVL.Axis_24_MR_Enable := GVL.Axis_24_Jog_Up_Enable := GVL.Axis_24_Jog_Dn_Enable := 
+0;
+
+ClearMotionAndJog := 0;</xhtml>
+                </ST>
+              </body>
+              <InterfaceAsPlainText>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml">{attribute 'TcRpcEnable'}
+METHOD PUBLIC ClearMotionAndJog : DINT
+</xhtml>
+              </InterfaceAsPlainText>
+              <addData />
+            </Method>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+            <InterfaceAsPlainText>
+              <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK FINAL UIFB
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+</xhtml>
+            </InterfaceAsPlainText>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+            <ObjectId>5f5724ba-b515-4970-a705-6a0dab9d357f</ObjectId>
+          </data>
+        </addData>
+      </pou>
+    </pous>
+  </types>
+  <instances>
+    <configurations />
+  </instances>
+  <addData>
+    <data name="http://www.3s-software.com/plcopenxml/projectstructure" handleUnknown="discard">
+      <ProjectStructure>
+        <Object Name="UIFB" ObjectId="5f5724ba-b515-4970-a705-6a0dab9d357f">
+          <Object Name="GetMotorsGroup" ObjectId="38c4a61e-6324-42b4-8b5f-b00629d3731a" />
+          <Object Name="SaveGroupMotors" ObjectId="e8380bac-f404-4054-b975-f938c50ea23a" />
+          <Object Name="ClearMotionAndJog" ObjectId="11ef4a45-0560-43fe-bb9d-e74b80ded0b2" />
+        </Object>
+      </ProjectStructure>
+    </data>
+  </addData>
+</project>

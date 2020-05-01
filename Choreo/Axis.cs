@@ -13,13 +13,20 @@ namespace Choreo {
         }
 
         public Axis(int index) { Index = index; }
-
         #region Runtime+PLC Properties
 
+        double rotations;
         [Plc("Act_Pos")]
         public double Rotations {
-            get => Position / FeetPerRotation;
-            set => Position = value * FeetPerRotation;
+            get => rotations;
+            set { rotations = value; OnPropertyChanged(nameof(Position)); }
+        }
+
+        double calibrationRotations;
+        [Plc("Calibration_Value")]
+        public double CalibrationRotations {
+            get => calibrationRotations;
+            set { calibrationRotations = value; OnPropertyChanged(nameof(CalibrationValue)); }
         }
 
         double load;
@@ -130,7 +137,7 @@ namespace Choreo {
         [Plc]
         public bool Active {
             get => active;
-            set { active = value; OnPropertyChanged(); }
+            set { active = value; OnPropertyChanged(); OnPropertyChanged("Color"); }
         }
 
         bool present;
@@ -140,11 +147,10 @@ namespace Choreo {
             set { present = value; OnPropertyChanged(); }
         }
 
-        double calibrationValue;
-        [Plc("Calibration_Value")]
+        [DataItem(title: "Set Position")]
         public double CalibrationValue {
-            get => calibrationValue;
-            set { calibrationValue = value; OnPropertyChanged(); }
+            get => CalibrationRotations * FeetPerRotation;
+            set { calibrationRotations = value / FeetPerRotation; OnPropertyChanged(); }
         }
 
         bool calibrationSave;
@@ -170,16 +176,11 @@ namespace Choreo {
         public int Index { get; private set; }
         public int Number => Index + 1;
 
-        double position;
         [DataItem]
-        public double Position {
-            get => position;
-            private set { position = value; OnPropertyChanged(); }
-        }
-
+        public double Position => Rotations * FeetPerRotation;
         public DataItemUI.States PositionStatus => DataItemUI.States.OK;
 
-        public virtual Color Color => Colors.Magenta;
+        public virtual Color Color => Colors.Yellow;
 
         int presetTouches;
         public int PresetTouches {
@@ -199,14 +200,14 @@ namespace Choreo {
         #endregion
 
         #region Settings
-        double setPosition;
-        [DataItem(title: "Set Position"), Persistent]
-        public double SetPosition {
-            get => setPosition;
-            set { setPosition = value; OnPropertyChanged(); }
-        }
+        //double setPosition;
+        //[DataItem(title: "Set Position"), Persistent]
+        //public double SetPosition {
+        //    get => setPosition;
+        //    set { setPosition = value; OnPropertyChanged(); }
+        //}
 
-        public DataItemUI.States SetPositionStatus => DataItemUI.States.OK;
+        //public DataItemUI.States SetPositionStatus => DataItemUI.States.OK;
 
         double softUp;
         [DataItem(title: "Soft Up/Max Limit"), Persistent]
@@ -300,7 +301,12 @@ namespace Choreo {
         [DataItem("ft", "Feet/Rotation"), Persistent]
         public double FeetPerRotation {
             get => feetPerRotation;
-            set { feetPerRotation = value <= 0.0 ? 1.0 : value; OnPropertyChanged(); }
+            set { 
+                feetPerRotation = value <= 0.0 ? 1.0 : value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(Position));
+                OnPropertyChanged(nameof(CalibrationValue));
+            }
         }
         #endregion
 

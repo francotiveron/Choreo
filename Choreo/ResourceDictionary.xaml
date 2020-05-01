@@ -9,7 +9,10 @@
     <sys:Double x:Key="DefaultFontSize">20</sys:Double>
     <SolidColorBrush x:Key="DefaultBackgroundBrush" Color="Black"/>
     <SolidColorBrush x:Key="DefaultForegroundBrush" Color="White"/>
-    <local:StatusBrushConverter x:Key="StatusBrushConverter"/>
+    <SolidColorBrush x:Key="DataItemFocusedBackground" Color="Green"/>
+    <SolidColorBrush x:Key="DataItemUnfocusedBackground" Color="#333333"/>
+    <!--<local:DataItemBackgroundConverter x:Key="DataItemBackgroundConverter"/>-->
+    <local:DataItemStatusBrushConverter x:Key="DataItemStatusBrushConverter"/>
     <local:DataItemEnablingConverter x:Key="DataItemEnablingConverter"/>
     <local:PresetBottomPanelButtonColorConverter x:Key="PresetBottomPanelButtonColorConverter"/>
     <local:PositionConverter x:Key="PositionConverter"/>

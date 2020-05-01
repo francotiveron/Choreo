@@ -12,7 +12,7 @@
             <Ellipse.Fill >
                 <MultiBinding Converter="{StaticResource MotorStatusConverter}" FallbackValue="Red">
                     <Binding Path="."/>
-                    <Binding Path="AxisStatus"/>
+                    <!--<Binding Path="AxisStatus"/>-->
                 </MultiBinding>
             </Ellipse.Fill>
         </Ellipse>

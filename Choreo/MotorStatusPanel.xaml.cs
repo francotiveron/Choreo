@@ -34,17 +34,25 @@ namespace Choreo {
     }
 
     public class AxisStatusBrushConverter : IMultiValueConverter {
+        static readonly Brush limeBrush = new SolidColorBrush(Colors.Lime);
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
             var axis = values[0] as Axis;
-            Brush brush = null;
+            Brush
+                @default = values[1] as Brush,
+                jogUp = values[2] as Brush,
+                jogDn = values[3] as Brush,
+                move = values[4] as Brush,
+                brush = null;
 
             if ((string)parameter == "Rectangle") {
                 if (axis.MAEnable || axis.MREnable || axis.JogUpEnable || axis.JogDnEnable)
-                    brush = new SolidColorBrush(Colors.Lime);
+                    brush = limeBrush;
             }
-            else if (axis.JogUpEnable) brush = (Brush)values[1];
-            else if (axis.JogDnEnable) brush = (Brush)values[2];
-            else brush = (Brush)values[3];
+            else if (axis.Active) brush = move;
+            else if (axis.JogUpEnable) brush = jogUp;
+            else if (axis.JogDnEnable) brush = jogDn;
+            else brush = @default;
+
             return brush;
         }
 

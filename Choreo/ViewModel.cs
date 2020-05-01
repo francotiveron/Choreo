@@ -34,13 +34,6 @@ namespace Choreo {
         public Motion Motion { get; } = new Motion();
 
         #region Runtime Properties
-        private bool moveActive;
-        [Plc("Move_Active")]
-        public bool MoveActive {
-            get { return moveActive; }
-            set { moveActive = value; OnPropertyChanged(); }
-        }
-
         private bool cueLoaded;
         [Plc("Cue_loaded")]
         public bool CueLoaded {

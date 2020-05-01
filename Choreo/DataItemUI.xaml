@@ -9,16 +9,12 @@
              Loaded="UserControl_Loaded"
              d:DesignHeight="50" d:DesignWidth="100"
             >
-    <UserControl.Style>
-        <Style TargetType="{x:Type UserControl}">
-            <Setter Property="Background" Value="#333333"/>
-            <Style.Triggers>
-                <Trigger Property="IsFocused" Value="True">
-                    <Setter Property="Background" Value="Green"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </UserControl.Style>
+    <!--<UserControl.Background>
+        <MultiBinding Converter="{StaticResource DataItemBackgroundConverter}">
+            <Binding RelativeSource="{RelativeSource Mode=Self}"/>
+            <Binding RelativeSource="{RelativeSource Mode=Self}" Path="IsFocused"/>
+        </MultiBinding>
+    </UserControl.Background>-->
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="20*"/>
@@ -46,7 +42,7 @@
                 />
             </Grid>
         </Grid>
-        <Rectangle x:Name="StatusCoverRectangle" Grid.Row="0" Fill="{Binding Converter={StaticResource StatusBrushConverter}}"/>
-        <Rectangle x:Name="StatusBottomLine"  Grid.Row="1" Fill="{Binding Converter={StaticResource StatusBrushConverter}}"/>
+        <Rectangle x:Name="StatusCoverRectangle" Grid.Row="0" Fill="{Binding Converter={StaticResource DataItemStatusBrushConverter}}"/>
+        <Rectangle x:Name="StatusBottomLine"  Grid.Row="1" Fill="{Binding Converter={StaticResource DataItemStatusBrushConverter}}"/>
     </Grid>
 </UserControl>
