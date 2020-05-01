@@ -173,6 +173,7 @@ namespace Choreo.TwinCAT {
             new SumSymbolWrite(Connection, valueSyms).Write(values);
         }
 
+        static readonly string[] moveProps = new string[] { nameof(Axis.MoveVal), nameof(Axis.Velocity), nameof(Axis.Accel), nameof(Axis.Decel) };
         void Upload(Motion motion) {
             var values = new object[] {
                 0.0
@@ -181,26 +182,20 @@ namespace Choreo.TwinCAT {
                 , motion.Deceleration
             };
 
-            List<ISymbol> enabSyms = new List<ISymbol>();
+            var enabSyms = new List<ISymbol>();
+            var valueSyms = new List<ISymbol>();
             var enableProp = motion.Relative ? nameof(Axis.MREnable) : nameof(Axis.MAEnable);
             var move = motion.Relative ? motion.RelativeSetpoint : motion.AbsoluteSetpoint;
 
             foreach (var ax in VM.Axes) {
                 if (!motion.Contains(ax)) continue;
 
-                enabSyms.Add(tags[ax, enableProp].Symbol);
-
-                List<ISymbol> valueSyms = new List<ISymbol>();
-                valueSyms.AddRange(
-                    new string[] {
-                        nameof(Axis.MoveVal)
-                        , nameof(Axis.Velocity)
-                        , nameof(Axis.Accel)
-                        , nameof(Axis.Decel) }
-                    .Select(propName => tags[ax, propName].Symbol));
-
+                valueSyms.Clear();
+                valueSyms.AddRange(moveProps.Select(prop => tags[ax, prop].Symbol));
                 values[0] = move / ax.FeetPerRotation;
                 new SumSymbolWrite(Connection, valueSyms).Write(values);
+
+                enabSyms.Add(tags[ax, enableProp].Symbol);
             }
 
             new SumSymbolWrite(Connection, enabSyms).Write(Enumerable.Repeat((object)true, enabSyms.Count).ToArray());
@@ -209,6 +204,31 @@ namespace Choreo.TwinCAT {
         void Upload(double jogVel) {
             var path = tags.PathOf(VM, nameof(ViewModel.JogVelocity));
             Connection.WriteSymbol(path, jogVel * 100.0, false);
+        }
+
+        void Upload(Preset preset) {
+            var enabSyms = new List<ISymbol>();
+            var valueSyms = new List<ISymbol>();
+            var aps = new List<(Axis, double)>();
+            aps.AddRange(preset.MotorPositions.Select(mp => (VM.Motors[mp.Key] as Axis, mp.Value)));
+            aps.AddRange(preset.GroupPositions.Select(gp => (VM.Groups[gp.Key] as Axis, gp.Value)));
+
+            foreach ((Axis ax, double pos) in aps) {
+                var values = new object[] {
+                    pos / ax.FeetPerRotation
+                    , ax.DefVel
+                    , ax.DefAcc
+                    , ax.DefDec
+                };
+
+                valueSyms.Clear();
+                valueSyms.AddRange(moveProps.Select(prop => tags[ax, prop].Symbol));
+                new SumSymbolWrite(Connection, valueSyms).Write(values);
+
+                enabSyms.Add(tags[ax, nameof(Axis.MAEnable)].Symbol);
+            }
+
+            new SumSymbolWrite(Connection, enabSyms).Write(Enumerable.Repeat((object)true, enabSyms.Count).ToArray());
         }
 
         public bool SaveGroupMotors(int groupIndex, ushort bitmap) => PlcMethod()?.Invoke(groupIndex, bitmap) == 0;

@@ -16,19 +16,26 @@ namespace Choreo {
             InitializeComponent();
         }
 
-        private void PushTimeout(int presetIndex) {
-            if (VM.IsEditing) return;
-            VM.BeginPresetEditing(presetIndex);
+        Preset preset;
+        private void PushTimeout() {
+            var n = preset?.Number ?? 0;
+            preset = null;
+            if (VM.IsEditing || n == 0) return;
+            VM.BeginPresetEditing(n - 1);
         }
 
         private void Button_MouseDown(object sender, MouseButtonEventArgs e) {
-            var button = (Button)sender;
-            var presetIndex = (int)button.GetValue(Grid.ColumnProperty);
-            if (e.LeftButton == MouseButtonState.Pressed) PushTimer.Start(() => PushTimeout(presetIndex));
+            if (e.ChangedButton== MouseButton.Left) {
+                preset = (sender as Button).DataContext as Preset;
+                PushTimer.Start(() => PushTimeout());
+            }
+            //if (e.LeftButton == MouseButtonState.Pressed) PushTimer.Start(() => PushTimeout());
         }
 
         private void Button_MouseUp(object sender, MouseButtonEventArgs e) {
-            PushTimer.Stop();
+            if (PushTimer.Stop() && preset != null) {
+                Plc.Upload(preset);
+            }
         }
     }
     public class PresetBottomPanelButtonColorConverter : IMultiValueConverter {

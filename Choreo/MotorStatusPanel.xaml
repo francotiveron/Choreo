@@ -83,6 +83,7 @@
                     <Binding Path="MREnable"/>
                     <Binding Path="JogUpEnable"/>
                     <Binding Path="JogDnEnable"/>
+                    <Binding Path="MoveVal"/>
                 </MultiBinding>
             </Image.Visibility>
         </Image>
@@ -95,6 +96,7 @@
                     <Binding Path="MREnable"/>
                     <Binding Path="JogUpEnable"/>
                     <Binding Path="JogDnEnable"/>
+                    <Binding Path="MoveVal"/>
                 </MultiBinding>
             </Image.Visibility>
         </Image>
