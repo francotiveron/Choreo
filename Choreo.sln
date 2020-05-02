@@ -11,6 +11,7 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		All|Any CPU = All|Any CPU
 		Debug|Any CPU = Debug|Any CPU
+		DefaultBuild|Any CPU = DefaultBuild|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
@@ -18,12 +19,16 @@ Global
 		{E2CE80D1-C8AC-4881-9474-A9A865DF46FB}.All|Any CPU.Build.0 = Release|Any CPU
 		{E2CE80D1-C8AC-4881-9474-A9A865DF46FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E2CE80D1-C8AC-4881-9474-A9A865DF46FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2CE80D1-C8AC-4881-9474-A9A865DF46FB}.DefaultBuild|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2CE80D1-C8AC-4881-9474-A9A865DF46FB}.DefaultBuild|Any CPU.Build.0 = Debug|Any CPU
 		{E2CE80D1-C8AC-4881-9474-A9A865DF46FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2CE80D1-C8AC-4881-9474-A9A865DF46FB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1A566158-8EF1-4F5D-8CD9-213554CC4955}.All|Any CPU.ActiveCfg = DefaultBuild
 		{1A566158-8EF1-4F5D-8CD9-213554CC4955}.All|Any CPU.Build.0 = DefaultBuild
 		{1A566158-8EF1-4F5D-8CD9-213554CC4955}.Debug|Any CPU.ActiveCfg = DefaultBuild
 		{1A566158-8EF1-4F5D-8CD9-213554CC4955}.Debug|Any CPU.Build.0 = DefaultBuild
+		{1A566158-8EF1-4F5D-8CD9-213554CC4955}.DefaultBuild|Any CPU.ActiveCfg = DefaultBuild
+		{1A566158-8EF1-4F5D-8CD9-213554CC4955}.DefaultBuild|Any CPU.Build.0 = DefaultBuild
 		{1A566158-8EF1-4F5D-8CD9-213554CC4955}.Release|Any CPU.ActiveCfg = DefaultBuild
 		{1A566158-8EF1-4F5D-8CD9-213554CC4955}.Release|Any CPU.Build.0 = DefaultBuild
 	EndGlobalSection
