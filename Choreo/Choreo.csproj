@@ -68,6 +68,9 @@
   <PropertyGroup>
     <SignManifests>true</SignManifests>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>VerendusLogo.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.19\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
@@ -234,9 +237,6 @@
     <Compile Include="Storage.cs" />
     <Compile Include="TwinCAT\Tag.cs" />
     <Compile Include="TwinCAT\TagCollection.cs" />
-    <Compile Include="UserControl1.xaml.cs">
-      <DependentUpon>UserControl1.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModel.cs" />
     <Compile Include="Motor.cs" />
     <Compile Include="TestWindow.xaml.cs">
@@ -390,10 +390,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MotorPanel.xaml.cs">
@@ -412,6 +408,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="VerendusLogo.ico" />
+    <Resource Include="Pictures\VerendusLogo.ico" />
     <Content Include="TwinCAT\UIFB.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -448,10 +446,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="VerendusLogo.png" />
+    <Resource Include="Pictures\VerendusLogo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="MainMenu.png" />
+    <Resource Include="Pictures\MainMenu.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">

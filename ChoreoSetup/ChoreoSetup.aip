@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <DOCUMENT Type="Advanced Installer" CreateVersion="17.0" version="17.0" Modules="simple" RootPath="." Language="en" Id="{400404AF-B3C8-4C19-B59E-CE36993BD8FB}">
   <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
-    <ROW Name="HiddenItems" Value="AppXProductDetailsComponent;AppXDependenciesComponent;AppXAppDetailsComponent;AppXVisualAssetsComponent;AppXCapabilitiesComponent;AppXAppDeclarationsComponent;AppXUriRulesComponent"/>
+    <ROW Name="HiddenItems" Value="AppXProductDetailsComponent;AppXDependenciesComponent;AppXAppDetailsComponent;AppXVisualAssetsComponent;AppXCapabilitiesComponent;AppXAppDeclarationsComponent;AppXUriRulesComponent;FixupComponent;MsiXDiffComponent;MsixManifestEditorComponent"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
@@ -37,11 +37,13 @@
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_UIFB.xml" Value="UIFB.xml"/>
     <ROW Property="ALLUSERS" Value="1"/>
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
+    <ROW Property="CTRLS" Value="2"/>
     <ROW Property="Manufacturer" Value="Verendus Industries"/>
     <ROW Property="ProductCode" Value="1033:{7DDE06DB-6F41-4C2A-B224-D5E24AB76AC8} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="Choreo UI App"/>
     <ROW Property="ProductVersion" Value="1.0.0" Type="32"/>
+    <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{46CF055B-37B7-4867-856C-C3512502F7DF}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
@@ -56,6 +58,7 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
     <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
     <ROW Directory="Choreo_Dir" Directory_Parent="APPDIR" DefaultDir="Choreo"/>
+    <ROW Directory="DesktopFolder" Directory_Parent="TARGETDIR" DefaultDir="DESKTO~1|DesktopFolder" IsPseudoRoot="1"/>
     <ROW Directory="SHORTCUTDIR" Directory_Parent="TARGETDIR" DefaultDir="SHORTC~1|SHORTCUTDIR" IsPseudoRoot="1"/>
     <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
     <ROW Directory="TwinCAT_Dir" Directory_Parent="Choreo_Dir" DefaultDir="TwinCAT"/>
@@ -168,6 +171,7 @@
     <ROW Action="AI_DpiContentScale" Type="1" Source="aicustact.dll" Target="DpiContentScale"/>
     <ROW Action="AI_EnableDebugLog" Type="321" Source="aicustact.dll" Target="EnableDebugLog"/>
     <ROW Action="AI_InstallModeCheck" Type="1" Source="aicustact.dll" Target="UpdateInstallMode" WithoutSeq="true"/>
+    <ROW Action="AI_LaunchApp" Type="1" Source="aicustact.dll" Target="[#Choreo.exe]"/>
     <ROW Action="AI_PREPARE_UPGRADE" Type="65" Source="aicustact.dll" Target="PrepareUpgrade"/>
     <ROW Action="AI_RESTORE_LOCATION" Type="65" Source="aicustact.dll" Target="RestoreLocation"/>
     <ROW Action="AI_ResolveKnownFolders" Type="1" Source="aicustact.dll" Target="AI_ResolveKnownFolders"/>
@@ -212,6 +216,7 @@
     <ROW Registry="Version" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
+    <ROW Shortcut="AI_PROPPATH_FILENAME_PERBUILD_Chore" Directory_="DesktopFolder" Name="[|AI_PROPPATH_FILENAME_PERBUILD_Choreo.exe]" Component_="Choreo_PrimaryOutput" Target="[#Choreo.exe]" Description="Choreo UI App" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="Choreo_Dir"/>
     <ROW Shortcut="Choreo" Directory_="SHORTCUTDIR" Name="Choreo" Component_="Choreo_PrimaryOutput" Target="[#Choreo.exe]" Hotkey="0" IconIndex="0" ShowCmd="1"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
@@ -222,7 +227,7 @@
     <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.VsProjectComponent">
-    <ROW ProjectId="{e2ce80d1-c8ac-4881-9474-a9a865df46fb}" ProjectName="Choreo" OutputGroup="PrimaryOutput" OutputFile="Choreo.exe" OutputFileShortcut="Choreo"/>
+    <ROW ProjectId="{e2ce80d1-c8ac-4881-9474-a9a865df46fb}" ProjectName="Choreo" OutputGroup="PrimaryOutput" OutputFile="Choreo.exe" OutputFileShortcut="AI_PROPPATH_FILENAME_PERBUILD_Chore"/>
     <ROW ProjectId="{e2ce80d1-c8ac-4881-9474-a9a865df46fb}" ProjectName="Choreo" OutputGroup="PrimaryOutput" OutputFile="Choreo.exe.config"/>
     <ROW ProjectId="{e2ce80d1-c8ac-4881-9474-a9a865df46fb}" ProjectName="Choreo" OutputGroup="References" OutputFile="Microsoft.Xaml.Behaviors.dll"/>
     <ROW ProjectId="{e2ce80d1-c8ac-4881-9474-a9a865df46fb}" ProjectName="Choreo" OutputGroup="References" OutputFile="NLog.dll"/>

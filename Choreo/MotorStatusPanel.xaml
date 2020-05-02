@@ -17,6 +17,7 @@
         </LinearGradientBrush>
         <SolidColorBrush x:Key="DefaultBrush" Color="#333333"/>
         <SolidColorBrush x:Key="MoveBrush" Color="Lime" Opacity="0.5"/>
+        <SolidColorBrush x:Key="ErrorBrush" Color="Red"  Opacity="0.5"/>
         <local:UpDnArrowVisibilityConverter x:Key="UpDnArrowVisibilityConverter"/>
         <local:AxisStatusBrushConverter x:Key="AxisStatusBrushConverter"/>
     </UserControl.Resources>
@@ -27,9 +28,11 @@
             <Binding Source="{StaticResource JogUpBrush}" />
             <Binding Source="{StaticResource JogDnBrush}" />
             <Binding Source="{StaticResource MoveBrush}" />
+            <Binding Source="{StaticResource ErrorBrush}" />
             <Binding Path="JogUpEnable"/>
             <Binding Path="JogDnEnable"/>
             <Binding Path="Active"/>
+            <Binding Path="AxisStatus"/>
         </MultiBinding>
     </UserControl.Background>
     <Grid>
@@ -37,29 +40,39 @@
             <ColumnDefinition Width="7*"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="12*"/>
                 <RowDefinition Height="12*"/>
                 <RowDefinition Height="8*"/>
-                <RowDefinition/>
             </Grid.RowDefinitions>
             <local:DataItemUI DataContext="{Binding Position, Converter={StaticResource PositionConverter}}"/>
             <local:DataItemUI Grid.Row="1" DataContext="{Binding Load}"/>
             <local:MotorStatusIndicator Grid.Row="2"/>
-            <Rectangle x:Name="StatusRectangle" Grid.Row="3">
-                <Rectangle.Fill>
-                    <MultiBinding Converter="{StaticResource AxisStatusBrushConverter}" ConverterParameter="Rectangle">
-                        <Binding Path="."/>
-                        <Binding Path="MAEnable"/>
-                        <Binding Path="MREnable"/>
-                        <Binding Path="JogUpEnable"/>
-                        <Binding Path="JogDnEnable"/>
-                    </MultiBinding>
-                </Rectangle.Fill>
-            </Rectangle>
         </Grid>
-        <ProgressBar Grid.Column="1" BorderBrush="#777777" Value="30" Orientation="Vertical" Background="#111111" >
+        <Rectangle x:Name="StatusRectangle" Grid.Row="1" Grid.ColumnSpan="2">
+            <Rectangle.Fill>
+                <MultiBinding Converter="{StaticResource AxisStatusBrushConverter}" ConverterParameter="Rectangle">
+                    <Binding Path="."/>
+                    <Binding Source="{StaticResource DefaultBrush}" />
+                    <Binding Source="{StaticResource JogUpBrush}" />
+                    <Binding Source="{StaticResource JogDnBrush}" />
+                    <Binding Source="{StaticResource MoveBrush}" />
+                    <Binding Source="{StaticResource ErrorBrush}" />
+                    <Binding Path="MAEnable"/>
+                    <Binding Path="MREnable"/>
+                    <Binding Path="JogUpEnable"/>
+                    <Binding Path="JogDnEnable"/>
+                    <Binding Path="Active"/>
+                    <Binding Path="AxisStatus"/>
+                </MultiBinding>
+            </Rectangle.Fill>
+        </Rectangle>
+        <ProgressBar Grid.Column="1" BorderBrush="#777777" Value="{Binding PositionSlider}" Orientation="Vertical" Background="#111111" >
             <ProgressBar.Style>
                 <Style TargetType="ProgressBar">
                     <Setter Property="Foreground" Value="DarkGray"/>
@@ -70,9 +83,6 @@
                     </Style.Triggers>
                 </Style>
             </ProgressBar.Style>
-            <!--<ProgressBar.Foreground>
-                <SolidColorBrush Color="{Binding Color, FallbackValue=DarkGray}"/>
-            </ProgressBar.Foreground>-->
         </ProgressBar>
         <Image Grid.Column="1" Source="Pictures/GreenArrowsUp.png" Stretch="Fill">
             <Image.Visibility>

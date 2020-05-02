@@ -34,18 +34,20 @@ namespace Choreo
 
     public class MotorStatusConverter : IMultiValueConverter {
         static string GetText(Axis axis) {
+            if (axis.AxisStatus == Axis.AxisStates.Error) return "Drive Fault";
             if (axis.MAEnable || axis.MREnable) {
                 return $"{(axis.MAEnable ? "A" : "R")}: {FeetInchesConvert.ToString(axis.MoveVal)}";
             }
-            else
             if (axis.JogUpEnable) return "Jog Up";
-            else
             if (axis.JogDnEnable) return "Jog Dn";
-            else return "OK";
+            return "OK";
         }
 
         static readonly SolidColorBrush okBrush = new SolidColorBrush(Colors.Lime);
+        static readonly SolidColorBrush warnBrush = new SolidColorBrush(Colors.Yellow);
+        static readonly SolidColorBrush errBrush = new SolidColorBrush(Colors.Red);
         static Brush GetColor(Axis axis) {
+            if (axis is Motor m && m.DriveStatus) return errBrush;
             return okBrush;
         }
 

@@ -29,9 +29,6 @@
     <Style TargetType="{x:Type UserControl}">
         <Setter Property="Background" Value="{StaticResource DefaultBackgroundBrush}"/>
     </Style>
-    <ControlTemplate x:Key="MainMenuButtonControlTemplate" TargetType="{x:Type Button}">
-        <Image Source="MainMenu.png" Margin="1" />
-    </ControlTemplate>
     <SolidColorBrush x:Key="MainWindowsBackgroundBrush" Color="Black"/>
     <SolidColorBrush x:Key="MainWindowsForegroundBrush" Color="White"/>
     <Style x:Key="ButtonDefaultStyle" TargetType="{x:Type Button}">
@@ -71,10 +68,10 @@
         <Setter Property="Content" Value="{Binding Name, FallbackValue=Preset X}"/>
     </Style>
     <Style TargetType="{x:Type ContextMenu}">
-        <Setter Property="FontFamily" Value="Comic Sans MS" />
-        <Setter Property="FontSize" Value="28" />
+        <!--<Setter Property="FontFamily" Value="Comic Sans MS" />-->
+        <!--<Setter Property="FontSize" Value="28" />-->
         <Setter Property="Background" Value="{DynamicResource MainWindowsBackgroundBrush}"/>
-        <Setter Property="Foreground" Value="{DynamicResource MainWindowsForegroundBrush}"/>
+        <!--<Setter Property="Foreground" Value="{DynamicResource MainWindowsForegroundBrush}"/>-->
     </Style>
     <Style TargetType="{x:Type Label}">
         <Setter Property="FontFamily" Value="{StaticResource DefaultFontFamily}" />

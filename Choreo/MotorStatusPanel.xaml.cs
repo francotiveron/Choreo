@@ -34,7 +34,6 @@ namespace Choreo {
     }
 
     public class AxisStatusBrushConverter : IMultiValueConverter {
-        static readonly Brush limeBrush = new SolidColorBrush(Colors.Lime);
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
             var axis = values[0] as Axis;
             Brush
@@ -42,12 +41,21 @@ namespace Choreo {
                 jogUp = values[2] as Brush,
                 jogDn = values[3] as Brush,
                 move = values[4] as Brush,
+                error = values[5] as Brush,
                 brush = null;
 
             if ((string)parameter == "Rectangle") {
-                if (axis.MAEnable || axis.MREnable || axis.JogUpEnable || axis.JogDnEnable)
-                    brush = limeBrush;
+                if (axis.AxisStatus == Axis.AxisStates.Error) {
+                    brush = error.Clone();
+                    brush.Opacity = 1.0;
+                }
+                else
+                if (axis.MAEnable || axis.MREnable || axis.JogUpEnable || axis.JogDnEnable) {
+                    brush = move.Clone();
+                    brush.Opacity = 1.0;
+                }
             }
+            else if (axis.AxisStatus == Axis.AxisStates.Error) brush = error;
             else if (axis.Active) brush = move;
             else if (axis.JogUpEnable) brush = jogUp;
             else if (axis.JogDnEnable) brush = jogDn;

@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="32" d:DesignWidth="108">
+             d:DesignHeight="32" d:DesignWidth="200">
     <StackPanel Orientation="Horizontal">
         <!--<Ellipse VerticalAlignment="Center" Width="20" Height="20" Margin="2,0,0,0" Fill="{Binding Converter={StaticResource MotorStatusConverter}, FallbackValue=Red}"/>
         <Label Style="{StaticResource DataItemDataStyle}" Content="{Binding Converter={StaticResource MotorStatusConverter}, FallbackValue=Status}"/>-->
@@ -12,7 +12,7 @@
             <Ellipse.Fill >
                 <MultiBinding Converter="{StaticResource MotorStatusConverter}" FallbackValue="Red">
                     <Binding Path="."/>
-                    <!--<Binding Path="AxisStatus"/>-->
+                    <Binding Path="AxisStatus"/>
                 </MultiBinding>
             </Ellipse.Fill>
         </Ellipse>
@@ -25,6 +25,7 @@
                     <Binding Path="MREnable"/>
                     <Binding Path="JogUpEnable"/>
                     <Binding Path="JogDnEnable"/>
+                    <Binding Path="AxisStatus"/>
                 </MultiBinding>
             </Label.Content>
         </Label>

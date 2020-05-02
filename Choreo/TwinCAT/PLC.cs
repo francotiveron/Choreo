@@ -159,6 +159,8 @@ namespace Choreo.TwinCAT {
                 axis.MinLoad
                 , axis.MaxLoad
                 , axis.LoadOffs
+                , axis.MinVel
+                , axis.MaxVel
             };
 
             List<ISymbol> valueSyms = new List<ISymbol>();
@@ -167,6 +169,8 @@ namespace Choreo.TwinCAT {
                         nameof(Axis.MinLoad)
                         , nameof(Axis.MaxLoad)
                         , nameof(Axis.LoadOffs)
+                        , nameof(Axis.MinVel)
+                        , nameof(Axis.MaxVel)
                         }
                 .Select(propName => tags[axis, propName].Symbol));
 
@@ -184,7 +188,12 @@ namespace Choreo.TwinCAT {
 
             var enabSyms = new List<ISymbol>();
             var valueSyms = new List<ISymbol>();
-            var enableProp = motion.Relative ? nameof(Axis.MREnable) : nameof(Axis.MAEnable);
+            var enaProps = new string[] { 
+                motion.Relative ? nameof(Axis.MREnable): nameof(Axis.MAEnable)
+                , motion.Relative ? nameof(Axis.MAEnable): nameof(Axis.MREnable)
+                , nameof(Axis.JogUpEnable)
+                , nameof(Axis.JogDnEnable) 
+            };
             var move = motion.Relative ? motion.RelativeSetpoint : motion.AbsoluteSetpoint;
 
             foreach (var ax in VM.Axes) {
@@ -195,10 +204,11 @@ namespace Choreo.TwinCAT {
                 values[0] = move / ax.FeetPerRotation;
                 new SumSymbolWrite(Connection, valueSyms).Write(values);
 
-                enabSyms.Add(tags[ax, enableProp].Symbol);
+                enabSyms.AddRange(enaProps.Select(p => tags[ax, p].Symbol));
             }
 
-            new SumSymbolWrite(Connection, enabSyms).Write(Enumerable.Repeat((object)true, enabSyms.Count).ToArray());
+            var tf = new object[] { true, false, false, false };
+            new SumSymbolWrite(Connection, enabSyms).Write(Enumerable.Repeat(tf, enabSyms.Count / 4).SelectMany(tfe => tfe).ToArray());
         }
 
         void Upload(double jogVel) {
@@ -209,6 +219,13 @@ namespace Choreo.TwinCAT {
         void Upload(Preset preset) {
             var enabSyms = new List<ISymbol>();
             var valueSyms = new List<ISymbol>();
+            var enaProps = new string[] {
+                nameof(Axis.MAEnable)
+                , nameof(Axis.MREnable)
+                , nameof(Axis.JogUpEnable)
+                , nameof(Axis.JogDnEnable)
+            };
+
             var aps = new List<(Axis, double)>();
             aps.AddRange(preset.MotorPositions.Select(mp => (VM.Motors[mp.Key] as Axis, mp.Value)));
             aps.AddRange(preset.GroupPositions.Select(gp => (VM.Groups[gp.Key] as Axis, gp.Value)));
@@ -225,10 +242,11 @@ namespace Choreo.TwinCAT {
                 valueSyms.AddRange(moveProps.Select(prop => tags[ax, prop].Symbol));
                 new SumSymbolWrite(Connection, valueSyms).Write(values);
 
-                enabSyms.Add(tags[ax, nameof(Axis.MAEnable)].Symbol);
+                enabSyms.AddRange(enaProps.Select(p => tags[ax, p].Symbol));
             }
 
-            new SumSymbolWrite(Connection, enabSyms).Write(Enumerable.Repeat((object)true, enabSyms.Count).ToArray());
+            var tf = new object[] { true, false, false, false };
+            new SumSymbolWrite(Connection, enabSyms).Write(Enumerable.Repeat(tf, enabSyms.Count / 4).SelectMany(tfe => tfe).ToArray());
         }
 
         public bool SaveGroupMotors(int groupIndex, ushort bitmap) => PlcMethod()?.Invoke(groupIndex, bitmap) == 0;
@@ -256,16 +274,23 @@ namespace Choreo.TwinCAT {
         }
 
         public void Jog(Axis axis, int direction) {
+            if (!IsOn) return;
+
             var values = new object[] {
                 direction > 0
                 , direction < 0
+                , false
+                , false
             };
 
             List<ISymbol> valueSyms = new List<ISymbol>();
             valueSyms.AddRange(
                 new string[] {
-                        nameof(Axis.JogUpEnable)
-                        , nameof(Axis.JogDnEnable) }
+                    nameof(Axis.JogUpEnable)
+                    , nameof(Axis.JogDnEnable)
+                    , nameof(Axis.MAEnable)
+                    , nameof(Axis.MREnable)
+                }
                 .Select(propName => tags[axis, propName].Symbol));
 
             new SumSymbolWrite(Connection, valueSyms).Write(values);
@@ -274,6 +299,8 @@ namespace Choreo.TwinCAT {
         public bool ClearMotionAndJog() => PlcMethod()?.Invoke() == 0;
 
         public void Calibrate(Axis axis) {
+            if (!IsOn) return;
+
             var pathVal = tags.PathOf(axis, nameof(Axis.CalibrationRotations));
             var pathSet = tags.PathOf(axis, nameof(Axis.CalibrationSave));
             Connection.WriteSymbol(pathVal, axis.CalibrationRotations, false);

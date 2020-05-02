@@ -10,22 +10,26 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="20*"/>
+                <ColumnDefinition Width="21*"/>
+                <!--<ColumnDefinition Width="2*"/>-->
                 <ColumnDefinition Width="2*"/>
-                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Image Source="VerendusLogo.png"/>
-            <Button x:Name="MainMenu" Grid.Column="3" Template="{StaticResource MainMenuButtonControlTemplate}">
-                <Button.Resources>
-                    <ResourceDictionary>
-                        <ResourceDictionary.MergedDictionaries>
-                            <ResourceDictionary Source="ResourceDictionary.xaml"/>
-                        </ResourceDictionary.MergedDictionaries>
-                    </ResourceDictionary>
-                </Button.Resources>
+            <Image Source="Pictures/VerendusLogo.png"/>
+            <Button x:Name="MainMenu" Grid.Column="2">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="Red"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Source={x:Static local:Globals.Plc}, Path=IsOn}" Value="True">
+                                <Setter Property="Background" Value="Green"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Image Source="Pictures/MainMenu.png"/>
                 <Button.ContextMenu>
                     <ContextMenu>
-                        <Button x:Name="ExitButton" Content="Exit" Click="ExitButton_Click"/>
+                        <Button x:Name="ExitButton" Content="Exit" Click="ExitButton_Click" Background="{x:Null}"/>
                     </ContextMenu>
                 </Button.ContextMenu>
             </Button>

@@ -8,13 +8,18 @@
 + Motor move window
 + Show window
 + Disable (darken) Min Acc and Min Dec data items in motor settings form
++ Clear button (the clear button removes any current move or jog assignments)
++ Jog velocity slide management
++ Motor position bar movement
++ Clarify meaning of arrows in motor pos bar
++ Disable group change in motor settings for grouped motors
 - Cue execution logic	
 - Motor Lock for group
-- Motor out of place function/dialog
-- Clear button (the clear button removes any current move or jog assignments)
-- Jog velocity slide management
-- Motor position bar movement
-- Clarify meaning of arrows in motor pos bar
+- Motor User Enable/Disable
+- Motor ES_Status
 - Settings values Data validation
-- Disable group change in motor settings for grouped motors
-- CleanUp classes (e.g. SelectPad and cmoments)
+- Motor/Group Name editing
+- Preset name editing
+- Black Exclamation point in Red Ellipse motor status
+- Users Login
+- Hide/Unhide Cue (eye) from show button

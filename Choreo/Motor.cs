@@ -7,6 +7,8 @@ namespace Choreo {
     public class Motor : Axis {
         public Motor(int index) : base(index) { }
 
+        public override AxisStates AxisStatus => DriveStatus ? AxisStates.Error : AxisStates.Ok;
+
         #region Runtime+PLC Properties
         bool fwdLim;
         [Plc("Fwd_Lim")]
@@ -40,7 +42,7 @@ namespace Choreo {
         [Plc("Drive_Status")]
         public bool DriveStatus {
             get => driveStatus;
-            set { driveStatus = value; OnPropertyChanged(); }
+            set { driveStatus = value; OnPropertyChanged(); OnPropertyChanged(nameof(AxisStatus)); }
         }
 
         bool eSStatus;

@@ -7,26 +7,31 @@ using static Choreo.Globals;
 
 namespace Choreo {
     public class Axis : PropertyChangedNotifier {
+        public enum AxisStates { Ok, Warning, Error };
         protected void OnStatusChanged([CallerMemberName] string name = null) {
             base.OnPropertyChanged(name);
-            //NotifyFurther(nameof(AxisStatus));
         }
 
         public Axis(int index) { Index = index; }
-        #region Runtime+PLC Properties
 
+        public virtual AxisStates AxisStatus => AxisStates.Ok;
+
+        #region Runtime+PLC Properties
         double rotations;
         [Plc("Act_Pos")]
         public double Rotations {
             get => rotations;
             set { rotations = value; OnPropertyChanged(nameof(Position)); }
         }
+        [DataItem]
+        public double Position => Rotations * FeetPerRotation;
+        public DataItemUI.States PositionStatus => DataItemUI.States.OK;
 
-        double calibrationRotations;
-        [Plc("Calibration_Value")]
-        public double CalibrationRotations {
-            get => calibrationRotations;
-            set { calibrationRotations = value; OnPropertyChanged(nameof(CalibrationValue)); }
+        private double posisionSlider;
+        [Plc("Position_Slider")]
+        public double PositionSlider {
+            get { return posisionSlider; }
+            set { posisionSlider = value; OnPropertyChanged(); }
         }
 
         double load;
@@ -35,7 +40,6 @@ namespace Choreo {
             get => load;
             set { load = value; OnPropertyChanged(); }
         }
-
         public DataItemUI.States LoadStatus => DataItemUI.States.OK;
 
         [Plc("Min_Load")]
@@ -74,6 +78,20 @@ namespace Choreo {
         public double Velocity {
             get => velocity;
             set { velocity = value; OnPropertyChanged(); }
+        }
+
+        double minVel;
+        [DataItem("fpm", "Min Velocity"), Plc("Min_Velocity")]
+        public double MinVel {
+            get => minVel;
+            set { minVel = value; OnPropertyChanged(); }
+        }
+
+        double maxVel;
+        [DataItem("fpm", "Max Velocity"), Plc("Max_Velocity")]
+        public double MaxVel {
+            get => maxVel;
+            set { maxVel = value; OnPropertyChanged(); }
         }
 
         bool mAEnable;
@@ -147,6 +165,13 @@ namespace Choreo {
             set { present = value; OnPropertyChanged(); }
         }
 
+        double calibrationRotations;
+        [Plc("Calibration_Value")]
+        public double CalibrationRotations {
+            get => calibrationRotations;
+            set { calibrationRotations = value; OnPropertyChanged(nameof(CalibrationValue)); }
+        }
+
         [DataItem(title: "Set Position")]
         public double CalibrationValue {
             get => CalibrationRotations * FeetPerRotation;
@@ -176,9 +201,6 @@ namespace Choreo {
         public int Index { get; private set; }
         public int Number => Index + 1;
 
-        [DataItem]
-        public double Position => Rotations * FeetPerRotation;
-        public DataItemUI.States PositionStatus => DataItemUI.States.OK;
 
         public virtual Color Color => Colors.Yellow;
 
@@ -195,20 +217,9 @@ namespace Choreo {
         public int Status {
             get { return 0; }
         }
-
-
         #endregion
 
         #region Settings
-        //double setPosition;
-        //[DataItem(title: "Set Position"), Persistent]
-        //public double SetPosition {
-        //    get => setPosition;
-        //    set { setPosition = value; OnPropertyChanged(); }
-        //}
-
-        //public DataItemUI.States SetPositionStatus => DataItemUI.States.OK;
-
         double softUp;
         [DataItem(title: "Soft Up/Max Limit"), Persistent]
         public double SoftUp {
@@ -240,18 +251,6 @@ namespace Choreo {
             set { defAcc = value; OnPropertyChanged(); }
         }
 
-        double minVel;
-        [DataItem("fpm", "Min Velocity"), Persistent]
-        public double MinVel {
-            get => minVel;
-            set { minVel = value; OnPropertyChanged(); }
-        }
-        double maxVel;
-        [DataItem("fpm", "Max Velocity"), Persistent]
-        public double MaxVel {
-            get => maxVel;
-            set { maxVel = value; OnPropertyChanged(); }
-        }
         double defVel;
         [DataItem("fpm", "Default Velocity"), Persistent]
         public double DefVel {
