@@ -41,6 +41,27 @@ namespace Choreo {
             set { cueLoaded = value; OnPropertyChanged(); }
         }
 
+        bool cueComplete;
+        [Plc("Cue_Complete")]
+        public bool CueComplete {
+            get { return cueComplete; }
+            set { cueComplete = value; OnPropertyChanged(); }
+        }
+
+        bool globalESStatus;
+        [Plc("Global_ES_Status")]
+        public bool GlobalESStatus {
+            get { return globalESStatus; }
+            set { globalESStatus = value; OnPropertyChanged(); }
+        }
+
+        bool parameterWrite;
+        [Plc("Parameter_Write")]
+        public bool ParameterWrite {
+            get { return parameterWrite; }
+            set { parameterWrite = value; OnPropertyChanged(); }
+        }
+
         private double jogVelocity;
         [Plc("Jog_Velocity")]
         public double JogVelocity {

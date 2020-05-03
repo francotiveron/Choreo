@@ -464,10 +464,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ToDo.txt" />
+    <Resource Include="Doc\ToDo.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Hrs.txt" />
+    <Resource Include="Doc\Hrs.txt" />
   </ItemGroup>
   <ItemGroup>
     <PublishFile Include="TwinCAT\UIFB.xml">

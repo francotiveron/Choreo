@@ -24,7 +24,7 @@ namespace Choreo {
             set { rotations = value; OnPropertyChanged(nameof(Position)); }
         }
         [DataItem]
-        public double Position => Rotations * FeetPerRotation;
+        public double Position => Rotations / RotationsPerFoot;
         public DataItemUI.States PositionStatus => DataItemUI.States.OK;
 
         private double posisionSlider;
@@ -174,8 +174,8 @@ namespace Choreo {
 
         [DataItem(title: "Set Position")]
         public double CalibrationValue {
-            get => CalibrationRotations * FeetPerRotation;
-            set { calibrationRotations = value / FeetPerRotation; OnPropertyChanged(); }
+            get => CalibrationRotations / RotationsPerFoot;
+            set { calibrationRotations = value * RotationsPerFoot; OnPropertyChanged(); }
         }
 
         bool calibrationSave;
@@ -201,7 +201,6 @@ namespace Choreo {
         public int Index { get; private set; }
         public int Number => Index + 1;
 
-
         public virtual Color Color => Colors.Yellow;
 
         int presetTouches;
@@ -220,18 +219,33 @@ namespace Choreo {
         #endregion
 
         #region Settings
-        double softUp;
-        [DataItem(title: "Soft Up/Max Limit"), Persistent]
+
+        double softUpRotations;
+        [Plc("Soft_Up")]
+        public double SoftUpRotations {
+            get => softUpRotations;
+            set { softUpRotations = value; OnPropertyChanged(nameof(SoftUp)); }
+        }
+
+        [DataItem(title: "Soft Up/Max Limit")]
         public double SoftUp {
-            get => softUp;
-            set { softUp = value; OnPropertyChanged(); }
+            get => softUpRotations / RotationsPerFoot;
+            set { softUpRotations = value * RotationsPerFoot; OnPropertyChanged(); }
         }
-        double softDn;
-        [DataItem(title: "Soft Down/Min Limit"), Persistent]
+
+        double softDnRotations;
+        [Plc("Soft_Down")]
+        public double SoftDnRotations {
+            get => softDnRotations;
+            set { softDnRotations = value; OnPropertyChanged(nameof(SoftDn)); }
+        }
+
+        [DataItem(title: "Soft Down/Min Limit")]
         public double SoftDn {
-            get => softDn;
-            set { softDn = value; OnPropertyChanged(); }
+            get => softDnRotations / RotationsPerFoot;
+            set { softDnRotations = value * RotationsPerFoot; OnPropertyChanged(); }
         }
+
         double minAcc;
         [DataItem("fpm2", "Min Acceleration"), Persistent]
         public double MinAcc {
@@ -296,15 +310,17 @@ namespace Choreo {
             set { loadOffs = value; OnPropertyChanged(); }
         }
 
-        double feetPerRotation = 1.0;
-        [DataItem("ft", "Feet/Rotation"), Persistent]
-        public double FeetPerRotation {
-            get => feetPerRotation;
+        double rotationsPerFoot = 1.0;
+        [DataItem("r/ft", "Rotations/Foot"), Persistent]
+        public double RotationsPerFoot {
+            get => rotationsPerFoot;
             set { 
-                feetPerRotation = value <= 0.0 ? 1.0 : value;
+                rotationsPerFoot = value <= 0.0 ? 1.0 : value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(Position));
                 OnPropertyChanged(nameof(CalibrationValue));
+                OnPropertyChanged(nameof(SoftUp));
+                OnPropertyChanged(nameof(SoftDn));
             }
         }
         #endregion

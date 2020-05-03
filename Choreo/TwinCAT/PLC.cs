@@ -69,32 +69,63 @@ namespace Choreo.TwinCAT {
             set { areSymbolsOK = value; OnPropertyChanged("IsOn"); }
         }
 
-        public bool IsOn => IsConnectionOK && AreSymbolsOK;
+        private bool isWatchdogOK;
+        public bool IsWatchdogOK {
+            get { return isWatchdogOK; }
+            set { isWatchdogOK = value; OnPropertyChanged("IsOn"); }
+        }
+
+
+        public bool IsOn => IsWatchdogOK;
 
         #region Monitor
         void StartMonitor() {
             monitorTimer = new Timer(Monitor, null, 1000, Timeout.Infinite);
         }
 
+        int watchdogCounter = int.MaxValue;
         void Monitor(object state) {
             monitorTimer.Change(Timeout.Infinite, Timeout.Infinite);
 
-            var healthy = 
-                Connection.State == ConnectionState.Connected 
-                && 
-                Log.ExOnce(() => (bool)Connection.ReadSymbol("GVL.Watchdog_OK", typeof(bool), false), "Unhealthy PLC Connection");
+            bool WatchdogOK() {
+                return Log.ExOnce(() => {
+                    try {
+                        var watchdog = (bool)Connection.ReadSymbol("GVL.Watchdog_OK", typeof(bool), false);
+                        if (watchdog) {
+                            Connection.WriteSymbol("GVL.Watchdog_OK", false, false);
+                            watchdogCounter = 0;
+                            return true;
+                        }
+                        else {
+                            if (watchdogCounter >= 5) return false;
+                            ++watchdogCounter;
+                        }
+                        return true;
+                    }
+                    catch {
+                        watchdogCounter = int.MaxValue;
+                        throw;
+                    }
+                }
+                , "Unhealthy PLC Connection");
+            }
 
-            if (IsConnectionOK && !healthy) {
+            if (IsConnectionOK && Connection.State != ConnectionState.Connected) {
                 Unhook();
                 IsConnectionOK = false;
             }
             else
-            if (!IsConnectionOK && healthy) {
-                Hook();
-                IsConnectionOK = true;
+            if (!IsConnectionOK && Connection.State == ConnectionState.Connected) {
+                try {
+                    Hook();
+                    IsConnectionOK = true;
+                }
+                catch { }
             }
 
             if (IsConnectionOK && !AreSymbolsOK) SetupSymbolsAndNotifications();
+
+            IsWatchdogOK = IsConnectionOK && AreSymbolsOK && WatchdogOK();
 
             monitorTimer.Change(1000, Timeout.Infinite);
         }
@@ -161,20 +192,25 @@ namespace Choreo.TwinCAT {
                 , axis.LoadOffs
                 , axis.MinVel
                 , axis.MaxVel
+                , axis.SoftDnRotations
+                , axis.SoftUpRotations
             };
 
             List<ISymbol> valueSyms = new List<ISymbol>();
             valueSyms.AddRange(
                 new string[] {
-                        nameof(Axis.MinLoad)
-                        , nameof(Axis.MaxLoad)
-                        , nameof(Axis.LoadOffs)
-                        , nameof(Axis.MinVel)
-                        , nameof(Axis.MaxVel)
-                        }
+                    nameof(Axis.MinLoad)
+                    , nameof(Axis.MaxLoad)
+                    , nameof(Axis.LoadOffs)
+                    , nameof(Axis.MinVel)
+                    , nameof(Axis.MaxVel)
+                    , nameof(Axis.SoftDnRotations)
+                    , nameof(Axis.SoftUpRotations)
+                    }
                 .Select(propName => tags[axis, propName].Symbol));
 
             new SumSymbolWrite(Connection, valueSyms).Write(values);
+            Connection.WriteSymbol(tags.PathOf(VM, nameof(ViewModel.ParameterWrite)), true, false);
         }
 
         static readonly string[] moveProps = new string[] { nameof(Axis.MoveVal), nameof(Axis.Velocity), nameof(Axis.Accel), nameof(Axis.Decel) };
@@ -201,7 +237,7 @@ namespace Choreo.TwinCAT {
 
                 valueSyms.Clear();
                 valueSyms.AddRange(moveProps.Select(prop => tags[ax, prop].Symbol));
-                values[0] = move / ax.FeetPerRotation;
+                values[0] = move * ax.RotationsPerFoot;
                 new SumSymbolWrite(Connection, valueSyms).Write(values);
 
                 enabSyms.AddRange(enaProps.Select(p => tags[ax, p].Symbol));
@@ -232,7 +268,7 @@ namespace Choreo.TwinCAT {
 
             foreach ((Axis ax, double pos) in aps) {
                 var values = new object[] {
-                    pos / ax.FeetPerRotation
+                    pos * ax.RotationsPerFoot
                     , ax.DefVel
                     , ax.DefAcc
                     , ax.DefDec
@@ -249,6 +285,10 @@ namespace Choreo.TwinCAT {
             new SumSymbolWrite(Connection, enabSyms).Write(Enumerable.Repeat(tf, enabSyms.Count / 4).SelectMany(tfe => tfe).ToArray());
         }
 
+        void Upload(Cue cue) {
+
+        }
+
         public bool SaveGroupMotors(int groupIndex, ushort bitmap) => PlcMethod()?.Invoke(groupIndex, bitmap) == 0;
 
         public bool GetMotorsGroup(ref ushort[] motorGroups) => PlcMethod(motorGroups)?.Invoke(out motorGroups) == 0;
@@ -256,6 +296,7 @@ namespace Choreo.TwinCAT {
         delegate int PlcMethodDelegate(params object[] @params);
         delegate int PlcMethodOutDelegate<T>(out T output, params object[] @params);
         PlcMethodDelegate PlcMethod([CallerMemberName]string method = null) {
+            if (!IsOn) return null;
             int fun(params object[] @params) {
                 var success = Connection.TryInvokeRpcMethod("GVL.UI", method, @params, out var res) == AdsErrorCode.NoError;
                 return (int)res;
@@ -264,6 +305,7 @@ namespace Choreo.TwinCAT {
         }
 
         PlcMethodOutDelegate<T> PlcMethod<T>(T outObj = null, [CallerMemberName]string method = null) where T:class {
+            if (!IsOn) return null;
             var outSpecs = new AnyTypeSpecifier[] { new AnyTypeSpecifier(outObj) };
             int fun<U>(out U output, params object[] @params) {
                 var success = Connection.TryInvokeRpcMethod("GVL.UI", method, @params, outSpecs, null, out var @out, out var res) == AdsErrorCode.NoError;

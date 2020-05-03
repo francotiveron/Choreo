@@ -110,11 +110,10 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Border x:Name="checkBoxBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                        <Border x:Name="checkBoxBorder" BorderBrush="Gray" BorderThickness="2" Background="Blue" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                             <Grid x:Name="markGrid">
-                                <Path x:Name="optionMark" Data="F1 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z "
-                                          Fill="Red" Margin="5" Opacity="0" Stretch="Uniform"/>
-                                <Rectangle x:Name="indeterminateMark" Fill="Blue" Margin="2" Opacity="0"/>
+                                <Path x:Name="optionMark" Data="F1 M 0,10 L 10,20 L 20,0"
+                                          Stroke="White" StrokeThickness="5" Margin="2" Opacity="0" Stretch="Uniform" />
                             </Grid>
                         </Border>
                         <ContentPresenter x:Name="contentPresenter" Grid.Column="1" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="10" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
@@ -122,11 +121,9 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="true">
                             <Setter Property="Opacity" TargetName="optionMark" Value="1"/>
-                            <Setter Property="Opacity" TargetName="indeterminateMark" Value="0"/>
                         </Trigger>
-                        <Trigger Property="IsChecked" Value="{x:Null}">
-                            <Setter Property="Opacity" TargetName="optionMark" Value="0"/>
-                            <Setter Property="Opacity" TargetName="indeterminateMark" Value="1"/>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" TargetName="checkBoxBorder" Value="Gray"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

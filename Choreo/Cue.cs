@@ -103,12 +103,11 @@ namespace Choreo {
             set { enabled = value; OnPropertyChanged(); }
         }
 
-        private int runtime;
-
-        public int Runtime {
-            get { return runtime; }
-            set { runtime = value; OnPropertyChanged(); }
-        }
+        //private int runtime;
+        //public int Runtime {
+        //    get { return runtime; }
+        //    set { runtime = value; OnPropertyChanged(); }
+        //}
 
         public int Index => VM.Cues.IndexOf(this);
 

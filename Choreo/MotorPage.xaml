@@ -44,10 +44,10 @@
                     x:Name="SetPosition" 
                     Margin="5" 
                     DataContext="{Binding CalibrationValue, Converter={StaticResource PositionConverter}}" 
-                    EditOrderNext="{Binding ElementName=FeetPerRotation, Mode=OneWay}" 
+                    EditOrderNext="{Binding ElementName=RotationsPerFoot, Mode=OneWay}" 
                     EditOrderPrev="{Binding ElementName=LoadOffs, Mode=OneWay}" 
                     Focusable="True" />
-                <local:DataItemUI x:Name="FeetPerRotation" Grid.Column="1" Margin="5" DataContext="{Binding FeetPerRotation}" EditOrderNext="{Binding ElementName=SoftUp, Mode=OneWay}" EditOrderPrev="{Binding ElementName=SetPosition, Mode=OneWay}" Focusable="True" />
+                <local:DataItemUI x:Name="RotationsPerFoot" Grid.Column="1" Margin="5" DataContext="{Binding RotationsPerFoot}" EditOrderNext="{Binding ElementName=SoftUp, Mode=OneWay}" EditOrderPrev="{Binding ElementName=SetPosition, Mode=OneWay}" Focusable="True" />
                 <Button x:Name="SaveNewPositionButton" Grid.Column="2" FontSize="16" Click="SaveNewPositionButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource TopBarCommandButtonStyle}">
@@ -76,7 +76,7 @@
                     DataContext="{Binding SoftUp, Converter={StaticResource PositionConverter}}" 
                     Focusable="True" 
                     EditOrderNext="{Binding ElementName=SoftDn, Mode=OneWay}" 
-                    EditOrderPrev="{Binding ElementName=FeetPerRotation, Mode=OneWay}"/>
+                    EditOrderPrev="{Binding ElementName=RotationsPerFoot, Mode=OneWay}"/>
                 <local:DataItemUI 
                     x:Name="SoftDn" 
                     Grid.Column="1" 

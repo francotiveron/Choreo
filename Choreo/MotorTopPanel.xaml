@@ -10,6 +10,16 @@
         <Label Content="Motor Settings"/>
         <Label Content="{Binding Name, FallbackValue=Motor X}" FontWeight="Bold"/>
         <Button x:Name="MotorCancelButton" Content="CANCEL" Style="{StaticResource TopBarCommandButtonStyle}" Click="Button_Click"/>
-        <Button x:Name="MotorSaveButton" Content="SAVE" Style="{StaticResource TopBarCommandButtonStyle}"  Click="Button_Click"/>
+        <Button x:Name="MotorSaveButton" Content="SAVE" Click="Button_Click">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource TopBarCommandButtonStyle}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=ParameterWrite, Source={x:Static local:Globals.VM}}" Value="True">
+                            <Setter Property="Background" Value="Crimson"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
     </DockPanel>
 </UserControl>

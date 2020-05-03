@@ -13,7 +13,7 @@
 + Motor position bar movement
 + Clarify meaning of arrows in motor pos bar
 + Disable group change in motor settings for grouped motors
-- Cue execution logic	
+* Cue execution logic	
 - Motor Lock for group
 - Motor User Enable/Disable
 - Motor ES_Status
