@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:qc="clr-namespace:QuickConverter;assembly=QuickConverter"
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="1080">
@@ -26,22 +27,70 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Label Content="Axis/Motor" Grid.ColumnSpan="4"/>
-            <CheckBox Content="Motor 01" Grid.Row="1" Grid.Column="0"/>
-            <CheckBox Content="Motor 02" Grid.Row="2" Grid.Column="0"/>
-            <CheckBox Content="Motor 03" Grid.Row="3" Grid.Column="0"/>
-            <CheckBox Content="Motor 04" Grid.Row="4" Grid.Column="0"/>
-            <CheckBox Content="Motor 05" Grid.Row="1" Grid.Column="1"/>
-            <CheckBox Content="Motor 06" Grid.Row="2" Grid.Column="1"/>
-            <CheckBox Content="Motor 07" Grid.Row="3" Grid.Column="1"/>
-            <CheckBox Content="Motor 08" Grid.Row="4" Grid.Column="1"/>
-            <CheckBox Content="Motor 09" Grid.Row="1" Grid.Column="2"/>
-            <CheckBox Content="Motor 10" Grid.Row="2" Grid.Column="2"/>
-            <CheckBox Content="Motor 11" Grid.Row="3" Grid.Column="2"/>
-            <CheckBox Content="Motor 12" Grid.Row="4" Grid.Column="2"/>
-            <CheckBox Content="Motor 13" Grid.Row="1" Grid.Column="3"/>
-            <CheckBox Content="Motor 14" Grid.Row="2" Grid.Column="3"/>
-            <CheckBox Content="Motor 15" Grid.Row="3" Grid.Column="3"/>
-            <CheckBox Content="Motor 16" Grid.Row="4" Grid.Column="3"/>
+            <CheckBox Content="Motor 01" Grid.Row="1" Grid.Column="0" 
+                Visibility="{Binding Path=AvailableMotors[0], Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Hidden'}}"
+                IsChecked="{Binding Path=SelectedMotors[0]}"
+                />
+            <CheckBox Content="Motor 02" Grid.Row="2" Grid.Column="0" 
+                Visibility="{Binding Path=AvailableMotors[1], Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Hidden'}}"
+                IsChecked="{Binding Path=SelectedMotors[1]}"
+                />
+            <CheckBox Content="Motor 03" Grid.Row="3" Grid.Column="0" 
+                Visibility="{Binding Path=AvailableMotors[2], Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Hidden'}}"
+                IsChecked="{Binding Path=SelectedMotors[2]}"
+                />
+            <CheckBox Content="Motor 04" Grid.Row="4" Grid.Column="0" 
+                Visibility="{Binding Path=AvailableMotors[3], Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Hidden'}}"
+                IsChecked="{Binding Path=SelectedMotors[3]}"
+                />
+            <CheckBox Content="Motor 05" Grid.Row="1" Grid.Column="1" 
+                Visibility="{Binding Path=AvailableMotors[4], Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Hidden'}}"
+                IsChecked="{Binding Path=SelectedMotors[4]}"
+                />
+            <CheckBox Content="Motor 06" Grid.Row="2" Grid.Column="1" 
+                Visibility="{Binding Path=AvailableMotors[5], Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Hidden'}}"
+                IsChecked="{Binding Path=SelectedMotors[5]}"
+                />
+            <CheckBox Content="Motor 07" Grid.Row="3" Grid.Column="1" 
+                Visibility="{Binding Path=AvailableMotors[6], Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Hidden'}}"
+                IsChecked="{Binding Path=SelectedMotors[6]}"
+                />
+            <CheckBox Content="Motor 08" Grid.Row="4" Grid.Column="1" 
+                Visibility="{Binding Path=AvailableMotors[7], Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Hidden'}}"
+                IsChecked="{Binding Path=SelectedMotors[7]}"
+                />
+            <CheckBox Content="Motor 09" Grid.Row="1" Grid.Column="2" 
+                Visibility="{Binding Path=AvailableMotors[8], Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Hidden'}}"
+                IsChecked="{Binding Path=SelectedMotors[8]}"
+                />
+            <CheckBox Content="Motor 10" Grid.Row="2" Grid.Column="2" 
+                Visibility="{Binding Path=AvailableMotors[9], Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Hidden'}}"
+                IsChecked="{Binding Path=SelectedMotors[9]}"
+                />
+            <CheckBox Content="Motor 11" Grid.Row="3" Grid.Column="2" 
+                Visibility="{Binding Path=AvailableMotors[10], Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Hidden'}}"
+                IsChecked="{Binding Path=SelectedMotors[10]}"
+                />
+            <CheckBox Content="Motor 12" Grid.Row="4" Grid.Column="2" 
+                Visibility="{Binding Path=AvailableMotors[11], Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Hidden'}}"
+                IsChecked="{Binding Path=SelectedMotors[11]}"
+                />
+            <CheckBox Content="Motor 13" Grid.Row="1" Grid.Column="3" 
+                Visibility="{Binding Path=AvailableMotors[12], Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Hidden'}}"
+                IsChecked="{Binding Path=SelectedMotors[12]}"
+                />
+            <CheckBox Content="Motor 14" Grid.Row="2" Grid.Column="3" 
+                Visibility="{Binding Path=AvailableMotors[13], Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Hidden'}}"
+                IsChecked="{Binding Path=SelectedMotors[13]}"
+                />
+            <CheckBox Content="Motor 15" Grid.Row="3" Grid.Column="3" 
+                Visibility="{Binding Path=AvailableMotors[14], Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Hidden'}}"
+                IsChecked="{Binding Path=SelectedMotors[14]}"
+                />
+            <CheckBox Content="Motor 16" Grid.Row="4" Grid.Column="3" 
+                Visibility="{Binding Path=AvailableMotors[15], Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Hidden'}}"
+                IsChecked="{Binding Path=SelectedMotors[15]}"
+                />
         </Grid>
         <Grid Grid.Column="1" x:Name="GroupsCheckGrid">
             <Grid.RowDefinitions>
@@ -56,14 +105,38 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Label Content="Groups" Grid.ColumnSpan="2"/>
-            <CheckBox Content="Group 01" Grid.Row="1" Grid.Column="0"/>
-            <CheckBox Content="Group 02" Grid.Row="2" Grid.Column="0"/>
-            <CheckBox Content="Group 03" Grid.Row="3" Grid.Column="0"/>
-            <CheckBox Content="Group 04" Grid.Row="4" Grid.Column="0"/>
-            <CheckBox Content="Group 05" Grid.Row="1" Grid.Column="1"/>
-            <CheckBox Content="Group 06" Grid.Row="2" Grid.Column="1"/>
-            <CheckBox Content="Group 07" Grid.Row="3" Grid.Column="1"/>
-            <CheckBox Content="Group 08" Grid.Row="4" Grid.Column="1"/>
+            <CheckBox Content="Group 01" Grid.Row="1" Grid.Column="0"
+                Visibility="{Binding Path=AvailableGroups[0], Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Hidden'}}"
+                IsChecked="{Binding Path=SelectedGroups[0]}"
+                />
+            <CheckBox Content="Group 02" Grid.Row="2" Grid.Column="0"
+                Visibility="{Binding Path=AvailableGroups[1], Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Hidden'}}"
+                IsChecked="{Binding Path=SelectedGroups[1]}"
+                />
+            <CheckBox Content="Group 03" Grid.Row="3" Grid.Column="0"
+                Visibility="{Binding Path=AvailableGroups[2], Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Hidden'}}"
+                IsChecked="{Binding Path=SelectedGroups[2]}"
+                />
+            <CheckBox Content="Group 04" Grid.Row="4" Grid.Column="0"
+                Visibility="{Binding Path=AvailableGroups[3], Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Hidden'}}"
+                IsChecked="{Binding Path=SelectedGroups[3]}"
+                />
+            <CheckBox Content="Group 05" Grid.Row="1" Grid.Column="1"
+                Visibility="{Binding Path=AvailableGroups[4], Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Hidden'}}"
+                IsChecked="{Binding Path=SelectedGroups[4]}"
+                />
+            <CheckBox Content="Group 06" Grid.Row="2" Grid.Column="1"
+                Visibility="{Binding Path=AvailableGroups[5], Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Hidden'}}"
+                IsChecked="{Binding Path=SelectedGroups[5]}"
+                />
+            <CheckBox Content="Group 07" Grid.Row="3" Grid.Column="1"
+                Visibility="{Binding Path=AvailableGroups[6], Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Hidden'}}"
+                IsChecked="{Binding Path=SelectedGroups[6]}"
+                />
+            <CheckBox Content="Group 08" Grid.Row="4" Grid.Column="1"
+                Visibility="{Binding Path=AvailableGroups[7], Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Hidden'}}"
+                IsChecked="{Binding Path=SelectedGroups[7]}"
+                />
         </Grid>
     </Grid>
 </UserControl>

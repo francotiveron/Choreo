@@ -51,6 +51,7 @@ namespace Choreo.TwinCAT {
             adsSession.Connect();
             adsSession.ConnectionStateChanged += Session_ConnectionStateChanged;
             tags = new TagCollection();
+            allEnabs.AddRange(VM.Axes.SelectMany(ax => enabProps.Select(prop => tags[ax, prop])));
             symbolNotificationObserver = Observer.Create<ValueChangedArgs>(OnSymbolNotification);
             StartMonitor();
             return this;
@@ -214,6 +215,10 @@ namespace Choreo.TwinCAT {
         }
 
         static readonly string[] moveProps = new string[] { nameof(Axis.MoveVal), nameof(Axis.Velocity), nameof(Axis.Accel), nameof(Axis.Decel) };
+        static readonly string[] enabProps = new string[] { nameof(Axis.MAEnable), nameof(Axis.MREnable), nameof(Axis.JogUpEnable), nameof(Axis.JogDnEnable) };
+        static readonly List<ITag> allEnabs = new List<ITag>();
+        static readonly object[] allEnabValues = Enumerable.Repeat(false, 96).OfType<object>().ToArray();
+
         void Upload(Motion motion) {
             var values = new object[] {
                 0.0
@@ -255,12 +260,6 @@ namespace Choreo.TwinCAT {
         void Upload(Preset preset) {
             var enabSyms = new List<ISymbol>();
             var valueSyms = new List<ISymbol>();
-            var enaProps = new string[] {
-                nameof(Axis.MAEnable)
-                , nameof(Axis.MREnable)
-                , nameof(Axis.JogUpEnable)
-                , nameof(Axis.JogDnEnable)
-            };
 
             var aps = new List<(Axis, double)>();
             aps.AddRange(preset.MotorPositions.Select(mp => (VM.Motors[mp.Key] as Axis, mp.Value)));
@@ -278,7 +277,7 @@ namespace Choreo.TwinCAT {
                 valueSyms.AddRange(moveProps.Select(prop => tags[ax, prop].Symbol));
                 new SumSymbolWrite(Connection, valueSyms).Write(values);
 
-                enabSyms.AddRange(enaProps.Select(p => tags[ax, p].Symbol));
+                enabSyms.AddRange(enabProps.Select(p => tags[ax, p].Symbol));
             }
 
             var tf = new object[] { true, false, false, false };
@@ -286,7 +285,37 @@ namespace Choreo.TwinCAT {
         }
 
         void Upload(Cue cue) {
+            var valueSyms = new List<ISymbol>();
+            var values = new List<object>();
+            var enabValues = (object[])allEnabValues.Clone();
 
+            foreach (var row in cue.Rows) {
+                var rowValues = new object[] {
+                    0.0
+                    , row.Velocity
+                    , row.Acceleration
+                    , row.Deceleration
+                };
+
+                foreach(var motor in VM.Motors.Where(motor => row.Motors[motor.Index])) {
+                    valueSyms.AddRange(moveProps.Select(prop => tags[motor, prop].Symbol));
+                    rowValues[0] = row.Target * motor.RotationsPerFoot;
+                    values.AddRange(rowValues);
+                    enabValues[motor.Index * 4] = true;
+                }
+
+                foreach (var group in VM.Groups.Where(group => row.Groups[group.Index])) {
+                    valueSyms.AddRange(moveProps.Select(prop => tags[group, prop].Symbol));
+                    rowValues[0] = row.Target * group.RotationsPerFoot;
+                    values.AddRange(rowValues);
+                    enabValues[(group.Index + 16) * 4] = true;
+                }
+            }
+            new SumSymbolWrite(Connection, valueSyms).Write(values.ToArray());
+            new SumSymbolWrite(Connection, allEnabs.Select(tag => tag.Symbol).ToList()).Write(enabValues.ToArray());
+            var path = tags.PathOf(VM, nameof(ViewModel.CueLoaded));
+            Connection.WriteSymbol(path, true, false);
+            VM.LoadedCue = cue.Number;
         }
 
         public bool SaveGroupMotors(int groupIndex, ushort bitmap) => PlcMethod()?.Invoke(groupIndex, bitmap) == 0;

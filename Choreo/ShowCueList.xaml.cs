@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,5 +33,17 @@ namespace Choreo {
 
         public static readonly DependencyProperty SelectedCueProperty =
             DependencyProperty.Register("SelectedCue", typeof(Cue), typeof(ShowCueList));
+    }
+
+    public class LoadedCueVisibilityConverter : IMultiValueConverter {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
+            var cue = values[0] as Cue;
+            var loadedCue = (int)values[1];
+            return cue.Number == loadedCue ? Visibility.Visible : Visibility.Hidden;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -7,6 +7,9 @@
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
              d:DesignHeight="760" d:DesignWidth="540">
+    <UserControl.Resources>
+        <local:LoadedCueVisibilityConverter x:Key="LoadedCueVisibilityConverter"/>
+    </UserControl.Resources>
     <Grid>
         <ListView ItemsSource="{Binding Cues}" 
                   Background="{x:Null}" 
@@ -16,21 +19,8 @@
                   VerticalAlignment="Top"
                   AlternationCount="2"
                   SelectionChanged="ListView_SelectionChanged"
+                  SelectionMode="Single"
                   >
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="Padding" Value="0"/>
-                    <Setter Property="Margin" Value="0"/>
-                    <Style.Triggers>
-                        <Trigger Property="ItemsControl.AlternationIndex"  Value="0">
-                            <Setter Property="Background" Value="#222222" />
-                        </Trigger>
-                        <Trigger Property="ItemsControl.AlternationIndex"  Value="1">
-                            <Setter Property="Background" Value="#444444" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -53,11 +43,36 @@
                         <Label Content="{Binding Number}" ContentStringFormat="00" />
                         <Label Content="{Binding Name}" Grid.Column="1"/>
                         <Label Content="{Binding Duration}" Grid.Column="2" ContentStringFormat="mm\:ss" />
-                        <!--<Label Grid.Column="3" Content="{qc:Binding '$P ? \'Enabled\' : \'Disabled\'', P={Binding Enabled}}"/>-->
                         <Label Grid.Column="3" Content="{Binding Path=Enabled, Converter={qc:QuickConverter '$P ? \'Enabled\' : \'Disabled\''}}"/>
+                        <Border Grid.Column="4" Background="#FF03DAA9" CornerRadius="5" Margin="0,0,10,0">
+                            <Border.Visibility>
+                                <MultiBinding Converter="{StaticResource LoadedCueVisibilityConverter}">
+                                    <Binding Path="."/>
+                                    <Binding Source="{x:Static local:Globals.VM}" Path="LoadedCue"/>
+                                </MultiBinding>
+                            </Border.Visibility>
+                            <!--Visibility="{Binding Source={x:Static local:Globals.VM}, Path=LoadedCue, Converter={StaticResource LoadedCueVisibilityConverter}}">-->
+                            <Label Content="loaded" Foreground="Black" HorizontalAlignment="Center" FontWeight="Bold"/>
+                        </Border>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="Margin" Value="0"/>
+                    <!--<Setter Property="BorderThickness" Value="1"/>
+                    <Setter Property="BorderBrush" Value="Red"/>-->
+                    <Style.Triggers>
+                        <Trigger Property="ItemsControl.AlternationIndex"  Value="0">
+                            <Setter Property="Background" Value="#222222" />
+                        </Trigger>
+                        <Trigger Property="ItemsControl.AlternationIndex"  Value="1">
+                            <Setter Property="Background" Value="#444444" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.Template>
                 <ControlTemplate>
                     <Grid>

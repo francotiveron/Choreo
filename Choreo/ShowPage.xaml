@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:qc="clr-namespace:QuickConverter;assembly=QuickConverter"
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1080">
@@ -15,12 +16,33 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
+        <StackPanel Margin="10,10,10,0" Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+            <Button x:Name="DisableCueButton" 
+                    Visibility="{Binding ElementName=CueList, Path=SelectedCue, Converter={qc:QuickConverter '$P == null ? Visibility.Hidden : Visibility.Visible'}}"
+                    Content="{Binding ElementName=CueList, Path=SelectedCue.Enabled, Converter={qc:QuickConverter '$P ? \'Disable Cue\' : \'Enable Cue\''}}"
+                    Click="DisableCueButton_Click" 
+                    Style="{StaticResource TopBarCommandButtonStyle}"
+                    Padding="5"
+                    />
+            <Button x:Name="LoadCueButton" 
+                    Visibility="{Binding ElementName=CueList, Path=SelectedCue, Converter={qc:QuickConverter '$P == null ? Visibility.Hidden : Visibility.Visible'}}"
+                    Background="{Binding Source={x:Static local:Globals.VM}, Path=CueLoaded, Converter={qc:QuickConverter '$P ? new SolidColorBrush(Colors.Crimson) : null'}}"
+                    Content="Load Cue"
+                    Click="LoadCueButton_Click" 
+                    Style="{StaticResource TopBarCommandButtonStyle}"
+                    Padding="5"
+                    />
+        </StackPanel>
+        <!--DataContext="{Binding ElementName=CueList, Path=SelectedCue}"-->
+        <!--Visibility="{qc:Binding '$P0 == null ? Visibility.Hidden : Visibility:Visible', P0={Binding SelectedValue}}"-->
+        <!--Content="{qc:Binding '$P0.Enabled ? \'Disable Cue\' ? \'Enable Cue\'', P0={Binding SelectedValue}}"-->
+        <!--Content="{Binding ElementName=CueList, Path=SelectedCue, Converter={qc:QuickConverter '($P == null ? \'NULL\' : ($P.Enabled ? \'Disable Cue\' : \'Enable Cue\')'}}"-->
 
-        <Label Content="Show" Grid.Row="0" Grid.Column="0"/>
         <local:ShowCueList x:Name="CueList" Grid.Row="1" Grid.Column="0"/>
-        <Label Content="{Binding Name}" Grid.Row="0" Grid.Column="1" />
+        <Label Content="{qc:MultiBinding 'String.Format(\'Cue {0}: {1}\', $P0, $P1)', P0={Binding Number}, P1={Binding Name}}"
+            Grid.Row="0" Grid.Column="1" 
+            DataContext="{Binding ElementName=CueList, Path=SelectedCue}" 
+            />
         <local:ShowCueRowList x:Name="CueRowList" Grid.Row="1" Grid.Column="1" DataContext="{Binding ElementName=CueList, Path=SelectedCue}"/>
-        <!--<local:CueRowListView Grid.Row="1" Grid.Column="1" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Cues[0]}"/>-->
-        <!--<local:CueRowListView Grid.Row="1" Grid.Column="1" DataContext="{Binding ElementName=CueList, Path=SelectedCue}"/>-->
     </Grid>
 </UserControl>

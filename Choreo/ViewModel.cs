@@ -249,6 +249,13 @@ namespace Choreo {
         }
         public bool IsEditing => IsGroupEditing || IsPresetEditing;
 
+        private int loadedCue;
+
+        public int LoadedCue {
+            get { return loadedCue; }
+            set { loadedCue = value; OnPropertyChanged(); }
+        }
+
         #endregion
     }
 

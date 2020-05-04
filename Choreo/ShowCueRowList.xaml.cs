@@ -33,7 +33,7 @@ namespace Choreo {
                     array
                     .Select((v, i) => (v, i))
                     .Where(vi => vi.v)
-                    .Select(vi => vi.i.ToString())
+                    .Select(vi => (vi.i + 1).ToString())
                     .ToArray());
             }
             return $"{BoolArrToString(cueRow.Motors)}/{BoolArrToString(cueRow.Groups)}";

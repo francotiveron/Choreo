@@ -34,7 +34,11 @@ namespace Choreo.Input {
                     PadEvent?.Invoke(this, new PadEventArgs { Name = but.Name, DataItem = DataItem }); ;
                     break;
                 case "BKSP":
-                    Value = Value.Substring(0, Math.Max(Value.Length - 1, 0));
+                    if (Value.Length > 0) {
+                        var len = Value.Length;
+                        if (Value[len - 1] == ' ') Value = Value.Substring(0, len - 2);
+                        else Value = Value.Substring(0, len - 1);
+                    }
                     break;
                 case "CLR":
                     Value = string.Empty;
@@ -52,7 +56,7 @@ namespace Choreo.Input {
                     if (!Value.Contains('.') && Value != "" && char.IsDigit(Value.Last())) Value = Value + '.';
                     break;
                 case "FEET":
-                    if (!Value.Contains("'") && DataItem.IsPosition && int.TryParse(Value, out _)) Value = Value + "'";
+                    if (!Value.Contains("'") && DataItem.IsPosition && int.TryParse(Value, out _)) Value = Value + "' ";
                     break;
                 default:
                     if (but.Name.StartsWith("NUM")) Value += but.Content;

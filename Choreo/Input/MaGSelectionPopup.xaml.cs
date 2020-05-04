@@ -31,13 +31,37 @@ namespace Choreo.Input {
                 if (dataItem == null) Visibility = Visibility.Hidden;
                 else {
                     var cueRow = dataItem.DataContext as CueRow;
-                    SelectorPanel.GetMotorsFrom(cueRow.Motors);
-                    SelectorPanel.GetGroupsFrom(cueRow.Groups);
+                    var sdc = new MaGSelectorDataContextType {
+                        AvailableMotors = AvailableMotors(cueRow)
+                        , AvailableGroups = AvailableGroups(cueRow)
+                        , SelectedMotors = (bool[])cueRow.Motors.Clone()
+                        , SelectedGroups = (bool[])cueRow.Groups.Clone()
+                    };
+                    SelectorPanel.DataContext = sdc;
+                    //SelectorPanel.GetMotorsFrom(cueRow.Motors);
+                    //SelectorPanel.GetGroupsFrom(cueRow.Groups);
                     Visibility = Visibility.Visible;
                 }
             }
         }
 
+        bool[] AvailableMotors(CueRow current) {
+            var cue = DataContext as Cue;
+            var ret = Enumerable.Repeat(true, 16).ToArray();
+            foreach (var row in cue.Rows.Except(new CueRow[] { current })) {
+                for (int i = 0; i < ret.Length; i++) ret[i] &= !row.Motors[i];
+            }
+            return ret;
+        }
+
+        bool[] AvailableGroups(CueRow current) {
+            var cue = DataContext as Cue;
+            var ret = Enumerable.Repeat(true, 8).ToArray();
+            foreach (var row in cue.Rows.Except(new CueRow[] { current })) {
+                for (int i = 0; i < ret.Length; i++) ret[i] &= !row.Groups[i];
+            }
+            return ret;
+        }
         public class MaGEventArgs : EventArgs {
             public string Name { get; set; }
             public MotAndGroUI DataItem { get; set; }
@@ -49,15 +73,16 @@ namespace Choreo.Input {
             var but = sender as Button;
             if (but.Name == "SAVE") {
                 var cueRow = dataItem.DataContext as CueRow;
-                SelectorPanel.PutMotorsInto(cueRow.Motors);
-                SelectorPanel.PutGroupsInto(cueRow.Groups);
+                var sdc = SelectorPanel.DataContext as MaGSelectorDataContextType;
+                Array.Copy(sdc.SelectedMotors, cueRow.Motors, cueRow.Motors.Length);
+                Array.Copy(sdc.SelectedGroups, cueRow.Groups, cueRow.Groups.Length);
             }
-            else
-            if (but.Name == "CANCEL") {
-                var cueRow = dataItem.DataContext as CueRow;
-                SelectorPanel.GetMotorsFrom(cueRow.Motors);
-                SelectorPanel.GetGroupsFrom(cueRow.Groups);
-            }
+            //else
+            //if (but.Name == "CANCEL") {
+            //    var cueRow = dataItem.DataContext as CueRow;
+            //    //SelectorPanel.GetMotorsFrom(cueRow.Motors);
+            //    //SelectorPanel.GetGroupsFrom(cueRow.Groups);
+            //}
             MaGEvent?.Invoke(this, new MaGEventArgs { Name = but.Name, DataItem = DataItem });
         }
     }

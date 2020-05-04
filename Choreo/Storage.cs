@@ -97,6 +97,8 @@ namespace Choreo {
 
         #region Cues
         public static void Save(Cue cue) {
+            Delete(cue);
+
             var elementKey = $@"Cues\{cue.Id}";
             Write(elementKey, cue);
             foreach(var row in cue.Rows) {
@@ -121,24 +123,11 @@ namespace Choreo {
                 Read(rowRoot, row);
                 cue.Rows.Add(row);
             }
-
-            //var value = cueRoot.GetValue("Name");
-            //cue.name = value as string;
-            //var rowsRoot = cueRoot.OpenSubKey("Rows");
-            //cue.Rows.Clear();
-            //if (rowsRoot == null) return;
-            //foreach (var rowId in rowsRoot.GetSubKeyNames()) {
-            //    var rowRoot = rowsRoot.OpenSubKey(rowId);
-            //    if (rowRoot == null) break;
-            //    var row = new CueRow(cue, rowId);
-            //    var target = double.Parse((string)rowRoot.GetValue("Target"));
-            //    row.Target = target;
-            //    cue.Rows.Add(row);
-            //}
         }
+
         public static void Delete(Cue cue) {
             var elementKey = $@"Cues\{cue.Id}";
-            root.DeleteSubKeyTree(elementKey);
+            try { root.DeleteSubKeyTree(elementKey); } catch { }
         }
         public static void Delete(Cue cue, CueRow row) {
             var elementKey = $@"Cues\{cue.Id}\Rows\{row.Id}";

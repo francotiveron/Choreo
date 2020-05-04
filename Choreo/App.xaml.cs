@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using static Choreo.Globals;
 
@@ -18,6 +19,8 @@ namespace Choreo
             QuickConverter.EquationTokenizer.AddNamespace(typeof(object));
             QuickConverter.EquationTokenizer.AddNamespace(typeof(Visibility));
             QuickConverter.EquationTokenizer.AddNamespace(typeof(Brush));
+            QuickConverter.EquationTokenizer.AddNamespace(typeof(CheckBox));
+            QuickConverter.EquationTokenizer.AddNamespace(typeof(Label));
         }
         private void VM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
             if (e.PropertyName == "MotorSettingsBeingEdited") {
