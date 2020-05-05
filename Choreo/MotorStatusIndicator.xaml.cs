@@ -33,23 +33,13 @@ namespace Choreo
     }
 
     public class MotorStatusConverter : IMultiValueConverter {
-        static string GetText(Axis axis) {
-            if (axis.AxisStatus == Axis.AxisStates.Error) return "Drive Fault";
-            if (axis.MAEnable || axis.MREnable) {
-                return $"{(axis.MAEnable ? "A" : "R")}: {FeetInchesConvert.ToString(axis.MoveVal)}";
-            }
-            if (axis.JogUpEnable) return "Jog Up";
-            if (axis.JogDnEnable) return "Jog Dn";
-            return "OK";
-        }
+        static string GetText(Axis axis) => axis.AxisStatusDescription;
 
         static readonly SolidColorBrush okBrush = new SolidColorBrush(Colors.Lime);
         static readonly SolidColorBrush warnBrush = new SolidColorBrush(Colors.Yellow);
         static readonly SolidColorBrush errBrush = new SolidColorBrush(Colors.Red);
-        static Brush GetColor(Axis axis) {
-            if (axis is Motor m && m.DriveStatus) return errBrush;
-            return okBrush;
-        }
+        static readonly Brush[] brushes = new Brush[] { okBrush, warnBrush, errBrush };
+        static Brush GetColor(Axis axis) => brushes[(int)axis.AxisStatus];
 
         static Dictionary<Type, Func<Axis, object>> funcs = new Dictionary<Type, Func<Axis, object>>() { { typeof(object), GetText }, { typeof(Brush), GetColor } };
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {

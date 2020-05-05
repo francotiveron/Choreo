@@ -43,7 +43,7 @@ namespace Choreo
         ~MainWindow() {}
 
         private void VM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
-            if (e.PropertyName == "GroupBeingEdited") {
+            if (e.PropertyName == nameof(ViewModel.GroupBeingEdited)) {
                 var group = VM.GroupBeingEdited;
                 if (group > 0) {
                     if (!(TopPanelArea.Child is GroupTopPanel)) TopPanelArea.Child = new GroupTopPanel();
@@ -53,7 +53,7 @@ namespace Choreo
                 else TopPanelArea.Child = new HomeTopPanel();
             }
             else
-            if (e.PropertyName == "PresetBeingEdited") {
+            if (e.PropertyName == nameof(ViewModel.PresetBeingEdited)) {
                 var preset = VM.PresetBeingEdited;
                 if (preset > 0) {
                     if (!(TopPanelArea.Child is PresetTopPanel)) TopPanelArea.Child = new PresetTopPanel();
@@ -63,8 +63,7 @@ namespace Choreo
                 else TopPanelArea.Child = new HomeTopPanel();
             }
             else
-            if (e.PropertyName == "CurrentMainWindowPage")
-                SelectPage();
+            if (e.PropertyName == nameof(ViewModel.CurrentMainWindowPage)) SelectPage();
         }
 
         void SelectPage() {

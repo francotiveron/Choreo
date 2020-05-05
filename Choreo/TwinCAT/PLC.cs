@@ -20,6 +20,7 @@ namespace Choreo.TwinCAT {
     public interface IPlc {
         event EventHandler SymbolsUpdated;
         void Upload<T>(T obj);
+        void Download<T>(T obj);
         bool SaveGroupMotors(int groupIndex, ushort bitmap);
         bool GetMotorsGroup(ref ushort[] motorGroups);
         bool ClearMotionAndJog();
@@ -61,19 +62,19 @@ namespace Choreo.TwinCAT {
         bool isConnectionOK;
         bool IsConnectionOK {
             get => isConnectionOK;
-            set { isConnectionOK = value; OnPropertyChanged("IsOn"); }
+            set { isConnectionOK = value; Notify()("IsOn"); }
         }
 
         bool areSymbolsOK;
         bool AreSymbolsOK {
             get => areSymbolsOK;
-            set { areSymbolsOK = value; OnPropertyChanged("IsOn"); }
+            set { areSymbolsOK = value; Notify()("IsOn"); }
         }
 
         private bool isWatchdogOK;
         public bool IsWatchdogOK {
             get { return isWatchdogOK; }
-            set { isWatchdogOK = value; OnPropertyChanged("IsOn"); }
+            set { isWatchdogOK = value; Notify()("IsOn"); }
         }
 
 
@@ -178,10 +179,20 @@ namespace Choreo.TwinCAT {
         #region IPlc Implementation
         public void Upload<T>(T obj) {
             if (!IsOn) return;
-            GetType().GetMethod("Upload", 
-                BindingFlags.Instance | BindingFlags.NonPublic, 
-                null, 
-                new Type[] { typeof(T) }, 
+            GetType().GetMethod("Upload",
+                BindingFlags.Instance | BindingFlags.NonPublic,
+                null,
+                new Type[] { typeof(T) },
+                null)
+                .Invoke(this, new object[] { obj });
+        }
+
+        public void Download<T>(T obj) {
+            if (!IsOn) return;
+            GetType().GetMethod("Download",
+                BindingFlags.Instance | BindingFlags.NonPublic,
+                null,
+                new Type[] { typeof(T) },
                 null)
                 .Invoke(this, new object[] { obj });
         }
@@ -195,6 +206,7 @@ namespace Choreo.TwinCAT {
                 , axis.MaxVel
                 , axis.SoftDnRotations
                 , axis.SoftUpRotations
+                , axis.UserEnable
             };
 
             List<ISymbol> valueSyms = new List<ISymbol>();
@@ -207,6 +219,7 @@ namespace Choreo.TwinCAT {
                     , nameof(Axis.MaxVel)
                     , nameof(Axis.SoftDnRotations)
                     , nameof(Axis.SoftUpRotations)
+                    , nameof(Axis.UserEnable)
                     }
                 .Select(propName => tags[axis, propName].Symbol));
 
@@ -214,11 +227,29 @@ namespace Choreo.TwinCAT {
             Connection.WriteSymbol(tags.PathOf(VM, nameof(ViewModel.ParameterWrite)), true, false);
         }
 
+        void Download(Axis axis) {
+            List<ISymbol> valueSyms = new List<ISymbol>();
+            valueSyms.AddRange(
+                new string[] {
+                    nameof(Axis.MinLoad)
+                    , nameof(Axis.MaxLoad)
+                    , nameof(Axis.LoadOffs)
+                    , nameof(Axis.MinVel)
+                    , nameof(Axis.MaxVel)
+                    , nameof(Axis.SoftDnRotations)
+                    , nameof(Axis.SoftUpRotations)
+                    , nameof(Axis.UserEnable)
+                    }
+                .Select(propName => tags[axis, propName].Symbol));
+
+            var values = new SumSymbolRead(Connection, valueSyms).Read();
+            for (int i = 0; i < valueSyms.Count; i++) tags[valueSyms[i]].Push(values[i]);
+        }
+
         static readonly string[] moveProps = new string[] { nameof(Axis.MoveVal), nameof(Axis.Velocity), nameof(Axis.Accel), nameof(Axis.Decel) };
         static readonly string[] enabProps = new string[] { nameof(Axis.MAEnable), nameof(Axis.MREnable), nameof(Axis.JogUpEnable), nameof(Axis.JogDnEnable) };
         static readonly List<ITag> allEnabs = new List<ITag>();
         static readonly object[] allEnabValues = Enumerable.Repeat(false, 96).OfType<object>().ToArray();
-
         void Upload(Motion motion) {
             var values = new object[] {
                 0.0
@@ -284,38 +315,46 @@ namespace Choreo.TwinCAT {
             new SumSymbolWrite(Connection, enabSyms).Write(Enumerable.Repeat(tf, enabSyms.Count / 4).SelectMany(tfe => tfe).ToArray());
         }
 
+        static readonly string[] cueProps = new string[] { nameof(ViewModel.CueLoaded), nameof(ViewModel.CueComplete)};
         void Upload(Cue cue) {
             var valueSyms = new List<ISymbol>();
             var values = new List<object>();
             var enabValues = (object[])allEnabValues.Clone();
 
-            foreach (var row in cue.Rows) {
-                var rowValues = new object[] {
+            if (cue is Cue) {
+                foreach (var row in cue.Rows) {
+                    var rowValues = new object[] {
                     0.0
                     , row.Velocity
                     , row.Acceleration
                     , row.Deceleration
                 };
 
-                foreach(var motor in VM.Motors.Where(motor => row.Motors[motor.Index])) {
-                    valueSyms.AddRange(moveProps.Select(prop => tags[motor, prop].Symbol));
-                    rowValues[0] = row.Target * motor.RotationsPerFoot;
-                    values.AddRange(rowValues);
-                    enabValues[motor.Index * 4] = true;
+                    foreach (var motor in VM.Motors.Where(motor => row.Motors[motor.Index])) {
+                        valueSyms.AddRange(moveProps.Select(prop => tags[motor, prop].Symbol));
+                        rowValues[0] = row.Target * motor.RotationsPerFoot;
+                        values.AddRange(rowValues);
+                        enabValues[motor.Index * 4] = true;
+                    }
+
+                    foreach (var group in VM.Groups.Where(group => row.Groups[group.Index])) {
+                        valueSyms.AddRange(moveProps.Select(prop => tags[group, prop].Symbol));
+                        rowValues[0] = row.Target * group.RotationsPerFoot;
+                        values.AddRange(rowValues);
+                        enabValues[(group.Index + 16) * 4] = true;
+                    }
                 }
 
-                foreach (var group in VM.Groups.Where(group => row.Groups[group.Index])) {
-                    valueSyms.AddRange(moveProps.Select(prop => tags[group, prop].Symbol));
-                    rowValues[0] = row.Target * group.RotationsPerFoot;
-                    values.AddRange(rowValues);
-                    enabValues[(group.Index + 16) * 4] = true;
-                }
+                new SumSymbolWrite(Connection, valueSyms).Write(values.ToArray());
+                new SumSymbolWrite(Connection, allEnabs.Select(tag => tag.Symbol).ToList()).Write(enabValues);
+                new SumSymbolWrite(Connection, cueProps.Select(prop => tags[VM, prop].Symbol).ToList()).Write(new object[] { true, false });
+                VM.LoadedCue = cue.Number;
             }
-            new SumSymbolWrite(Connection, valueSyms).Write(values.ToArray());
-            new SumSymbolWrite(Connection, allEnabs.Select(tag => tag.Symbol).ToList()).Write(enabValues.ToArray());
-            var path = tags.PathOf(VM, nameof(ViewModel.CueLoaded));
-            Connection.WriteSymbol(path, true, false);
-            VM.LoadedCue = cue.Number;
+            else {
+                new SumSymbolWrite(Connection, allEnabs.Select(tag => tag.Symbol).ToList()).Write(enabValues);
+                new SumSymbolWrite(Connection, cueProps.Select(prop => tags[VM, prop].Symbol).ToList()).Write(new object[] { false, false });
+                VM.LoadedCue = 0;
+            }
         }
 
         public bool SaveGroupMotors(int groupIndex, ushort bitmap) => PlcMethod()?.Invoke(groupIndex, bitmap) == 0;

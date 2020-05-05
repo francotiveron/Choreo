@@ -16,14 +16,14 @@ using static Choreo.Globals;
 
 namespace Choreo {
     public partial class DataItemUI {
-        public enum States { OK, Warning, Error };
+        //public enum States { OK, Warning, Error };
         public DataItemUI() {
             InitializeComponent();
             DataContextChanged += DataItemUI_DataContextChanged;
         }
 
         object dc;
-        PropertyInfo pi;
+        PropertyInfo pi, statusPi;
         DependencyObject focusScope = null;
         public bool IsPosition { get; private set; }
 
@@ -37,6 +37,7 @@ namespace Choreo {
             var type = dc.GetType();
             var property = binding.Path.Path;
             pi = type.GetProperty(property);
+            statusPi = type.GetProperty($"{property}Status");
             var attr = pi.GetCustomAttribute<DataItemAttribute>();
 
             var x = StatusCoverRectangle.GetBindingExpression(Shape.FillProperty);
@@ -81,6 +82,8 @@ namespace Choreo {
         }
 
         public bool StandAlone { get; set; }
+
+        public Status? Status => (Status?)statusPi?.GetValue(dc);
 
         void UserControl_Loaded(object sender, RoutedEventArgs e) {
             if (ValueFontSize != null) Value.SetValue(FontSizeProperty, ValueFontSize);
@@ -178,36 +181,19 @@ namespace Choreo {
         #endregion
     }
 
-    //public class DataItemBackgroundConverter : IMultiValueConverter {
-    //    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
-    //        var control = (DataItemUI)values[0];
-    //        var isFocused = (bool)values[1];
-
-    //        if (isFocused) return Application.Current.Resources["DataItemFocusedBackground"];
-    //        else {
-    //            if (control.Focusable) return Application.Current.Resources["DataItemUnfocusedBackground"];
-    //            else return null;
-    //        }
-    //    }
-
-    //    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) {
-    //        throw new NotImplementedException();
-    //    }
-    //}
-
     public class DataItemStatusBrushConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-            if (value == null) return null;
-            DataItemUI.States status = (DataItemUI.States)value;
+            if (value == null || !(value is Status)) return null;
+            Status status = (Status)value;
             var color = Colors.Transparent;
             var opacity = 0.0;
 
-            switch(status) {
-                case DataItemUI.States.Warning:
+            switch(status.Value) {
+                case Status.Values.Warning:
                     color = Colors.Yellow;
                     opacity = 0.4;
                     break;
-                case DataItemUI.States.Error:
+                case Status.Values.Error:
                     color = Colors.Red;
                     opacity = 0.4;
                     break;

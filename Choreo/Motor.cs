@@ -7,49 +7,56 @@ namespace Choreo {
     public class Motor : Axis {
         public Motor(int index) : base(index) { }
 
-        public override AxisStates AxisStatus => DriveStatus ? AxisStates.Error : AxisStates.Ok;
+        public override Status AxisStatus => DriveStatus || ESStatus;
+        public override string AxisStatusDescription {
+            get {
+                if (ESStatus) return "E-Stop";
+                if (DriveStatus) return "Drive Fault";
+                return base.AxisStatusDescription;
+            }
+        }
 
         #region Runtime+PLC Properties
         bool fwdLim;
         [Plc("Fwd_Lim")]
         public bool FwdLim {
             get => fwdLim;
-            set { fwdLim = value; OnPropertyChanged(); }
+            set { fwdLim = value; Notify(); }
         }
 
         bool revLim;
         [Plc("Rev_Lim")]
         public bool RevLim {
             get => revLim;
-            set { revLim = value; OnPropertyChanged(); }
+            set { revLim = value; Notify(); }
         }
 
         bool fwdUltLim;
         [Plc("Fwd_Ult_Lim")]
         public bool FwdUltLim {
             get => fwdUltLim;
-            set { fwdUltLim = value; OnPropertyChanged(); }
+            set { fwdUltLim = value; Notify(); }
         }
 
         bool revUltLim;
         [Plc("Rev_Ult_Lim")]
         public bool RevUltLim {
             get => revUltLim;
-            set { revUltLim = value; OnPropertyChanged(); }
+            set { revUltLim = value; Notify(); }
         }
 
         bool driveStatus;
         [Plc("Drive_Status")]
         public bool DriveStatus {
             get => driveStatus;
-            set { driveStatus = value; OnPropertyChanged(); OnPropertyChanged(nameof(AxisStatus)); }
+            set { driveStatus = value; Notify()(nameof(AxisStatus)); }
         }
 
         bool eSStatus;
         [Plc("ES_Status")]
         public bool ESStatus {
             get => eSStatus;
-            set { eSStatus = value; OnPropertyChanged(); }
+            set { eSStatus = value; Notify()(nameof(AxisStatus)); }
         }
         #endregion
 
@@ -60,7 +67,7 @@ namespace Choreo {
             get => group;
             set {
                 group = value;
-                OnPropertyChanged(); OnPropertyChanged("Color");
+                Notify()("Color");
             }
         }
         public bool IsGrouped => Group > 0;

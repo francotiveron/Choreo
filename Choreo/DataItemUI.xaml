@@ -43,6 +43,6 @@
             </Grid>
         </Grid>
         <Rectangle x:Name="StatusCoverRectangle" Grid.Row="0" Fill="{Binding Converter={StaticResource DataItemStatusBrushConverter}}"/>
-        <Rectangle x:Name="StatusBottomLine"  Grid.Row="1" Fill="{Binding Converter={StaticResource DataItemStatusBrushConverter}}"/>
+        <Rectangle x:Name="StatusBottomLine" Grid.Row="1" Fill="{Binding Converter={StaticResource DataItemStatusBrushConverter}}"/>
     </Grid>
 </UserControl>

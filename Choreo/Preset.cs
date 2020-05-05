@@ -17,7 +17,7 @@ namespace Choreo {
                 if (name == null) return $"Preset {Index + 1}";
                 return name;
             }
-            set { name = value; OnPropertyChanged(); }
+            set { name = value; Notify(); }
 
         }
 

@@ -33,40 +33,49 @@ namespace Choreo {
         public ObservableCollection<Cue> Cues { get; } = new ObservableCollection<Cue>();
         public Motion Motion { get; } = new Motion();
 
+        private void CueCompleteChanged() {
+            if (CueComplete) {
+                if (LoadedCue > 0) {
+                    var nextCue = Cues.Skip(LoadedCue).FirstOrDefault(cue => cue.Enabled);
+                    Plc.Upload(nextCue);
+                }
+            }
+        }
+
         #region Runtime Properties
         private bool cueLoaded;
         [Plc("Cue_loaded")]
         public bool CueLoaded {
             get { return cueLoaded; }
-            set { cueLoaded = value; OnPropertyChanged(); }
+            set { cueLoaded = value; Notify(); }
         }
 
         bool cueComplete;
         [Plc("Cue_Complete")]
         public bool CueComplete {
             get { return cueComplete; }
-            set { cueComplete = value; OnPropertyChanged(); }
+            set { cueComplete = value; Notify(); CueCompleteChanged(); }
         }
 
         bool globalESStatus;
         [Plc("Global_ES_Status")]
         public bool GlobalESStatus {
             get { return globalESStatus; }
-            set { globalESStatus = value; OnPropertyChanged(); }
+            set { globalESStatus = value; Notify(); }
         }
 
         bool parameterWrite;
         [Plc("Parameter_Write")]
         public bool ParameterWrite {
             get { return parameterWrite; }
-            set { parameterWrite = value; OnPropertyChanged(); }
+            set { parameterWrite = value; Notify(); }
         }
 
         private double jogVelocity;
         [Plc("Jog_Velocity")]
         public double JogVelocity {
             get { return jogVelocity; }
-            set { jogVelocity = value / 100.0; OnPropertyChanged(); }
+            set { jogVelocity = value / 100.0; Notify(); }
         }
         #endregion
 
@@ -74,15 +83,17 @@ namespace Choreo {
         int motorSettingsBeingEdited;
         public int MotorSettingsBeingEdited {
             get => motorSettingsBeingEdited;
-            set { motorSettingsBeingEdited = value; OnPropertyChanged(); }
+            set { motorSettingsBeingEdited = value; Notify(); }
         }
         public bool IsMotorSettingsEditing => MotorSettingsBeingEdited > 0;
         public void BeginMotorSettingsEditing(int index) => MotorSettingsBeingEdited = index + 1;
         public void EndMotorSettingsEditing() => MotorSettingsBeingEdited = 0;
         public void MotorSettingsEditCancel() {
+            Plc.Download(Motors[MotorSettingsBeingEdited - 1]);
             Load(Motors[MotorSettingsBeingEdited - 1]);
             EndMotorSettingsEditing();
         }
+
         public void MotorSettingsEditSave() {
             Plc.Upload(Motors[MotorSettingsBeingEdited - 1]);
             Save(Motors[MotorSettingsBeingEdited - 1]);
@@ -92,7 +103,7 @@ namespace Choreo {
         int groupSettingsBeingEdited;
         public int GroupSettingsBeingEdited {
             get => groupSettingsBeingEdited;
-            set { groupSettingsBeingEdited = value; OnPropertyChanged(); }
+            set { groupSettingsBeingEdited = value; Notify(); }
         }
         public bool IsGroupSettingsEditing => GroupSettingsBeingEdited > 0;
         public void BeginGroupSettingsEditing(int index) => GroupSettingsBeingEdited = index + 1;
@@ -113,7 +124,7 @@ namespace Choreo {
         HashSet<Motor> editedGroupMotorsInitial;
         public int GroupBeingEdited {
             get => groupBeingEdited;
-            set { groupBeingEdited = value; OnPropertyChanged(); }
+            set { groupBeingEdited = value; Notify(); }
         }
         public bool IsGroupEditing => GroupBeingEdited > 0;
         public void BeginGroupEditing(int group) {
@@ -153,7 +164,7 @@ namespace Choreo {
         int presetBeingEdited;
         public int PresetBeingEdited {
             get => presetBeingEdited;
-            set { presetBeingEdited = value; OnPropertyChanged(); }
+            set { presetBeingEdited = value; Notify(); }
         }
         public bool IsPresetEditing => PresetBeingEdited > 0;
 
@@ -188,7 +199,7 @@ namespace Choreo {
         int cueBeingEdited;
         public int CueBeingEdited {
             get => cueBeingEdited;
-            set { cueBeingEdited = value; OnPropertyChanged(); }
+            set { cueBeingEdited = value; Notify(); }
         }
         public void BeginCueEditing(int cue) {
             CueBeingEdited = cue + 1;
@@ -222,10 +233,10 @@ namespace Choreo {
 
         public bool MotionEditing {
             get { return motionEditing; }
-            set { motionEditing = value; OnPropertyChanged(); }
+            set { motionEditing = value; Notify(); }
         }
 
-        public void BeginMotionEditing(bool relative, object hook) {
+        public void BeginMotionEditing(bool relative, Axis hook) {
             Motion.Hook = hook;
             Motion.Relative = relative;
             MotionEditing = true;
@@ -245,15 +256,14 @@ namespace Choreo {
         MainWindowPages currentMainWindowPage;
         public MainWindowPages CurrentMainWindowPage {
             get => currentMainWindowPage;
-            set { currentMainWindowPage = value; OnPropertyChanged(); }
+            set { currentMainWindowPage = value; Notify(); }
         }
         public bool IsEditing => IsGroupEditing || IsPresetEditing;
 
         private int loadedCue;
-
         public int LoadedCue {
             get { return loadedCue; }
-            set { loadedCue = value; OnPropertyChanged(); }
+            set { loadedCue = value; Notify(); }
         }
 
         #endregion

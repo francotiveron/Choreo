@@ -22,27 +22,8 @@ namespace Choreo {
                 NumPad.DataItem = diui;
             e.Handled = true;
         }
-
-        //public static void SetEditingItem(object item) {
-        //    switch(item) {
-        //        case Motor m: VM.MotorSettingsBeingEdited = m.Index + 1; break;
-        //    }
-        //}
-
-        //private void ResetGroupButton_Click(object sender, RoutedEventArgs e) {
-        //    VM.Motors[VM.MotorSettingsBeingEdited - 1].Group = 0;
-        //}
-
         private void NumPad_PadEvent(object sender, Input.NumericPad1.PadEventArgs e) => FocusManager.SetFocusedElement(EditableElementsGrid, e.DataItem.Navigate(e.Name));
 
         private void SaveNewPositionButton_Click(object sender, RoutedEventArgs e) => Plc.Calibrate(DataContext as Axis);
     }
-
-    //public class EditDataItemSetter: DynamicObject {
-    //    public override bool TryInvoke(InvokeBinder binder, object[] args, out object result) {
-    //        MotorPage.SetEditingItem(args[0]);
-    //        result = null;
-    //        return true;
-    //    }
-    //}
 }

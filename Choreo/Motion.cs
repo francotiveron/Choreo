@@ -4,13 +4,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TwinCAT.Ads;
 using static Choreo.Globals;
 
 namespace Choreo {
     public class Motion: PropertyChangedNotifier {
         public Motion() { }
 
-        public object Hook { get; set; }
+        Axis hook;
+        public Axis Hook {
+            get => hook; 
+            set {
+                hook = value;
+                for (int i = 0; i < Motors.Length; i++) Motors[i] = false;
+                for (int i = 0; i < Groups.Length; i++) Groups[i] = false;
+
+                if (hook is Motor m) Motors[m.Index] = true;
+                else
+                if (hook is Group g) Groups[g.Index] = true;
+
+                Velocity = hook.DefVel;
+                Acceleration = hook.DefAcc;
+                Deceleration = hook.DefDec;
+            }
+        }
 
         public bool[] Motors { get; } = new bool[16];
         public bool[] Groups { get; } = new bool[8];
@@ -20,44 +37,47 @@ namespace Choreo {
         private bool relative;
         public bool Relative {
             get { return relative; }
-            set { relative = value; OnPropertyChanged(); }
+            set { relative = value; Notify(); }
         }
 
         double relativeSetpoint;
         [DataItem(title:"Relative Setpoint")]
         public double RelativeSetpoint {
             get { return relativeSetpoint; }
-            set { relativeSetpoint = value; OnPropertyChanged(); }
+            set { relativeSetpoint = value; Notify(); }
         }
-
-        public DataItemUI.States RelativeSetpointStatus => DataItemUI.States.OK;
+        public Status RelativeSetpointStatus => Status.Ok;
 
         double absoluteSetpoint;
         [DataItem(title: "Absolute Setpoint")]
         public double AbsoluteSetpoint {
             get { return absoluteSetpoint; }
-            set { absoluteSetpoint = value; OnPropertyChanged(); }
+            set { absoluteSetpoint = value; Notify(); }
         }
+        public Status AbsoluteSetpointStatus => Status.Ok;
 
         double velocity;
         [DataItem]
         public double Velocity {
             get { return velocity; }
-            set { velocity = value; OnPropertyChanged(); }
+            set { velocity = value; Notify(); }
         }
+        public Status VelocityStatus => Velocity < hook.MinVel || Velocity > hook.MaxVel;
 
         double acceleration;
         [DataItem]
         public double Acceleration {
             get { return acceleration; }
-            set { acceleration = value; OnPropertyChanged(); }
+            set { acceleration = value; Notify(); }
         }
+        public Status AccelerationStatus => Acceleration < hook.MinAcc || Acceleration > hook.MaxAcc;
 
         double deceleration;
         [DataItem]
         public double Deceleration {
             get { return deceleration; }
-            set { deceleration = value; OnPropertyChanged(); }
+            set { deceleration = value; Notify(); }
         }
+        public Status DecelerationStatus => Deceleration < hook.MinDec || Deceleration > hook.MaxDec;
     }
 }

@@ -23,7 +23,7 @@
             </Border.Child>
         </Border>
         <Border Grid.Row="1" Name="PageArea">
-            <local:MotorPage/>
+            <local:MotorPage x:Name="Page"/>
         </Border>
     </Grid>
 </Window>

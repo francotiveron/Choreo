@@ -60,28 +60,28 @@ namespace Choreo {
         [DataItem, Persistent]
         public double Target {
             get { return target; }
-            set { target = value; OnPropertyChanged(); }
+            set { target = value; Notify(); }
         }
 
         double velocity;
         [DataItem(mu: "fpm"), Persistent]
         public double Velocity {
             get { return velocity; }
-            set { velocity = value; OnPropertyChanged(); }
+            set { velocity = value; Notify(); }
         }
 
         double acceleration;
         [DataItem, Persistent]
         public double Acceleration {
             get { return acceleration; }
-            set { acceleration = value; OnPropertyChanged(); }
+            set { acceleration = value; Notify(); }
         }
 
         double deceleration;
         [DataItem, Persistent]
         public double Deceleration {
             get { return deceleration; }
-            set { deceleration = value; OnPropertyChanged(); }
+            set { deceleration = value; Notify(); }
         }
     }
 
@@ -94,13 +94,13 @@ namespace Choreo {
         [DataItem(title: "Cue Name"), Persistent]
         public string Name {
             get => name == null ? string.Empty : name;
-            set { name = value; OnPropertyChanged(); }
+            set { name = value; Notify(); }
         }
 
         private bool enabled;
         public bool Enabled {
             get { return enabled; }
-            set { enabled = value; OnPropertyChanged(); }
+            set { enabled = value; Notify(); }
         }
 
         //private int runtime;
@@ -113,19 +113,19 @@ namespace Choreo {
 
         [DataItem(title: "Cue Number")]
         public int Number => Index + 1;
-        public void RefreshIndex() { OnPropertyChanged("Index"); OnPropertyChanged("Number"); OnPropertyChanged("Name"); }
+        public void RefreshIndex() { Notify()(nameof(Index), nameof(Number), nameof(Name)); }
 
         bool show;
         [Persistent]
         public bool Show {
             get { return show; }
-            set { show = value; OnPropertyChanged(); }
+            set { show = value; Notify(); }
         }
 
         TimeSpan duration;
         public TimeSpan Duration {
             get { return duration; }
-            set { duration = value; OnPropertyChanged(); }
+            set { duration = value; Notify(); }
         }
 
         public ObservableCollection<CueRow> Rows { get; private set; } = new ObservableCollection<CueRow>();

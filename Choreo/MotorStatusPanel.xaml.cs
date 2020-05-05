@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
+using static Choreo.Globals;
 
 namespace Choreo {
     /// <summary>
@@ -45,7 +46,7 @@ namespace Choreo {
                 brush = null;
 
             if ((string)parameter == "Rectangle") {
-                if (axis.AxisStatus == Axis.AxisStates.Error) {
+                if (axis.AxisStatus == Status.Error) {
                     brush = error.Clone();
                     brush.Opacity = 1.0;
                 }
@@ -55,7 +56,7 @@ namespace Choreo {
                     brush.Opacity = 1.0;
                 }
             }
-            else if (axis.AxisStatus == Axis.AxisStates.Error) brush = error;
+            else if (axis.AxisStatus == Status.Error) brush = error;
             else if (axis.Active) brush = move;
             else if (axis.JogUpEnable) brush = jogUp;
             else if (axis.JogDnEnable) brush = jogDn;

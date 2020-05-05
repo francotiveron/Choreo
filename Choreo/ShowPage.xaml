@@ -39,10 +39,7 @@
         <!--Content="{Binding ElementName=CueList, Path=SelectedCue, Converter={qc:QuickConverter '($P == null ? \'NULL\' : ($P.Enabled ? \'Disable Cue\' : \'Enable Cue\')'}}"-->
 
         <local:ShowCueList x:Name="CueList" Grid.Row="1" Grid.Column="0"/>
-        <Label Content="{qc:MultiBinding 'String.Format(\'Cue {0}: {1}\', $P0, $P1)', P0={Binding Number}, P1={Binding Name}}"
-            Grid.Row="0" Grid.Column="1" 
-            DataContext="{Binding ElementName=CueList, Path=SelectedCue}" 
-            />
+        <Label Content="{qc:MultiBinding 'String.Format(\'Cue {0}: {1}\', $P0, $P1)', P0={Binding Number}, P1={Binding Name}}" Grid.Row="0" Grid.Column="1" DataContext="{Binding ElementName=CueList, Path=SelectedCue}"/>
         <local:ShowCueRowList x:Name="CueRowList" Grid.Row="1" Grid.Column="1" DataContext="{Binding ElementName=CueList, Path=SelectedCue}"/>
     </Grid>
 </UserControl>

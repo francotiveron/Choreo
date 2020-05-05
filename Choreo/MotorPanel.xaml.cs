@@ -20,6 +20,7 @@ namespace Choreo
         }
         public bool IsMotor => DataContext is Motor;
         public bool IsGroup => DataContext is Group;
+        public bool AxisEnabled => DataContext is Axis axis && axis.UserEnable;
 
         public int Index => IsGroup ? ((Group)DataContext).Index : ((Motor)DataContext).Index;
 
@@ -74,7 +75,7 @@ namespace Choreo
 
         private void UserControl_MouseMove(object sender, MouseEventArgs e)
         {
-            if (Gesture)
+            if (Gesture && AxisEnabled)
             {
                 var x = e.GetPosition(this).X;
                 var y = e.GetPosition(this).Y;
@@ -85,6 +86,7 @@ namespace Choreo
                 if ((y - gestureStartY) < -10.0) GestureUp();
                 else
                 if ((y - gestureStartY) > 10.0) GestureDn();
+                e.Handled = true;
             }
         }
 
@@ -121,13 +123,13 @@ namespace Choreo
 
         private void GestureLeft()
         {
-            VM.BeginMotionEditing(true, DataContext);
+            VM.BeginMotionEditing(true, (Axis)DataContext);
             Gesture = false;
         }
 
         private void GestureRight()
         {
-            VM.BeginMotionEditing(false, DataContext);
+            VM.BeginMotionEditing(false, (Axis)DataContext);
             Gesture = false;
         }
 

@@ -31,9 +31,14 @@ namespace Choreo {
             }
             else
             if (sender == MotorSaveButton) {
-                if (VM.IsMotorSettingsEditing) VM.MotorSettingsEditSave();
-                else
-                if (VM.IsGroupSettingsEditing) VM.GroupSettingsEditSave();
+                var window = Application.Current.MainWindow as MotorWindow;
+                var page = window?.Page;
+                if (DataItemsValid(page.EditableElementsGrid.Children)) {
+                    if (VM.IsMotorSettingsEditing) VM.MotorSettingsEditSave();
+                    else
+                    if (VM.IsGroupSettingsEditing) VM.GroupSettingsEditSave();
+                }
+                else Log.Alert("Please insert valid data", "Invalid Data Entry");
             }
         }
     }
