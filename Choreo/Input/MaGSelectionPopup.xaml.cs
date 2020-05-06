@@ -76,13 +76,9 @@ namespace Choreo.Input {
                 var sdc = SelectorPanel.DataContext as MaGSelectorDataContextType;
                 Array.Copy(sdc.SelectedMotors, cueRow.Motors, cueRow.Motors.Length);
                 Array.Copy(sdc.SelectedGroups, cueRow.Groups, cueRow.Groups.Length);
+                cueRow.Validate();
             }
-            //else
-            //if (but.Name == "CANCEL") {
-            //    var cueRow = dataItem.DataContext as CueRow;
-            //    //SelectorPanel.GetMotorsFrom(cueRow.Motors);
-            //    //SelectorPanel.GetGroupsFrom(cueRow.Groups);
-            //}
+
             MaGEvent?.Invoke(this, new MaGEventArgs { Name = but.Name, DataItem = DataItem });
         }
     }

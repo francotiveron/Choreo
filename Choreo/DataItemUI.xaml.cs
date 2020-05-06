@@ -44,14 +44,14 @@ namespace Choreo {
             binding = new Binding($"{property}Status");
             binding.Source = dc;
             binding.Converter = x.ParentBinding.Converter;
-            binding.ConverterParameter = StatusCoverRectangle;
+            binding.ConverterParameter = StatusCoverRectangle.Name;
             StatusCoverRectangle.SetBinding(Shape.FillProperty, binding);
 
             x = StatusBottomLine.GetBindingExpression(Shape.FillProperty);
             binding = new Binding($"{property}Status");
             binding.Source = dc;
             binding.Converter = x.ParentBinding.Converter;
-            binding.ConverterParameter = StatusBottomLine;
+            binding.ConverterParameter = StatusBottomLine.Name;
             StatusBottomLine.SetBinding(Shape.FillProperty, binding);
 
             if (attr != null) {
@@ -202,7 +202,7 @@ namespace Choreo {
             if (opacity == 0.0) return null;
 
             var brush = new SolidColorBrush(color);
-            if (parameter is Rectangle r && r.Name == "StatusCoverRectangle") brush.Opacity = opacity;
+            if ((string)parameter == "StatusCoverRectangle") brush.Opacity = opacity;
 
             return brush;
         }

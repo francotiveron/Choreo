@@ -16,7 +16,6 @@ namespace Choreo {
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e) => FocusManager.SetFocusedElement(EditableElementsGrid, SetPosition);
-
         private void Focus(object sender, RoutedEventArgs e) {
             if (e.OriginalSource is DataItemUI diui) {
                 if (diui == AxisName) {

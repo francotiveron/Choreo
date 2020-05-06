@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using static Choreo.Globals;
 
 namespace Choreo {
@@ -19,6 +20,10 @@ namespace Choreo {
 
         public bool[] Motors { get; } = new bool[16];
         public bool[] Groups { get; } = new bool[8];
+
+        public Status Status => !(Motors.Any(m => m) || Groups.Any(g => g));
+
+        public void Validate() => MultiNotify(nameof(Status));
 
         [Persistent]
         public ushort MotorsBitmap {
@@ -103,12 +108,7 @@ namespace Choreo {
             set { enabled = value; Notify(); }
         }
 
-        //private int runtime;
-        //public int Runtime {
-        //    get { return runtime; }
-        //    set { runtime = value; OnPropertyChanged(); }
-        //}
-
+        public bool IsValid => Rows.All(row => row.Status == Status.Ok);
         public int Index => VM.Cues.IndexOf(this);
 
         [DataItem(title: "Cue Number")]

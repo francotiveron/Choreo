@@ -50,7 +50,6 @@ namespace Choreo {
         private void InitializeMotorsCheckGrid(int? hook) {
             MotorsCheckGrid.Children.Clear();
             for (int i = 0; i < 16; i++) {
-                if (!VM.Motors[i].IsOperational) continue;
                 var cb = CreateCheckBox(VM.Motors[i], i, $"Motors[{i}]", i == hook);
                 cb.Tag = "Motor";
                 MotorsCheckGrid.Children.Add(cb);
@@ -60,25 +59,29 @@ namespace Choreo {
         private void InitializeGroupsCheckGrid(int? hook) {
             GroupsCheckGrid.Children.Clear();
             for (int i = 0; i < 8; i++) {
-                if (!VM.Groups[i].IsOperational) continue;
                 var cb = CreateCheckBox(VM.Groups[i], i, $"Groups[{i}]", i == hook);
                 cb.Tag = "Group";
                 GroupsCheckGrid.Children.Add(cb);
             }
         }
 
-        CheckBox CreateCheckBox(object dc, int i, string binding, bool disabled) {
+        CheckBox CreateCheckBox(Axis axis, int i, string binding, bool isHook) {
             var cb = new CheckBox();
             cb.VerticalContentAlignment = VerticalAlignment.Center;
             cb.HorizontalAlignment = HorizontalAlignment.Center;
-            var b = new Binding(nameof(Axis.FullName));
-            b.Source = dc;
-            cb.SetBinding(CheckBox.ContentProperty, b);
             cb.SetValue(Grid.RowProperty, i % 4);
             cb.SetValue(Grid.ColumnProperty, i / 4);
+
+            var b = new Binding(nameof(Axis.FullName));
+            b.Source = axis;
+            cb.SetBinding(CheckBox.ContentProperty, b);
+
             b = new Binding(binding);
             cb.SetBinding(CheckBox.IsCheckedProperty, b);
-            cb.IsEnabled = !disabled;
+
+            cb.IsEnabled = !isHook;
+            cb.Visibility = axis.IsOperational ? Visibility.Visible : Visibility.Hidden;
+
             cb.Click += Cb_Click;
             return cb;
         }
@@ -94,6 +97,7 @@ namespace Choreo {
                     break;
             }
             c.GetBindingExpression(ContentProperty).UpdateTarget();
+            VM.Motion.Validate();
         }
 
         private void NumPad_PadEvent(object sender, Input.NumericPad1.PadEventArgs e) => FocusManager.SetFocusedElement(EditableElementsGrid, e.DataItem.Navigate(e.Name));

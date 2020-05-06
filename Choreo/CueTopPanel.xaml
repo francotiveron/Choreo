@@ -8,7 +8,7 @@
              d:DesignHeight="60" d:DesignWidth="1280">
     <DockPanel Background="#FF0D4D16">
         <Label Content="Cue Settings" />
-        <Button x:Name="CueAddRowSaveButton" Content="ADD ROW" Style="{StaticResource TopBarCommandButtonStyle}"  Click="Button_Click"/>
+        <Button x:Name="CueAddRowButton" Content="ADD ROW" Style="{StaticResource TopBarCommandButtonStyle}"  Click="Button_Click"/>
         <Button x:Name="CueEditSaveButton" Content="SAVE" Style="{StaticResource TopBarCommandButtonStyle}"  Click="Button_Click"/>
         <Button x:Name="CueEditCancelButton" Content="CANCEL" Style="{StaticResource TopBarCommandButtonStyle}" Click="Button_Click"/>
     </DockPanel>

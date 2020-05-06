@@ -17,8 +17,8 @@
 + Motor User Enable/Disable
 + Motor ES_Status
 + Motor/Group Name editing
++ Settings values Data validation
 * Preset name editing
-* Settings values Data validation
 - Motor Lock for group
 - Black Exclamation point in Red Ellipse motor status
 - Users Login

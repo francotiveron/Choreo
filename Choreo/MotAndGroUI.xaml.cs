@@ -34,6 +34,8 @@ namespace Choreo {
         private void UserControl_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
             if (Focusable && focusScope != null) FocusManager.SetFocusedElement(focusScope, this);
         }
+
+        public object Title { get => Label.Content; set => Label.Content = value; }
     }
 
     public class MotAndGroConverter : IValueConverter {

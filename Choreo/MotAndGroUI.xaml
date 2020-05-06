@@ -23,16 +23,19 @@
         </Style>
     </UserControl.Style>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="5*"/>
-            <RowDefinition Height="6*"/>
-            <RowDefinition Height="6*"/>
-        </Grid.RowDefinitions>
-        <Label x:Name="Label" HorizontalAlignment="Left"
-                    Content="Apply also to"
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="6*"/>
+                <RowDefinition Height="6*"/>
+            </Grid.RowDefinitions>
+            <Label x:Name="Label" HorizontalAlignment="Left"
+                    Content="Apply (Also) To"
                     Style="{StaticResource DataItemLabelStyle}" Margin="5,0,0,0"
             />
-        <Label x:Name="Motors" Grid.Row="1" Content="{Binding ., Converter={StaticResource MotAndGroConverter}, ConverterParameter=Motors, FallbackValue=M:}" Padding="0" Style="{StaticResource DataItemDataStyle}"/>
-        <Label x:Name="Groups" Grid.Row="2" Content="{Binding ., Converter={StaticResource MotAndGroConverter}, ConverterParameter=Groups, FallbackValue=G:}" Padding="0" Style="{StaticResource DataItemDataStyle}"/>
+            <Label x:Name="Motors" Grid.Row="1" Content="{Binding ., Converter={StaticResource MotAndGroConverter}, ConverterParameter=Motors, FallbackValue=M:}" Padding="0" Style="{StaticResource DataItemDataStyle}"/>
+            <Label x:Name="Groups" Grid.Row="2" Content="{Binding ., Converter={StaticResource MotAndGroConverter}, ConverterParameter=Groups, FallbackValue=G:}" Padding="0" Style="{StaticResource DataItemDataStyle}"/>
+        </Grid>
+        <Rectangle x:Name="StatusCoverRectangle" Fill="{Binding Path=Status, Converter={StaticResource DataItemStatusBrushConverter}, ConverterParameter=StatusCoverRectangle}"/>
     </Grid>
 </UserControl>

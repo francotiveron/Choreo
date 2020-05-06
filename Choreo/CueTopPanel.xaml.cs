@@ -15,12 +15,13 @@ namespace Choreo {
             var button = (Button)sender;
             switch (button.Name) {
                 case "CueEditSaveButton":
-                    VM.CueEditSave();
+                    if (VM.Cues[VM.CueBeingEdited - 1].IsValid) VM.CueEditSave();
+                    else Log.Alert("Please insert valid data", "Invalid Data Entry");
                     break;
                 case "CueEditCancelButton":
                     VM.CueEditCancel();
                     break;
-                case "CueAddRowSaveButton":
+                case "CueAddRowButton":
                     var cue = VM.Cues[VM.CueBeingEdited - 1];
                     cue.Rows.Add(new CueRow(cue));
                     break;

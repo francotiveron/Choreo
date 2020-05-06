@@ -34,6 +34,15 @@ namespace Choreo {
 
         public bool Contains(Axis ax) => (ax is Motor ? Motors : Groups)[ax.Index];
 
+        public IEnumerable<Axis> Axes => VM.Motors.Where(m => Motors[m.Index]).Cast<Axis>().Concat(VM.Groups.Where(g => Groups[g.Index]).Cast<Axis>());
+
+        public double MinVel => Axes.Select(ax => ax.MinVel).Max();
+        public double MaxVel => Axes.Select(ax => ax.MaxVel).Min();
+        public double MinAcc => Axes.Select(ax => ax.MinAcc).Max();
+        public double MaxAcc => Axes.Select(ax => ax.MaxAcc).Min();
+        public double MinDec => Axes.Select(ax => ax.MinDec).Max();
+        public double MaxDec => Axes.Select(ax => ax.MaxDec).Min();
+
         private bool relative;
         public bool Relative {
             get { return relative; }
@@ -62,7 +71,7 @@ namespace Choreo {
             get { return velocity; }
             set { velocity = value; Notify(); }
         }
-        public Status VelocityStatus => Velocity < hook.MinVel || Velocity > hook.MaxVel;
+        public Status VelocityStatus => Velocity < MinVel || Velocity > MaxVel;
 
         double acceleration;
         [DataItem]
@@ -70,7 +79,7 @@ namespace Choreo {
             get { return acceleration; }
             set { acceleration = value; Notify(); }
         }
-        public Status AccelerationStatus => Acceleration < hook.MinAcc || Acceleration > hook.MaxAcc;
+        public Status AccelerationStatus => Acceleration < MinAcc || Acceleration > MaxAcc;
 
         double deceleration;
         [DataItem]
@@ -78,6 +87,8 @@ namespace Choreo {
             get { return deceleration; }
             set { deceleration = value; Notify(); }
         }
-        public Status DecelerationStatus => Deceleration < hook.MinDec || Deceleration > hook.MaxDec;
+        public Status DecelerationStatus => Deceleration < MinDec || Deceleration > MaxDec;
+
+        public void Validate() => MultiNotify(nameof(VelocityStatus), nameof(AccelerationStatus), nameof(DecelerationStatus));
     }
 }

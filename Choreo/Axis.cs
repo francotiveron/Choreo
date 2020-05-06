@@ -266,7 +266,6 @@ namespace Choreo {
         }
         public Status SoftDnStatus => SoftDn > SoftUp;
 
-        double minAcc;
         [DataItem("fpm2", "Min Acceleration")]
         public double MinAcc => 1.0;
         public Status MinAccStatus => MinAcc < 0;
@@ -295,7 +294,6 @@ namespace Choreo {
         }
         public Status DefVelStatus => DefVel < MinVel || DefVel > MaxVel;
 
-        double minDec;
         [DataItem("fpm2", "Min Deceleration")]
         public double MinDec => 1.0;
         public Status MinDecStatus => MinDec < 0;

@@ -39,7 +39,7 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <inp:MaGSelectionPopup x:Name="MaGSelect" Grid.Row="1" Grid.ColumnSpan="2" MaGEvent="MaGSelect_MaGEvent"/>
+            <inp:MaGSelectionPopup x:Name="MaGSelect" Grid.Row="1" Grid.ColumnSpan="2" Margin="10" MaGEvent="MaGSelect_MaGEvent"/>
             <inp:AlphaNumericPad x:Name="AlNumPad" Grid.Row="1" Grid.ColumnSpan="2" AlNumEvent="AlNumPad_AlNumEvent"/>
         </Grid>
     </Grid>

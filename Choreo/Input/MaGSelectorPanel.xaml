@@ -14,7 +14,7 @@
         </Grid.ColumnDefinitions>
         <Grid x:Name="MotorsCheckGrid">
             <Grid.RowDefinitions>
-                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -110,7 +110,7 @@
         </Grid>
         <Grid Grid.Column="1" x:Name="GroupsCheckGrid">
             <Grid.RowDefinitions>
-                <RowDefinition/>
+                <RowDefinition Height="Auto "/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>

@@ -118,7 +118,7 @@
                         />
                 </Grid>
             </Grid>
-            <local:MotAndGroUI x:Name="MaG" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="6" Margin="10,5,10,0"/>
+            <local:MotAndGroUI x:Name="MaG" Title="Apply Also To" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="6" Margin="10,5,10,0"/>
         </Grid>
         <Grid x:Name="HookGrid" Grid.Column="1" DataContext="{Binding Hook}">
             <Grid.ColumnDefinitions>
