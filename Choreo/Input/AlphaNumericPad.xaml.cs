@@ -14,9 +14,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Choreo.Input {
-    /// <summary>
-    /// Interaction logic for AlphaNumericPad.xaml
-    /// </summary>
+    public interface IStrVal {
+        string StrVal { get; set; }
+    }
     public partial class AlphaNumericPad : UserControl {
         public AlphaNumericPad() {
             InitializeComponent();
@@ -30,8 +30,8 @@ namespace Choreo.Input {
             set => ValueTextBox.Text = value;
         }
 
-        DataItemUI dataItem;
-        public DataItemUI DataItem {
+        IStrVal dataItem;
+        public IStrVal DataItem {
             get => dataItem;
             set {
                 dataItem = value;
@@ -45,7 +45,7 @@ namespace Choreo.Input {
 
         public class AlNumEventArgs : EventArgs {
             public string Name { get; set; }
-            public DataItemUI DataItem { get; set; }
+            public IStrVal DataItem { get; set; }
         }
 
         public event EventHandler<AlNumEventArgs> AlNumEvent;

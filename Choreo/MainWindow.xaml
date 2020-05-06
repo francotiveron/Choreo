@@ -29,7 +29,7 @@
             </Border.Child>
         </Border>
         <Border Grid.Row="1" Name="PageArea">
-            <local:HomePage/>
+            <local:HomePage x:Name="Page"/>
         </Border>
         <Rectangle Grid.RowSpan="27" Fill="#FF727200" Opacity="0.645" Visibility="Hidden"/>
     </Grid>

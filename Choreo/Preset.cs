@@ -1,24 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using static Choreo.Globals;
 
 namespace Choreo {
     public class Preset : PropertyChangedNotifier 
     {
         public Preset(int index) { Index = index; }
+        Preset() { }
         public int Index { get; set; }
         public int Number => Index + 1;
 
-        private string name;
+        string name;
         public string Name {
-            get {
-                if (name == null) return $"Preset {Index + 1}";
-                return name;
-            }
-            set { name = value; Notify(); }
+            get => name ?? string.Empty;
+            set { name = string.IsNullOrWhiteSpace(value) ? null : value; Notify()(nameof(FullName)); }
+        }
 
+        public string FullName {
+            get {
+                if (name == null) return $"{GetType().Name} {Number:0}";
+                return $"{Number:0}-{name}";
+            }
         }
 
         public Dictionary<int, double> MotorPositions = new Dictionary<int, double>();
@@ -44,6 +46,34 @@ namespace Choreo {
                     return ContainsGroup(group.Index);
             }
             return false;
+        }
+
+
+        string nameBackup;
+        Dictionary<int, double> MotorPositionsBackup = new Dictionary<int, double>();
+        Dictionary<int, double> GroupPositionsBackup = new Dictionary<int, double>();
+        public void Backup() {
+            nameBackup = Name;
+            foreach (var kv in MotorPositions) MotorPositionsBackup[kv.Key] = kv.Value;
+            foreach (var kv in GroupPositions) GroupPositionsBackup[kv.Key] = kv.Value;
+        }
+        public void Restore() {
+            foreach (var kv in MotorPositionsBackup) MotorPositions[kv.Key] = kv.Value;
+            foreach (var kv in GroupPositionsBackup) GroupPositions[kv.Key] = kv.Value;
+            Name = nameBackup;
+        }
+
+        /*
+         * Rewrites actual positions. This is required for the following scenario
+         * 1 - Preset is empty
+         * 2 - Preset is creater => axes are selected in the UI => positions are copied in preset
+         * 3 - Axes are moved for normal operation
+         * 4 - User open preset and save => as no touch has been performed, new axes position are not updated in the preset
+         * Calling Update before save fixes this scenario
+         */
+        public void Update() {
+            foreach (var i in MotorPositions.Keys.ToArray()) MotorPositions[i] = VM.Motors[i].Position;
+            foreach (var i in GroupPositions.Keys.ToArray()) GroupPositions[i] = VM.Groups[i].Position;
         }
     }
 }

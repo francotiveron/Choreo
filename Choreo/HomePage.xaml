@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:qc="clr-namespace:QuickConverter;assembly=QuickConverter"
              xmlns:inp="clr-namespace:Choreo.Input"
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
@@ -19,8 +20,15 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <inp:AlphaNumericPad x:Name="AlNumPad" Grid.Row="1" Grid.ColumnSpan="2" AlNumEvent="AlNumPad_AlNumEvent"/>
+            <inp:AlphaNumericPad x:Name="PresetAlNumPad" Grid.Row="1" AlNumEvent="AlNumPad_AlNumEvent"/>
         </Grid>
+        <Button x:Name="RenamePresetButton" Content="RENAME PRESET" 
+                Width="250" Height="50" 
+                HorizontalAlignment="Right" VerticalAlignment="Top" 
+                Click="RenamePresetButton_Click" 
+                Style="{StaticResource TopBarCommandButtonStyle}"
+                Visibility="{Binding Source={x:Static local:Globals.VM}, Path=IsPresetEditing, Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Hidden'}}"
+                />
     </Grid>
 
 </UserControl>

@@ -47,11 +47,8 @@
         <Setter Property="Padding" Value="10,0,10,0"/>
     </Style>
     <Style x:Key="PresetButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonDefaultStyle}">
-        <!--<Setter Property="Foreground" Value="White"/>-->
-        <!--<Setter Property="Background" Value="{Binding Source={x:Static local:Globals.VM}, Path=PresetBeingEdited}"/>-->
         <Setter Property="Background">
             <Setter.Value>
-                <!--<SolidColorBrush Color="{Binding Source={x:Static local:Globals.VM}, Path=PresetBeingEdited}"/>-->
                 <SolidColorBrush>
                     <SolidColorBrush.Color>
                         <MultiBinding Converter="{StaticResource PresetBottomPanelButtonColorConverter}" FallbackValue="DarkBlue">
@@ -65,7 +62,7 @@
         <Setter Property="Margin" Value="10"/>
         <Setter Property="Padding" Value="10,0,10,0"/>
         <Setter Property="Margin" Value="10"/>
-        <Setter Property="Content" Value="{Binding Name, FallbackValue=Preset X}"/>
+        <Setter Property="Content" Value="{Binding FullName, FallbackValue=Preset X}"/>
     </Style>
     <Style TargetType="{x:Type ContextMenu}">
         <!--<Setter Property="FontFamily" Value="Comic Sans MS" />-->

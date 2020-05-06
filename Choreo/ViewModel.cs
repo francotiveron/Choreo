@@ -164,17 +164,17 @@ namespace Choreo {
         int presetBeingEdited;
         public int PresetBeingEdited {
             get => presetBeingEdited;
-            set { presetBeingEdited = value; Notify(); }
+            set { presetBeingEdited = value; Notify()(nameof(IsPresetEditing)); }
         }
         public bool IsPresetEditing => PresetBeingEdited > 0;
 
-        List<KeyValuePair<int, double>> presetMotorsBackup;
         public void BeginPresetEditing(int preset) {
+            Presets[preset].Backup();
             PresetBeingEdited = preset + 1;
-            presetMotorsBackup = Presets[preset].MotorPositions.ToList();
         }
         public void EndPresetEditing() => PresetBeingEdited = 0;
         public void PresetEditSave() {
+            Presets[PresetBeingEdited - 1].Update();
             Save(Presets[PresetBeingEdited - 1]);
             EndPresetEditing();
         }
@@ -187,10 +187,7 @@ namespace Choreo {
             foreach (var key in keys) Groups[key].PresetTouch();
         }
         public void PresetEditCancel() {
-            var preset = Presets[PresetBeingEdited - 1];
-            preset.MotorPositions.Clear();
-            foreach (var kv in presetMotorsBackup) preset.MotorPositions[kv.Key] = kv.Value;
-            presetMotorsBackup = null;
+            Presets[PresetBeingEdited - 1].Restore();
             EndPresetEditing();
         }
         #endregion

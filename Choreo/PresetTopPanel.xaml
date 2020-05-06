@@ -10,7 +10,6 @@
     <Label Content="Edit Preset"/>
     <Label Content="{Binding Name, FallbackValue=Preset X}" FontWeight="Bold"/>
     <Button x:Name="PresetEditSaveButton" Content="SAVE" Style="{StaticResource TopBarCommandButtonStyle}" Click="Button_Click"/>
-    <Button x:Name="PresetRenameButton" Content="RENAME" Style="{StaticResource TopBarCommandButtonStyle}" Click="Button_Click"/>
     <Button x:Name="PresetEditClearButton" Content="CLEAR" Style="{StaticResource TopBarCommandButtonStyle}" Click="Button_Click"/>
     <Button x:Name="PresetEditCancelButton" Content="CANCEL" Style="{StaticResource TopBarCommandButtonStyle}" Click="Button_Click"/>
 </DockPanel>

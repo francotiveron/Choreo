@@ -7,10 +7,6 @@ using static Choreo.Globals;
 
 namespace Choreo {
     public class Axis : PropertyChangedNotifier {
-        //protected void OnStatusChanged([CallerMemberName] string name = null) {
-        //    base.Notify(name);
-        //}
-
         public Axis(int index) { Index = index; }
 
         public virtual Status AxisStatus => Status.Ok;
@@ -67,7 +63,7 @@ namespace Choreo {
         [Plc("Move_Val")]
         public double MoveValRotations {
             get => moveValRotations;
-            set { moveValRotations = value; Notify(); }
+            set { moveValRotations = value; Notify()(nameof(MoveVal)); }
         }
         public double MoveVal => MoveValRotations / RotationsPerFoot;
 

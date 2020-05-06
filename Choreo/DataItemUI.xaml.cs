@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Choreo.Input;
+using System;
 using System.Collections;
 using System.Diagnostics;
 using System.Dynamic;
@@ -15,8 +16,7 @@ using TwinCAT.TypeSystem;
 using static Choreo.Globals;
 
 namespace Choreo {
-    public partial class DataItemUI {
-        //public enum States { OK, Warning, Error };
+    public partial class DataItemUI : IStrVal {
         public DataItemUI() {
             InitializeComponent();
             DataContextChanged += DataItemUI_DataContextChanged;
@@ -134,16 +134,16 @@ namespace Choreo {
 
         public DataItemUI Next {
             get {
-                var diui = this;
-                for (diui = EditOrderNext; diui != this && !diui.IsEnabled; diui = diui.EditOrderNext) ;
+                var diui = EditOrderNext;
+                for (; diui != null && diui != this && !diui.IsEnabled; diui = diui.EditOrderNext) ;
                 return diui;
             }
         }
 
         public DataItemUI Prev {
             get {
-                var diui = this;
-                for (diui = EditOrderPrev; diui != this && !diui.IsEnabled; diui = diui.EditOrderPrev) ;
+                var diui = EditOrderPrev;
+                for (; diui != null && diui != this && !diui.IsEnabled; diui = diui.EditOrderPrev) ;
                 return diui;
             }
         }

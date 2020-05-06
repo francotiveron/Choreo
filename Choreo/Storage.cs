@@ -50,13 +50,6 @@ namespace Choreo {
         }
 
         #region Motors
-        //public static void SaveGroup(Motor motor) {
-        //    Write($@"Motors\[{motor.Index}]", "Group", motor.Group);
-        //}
-        //public static void LoadGroup(Motor motor) {
-        //    var value = Read($@"Motors\[{motor.Index}]", "Group");
-        //    if (value is int group) motor.Group = group;
-        //}
         public static void Save(Motor motor) => Write($@"Motors\[{motor.Index}]", motor);
         public static void Load(Motor motor) => Read($@"Motors\[{motor.Index}]", motor);
         public static void SaveMotors() => Save(VM.Motors);
@@ -66,19 +59,15 @@ namespace Choreo {
         #region Groups
         public static void Save(Group group) => Write($@"Groups\[{group.Index}]", group);
         public static void Load(Group group) => Read($@"Groups\[{group.Index}]", group);
-        public static void Save(Preset preset) {
-            var value = string.Join(";", preset.MotorPositions.Select(kv => $"{kv.Key},{kv.Value}"));
-            Write($@"Presets\[{preset.Index}]", "MotorPositions", value);
-            value = string.Join(";", preset.GroupPositions.Select(kv => $"{kv.Key},{kv.Value}"));
-            Write($@"Presets\[{preset.Index}]", "GroupPositions", value);
-        }
         public static void SaveGroups() => Save(VM.Groups);
         public static void LoadGroups() => Load(VM.Groups);
         #endregion
 
         #region Presets
         public static void Load(Preset preset) {
-            var value = Read($@"Presets\[{preset.Index}]", "MotorPositions") as string;
+            var value = Read($@"Presets\[{preset.Index}]", "Name") as string;
+            preset.Name = value;
+            value = Read($@"Presets\[{preset.Index}]", "MotorPositions") as string;
             if (value is string && !string.IsNullOrWhiteSpace(value)) {
                 var kvs = value.Split(';').Select(kv => kv.Split(',')).Select(kv => (int.Parse(kv[0]), double.Parse(kv[1])));
                 preset.MotorPositions.Clear();
@@ -91,6 +80,14 @@ namespace Choreo {
                 foreach (var (index, position) in kvs) preset.GroupPositions[index] = position;
             }
         }
+        public static void Save(Preset preset) {
+            Write($@"Presets\[{preset.Index}]", "Name", preset.Name);
+            var value = string.Join(";", preset.MotorPositions.Select(kv => $"{kv.Key},{kv.Value}"));
+            Write($@"Presets\[{preset.Index}]", "MotorPositions", value);
+            value = string.Join(";", preset.GroupPositions.Select(kv => $"{kv.Key},{kv.Value}"));
+            Write($@"Presets\[{preset.Index}]", "GroupPositions", value);
+        }
+
         public static void SavePresets() => Save(VM.Presets);
         public static void LoadPresets() => Load(VM.Presets);
         #endregion
