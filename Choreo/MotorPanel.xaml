@@ -26,7 +26,7 @@
                     <SolidColorBrush Color="{Binding Color, FallbackValue=DarkGray}"/>
                 </Border.Background>
                 <Label 
-                    Content="{Binding Name, FallbackValue=Motor X}" 
+                    Content="{Binding FullName, FallbackValue=Motor X}" 
                     FontSize="18" 
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center"

@@ -8,7 +8,7 @@
              d:DesignHeight="60" d:DesignWidth="1280">
     <DockPanel Background="#FF0D2A4D">
         <Label Content="Motor Settings"/>
-        <Label Content="{Binding Name, FallbackValue=Motor X}" FontWeight="Bold"/>
+        <Label Content="{Binding FullName, FallbackValue=Motor X}" FontWeight="Bold"/>
         <Button x:Name="MotorCancelButton" Content="CANCEL" Style="{StaticResource TopBarCommandButtonStyle}" Click="Button_Click"/>
         <Button x:Name="MotorSaveButton" Content="SAVE" Click="Button_Click">
             <Button.Style>

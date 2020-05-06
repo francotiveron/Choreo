@@ -16,10 +16,10 @@
 + Cue execution logic	
 + Motor User Enable/Disable
 + Motor ES_Status
++ Motor/Group Name editing
+* Preset name editing
 * Settings values Data validation
 - Motor Lock for group
-- Motor/Group Name editing
-- Preset name editing
 - Black Exclamation point in Red Ellipse motor status
 - Users Login
 - Hide/Unhide Cue (eye) from show button

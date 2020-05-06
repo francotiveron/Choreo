@@ -246,7 +246,7 @@ namespace Choreo.TwinCAT {
             for (int i = 0; i < valueSyms.Count; i++) tags[valueSyms[i]].Push(values[i]);
         }
 
-        static readonly string[] moveProps = new string[] { nameof(Axis.MoveVal), nameof(Axis.Velocity), nameof(Axis.Accel), nameof(Axis.Decel) };
+        static readonly string[] moveProps = new string[] { nameof(Axis.MoveValRotations), nameof(Axis.Velocity), nameof(Axis.Accel), nameof(Axis.Decel) };
         static readonly string[] enabProps = new string[] { nameof(Axis.MAEnable), nameof(Axis.MREnable), nameof(Axis.JogUpEnable), nameof(Axis.JogDnEnable) };
         static readonly List<ITag> allEnabs = new List<ITag>();
         static readonly object[] allEnabValues = Enumerable.Repeat(false, 96).OfType<object>().ToArray();
@@ -297,6 +297,7 @@ namespace Choreo.TwinCAT {
             aps.AddRange(preset.GroupPositions.Select(gp => (VM.Groups[gp.Key] as Axis, gp.Value)));
 
             foreach ((Axis ax, double pos) in aps) {
+                if (!ax.IsOperational) continue;
                 var values = new object[] {
                     pos * ax.RotationsPerFoot
                     , ax.DefVel

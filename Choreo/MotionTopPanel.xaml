@@ -8,7 +8,7 @@
              d:DesignHeight="60" d:DesignWidth="1280">
     <DockPanel Background="#FF8F0570">
         <Label Content="Motion" />
-        <Label DataContext="{Binding Hook}" Content="{Binding Name, FallbackValue=Hook X}" FontWeight="Bold"/>
+        <Label DataContext="{Binding Hook}" Content="{Binding FullName, FallbackValue=Hook X}" FontWeight="Bold"/>
         <Button x:Name="MotionCancelButton" Content="CANCEL" Style="{StaticResource TopBarCommandButtonStyle}" Click="Button_Click"/>
         <Button x:Name="MotionSaveButton" Content="SAVE" Style="{StaticResource TopBarCommandButtonStyle}"  Click="Button_Click"/>
     </DockPanel>

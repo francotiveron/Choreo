@@ -24,5 +24,8 @@ namespace Choreo
         {
             InitializeComponent();
         }
+        private void AlNumPad_AlNumEvent(object sender, Input.AlphaNumericPad.AlNumEventArgs e) {
+            AlNumPad.DataItem = null;
+        }
     }
 }

@@ -16,14 +16,18 @@
             <ColumnDefinition Width="8*"/>
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel VerticalAlignment="Top" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2">
             <CheckBox HorizontalAlignment="left" Content="User Enable" IsChecked="{Binding UserEnable}" Margin="20" />
             <!--<Viewbox Stretch="Fill">
                 <Label Content="CURRENT POSITION &amp; LOAD" Margin="20"/>
             </Viewbox>-->
             <local:MotorPanel Margin="10"/>
         </StackPanel>
-        <Grid Grid.Column="1" Margin="5" x:Name="EditableElementsGrid"  FocusManager.IsFocusScope="True">
+        <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="5" x:Name="EditableElementsGrid"  FocusManager.IsFocusScope="True">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -38,7 +42,7 @@
                     <ColumnDefinition Width="4*"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <local:DataItemUI Margin="5" DataContext="{Binding Name}" Focusable="True"/>
+                <local:DataItemUI x:Name="AxisName" Margin="5" DataContext="{Binding Name}" Focusable="True"/>
                 <local:DataItemUI Margin="5" Grid.Column="1" DataContext="{Binding Group}" StandAlone="True"/>
             </Grid>
             <Grid Grid.Row="1">
@@ -134,8 +138,15 @@
                 <local:DataItemUI x:Name="LoadOffs" Grid.Column="2" Margin="5" DataContext="{Binding LoadOffs}" EditOrderNext="{Binding ElementName=SetPosition, Mode=OneWay}" EditOrderPrev="{Binding ElementName=MaxLoad, Mode=OneWay}" Focusable="True"/>
             </Grid>
         </Grid>
-        <StackPanel Grid.Column="2">
+        <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="2">
             <inp:NumericPad1 x:Name="NumPad" Margin="20,20,20,5" Height="400" PadEvent="NumPad_PadEvent" />
         </StackPanel>
+        <Grid Grid.Row="1" Grid.ColumnSpan="3">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <inp:AlphaNumericPad x:Name="AlNumPad" Grid.Row="1" Grid.ColumnSpan="2" AlNumEvent="AlNumPad_AlNumEvent"/>
+        </Grid>
     </Grid>
 </UserControl>

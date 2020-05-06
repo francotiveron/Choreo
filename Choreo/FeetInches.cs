@@ -19,14 +19,15 @@ namespace Choreo {
         public static double Feet(int feet, double inches) => feet + inches / f2i;
         public static string ToString(double feet) {
             (double intFeet, double inches) = FeetInches(feet);
-            return $"{intFeet}' {inches:0.000}\"";
+            return $"{intFeet}'-{inches:0.000}\"";
         }
         public static bool TryParse(string s, out double? feet) {
             feet = null;
             int? intFeet = null;
             double? inches = null;
 
-            var match = Regex.Match(s, "^([+-])?((\\d+)(')\\s?)?((\\d*\\.?\\d*)(\")?)?$");
+            //var match = Regex.Match(s, "^([+-])?((\\d+)(')\\s?)?((\\d*\\.?\\d*)(\")?)?$");
+            var match = Regex.Match(s, "^([+-])?((\\d+)(')-)?((\\d*\\.?\\d*)(\")?)?$");
             if (!match.Success) return false;
             var groups = match.Groups;
             if (groups.Count != 8) return false;

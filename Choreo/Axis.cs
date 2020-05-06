@@ -25,6 +25,8 @@ namespace Choreo {
             }
         }
 
+        public bool IsOperational => Present && UserEnable;
+
         #region Runtime+PLC Properties
         double rotations;
         [Plc("Act_Pos")]
@@ -61,12 +63,13 @@ namespace Choreo {
             set => MaxLoad = value;
         }
 
-        double moveVal;
+        double moveValRotations;
         [Plc("Move_Val")]
-        public double MoveVal {
-            get => moveVal;
-            set { moveVal = value; Notify(); }
+        public double MoveValRotations {
+            get => moveValRotations;
+            set { moveValRotations = value; Notify(); }
         }
+        public double MoveVal => MoveValRotations / RotationsPerFoot;
 
         double accel;
         [Plc]
@@ -202,11 +205,15 @@ namespace Choreo {
         string name;
         [DataItem(title: "Axis Name"), Persistent]
         public string Name {
+            get => name ?? string.Empty;
+            set { name = string.IsNullOrWhiteSpace(value) ? null : value; Notify()(nameof(FullName)); }
+        }
+
+        public string FullName {
             get {
                 if (name == null) return $"{GetType().Name} {Number:00}";
-                return name;
+                return $"{Number:00}-{name}";
             }
-            set { name = value; Notify(); }
         }
 
         public int Index { get; private set; }

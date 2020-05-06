@@ -25,14 +25,15 @@ namespace Choreo {
         }
 
         private void Button_MouseDown(object sender, MouseButtonEventArgs e) {
+            if (VM.IsEditing) return;
             if (e.ChangedButton== MouseButton.Left) {
                 preset = (sender as Button).DataContext as Preset;
                 PushTimer.Start(() => PushTimeout());
             }
-            //if (e.LeftButton == MouseButtonState.Pressed) PushTimer.Start(() => PushTimeout());
         }
 
         private void Button_MouseUp(object sender, MouseButtonEventArgs e) {
+            if (VM.IsEditing) return;
             if (PushTimer.Stop() && preset != null) {
                 Plc.Upload(preset);
             }

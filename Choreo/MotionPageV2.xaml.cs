@@ -50,6 +50,7 @@ namespace Choreo {
         private void InitializeMotorsCheckGrid(int? hook) {
             MotorsCheckGrid.Children.Clear();
             for (int i = 0; i < 16; i++) {
+                if (!VM.Motors[i].IsOperational) continue;
                 var cb = CreateCheckBox(VM.Motors[i], i, $"Motors[{i}]", i == hook);
                 cb.Tag = "Motor";
                 MotorsCheckGrid.Children.Add(cb);
@@ -59,6 +60,7 @@ namespace Choreo {
         private void InitializeGroupsCheckGrid(int? hook) {
             GroupsCheckGrid.Children.Clear();
             for (int i = 0; i < 8; i++) {
+                if (!VM.Groups[i].IsOperational) continue;
                 var cb = CreateCheckBox(VM.Groups[i], i, $"Groups[{i}]", i == hook);
                 cb.Tag = "Group";
                 GroupsCheckGrid.Children.Add(cb);
@@ -69,7 +71,7 @@ namespace Choreo {
             var cb = new CheckBox();
             cb.VerticalContentAlignment = VerticalAlignment.Center;
             cb.HorizontalAlignment = HorizontalAlignment.Center;
-            var b = new Binding("Name");
+            var b = new Binding(nameof(Axis.FullName));
             b.Source = dc;
             cb.SetBinding(CheckBox.ContentProperty, b);
             cb.SetValue(Grid.RowProperty, i % 4);
