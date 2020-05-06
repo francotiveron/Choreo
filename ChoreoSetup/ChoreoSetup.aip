@@ -5,13 +5,13 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Choreo.exe" Value="..\Choreo\bin\Release"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Choreo.exe.config" Value="..\Choreo\bin\Release"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Choreo.pdb" Value="..\Choreo\bin\Release"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Choreo.exe" Value="..\Choreo\bin\Debug"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Choreo.exe.config" Value="..\Choreo\bin\Debug"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Choreo.pdb" Value="..\Choreo\bin\Debug"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_Microsoft.Xaml.Behaviors.dll" Value="..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.19\lib\net45"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_NLog.config" Value="..\Choreo\bin\Release"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_NLog.config" Value="..\Choreo\bin\Debug"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_NLog.dll" Value="..\packages\NLog.4.7.0\lib\net45"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Plc.config" Value="..\Choreo\bin\Release"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Plc.config" Value="..\Choreo\bin\Debug"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_QuickConverter.dll" Value="..\packages\QuickConverter.1.2.5\lib\net40"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_System.Reactive.dll" Value="..\packages\System.Reactive.4.4.1\lib\net46"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_System.Runtime.CompilerServices.Unsafe.dll" Value="..\packages\System.Runtime.CompilerServices.Unsafe.4.7.1\lib\net461"/>
@@ -19,7 +19,7 @@
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_System.ValueTuple.dll" Value="..\packages\System.ValueTuple.4.5.0\lib\net47"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_TwinCAT.Ads.Reactive.dll" Value="..\packages\Beckhoff.TwinCAT.Ads.Reactive.4.4.4\lib\Net40-full"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_TwinCAT.Ads.dll" Value="..\packages\Beckhoff.TwinCAT.Ads.4.4.4\lib\Net40-full"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_UIFB.xml" Value="..\Choreo\bin\Release\TwinCAT"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_UIFB.xml" Value="..\Choreo\bin\Debug\TwinCAT"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Choreo.exe" Value="Choreo.exe"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Choreo.exe.config" Value="Choreo.exe.config"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Choreo.pdb" Value="Choreo.pdb"/>

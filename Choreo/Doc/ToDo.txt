@@ -24,3 +24,4 @@
 - Users Login
 - Hide/Unhide Cue (eye) from show button
 - Logging
+- improve Alert
