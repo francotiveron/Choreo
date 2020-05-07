@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Choreo.UserManagement;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -71,9 +73,6 @@ namespace Choreo
             MainWindow = newWindow;
             newWindow.Show();
             oldWindow.Close();
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-            GC.Collect();
         }
 
         protected override void OnStartup(StartupEventArgs e)
@@ -85,6 +84,14 @@ namespace Choreo
             PresentationTraceSources.DataBindingSource.Switch.Level = SourceLevels.Warning | SourceLevels.Error;
             SetupExceptionHandling();
             MainWindow = new MainWindow();
+
+            var form = new LoginForm();
+            var success = form.ShowDialog();
+            if (success != true) return;
+            //Application.Current.Dispatcher.Invoke(() => Thread.CurrentPrincipal = form.Principal);
+            Thread.CurrentPrincipal = form.Principal;
+            AppDomain.CurrentDomain.SetThreadPrincipal(form.Principal);
+            //int id = Thread.CurrentThread.ManagedThreadId;
             MainWindow.Show();
         }
         private void SetupExceptionHandling() {

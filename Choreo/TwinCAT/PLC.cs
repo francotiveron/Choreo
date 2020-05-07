@@ -6,6 +6,8 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Security.Permissions;
+using System.Security.Principal;
 using System.Threading;
 using TwinCAT;
 using TwinCAT.Ads;
@@ -288,7 +290,11 @@ namespace Choreo.TwinCAT {
             Connection.WriteSymbol(path, jogVel * 100.0, false);
         }
 
+        //[PrincipalPermission(SecurityAction.Demand, Role = @"ChoreoUsers")]
         void Upload(Preset preset) {
+            WindowsPrincipal myWindowsPrincipal = (WindowsPrincipal)Thread.CurrentPrincipal;
+            int id = Thread.CurrentThread.ManagedThreadId;
+
             var enabSyms = new List<ISymbol>();
             var valueSyms = new List<ISymbol>();
 

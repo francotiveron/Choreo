@@ -19,9 +19,10 @@
 + Motor/Group Name editing
 + Settings values Data validation
 + Preset name editing
-- Motor Lock for group
++ Users Login (To Be Implemented)
+- Motor Lock for group (To Be Clarified)
 - Black Exclamation point in Red Ellipse motor status
-- Users Login
-- Hide/Unhide Cue (eye) from show button
-- Logging
-- improve Alert
+- Hide/Unhide Cue (eye) from show button (To Be Clarified)
+- Logging (To Be Improved)
+- Improve Alert
+- Figma alignment

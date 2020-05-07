@@ -1,0 +1,46 @@
+﻿<Window x:Class="Choreo.UserManagement.LoginForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:usr="clr-namespace:Choreo.UserManagement"
+        xmlns:inp="clr-namespace:Choreo.Input"
+        xmlns:local="clr-namespace:Choreo"
+        mc:Ignorable="d"
+        Title="LoginForm" Height="800" Width="1280" Foreground="White" HorizontalContentAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalContentAlignment="Center" FontSize="30" WindowStyle="None" ShowInTaskbar="False" Topmost="True" Background="{x:Null}" ResizeMode="NoResize">
+    <Window.DataContext>
+        <usr:LoginModel/>
+    </Window.DataContext>
+    <Grid>
+        <Border Margin="400,100" Padding="50" Background="#222222" x:Name="EditableElementsGrid"  FocusManager.IsFocusScope="True">
+            <StackPanel>
+                <Image Source="../Pictures/VerendusLogo.png" Stretch="Uniform" Margin="100,30" />
+                <local:DataItemUI
+                    x:Name="UserName" 
+                    Background="{StaticResource DataItemUnfocusedBackground}"
+                    Margin="0,10" 
+                    DataContext="{Binding Username}" 
+                    Focusable="True" 
+                    StandAlone="True"/>
+                <local:DataItemUI 
+                    x:Name="UserPassword" 
+                    Background="{StaticResource DataItemUnfocusedBackground}"
+                    Margin="0,10" 
+                    DataContext="{Binding Password}" 
+                    Focusable="True" 
+                    StandAlone="True"/>
+                <Button x:Name="LoginButton" Content="Login" Height="50" Margin="0,30,0,0" Click="LoginButton_Click" Background="DarkBlue"/>
+                <Button x:Name="CancelButton" Content="Cancel" Height="50" Margin="0,30,0,0" Click="CancelButton_Click" Background="DarkBlue"/>
+            </StackPanel>
+
+        </Border>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <inp:AlphaNumericPad x:Name="AlNumPad" Grid.Row="1" AlNumEvent="AlNumPad_AlNumEvent"/>
+        </Grid>
+    </Grid>
+</Window>
