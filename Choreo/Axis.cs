@@ -168,12 +168,7 @@ namespace Choreo {
             set { active = value; Notify()(nameof(Color)); }
         }
 
-        bool present;
-        [Plc]
-        public bool Present {
-            get => present;
-            set { present = value; Notify(); }
-        }
+        public virtual bool Present { get; protected set; } = true;
 
         double calibrationRotations;
         [Plc("Calibration_Value")]
