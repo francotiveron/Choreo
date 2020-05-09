@@ -17,6 +17,13 @@ namespace Choreo {
         }
 
         #region Runtime+PLC Properties
+
+        [Plc]
+        public override bool Present {
+            get => base.Present;
+            protected set { base.Present = value; Notify(); }
+        }
+
         bool fwdLim;
         [Plc("Fwd_Lim")]
         public bool FwdLim {
@@ -56,7 +63,7 @@ namespace Choreo {
         [Plc("ES_Status")]
         public bool ESStatus {
             get => eSStatus;
-            set { eSStatus = value; Notify()(nameof(AxisStatus)); }
+            set { eSStatus = !value; Notify()(nameof(AxisStatus)); }
         }
         #endregion
 
