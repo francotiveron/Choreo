@@ -15,7 +15,7 @@
         <local:MotorPanelDarkeningConverter x:Key="DarkeningConverter"/>
     </UserControl.Resources>
 
-    <Border BorderThickness="5" ManipulationStarted="Border_ManipulationStarted" ManipulationDelta="Border_ManipulationDelta" ManipulationCompleted="Border_ManipulationCompleted">
+    <Border BorderThickness="5" Stylus.IsPressAndHoldEnabled="False">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition/>
