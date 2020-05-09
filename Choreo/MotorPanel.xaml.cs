@@ -24,36 +24,72 @@ namespace Choreo
 
         public int Index => IsGroup ? ((Group)DataContext).Index : ((Motor)DataContext).Index;
 
-        #region Gesture
-        bool gesture;
-        bool Gesture {
-            get => gesture;
-            set {
-                gesture = value;
-                Mouse.OverrideCursor = gesture ? Cursors.ScrollAll : null;
-            }
-        }
-        double gestureStartX, gestureStartY;
-
-        private void Border_ManipulationStarted(object sender, ManipulationStartedEventArgs e)
-        {
-
+        #region user interaction
+        private void Border_ManipulationStarting(object sender, ManipulationStartingEventArgs e) {
+            //e.ManipulationContainer = this;
+            //e.Handled = true;
         }
 
-        private void Border_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
-        {
-
+        private void Border_ManipulationStarted(object sender, ManipulationStartedEventArgs e) {
+            InteractionDown(e.ManipulationOrigin);
+            e.Handled = true;
         }
 
-        private void Border_ManipulationCompleted(object sender, ManipulationCompletedEventArgs e)
-        {
-
+        private void Border_ManipulationDelta(object sender, ManipulationDeltaEventArgs e) {
+            var pt = new Point(e.ManipulationOrigin.X + e.DeltaManipulation.Translation.X, e.ManipulationOrigin.Y + e.DeltaManipulation.Translation.Y);
+            InteractionMove(pt);
         }
 
-        private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
-        {
+        private void Border_ManipulationCompleted(object sender, ManipulationCompletedEventArgs e) {
+            InteractionUp();
+        }
+
+        private void UserControl_MouseDown(object sender, MouseButtonEventArgs e) {
             if (e.LeftButton != MouseButtonState.Pressed) return;
+            InteractionDown(e.GetPosition(this));
+            e.Handled = true;
+            //if (VM.IsGroupEditing && DataContext is Motor m) {
+            //    if (m.Group == 0) {
+            //        if (m.IsPreset) {
+            //            Log.Alert("Motors already in Presets cannot be grouped", "Motor in Preset");
+            //            return;
+            //        }
+            //        m.Group = VM.GroupBeingEdited;
+            //    }
+            //    else
+            //    if (m.Group == VM.GroupBeingEdited) m.Group = 0;
+            //    return;
+            //}
+            //else
+            //if (VM.IsPresetEditing) {
+            //    if (!(DataContext is Motor mm) || !mm.IsGrouped) VM.Presets[VM.PresetBeingEdited - 1].Toggle(DataContext);
+            //}
+            //else StartGesture(e.GetPosition(this));
+        }
 
+        private void UserControl_MouseMove(object sender, MouseEventArgs e) {
+            InteractionMove(e.GetPosition(this));
+            e.Handled = true;
+            //if (Gesture && AxisEnabled) {
+            //    var x = e.GetPosition(this).X;
+            //    var y = e.GetPosition(this).Y;
+            //    if ((x - gestureStartX) < -10.0) GestureLeft();
+            //    else
+            //    if ((x - gestureStartX) > 10.0) GestureRight();
+            //    else
+            //    if ((y - gestureStartY) < -10.0) GestureUp();
+            //    else
+            //    if ((y - gestureStartY) > 10.0) GestureDn();
+            //    e.Handled = true;
+            //}
+        }
+
+        private void UserControl_MouseUp(object sender, MouseButtonEventArgs e) {
+            InteractionUp();
+            //StopGesture();
+        }
+
+        void InteractionDown(Point pos) {
             if (VM.IsGroupEditing && DataContext is Motor m) {
                 if (m.Group == 0) {
                     if (m.IsPreset) {
@@ -67,18 +103,16 @@ namespace Choreo
                 return;
             }
             else
-            if (VM.IsPresetEditing) { 
-                if (!(DataContext is Motor mm) || !mm.IsGrouped) VM.Presets[VM.PresetBeingEdited - 1].Toggle(DataContext); 
+            if (VM.IsPresetEditing) {
+                if (!(DataContext is Motor mm) || !mm.IsGrouped) VM.Presets[VM.PresetBeingEdited - 1].Toggle(DataContext);
             }
-            else StartGesture(e.GetPosition(this));
+            else StartGesture(pos);
         }
 
-        private void UserControl_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (Gesture && AxisEnabled)
-            {
-                var x = e.GetPosition(this).X;
-                var y = e.GetPosition(this).Y;
+        void InteractionMove(Point pos) {
+            if (Gesture && AxisEnabled) {
+                var x = pos.X;
+                var y = pos.Y;
                 if ((x - gestureStartX) < -10.0) GestureLeft();
                 else
                 if ((x - gestureStartX) > 10.0) GestureRight();
@@ -86,14 +120,25 @@ namespace Choreo
                 if ((y - gestureStartY) < -10.0) GestureUp();
                 else
                 if ((y - gestureStartY) > 10.0) GestureDn();
-                e.Handled = true;
             }
         }
 
-        private void UserControl_MouseUp(object sender, MouseButtonEventArgs e)
-        {
+        void InteractionUp() {
             StopGesture();
         }
+        #endregion
+
+        #region Gesture
+        bool gesture;
+        bool Gesture {
+            get => gesture;
+            set {
+                gesture = value;
+                Mouse.OverrideCursor = gesture ? Cursors.ScrollAll : null;
+            }
+        }
+
+        double gestureStartX, gestureStartY;
 
         private void PushTimeout() {
             if (Gesture) {
@@ -141,7 +186,6 @@ namespace Choreo
             }
             Gesture = false;
         }
-
         private void GestureDn() {
             var axis = (Axis)DataContext;
             if (!axis.JogDnEnable) {
