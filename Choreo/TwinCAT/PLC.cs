@@ -179,7 +179,9 @@ namespace Choreo.TwinCAT {
         #endregion
 
         #region IPlc Implementation
+        [PrincipalPermission(SecurityAction.Demand, Role = @"ChoreoUsers")]
         public void Upload<T>(T obj) {
+            WindowsPrincipal myWindowsPrincipal = (WindowsPrincipal)Thread.CurrentPrincipal;
             if (!IsOn) return;
             GetType().GetMethod("Upload",
                 BindingFlags.Instance | BindingFlags.NonPublic,
@@ -290,9 +292,7 @@ namespace Choreo.TwinCAT {
             Connection.WriteSymbol(path, jogVel * 100.0, false);
         }
 
-        //[PrincipalPermission(SecurityAction.Demand, Role = @"ChoreoUsers")]
         void Upload(Preset preset) {
-            WindowsPrincipal myWindowsPrincipal = (WindowsPrincipal)Thread.CurrentPrincipal;
             int id = Thread.CurrentThread.ManagedThreadId;
 
             var enabSyms = new List<ISymbol>();

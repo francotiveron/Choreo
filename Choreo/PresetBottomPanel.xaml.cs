@@ -36,7 +36,6 @@ namespace Choreo {
         private void Button_MouseUp(object sender, MouseButtonEventArgs e) {
             if (VM.IsEditing) return;
             if (PushTimer.Stop() && preset != null) {
-                var p = Thread.CurrentPrincipal;
                 Plc.Upload(preset);
             }
         }

@@ -68,5 +68,13 @@ namespace Choreo.UserManagement {
 
             return null;
         }
+        public static bool Login()
+        {
+            var form = new LoginForm();
+            var success = form.ShowDialog();
+            if (success != true) return false;
+            AppDomain.CurrentDomain.SetThreadPrincipal(form.Principal);
+            return true;
+        }
     }
 }
