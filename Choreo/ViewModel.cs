@@ -15,10 +15,16 @@ namespace Choreo {
             CurrentMainWindowPage = MainWindowPages.Home;
         }
 
-        public void Init() {
-            var mg = new ushort[16];
-            Plc.GetMotorsGroup(ref mg);
-            foreach (var m in VM.Motors) m.Group = mg[m.Index];
+        public void Init() => Plc.PropertyChanged += Plc_PropertyChanged;
+
+        void Plc_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
+            if (e.PropertyName == nameof(AdsPlc.IsOn)) {
+                if (Plc.IsOn) {
+                    var mg = new ushort[16];
+                    Plc.GetMotorsGroup(ref mg);
+                    foreach (var m in VM.Motors) m.Group = mg[m.Index];
+                }
+            }
         }
 
         public List<Motor> Motors { get; } = new List<Motor>(Range(0, 16).Select(i => new Motor(i)));

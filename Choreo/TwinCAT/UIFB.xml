@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://www.plcopen.org/xml/tc6_0200">
-  <fileHeader companyName="Beckhoff Automation GmbH" productName="TwinCAT PLC Control" productVersion="3.5.13.20" creationDateTime="2020-05-01T09:38:16.9613047" />
-  <contentHeader name="Choereo" modificationDateTime="2020-05-01T09:38:16.9683049">
+  <fileHeader companyName="Beckhoff Automation GmbH" productName="TwinCAT PLC Control" productVersion="3.5.13.20" creationDateTime="2020-05-12T15:43:13.4880122" />
+  <contentHeader name="Choereo" modificationDateTime="2020-05-12T15:43:13.4930108">
     <coordinateInfo>
       <fbd>
         <scaling x="1" y="1" />
@@ -36,162 +36,6 @@
           </ST>
         </body>
         <addData>
-          <data name="http://www.3s-software.com/plcopenxml/method" handleUnknown="implementation">
-            <Method name="GetMotorsGroup" ObjectId="38c4a61e-6324-42b4-8b5f-b00629d3731a">
-              <interface>
-                <returnType>
-                  <DINT />
-                </returnType>
-                <outputVars>
-                  <variable name="res">
-                    <type>
-                      <array>
-                        <dimension lower="0" upper="15" />
-                        <baseType>
-                          <INT />
-                        </baseType>
-                      </array>
-                    </type>
-                  </variable>
-                </outputVars>
-                <localVars>
-                  <variable name="ptr">
-                    <type>
-                      <pointer>
-                        <baseType>
-                          <BOOL />
-                        </baseType>
-                      </pointer>
-                    </type>
-                  </variable>
-                  <variable name="im">
-                    <type>
-                      <INT />
-                    </type>
-                  </variable>
-                  <variable name="ig">
-                    <type>
-                      <INT />
-                    </type>
-                  </variable>
-                </localVars>
-                <addData>
-                  <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
-                    <Attributes>
-                      <Attribute Name="TcRpcEnable" Value="" />
-                    </Attributes>
-                  </data>
-                </addData>
-              </interface>
-              <body>
-                <ST>
-                  <xhtml xmlns="http://www.w3.org/1999/xhtml">ptr := ADR(GVL.Group_01_Axis_01);
-MEMSET(destAddr:=ADR(res[0]), fillByte:=0, n:=SIZEOF(res));
-FOR ig := 1 TO 8 DO
-	FOR im := 0 TO 15 DO
-		IF ptr^ THEN
-			IF res[im] &lt;&gt; 0 THEN
-				ptr^ := 0;
-			ELSE
-				res[im] := ig;
-			END_IF
-		END_IF
-		ptr := ptr + 1;
-	END_FOR
-END_FOR
-
-GetMotorsGroup := 0;
-RETURN;
-</xhtml>
-                </ST>
-              </body>
-              <InterfaceAsPlainText>
-                <xhtml xmlns="http://www.w3.org/1999/xhtml">{attribute 'TcRpcEnable'}
-METHOD PUBLIC GetMotorsGroup : DINT
-VAR_OUTPUT
-	res: ARRAY[0..15] OF INT;
-END_VAR
-VAR
-	ptr: POINTER TO BOOL;
-	im, ig:INT;
-END_VAR
-</xhtml>
-              </InterfaceAsPlainText>
-              <addData />
-            </Method>
-          </data>
-          <data name="http://www.3s-software.com/plcopenxml/method" handleUnknown="implementation">
-            <Method name="SaveGroupMotors" ObjectId="e8380bac-f404-4054-b975-f938c50ea23a">
-              <interface>
-                <returnType>
-                  <DINT />
-                </returnType>
-                <inputVars>
-                  <variable name="Group">
-                    <type>
-                      <INT />
-                    </type>
-                  </variable>
-                  <variable name="Bitmap">
-                    <type>
-                      <WORD />
-                    </type>
-                  </variable>
-                </inputVars>
-                <localVars>
-                  <variable name="ptr">
-                    <type>
-                      <pointer>
-                        <baseType>
-                          <BOOL />
-                        </baseType>
-                      </pointer>
-                    </type>
-                  </variable>
-                  <variable name="i">
-                    <type>
-                      <INT />
-                    </type>
-                  </variable>
-                </localVars>
-                <addData>
-                  <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
-                    <Attributes>
-                      <Attribute Name="TcRpcEnable" Value="" />
-                    </Attributes>
-                  </data>
-                </addData>
-              </interface>
-              <body>
-                <ST>
-                  <xhtml xmlns="http://www.w3.org/1999/xhtml">ptr := ADR(GVL.Group_01_Axis_01) + Group * 16;
-
-FOR i := 0 TO 15 DO
-	ptr^ := (Bitmap AND 1) &lt;&gt; 0;
-	ptr := ptr + 1;
-	Bitmap := SHR(Bitmap, 1);
-END_FOR
-
-SaveGroupMotors := 0;
-RETURN;</xhtml>
-                </ST>
-              </body>
-              <InterfaceAsPlainText>
-                <xhtml xmlns="http://www.w3.org/1999/xhtml">{attribute 'TcRpcEnable'}
-METHOD PUBLIC SaveGroupMotors : DINT
-VAR_INPUT
-	Group:INT;
-	Bitmap:WORD;
-END_VAR
-VAR
-	ptr: POINTER TO BOOL;
-	i:INT;
-END_VAR
-</xhtml>
-              </InterfaceAsPlainText>
-              <addData />
-            </Method>
-          </data>
           <data name="http://www.3s-software.com/plcopenxml/method" handleUnknown="implementation">
             <Method name="ClearMotionAndJog" ObjectId="11ef4a45-0560-43fe-bb9d-e74b80ded0b2">
               <interface>
@@ -245,6 +89,448 @@ METHOD PUBLIC ClearMotionAndJog : DINT
               <addData />
             </Method>
           </data>
+          <data name="http://www.3s-software.com/plcopenxml/method" handleUnknown="implementation">
+            <Method name="GetMotorsGroup" ObjectId="aff4a827-7071-4903-bfa0-75ca92683f35">
+              <interface>
+                <returnType>
+                  <DINT />
+                </returnType>
+                <outputVars>
+                  <variable name="res">
+                    <type>
+                      <array>
+                        <dimension lower="0" upper="15" />
+                        <baseType>
+                          <INT />
+                        </baseType>
+                      </array>
+                    </type>
+                  </variable>
+                </outputVars>
+                <localVars>
+                  <variable name="ptr">
+                    <type>
+                      <array>
+                        <dimension lower="1" upper="8" />
+                        <baseType>
+                          <pointer>
+                            <baseType>
+                              <BOOL />
+                            </baseType>
+                          </pointer>
+                        </baseType>
+                      </array>
+                    </type>
+                  </variable>
+                  <variable name="im">
+                    <type>
+                      <INT />
+                    </type>
+                  </variable>
+                  <variable name="ig">
+                    <type>
+                      <INT />
+                    </type>
+                  </variable>
+                </localVars>
+                <addData>
+                  <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                    <Attributes>
+                      <Attribute Name="TcRpcEnable" Value="" />
+                    </Attributes>
+                  </data>
+                </addData>
+              </interface>
+              <body>
+                <ST>
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml">MEMSET(destAddr:=ADR(res[0]), fillByte:=0, n:=SIZEOF(res));
+
+FOR im := 0 TO 15 DO
+	CASE im OF
+		0:
+			ptr[1] := ADR(GVL.Group_01_Axis_01);
+			ptr[2] := ADR(GVL.Group_02_Axis_01);
+			ptr[3] := ADR(GVL.Group_03_Axis_01);
+			ptr[4] := ADR(GVL.Group_04_Axis_01);
+			ptr[5] := ADR(GVL.Group_05_Axis_01);
+			ptr[6] := ADR(GVL.Group_06_Axis_01);
+			ptr[7] := ADR(GVL.Group_07_Axis_01);
+			ptr[8] := ADR(GVL.Group_08_Axis_01);
+		1:
+			ptr[1] := ADR(GVL.Group_01_Axis_02);
+			ptr[2] := ADR(GVL.Group_02_Axis_02);
+			ptr[3] := ADR(GVL.Group_03_Axis_02);
+			ptr[4] := ADR(GVL.Group_04_Axis_02);
+			ptr[5] := ADR(GVL.Group_05_Axis_02);
+			ptr[6] := ADR(GVL.Group_06_Axis_02);
+			ptr[7] := ADR(GVL.Group_07_Axis_02);
+			ptr[8] := ADR(GVL.Group_08_Axis_02);
+		2:
+			ptr[1] := ADR(GVL.Group_01_Axis_03);
+			ptr[2] := ADR(GVL.Group_02_Axis_03);
+			ptr[3] := ADR(GVL.Group_03_Axis_03);
+			ptr[4] := ADR(GVL.Group_04_Axis_03);
+			ptr[5] := ADR(GVL.Group_05_Axis_03);
+			ptr[6] := ADR(GVL.Group_06_Axis_03);
+			ptr[7] := ADR(GVL.Group_07_Axis_03);
+			ptr[8] := ADR(GVL.Group_08_Axis_03);
+		3:
+			ptr[1] := ADR(GVL.Group_01_Axis_04);
+			ptr[2] := ADR(GVL.Group_02_Axis_04);
+			ptr[3] := ADR(GVL.Group_03_Axis_04);
+			ptr[4] := ADR(GVL.Group_04_Axis_04);
+			ptr[5] := ADR(GVL.Group_05_Axis_04);
+			ptr[6] := ADR(GVL.Group_06_Axis_04);
+			ptr[7] := ADR(GVL.Group_07_Axis_04);
+			ptr[8] := ADR(GVL.Group_08_Axis_04);
+		4:
+			ptr[1] := ADR(GVL.Group_01_Axis_05);
+			ptr[2] := ADR(GVL.Group_02_Axis_05);
+			ptr[3] := ADR(GVL.Group_03_Axis_05);
+			ptr[4] := ADR(GVL.Group_04_Axis_05);
+			ptr[5] := ADR(GVL.Group_05_Axis_05);
+			ptr[6] := ADR(GVL.Group_06_Axis_05);
+			ptr[7] := ADR(GVL.Group_07_Axis_05);
+			ptr[8] := ADR(GVL.Group_08_Axis_05);
+		5:
+			ptr[1] := ADR(GVL.Group_01_Axis_06);
+			ptr[2] := ADR(GVL.Group_02_Axis_06);
+			ptr[3] := ADR(GVL.Group_03_Axis_06);
+			ptr[4] := ADR(GVL.Group_04_Axis_06);
+			ptr[5] := ADR(GVL.Group_05_Axis_06);
+			ptr[6] := ADR(GVL.Group_06_Axis_06);
+			ptr[7] := ADR(GVL.Group_07_Axis_06);
+			ptr[8] := ADR(GVL.Group_08_Axis_06);
+		6:
+			ptr[1] := ADR(GVL.Group_01_Axis_07);
+			ptr[2] := ADR(GVL.Group_02_Axis_07);
+			ptr[3] := ADR(GVL.Group_03_Axis_07);
+			ptr[4] := ADR(GVL.Group_04_Axis_07);
+			ptr[5] := ADR(GVL.Group_05_Axis_07);
+			ptr[6] := ADR(GVL.Group_06_Axis_07);
+			ptr[7] := ADR(GVL.Group_07_Axis_07);
+			ptr[8] := ADR(GVL.Group_08_Axis_07);
+		7:
+			ptr[1] := ADR(GVL.Group_01_Axis_08);
+			ptr[2] := ADR(GVL.Group_02_Axis_08);
+			ptr[3] := ADR(GVL.Group_03_Axis_08);
+			ptr[4] := ADR(GVL.Group_04_Axis_08);
+			ptr[5] := ADR(GVL.Group_05_Axis_08);
+			ptr[6] := ADR(GVL.Group_06_Axis_08);
+			ptr[7] := ADR(GVL.Group_07_Axis_08);
+			ptr[8] := ADR(GVL.Group_08_Axis_08);
+		8:
+			ptr[1] := ADR(GVL.Group_01_Axis_09);
+			ptr[2] := ADR(GVL.Group_02_Axis_09);
+			ptr[3] := ADR(GVL.Group_03_Axis_09);
+			ptr[4] := ADR(GVL.Group_04_Axis_09);
+			ptr[5] := ADR(GVL.Group_05_Axis_09);
+			ptr[6] := ADR(GVL.Group_06_Axis_09);
+			ptr[7] := ADR(GVL.Group_07_Axis_09);
+			ptr[8] := ADR(GVL.Group_08_Axis_09);
+		9:
+			ptr[1] := ADR(GVL.Group_01_Axis_10);
+			ptr[2] := ADR(GVL.Group_02_Axis_10);
+			ptr[3] := ADR(GVL.Group_03_Axis_10);
+			ptr[4] := ADR(GVL.Group_04_Axis_10);
+			ptr[5] := ADR(GVL.Group_05_Axis_10);
+			ptr[6] := ADR(GVL.Group_06_Axis_10);
+			ptr[7] := ADR(GVL.Group_07_Axis_10);
+			ptr[8] := ADR(GVL.Group_08_Axis_10);
+		10:
+			ptr[1] := ADR(GVL.Group_01_Axis_11);
+			ptr[2] := ADR(GVL.Group_02_Axis_11);
+			ptr[3] := ADR(GVL.Group_03_Axis_11);
+			ptr[4] := ADR(GVL.Group_04_Axis_11);
+			ptr[5] := ADR(GVL.Group_05_Axis_11);
+			ptr[6] := ADR(GVL.Group_06_Axis_11);
+			ptr[7] := ADR(GVL.Group_07_Axis_11);
+			ptr[8] := ADR(GVL.Group_08_Axis_11);
+		11:
+			ptr[1] := ADR(GVL.Group_01_Axis_12);
+			ptr[2] := ADR(GVL.Group_02_Axis_12);
+			ptr[3] := ADR(GVL.Group_03_Axis_12);
+			ptr[4] := ADR(GVL.Group_04_Axis_12);
+			ptr[5] := ADR(GVL.Group_05_Axis_12);
+			ptr[6] := ADR(GVL.Group_06_Axis_12);
+			ptr[7] := ADR(GVL.Group_07_Axis_12);
+			ptr[8] := ADR(GVL.Group_08_Axis_12);
+		12:
+			ptr[1] := ADR(GVL.Group_01_Axis_13);
+			ptr[2] := ADR(GVL.Group_02_Axis_13);
+			ptr[3] := ADR(GVL.Group_03_Axis_13);
+			ptr[4] := ADR(GVL.Group_04_Axis_13);
+			ptr[5] := ADR(GVL.Group_05_Axis_13);
+			ptr[6] := ADR(GVL.Group_06_Axis_13);
+			ptr[7] := ADR(GVL.Group_07_Axis_13);
+			ptr[8] := ADR(GVL.Group_08_Axis_13);
+		13:
+			ptr[1] := ADR(GVL.Group_01_Axis_14);
+			ptr[2] := ADR(GVL.Group_02_Axis_14);
+			ptr[3] := ADR(GVL.Group_03_Axis_14);
+			ptr[4] := ADR(GVL.Group_04_Axis_14);
+			ptr[5] := ADR(GVL.Group_05_Axis_14);
+			ptr[6] := ADR(GVL.Group_06_Axis_14);
+			ptr[7] := ADR(GVL.Group_07_Axis_14);
+			ptr[8] := ADR(GVL.Group_08_Axis_14);
+		14:
+			ptr[1] := ADR(GVL.Group_01_Axis_15);
+			ptr[2] := ADR(GVL.Group_02_Axis_15);
+			ptr[3] := ADR(GVL.Group_03_Axis_15);
+			ptr[4] := ADR(GVL.Group_04_Axis_15);
+			ptr[5] := ADR(GVL.Group_05_Axis_15);
+			ptr[6] := ADR(GVL.Group_06_Axis_15);
+			ptr[7] := ADR(GVL.Group_07_Axis_15);
+			ptr[8] := ADR(GVL.Group_08_Axis_15);
+		15:
+			ptr[1] := ADR(GVL.Group_01_Axis_16);
+			ptr[2] := ADR(GVL.Group_02_Axis_16);
+			ptr[3] := ADR(GVL.Group_03_Axis_16);
+			ptr[4] := ADR(GVL.Group_04_Axis_16);
+			ptr[5] := ADR(GVL.Group_05_Axis_16);
+			ptr[6] := ADR(GVL.Group_06_Axis_16);
+			ptr[7] := ADR(GVL.Group_07_Axis_16);
+			ptr[8] := ADR(GVL.Group_08_Axis_16);
+	END_CASE
+	
+	FOR ig := 1 TO 8 DO
+		IF res[im] &lt;&gt; 0 THEN
+			ptr[ig]^ := 0;
+		ELSE
+			IF ptr[ig]^ THEN
+				res[im] := ig;
+			END_IF
+		END_IF
+	END_FOR
+END_FOR
+
+GetMotorsGroup := 0;
+
+</xhtml>
+                </ST>
+              </body>
+              <InterfaceAsPlainText>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml">{attribute 'TcRpcEnable'}
+METHOD PUBLIC GetMotorsGroup : DINT
+VAR_OUTPUT
+	res: ARRAY[0..15] OF INT;
+END_VAR
+VAR
+	ptr: ARRAY[1..8] OF POINTER TO BOOL;
+	im, ig:INT;
+END_VAR
+</xhtml>
+              </InterfaceAsPlainText>
+              <addData />
+            </Method>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/method" handleUnknown="implementation">
+            <Method name="SaveGroupMotors" ObjectId="14725f97-0d69-4151-8e3a-914062cc559c">
+              <interface>
+                <returnType>
+                  <DINT />
+                </returnType>
+                <inputVars>
+                  <variable name="Group">
+                    <type>
+                      <INT />
+                    </type>
+                  </variable>
+                  <variable name="Bitmap">
+                    <type>
+                      <WORD />
+                    </type>
+                  </variable>
+                </inputVars>
+                <localVars>
+                  <variable name="ptr">
+                    <type>
+                      <pointer>
+                        <baseType>
+                          <BOOL />
+                        </baseType>
+                      </pointer>
+                    </type>
+                  </variable>
+                  <variable name="i">
+                    <type>
+                      <INT />
+                    </type>
+                  </variable>
+                </localVars>
+                <addData>
+                  <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                    <Attributes>
+                      <Attribute Name="TcRpcEnable" Value="" />
+                    </Attributes>
+                  </data>
+                </addData>
+              </interface>
+              <body>
+                <ST>
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml">ptr := ADR(GVL.Group_01_Axis_01) + Group * 16;
+
+
+ 
+CASE Group OF
+	0:
+		GVL.Group_01_Axis_01 := (Bitmap AND 2#0000_0000_0000_0001) &lt;&gt; 0;
+		GVL.Group_01_Axis_02 := (Bitmap AND 2#0000_0000_0000_0010) &lt;&gt; 0;
+		GVL.Group_01_Axis_03 := (Bitmap AND 2#0000_0000_0000_0100) &lt;&gt; 0;
+		GVL.Group_01_Axis_04 := (Bitmap AND 2#0000_0000_0000_1000) &lt;&gt; 0;
+		GVL.Group_01_Axis_05 := (Bitmap AND 2#0000_0000_0001_0000) &lt;&gt; 0;
+		GVL.Group_01_Axis_06 := (Bitmap AND 2#0000_0000_0010_0000) &lt;&gt; 0;
+		GVL.Group_01_Axis_07 := (Bitmap AND 2#0000_0000_0100_0000) &lt;&gt; 0;
+		GVL.Group_01_Axis_08 := (Bitmap AND 2#0000_0000_1000_0000) &lt;&gt; 0;
+		GVL.Group_01_Axis_09 := (Bitmap AND 2#0000_0001_0000_0000) &lt;&gt; 0;
+		GVL.Group_01_Axis_10 := (Bitmap AND 2#0000_0010_0000_0000) &lt;&gt; 0;
+		GVL.Group_01_Axis_11 := (Bitmap AND 2#0000_0100_0000_0000) &lt;&gt; 0;
+		GVL.Group_01_Axis_12 := (Bitmap AND 2#0000_1000_0000_0000) &lt;&gt; 0;
+		GVL.Group_01_Axis_13 := (Bitmap AND 2#0001_0000_0000_0000) &lt;&gt; 0;
+		GVL.Group_01_Axis_14 := (Bitmap AND 2#0010_0000_0000_0000) &lt;&gt; 0;
+		GVL.Group_01_Axis_15 := (Bitmap AND 2#0100_0000_0000_0000) &lt;&gt; 0;
+		GVL.Group_01_Axis_16 := (Bitmap AND 2#1000_0000_0000_0000) &lt;&gt; 0;
+	1:
+		GVL.Group_02_Axis_01 := (Bitmap AND 2#0000_0000_0000_0001) &lt;&gt; 0;
+		GVL.Group_02_Axis_02 := (Bitmap AND 2#0000_0000_0000_0010) &lt;&gt; 0;
+		GVL.Group_02_Axis_03 := (Bitmap AND 2#0000_0000_0000_0100) &lt;&gt; 0;
+		GVL.Group_02_Axis_04 := (Bitmap AND 2#0000_0000_0000_1000) &lt;&gt; 0;
+		GVL.Group_02_Axis_05 := (Bitmap AND 2#0000_0000_0001_0000) &lt;&gt; 0;
+		GVL.Group_02_Axis_06 := (Bitmap AND 2#0000_0000_0010_0000) &lt;&gt; 0;
+		GVL.Group_02_Axis_07 := (Bitmap AND 2#0000_0000_0100_0000) &lt;&gt; 0;
+		GVL.Group_02_Axis_08 := (Bitmap AND 2#0000_0000_1000_0000) &lt;&gt; 0;
+		GVL.Group_02_Axis_09 := (Bitmap AND 2#0000_0001_0000_0000) &lt;&gt; 0;
+		GVL.Group_02_Axis_10 := (Bitmap AND 2#0000_0010_0000_0000) &lt;&gt; 0;
+		GVL.Group_02_Axis_11 := (Bitmap AND 2#0000_0100_0000_0000) &lt;&gt; 0;
+		GVL.Group_02_Axis_12 := (Bitmap AND 2#0000_1000_0000_0000) &lt;&gt; 0;
+		GVL.Group_02_Axis_13 := (Bitmap AND 2#0001_0000_0000_0000) &lt;&gt; 0;
+		GVL.Group_02_Axis_14 := (Bitmap AND 2#0010_0000_0000_0000) &lt;&gt; 0;
+		GVL.Group_02_Axis_15 := (Bitmap AND 2#0100_0000_0000_0000) &lt;&gt; 0;
+		GVL.Group_02_Axis_16 := (Bitmap AND 2#1000_0000_0000_0000) &lt;&gt; 0;
+	2:
+		GVL.Group_03_Axis_01 := (Bitmap AND 2#0000_0000_0000_0001) &lt;&gt; 0;
+		GVL.Group_03_Axis_02 := (Bitmap AND 2#0000_0000_0000_0010) &lt;&gt; 0;
+		GVL.Group_03_Axis_03 := (Bitmap AND 2#0000_0000_0000_0100) &lt;&gt; 0;
+		GVL.Group_03_Axis_04 := (Bitmap AND 2#0000_0000_0000_1000) &lt;&gt; 0;
+		GVL.Group_03_Axis_05 := (Bitmap AND 2#0000_0000_0001_0000) &lt;&gt; 0;
+		GVL.Group_03_Axis_06 := (Bitmap AND 2#0000_0000_0010_0000) &lt;&gt; 0;
+		GVL.Group_03_Axis_07 := (Bitmap AND 2#0000_0000_0100_0000) &lt;&gt; 0;
+		GVL.Group_03_Axis_08 := (Bitmap AND 2#0000_0000_1000_0000) &lt;&gt; 0;
+		GVL.Group_03_Axis_09 := (Bitmap AND 2#0000_0001_0000_0000) &lt;&gt; 0;
+		GVL.Group_03_Axis_10 := (Bitmap AND 2#0000_0010_0000_0000) &lt;&gt; 0;
+		GVL.Group_03_Axis_11 := (Bitmap AND 2#0000_0100_0000_0000) &lt;&gt; 0;
+		GVL.Group_03_Axis_12 := (Bitmap AND 2#0000_1000_0000_0000) &lt;&gt; 0;
+		GVL.Group_03_Axis_13 := (Bitmap AND 2#0001_0000_0000_0000) &lt;&gt; 0;
+		GVL.Group_03_Axis_14 := (Bitmap AND 2#0010_0000_0000_0000) &lt;&gt; 0;
+		GVL.Group_03_Axis_15 := (Bitmap AND 2#0100_0000_0000_0000) &lt;&gt; 0;
+		GVL.Group_03_Axis_16 := (Bitmap AND 2#1000_0000_0000_0000) &lt;&gt; 0;
+	3:
+		GVL.Group_04_Axis_01 := (Bitmap AND 2#0000_0000_0000_0001) &lt;&gt; 0;
+		GVL.Group_04_Axis_02 := (Bitmap AND 2#0000_0000_0000_0010) &lt;&gt; 0;
+		GVL.Group_04_Axis_03 := (Bitmap AND 2#0000_0000_0000_0100) &lt;&gt; 0;
+		GVL.Group_04_Axis_04 := (Bitmap AND 2#0000_0000_0000_1000) &lt;&gt; 0;
+		GVL.Group_04_Axis_05 := (Bitmap AND 2#0000_0000_0001_0000) &lt;&gt; 0;
+		GVL.Group_04_Axis_06 := (Bitmap AND 2#0000_0000_0010_0000) &lt;&gt; 0;
+		GVL.Group_04_Axis_07 := (Bitmap AND 2#0000_0000_0100_0000) &lt;&gt; 0;
+		GVL.Group_04_Axis_08 := (Bitmap AND 2#0000_0000_1000_0000) &lt;&gt; 0;
+		GVL.Group_04_Axis_09 := (Bitmap AND 2#0000_0001_0000_0000) &lt;&gt; 0;
+		GVL.Group_04_Axis_10 := (Bitmap AND 2#0000_0010_0000_0000) &lt;&gt; 0;
+		GVL.Group_04_Axis_11 := (Bitmap AND 2#0000_0100_0000_0000) &lt;&gt; 0;
+		GVL.Group_04_Axis_12 := (Bitmap AND 2#0000_1000_0000_0000) &lt;&gt; 0;
+		GVL.Group_04_Axis_13 := (Bitmap AND 2#0001_0000_0000_0000) &lt;&gt; 0;
+		GVL.Group_04_Axis_14 := (Bitmap AND 2#0010_0000_0000_0000) &lt;&gt; 0;
+		GVL.Group_04_Axis_15 := (Bitmap AND 2#0100_0000_0000_0000) &lt;&gt; 0;
+		GVL.Group_04_Axis_16 := (Bitmap AND 2#1000_0000_0000_0000) &lt;&gt; 0;
+	4:
+		GVL.Group_05_Axis_01 := (Bitmap AND 2#0000_0000_0000_0001) &lt;&gt; 0;
+		GVL.Group_05_Axis_02 := (Bitmap AND 2#0000_0000_0000_0010) &lt;&gt; 0;
+		GVL.Group_05_Axis_03 := (Bitmap AND 2#0000_0000_0000_0100) &lt;&gt; 0;
+		GVL.Group_05_Axis_04 := (Bitmap AND 2#0000_0000_0000_1000) &lt;&gt; 0;
+		GVL.Group_05_Axis_05 := (Bitmap AND 2#0000_0000_0001_0000) &lt;&gt; 0;
+		GVL.Group_05_Axis_06 := (Bitmap AND 2#0000_0000_0010_0000) &lt;&gt; 0;
+		GVL.Group_05_Axis_07 := (Bitmap AND 2#0000_0000_0100_0000) &lt;&gt; 0;
+		GVL.Group_05_Axis_08 := (Bitmap AND 2#0000_0000_1000_0000) &lt;&gt; 0;
+		GVL.Group_05_Axis_09 := (Bitmap AND 2#0000_0001_0000_0000) &lt;&gt; 0;
+		GVL.Group_05_Axis_10 := (Bitmap AND 2#0000_0010_0000_0000) &lt;&gt; 0;
+		GVL.Group_05_Axis_11 := (Bitmap AND 2#0000_0100_0000_0000) &lt;&gt; 0;
+		GVL.Group_05_Axis_12 := (Bitmap AND 2#0000_1000_0000_0000) &lt;&gt; 0;
+		GVL.Group_05_Axis_13 := (Bitmap AND 2#0001_0000_0000_0000) &lt;&gt; 0;
+		GVL.Group_05_Axis_14 := (Bitmap AND 2#0010_0000_0000_0000) &lt;&gt; 0;
+		GVL.Group_05_Axis_15 := (Bitmap AND 2#0100_0000_0000_0000) &lt;&gt; 0;
+		GVL.Group_05_Axis_16 := (Bitmap AND 2#1000_0000_0000_0000) &lt;&gt; 0;
+	5:
+		GVL.Group_06_Axis_01 := (Bitmap AND 2#0000_0000_0000_0001) &lt;&gt; 0;
+		GVL.Group_06_Axis_02 := (Bitmap AND 2#0000_0000_0000_0010) &lt;&gt; 0;
+		GVL.Group_06_Axis_03 := (Bitmap AND 2#0000_0000_0000_0100) &lt;&gt; 0;
+		GVL.Group_06_Axis_04 := (Bitmap AND 2#0000_0000_0000_1000) &lt;&gt; 0;
+		GVL.Group_06_Axis_05 := (Bitmap AND 2#0000_0000_0001_0000) &lt;&gt; 0;
+		GVL.Group_06_Axis_06 := (Bitmap AND 2#0000_0000_0010_0000) &lt;&gt; 0;
+		GVL.Group_06_Axis_07 := (Bitmap AND 2#0000_0000_0100_0000) &lt;&gt; 0;
+		GVL.Group_06_Axis_08 := (Bitmap AND 2#0000_0000_1000_0000) &lt;&gt; 0;
+		GVL.Group_06_Axis_09 := (Bitmap AND 2#0000_0001_0000_0000) &lt;&gt; 0;
+		GVL.Group_06_Axis_10 := (Bitmap AND 2#0000_0010_0000_0000) &lt;&gt; 0;
+		GVL.Group_06_Axis_11 := (Bitmap AND 2#0000_0100_0000_0000) &lt;&gt; 0;
+		GVL.Group_06_Axis_12 := (Bitmap AND 2#0000_1000_0000_0000) &lt;&gt; 0;
+		GVL.Group_06_Axis_13 := (Bitmap AND 2#0001_0000_0000_0000) &lt;&gt; 0;
+		GVL.Group_06_Axis_14 := (Bitmap AND 2#0010_0000_0000_0000) &lt;&gt; 0;
+		GVL.Group_06_Axis_15 := (Bitmap AND 2#0100_0000_0000_0000) &lt;&gt; 0;
+		GVL.Group_06_Axis_16 := (Bitmap AND 2#1000_0000_0000_0000) &lt;&gt; 0;
+	6:
+		GVL.Group_07_Axis_01 := (Bitmap AND 2#0000_0000_0000_0001) &lt;&gt; 0;
+		GVL.Group_07_Axis_02 := (Bitmap AND 2#0000_0000_0000_0010) &lt;&gt; 0;
+		GVL.Group_07_Axis_03 := (Bitmap AND 2#0000_0000_0000_0100) &lt;&gt; 0;
+		GVL.Group_07_Axis_04 := (Bitmap AND 2#0000_0000_0000_1000) &lt;&gt; 0;
+		GVL.Group_07_Axis_05 := (Bitmap AND 2#0000_0000_0001_0000) &lt;&gt; 0;
+		GVL.Group_07_Axis_06 := (Bitmap AND 2#0000_0000_0010_0000) &lt;&gt; 0;
+		GVL.Group_07_Axis_07 := (Bitmap AND 2#0000_0000_0100_0000) &lt;&gt; 0;
+		GVL.Group_07_Axis_08 := (Bitmap AND 2#0000_0000_1000_0000) &lt;&gt; 0;
+		GVL.Group_07_Axis_09 := (Bitmap AND 2#0000_0001_0000_0000) &lt;&gt; 0;
+		GVL.Group_07_Axis_10 := (Bitmap AND 2#0000_0010_0000_0000) &lt;&gt; 0;
+		GVL.Group_07_Axis_11 := (Bitmap AND 2#0000_0100_0000_0000) &lt;&gt; 0;
+		GVL.Group_07_Axis_12 := (Bitmap AND 2#0000_1000_0000_0000) &lt;&gt; 0;
+		GVL.Group_07_Axis_13 := (Bitmap AND 2#0001_0000_0000_0000) &lt;&gt; 0;
+		GVL.Group_07_Axis_14 := (Bitmap AND 2#0010_0000_0000_0000) &lt;&gt; 0;
+		GVL.Group_07_Axis_15 := (Bitmap AND 2#0100_0000_0000_0000) &lt;&gt; 0;
+		GVL.Group_07_Axis_16 := (Bitmap AND 2#1000_0000_0000_0000) &lt;&gt; 0;
+	7:
+		GVL.Group_08_Axis_01 := (Bitmap AND 2#0000_0000_0000_0001) &lt;&gt; 0;
+		GVL.Group_08_Axis_02 := (Bitmap AND 2#0000_0000_0000_0010) &lt;&gt; 0;
+		GVL.Group_08_Axis_03 := (Bitmap AND 2#0000_0000_0000_0100) &lt;&gt; 0;
+		GVL.Group_08_Axis_04 := (Bitmap AND 2#0000_0000_0000_1000) &lt;&gt; 0;
+		GVL.Group_08_Axis_05 := (Bitmap AND 2#0000_0000_0001_0000) &lt;&gt; 0;
+		GVL.Group_08_Axis_06 := (Bitmap AND 2#0000_0000_0010_0000) &lt;&gt; 0;
+		GVL.Group_08_Axis_07 := (Bitmap AND 2#0000_0000_0100_0000) &lt;&gt; 0;
+		GVL.Group_08_Axis_08 := (Bitmap AND 2#0000_0000_1000_0000) &lt;&gt; 0;
+		GVL.Group_08_Axis_09 := (Bitmap AND 2#0000_0001_0000_0000) &lt;&gt; 0;
+		GVL.Group_08_Axis_10 := (Bitmap AND 2#0000_0010_0000_0000) &lt;&gt; 0;
+		GVL.Group_08_Axis_11 := (Bitmap AND 2#0000_0100_0000_0000) &lt;&gt; 0;
+		GVL.Group_08_Axis_12 := (Bitmap AND 2#0000_1000_0000_0000) &lt;&gt; 0;
+		GVL.Group_08_Axis_13 := (Bitmap AND 2#0001_0000_0000_0000) &lt;&gt; 0;
+		GVL.Group_08_Axis_14 := (Bitmap AND 2#0010_0000_0000_0000) &lt;&gt; 0;
+		GVL.Group_08_Axis_15 := (Bitmap AND 2#0100_0000_0000_0000) &lt;&gt; 0;
+		GVL.Group_08_Axis_16 := (Bitmap AND 2#1000_0000_0000_0000) &lt;&gt; 0;
+END_CASE
+
+SaveGroupMotors := 0;
+RETURN;</xhtml>
+                </ST>
+              </body>
+              <InterfaceAsPlainText>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml">{attribute 'TcRpcEnable'}
+METHOD PUBLIC SaveGroupMotors : DINT
+VAR_INPUT
+	Group:INT;
+	Bitmap:WORD;
+END_VAR
+VAR
+	ptr: POINTER TO BOOL;
+	i:INT;
+END_VAR
+</xhtml>
+              </InterfaceAsPlainText>
+              <addData />
+            </Method>
+          </data>
           <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
             <InterfaceAsPlainText>
               <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK FINAL UIFB
@@ -271,9 +557,9 @@ END_VAR
     <data name="http://www.3s-software.com/plcopenxml/projectstructure" handleUnknown="discard">
       <ProjectStructure>
         <Object Name="UIFB" ObjectId="5f5724ba-b515-4970-a705-6a0dab9d357f">
-          <Object Name="GetMotorsGroup" ObjectId="38c4a61e-6324-42b4-8b5f-b00629d3731a" />
-          <Object Name="SaveGroupMotors" ObjectId="e8380bac-f404-4054-b975-f938c50ea23a" />
           <Object Name="ClearMotionAndJog" ObjectId="11ef4a45-0560-43fe-bb9d-e74b80ded0b2" />
+          <Object Name="GetMotorsGroup" ObjectId="aff4a827-7071-4903-bfa0-75ca92683f35" />
+          <Object Name="SaveGroupMotors" ObjectId="14725f97-0d69-4151-8e3a-914062cc559c" />
         </Object>
       </ProjectStructure>
     </data>
