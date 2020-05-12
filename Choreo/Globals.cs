@@ -21,10 +21,9 @@ namespace Choreo
             VM = new ViewModel();
             Storage.LoadAll();
             Plc = PlcFactory.New();
-            Plc.SymbolsUpdated += Plc_SymbolsUpdated;
+            VM.Init();
         }
 
-        private static void Plc_SymbolsUpdated(object sender, EventArgs e) => VM.Init();
         public struct Status {
             public enum Values { Ok, Warning, Error };
             public static Values Ok => Values.Ok;

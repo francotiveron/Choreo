@@ -1,6 +1,7 @@
 ﻿using NLog.LayoutRenderers.Wrappers;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -19,8 +20,8 @@ using static Choreo.Globals;
 using Cfg = Choreo.Configuration;
 
 namespace Choreo.TwinCAT {
-    public interface IPlc {
-        event EventHandler SymbolsUpdated;
+    public interface IPlc : INotifyPropertyChanged {
+        bool IsOn { get; }
         void Upload<T>(T obj);
         void Download<T>(T obj);
         bool SaveGroupMotors(int groupIndex, ushort bitmap);
@@ -42,7 +43,6 @@ namespace Choreo.TwinCAT {
         IObserver<ValueChangedArgs> symbolNotificationObserver;
         Timer monitorTimer;
         TagCollection tags;
-        public event EventHandler SymbolsUpdated;
 
         public AdsPlc(AmsNetId amsNetId, AmsPort amsPort) {
             adsSession = new AdsSession(amsNetId, (int)amsPort);
@@ -60,27 +60,10 @@ namespace Choreo.TwinCAT {
             return this;
         }
 
-
-        bool isConnectionOK;
-        bool IsConnectionOK {
-            get => isConnectionOK;
-            set { isConnectionOK = value; Notify()("IsOn"); }
-        }
-
-        bool areSymbolsOK;
-        bool AreSymbolsOK {
-            get => areSymbolsOK;
-            set { areSymbolsOK = value; Notify()("IsOn"); }
-        }
-
-        private bool isWatchdogOK;
-        public bool IsWatchdogOK {
-            get { return isWatchdogOK; }
-            set { isWatchdogOK = value; Notify()("IsOn"); }
-        }
-
-
-        public bool IsOn => IsWatchdogOK;
+        bool IsConnectionOK { get; set; }
+        bool IsWatchdogOK { get; set; }
+        bool AreSymbolsOK { get; set; }
+        public bool IsOn => IsConnectionOK && IsWatchdogOK && AreSymbolsOK;
 
         #region Monitor
         void StartMonitor() {
@@ -90,6 +73,7 @@ namespace Choreo.TwinCAT {
         int watchdogCounter = int.MaxValue;
         void Monitor(object state) {
             monitorTimer.Change(Timeout.Infinite, Timeout.Infinite);
+            bool wasOn = IsOn;
 
             bool WatchdogOK() {
                 return Log.ExOnce(() => {
@@ -126,10 +110,10 @@ namespace Choreo.TwinCAT {
                 }
                 catch { }
             }
+            IsWatchdogOK = IsConnectionOK && WatchdogOK();
+            if (IsWatchdogOK && !AreSymbolsOK) SetupSymbolsAndNotifications();
 
-            if (IsConnectionOK && !AreSymbolsOK) SetupSymbolsAndNotifications();
-
-            IsWatchdogOK = IsConnectionOK && AreSymbolsOK && WatchdogOK();
+            if (IsOn ^ wasOn) MultiNotify(nameof(IsOn));
 
             monitorTimer.Change(1000, Timeout.Infinite);
         }
@@ -156,7 +140,6 @@ namespace Choreo.TwinCAT {
                 SymbolCollection notificationSymbols = new SymbolCollection(tags.Select(tag => tag.Symbol));
                 notificationSubscription = notificationSymbols.WhenValueChangedAnnotated().Subscribe(symbolNotificationObserver);
                 AreSymbolsOK = true;
-                SymbolsUpdated?.Invoke(this, null);
             }, "PLC Symbols do not match");
         }
         void OnSymbolNotification(ValueChangedArgs vca) => tags[vca.Symbol].Push(vca.Value);
