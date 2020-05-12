@@ -36,6 +36,7 @@
         </Grid.RowDefinitions>
         <Button Click="Button_Click" Grid.Row="0" Grid.Column="0" x:Name="ESC" Content="ESC"/>
         <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="5" x:Name="ValueTextBox" IsReadOnly="True" Background="{x:Null}" Foreground="yellow" Text="???" MaxLines="1" FontSize="30" MaxLength="30" BorderThickness="3" TextAlignment="Left" />
+        <PasswordBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="5" x:Name="PasswordTextBox" Background="{x:Null}" Foreground="yellow" FontSize="30" MaxLength="30" BorderThickness="3" />
         <Button Click="Button_Click" Grid.Row="0" Grid.Column="6" x:Name="CAPSLOCK">
             <Button.Template>
                 <ControlTemplate>

@@ -25,5 +25,7 @@ namespace Choreo {
         Preset preset;
         public PresetNameSetter(Preset preset) => this.preset = preset;
         public string StrVal { get => preset.Name; set => preset.Name = value; }
+
+        public bool IsPassword => false;
     }
 }

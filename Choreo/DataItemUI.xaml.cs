@@ -4,6 +4,7 @@ using System.Collections;
 using System.Diagnostics;
 using System.Dynamic;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Windows;
@@ -26,12 +27,14 @@ namespace Choreo {
         PropertyInfo pi, statusPi;
         DependencyObject focusScope = null;
         public bool IsPosition { get; private set; }
+        public bool IsPassword { get; private set; }
 
         private void DataItemUI_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e) {
             var binding = BindingOperations.GetBinding(this, DataContextProperty);
             if (binding == null) return;
 
             IsPosition = binding.Converter == Application.Current.Resources["PositionConverter"];
+            IsPassword = binding.Converter == Application.Current.Resources["PasswordConverter"];
 
             dc = (Parent ?? TemplatedParent).GetValue(DataContextProperty);
             var type = dc.GetType();
@@ -82,7 +85,6 @@ namespace Choreo {
         }
 
         public bool StandAlone { get; set; }
-
         public Status? Status => (Status?)statusPi?.GetValue(dc);
 
         void UserControl_Loaded(object sender, RoutedEventArgs e) {
@@ -226,6 +228,17 @@ namespace Choreo {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             var feet = (double)value;
             return FeetInchesConvert.ToString(feet);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class PasswordConverter : IValueConverter {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            var password = (string)value;
+            return new String('*', password.Length);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {

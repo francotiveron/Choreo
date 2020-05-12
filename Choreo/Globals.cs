@@ -16,7 +16,6 @@ namespace Choreo
         public static ViewModel VM { get; private set; }
         public static IPlc Plc { get; private set; }
         static Globals() {
-            User.Init();
             Log = ChoreoLogger.GetLogging();
             VM = new ViewModel();
             Storage.LoadAll();

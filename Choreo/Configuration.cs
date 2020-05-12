@@ -1,29 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CommandLine;
+using System;
 using System.Configuration;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 using TwinCAT.Ads;
 
-namespace Choreo
-{
-    static class Configuration
-    {
-        //public static AmsNetId AmsNetId {
-        //    get {
-        //        try {
-        //            return AmsNetId.Parse(ConfigurationManager.AppSettings[nameof(AmsNetId)]);
-        //        }
-        //        catch {
-        //            return Properties.PlcSettings.Default.AmsNetId;
-        //        }
-        //    }
+namespace Choreo {
+    static class Configuration {
+        [DllImport("user32.dll")]
+        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+        class CommandLineOptions {
+            [Option(HelpText = "Bypass User Management")]
+            public bool NoLogin { get; set; }
 
-        //}
-        //public static AmsPort AmsPort => Properties.PlcSettings.Default.AmsPort;
+            [Option(HelpText = "Interactive User Automatic Login")]
+            public bool AutoLogin { get; set; }
+        }
 
+        static CommandLineOptions options;
+        public static void ParseCommandLine(string[] args) {
+            Parser.Default.ParseArguments<CommandLineOptions>(args)
+            .WithParsed(opt => options = opt)
+            .WithNotParsed(_ => {
+                Console.ReadLine();
+                Environment.Exit(-1);
+            });
+
+            IntPtr h = Process.GetCurrentProcess().MainWindowHandle;
+            ShowWindow(h, 0);
+        }
+
+        public static bool UserManagement => !options.NoLogin;
+        public static bool AutoLogin => options.AutoLogin;
         public static AmsNetId PlcAmsNetId => Parse(AmsNetId.Parse);
         public static AmsPort PlcAmsPort => Parse((s) => (AmsPort)Enum.Parse(typeof(AmsPort), s));
 

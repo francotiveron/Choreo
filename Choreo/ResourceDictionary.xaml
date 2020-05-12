@@ -17,6 +17,7 @@
     <local:DataItemEnablingConverter x:Key="DataItemEnablingConverter"/>
     <local:PresetBottomPanelButtonColorConverter x:Key="PresetBottomPanelButtonColorConverter"/>
     <local:PositionConverter x:Key="PositionConverter"/>
+    <local:PasswordConverter x:Key="PasswordConverter"/>
     <local:MotorStatusConverter x:Key="MotorStatusConverter"/>
 
     <Style TargetType="{x:Type Window}">

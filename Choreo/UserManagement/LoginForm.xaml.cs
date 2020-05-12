@@ -1,4 +1,5 @@
-﻿using System.Security.Principal;
+﻿using System;
+using System.Security.Principal;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -6,8 +7,11 @@ using static Choreo.Globals;
 
 namespace Choreo.UserManagement {
     public partial class LoginForm : Window {
-        public LoginForm() {
+        Func<IPrincipal, bool> roleChecker;
+        public LoginForm(Func<IPrincipal, bool> checker) {
+            roleChecker = checker;
             InitializeComponent();
+            FailedLoginLabel.Visibility = Visibility.Hidden;
             FocusManager.AddGotFocusHandler(this, Focus);
         }
 
@@ -27,13 +31,17 @@ namespace Choreo.UserManagement {
         private void LoginButton_Click(object sender, RoutedEventArgs e) {
             var login = DataContext as LoginModel;
             if (User.Login(login.Username, login.Password) is IPrincipal principal) {
-                DialogResult = true;
-                Principal = principal;
-                Close();
-                return;
+                if (roleChecker(principal)) {
+                    DialogResult = true;
+                    Principal = principal;
+                    Close();
+                    return;
+                }
+                FailedLoginLabel.Content = "User Level is Insufficient";
             }
+            else FailedLoginLabel.Content = "Login Failed";
 
-            Log.Alert($"Failed Login for user {login.Username}", "Login Failure");
+            FailedLoginLabel.Visibility = Visibility.Visible;
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e) {

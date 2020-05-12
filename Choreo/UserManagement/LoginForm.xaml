@@ -14,6 +14,7 @@
     <Grid>
         <Border Margin="400,100" Padding="50" Background="#222222" x:Name="EditableElementsGrid"  FocusManager.IsFocusScope="True">
             <StackPanel>
+                <Label Content="Login Failed" x:Name="FailedLoginLabel" Foreground="Red" HorizontalAlignment="Center"/>
                 <Image Source="../Pictures/VerendusLogo.png" Stretch="Uniform" Margin="100,30" />
                 <local:DataItemUI
                     x:Name="UserName" 
@@ -26,7 +27,7 @@
                     x:Name="UserPassword" 
                     Background="{StaticResource DataItemUnfocusedBackground}"
                     Margin="0,10" 
-                    DataContext="{Binding Password}" 
+                    DataContext="{Binding Password, Converter={StaticResource PasswordConverter}}" 
                     Focusable="True" 
                     StandAlone="True"/>
                 <Button x:Name="LoginButton" Content="Login" Height="50" Margin="0,30,0,0" Click="LoginButton_Click" Background="DarkBlue"/>

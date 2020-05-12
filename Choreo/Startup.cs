@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using static Choreo.Globals;
+using Cfg = Choreo.Configuration;
 
 namespace Choreo
 {
@@ -12,6 +13,8 @@ namespace Choreo
         [STAThread]
         static void Main(string[] args)
         {
+            Cfg.ParseCommandLine(args);
+
             PresentationTraceSources.Refresh();
             PresentationTraceSources.DataBindingSource.Listeners.Add(new ConsoleTraceListener());
             PresentationTraceSources.DataBindingSource.Listeners.Add(new DebugTraceListener());
@@ -21,7 +24,7 @@ namespace Choreo
             SetupExceptionHandling(app);
             app.MainWindow = new MainWindow();
 
-            if (!User.Login()) return;
+            User.Init();
 
             app.MainWindow.Show();
             app.Run();

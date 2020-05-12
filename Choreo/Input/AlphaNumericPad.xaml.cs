@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 namespace Choreo.Input {
     public interface IStrVal {
         string StrVal { get; set; }
+        bool IsPassword { get; }
     }
     public partial class AlphaNumericPad : UserControl {
         public AlphaNumericPad() {
@@ -26,8 +27,8 @@ namespace Choreo.Input {
         }
 
         public string Value {
-            get => ValueTextBox.Text;
-            set => ValueTextBox.Text = value;
+            get => DataItem.IsPassword ? PasswordTextBox.Password : ValueTextBox.Text;
+            set { if (DataItem.IsPassword) PasswordTextBox.Password = value; else ValueTextBox.Text = value; }
         }
 
         IStrVal dataItem;
@@ -37,6 +38,14 @@ namespace Choreo.Input {
                 dataItem = value;
                 if (dataItem == null) Visibility = Visibility.Hidden;
                 else {
+                    if (dataItem.IsPassword) {
+                        PasswordTextBox.Visibility = Visibility.Visible;
+                        ValueTextBox.Visibility = Visibility.Hidden;
+                    }
+                    else {
+                        PasswordTextBox.Visibility = Visibility.Hidden;
+                        ValueTextBox.Visibility = Visibility.Visible;
+                    }
                     Visibility = Visibility.Visible;
                     Value = dataItem.StrVal;
                 }

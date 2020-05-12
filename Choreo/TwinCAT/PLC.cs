@@ -1,4 +1,5 @@
-﻿using NLog.LayoutRenderers.Wrappers;
+﻿using Choreo.UserManagement;
+using NLog.LayoutRenderers.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -162,9 +163,8 @@ namespace Choreo.TwinCAT {
         #endregion
 
         #region IPlc Implementation
-        [PrincipalPermission(SecurityAction.Demand, Role = @"ChoreoUsers")]
         public void Upload<T>(T obj) {
-            WindowsPrincipal myWindowsPrincipal = (WindowsPrincipal)Thread.CurrentPrincipal;
+            User.RequirePower();
             if (!IsOn) return;
             GetType().GetMethod("Upload",
                 BindingFlags.Instance | BindingFlags.NonPublic,
