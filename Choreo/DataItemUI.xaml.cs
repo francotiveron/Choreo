@@ -73,7 +73,8 @@ namespace Choreo {
                 if (FeetInchesConvert.TryParse(v, out double? feet)) value = feet;
             }
             else {
-                value = Convert.ChangeType(v, pi.PropertyType);
+                try { value = Convert.ChangeType(v, pi.PropertyType); }
+                catch { value = pi.PropertyType.Default(); }
                 if (value is double dv) value = Math.Round(dv, 3);
             }
 

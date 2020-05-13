@@ -221,10 +221,6 @@ namespace Choreo {
             }
         }
         public void PresetTouch() => ++PresetTouches;
-
-        //public int Status {
-        //    get { return 0; }
-        //}
         #endregion
 
         #region Settings
@@ -311,7 +307,7 @@ namespace Choreo {
             get => minLoad;
             set { minLoad = value; Notify()(nameof(MaxLoad), nameof(LoadOffs)); }
         }
-        public Status MinLoadStatus => MinLoad < 0;
+        public Status MinLoadStatus => MinLoad > MaxLoad;
 
         double maxLoad;
         [DataItem("lbs", "Max Load"), Plc("Max_Load")]
@@ -319,7 +315,7 @@ namespace Choreo {
             get => maxLoad;
             set { maxLoad = value; Notify()(nameof(MinLoad), nameof(LoadOffs)); }
         }
-        public Status MaxLoadStatus => MaxLoad < LoadOffs;
+        public Status MaxLoadStatus => MaxLoad < MinLoad;
 
         double loadOffs;
         [DataItem("lbs", "Load Offset"), Plc("Load_Offset")]
@@ -327,14 +323,20 @@ namespace Choreo {
             get => loadOffs;
             set { loadOffs = value; Notify()(nameof(MaxLoad), nameof(MinLoad)); }
         }
-        public Status LoadOffsStatus => LoadOffs < MinLoad || LoadOffs > MaxLoad;
+        public Status LoadOffsStatus => Status.Ok;
 
         double rotationsPerFoot = 1.0;
         [DataItem("r/ft", "Rotations/Foot"), Persistent]
         public double RotationsPerFoot {
             get => rotationsPerFoot;
-            set { 
+            set {
+                var calVal = CalibrationValue;
+                var softUp = SoftUp;
+                var softDn = SoftDn;
                 rotationsPerFoot = value <= 0.0 ? 1.0 : value;
+                CalibrationValue = calVal;
+                SoftUp = softUp;
+                SoftDn = softDn;
                 Notify()(nameof(Position), nameof(CalibrationValue), nameof(SoftUp), nameof(SoftDn));
             }
         }

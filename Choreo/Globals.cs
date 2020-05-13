@@ -79,5 +79,13 @@ namespace Choreo
             }
             return true;
         }
+
+        public static object Default(this Type t) {
+            if (t.IsValueType && Nullable.GetUnderlyingType(t) == null)
+                return Activator.CreateInstance(t);
+            else
+                return null;
+        }
+
     }
 }
