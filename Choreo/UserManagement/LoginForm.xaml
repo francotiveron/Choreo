@@ -7,7 +7,12 @@
         xmlns:inp="clr-namespace:Choreo.Input"
         xmlns:local="clr-namespace:Choreo"
         mc:Ignorable="d"
-        Title="LoginForm" Height="800" Width="1280" Foreground="White" HorizontalContentAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalContentAlignment="Center" FontSize="30" WindowStyle="None" ShowInTaskbar="False" Topmost="True" Background="{x:Null}" ResizeMode="NoResize">
+        Title="LoginForm" Height="800" Width="1280" Foreground="White" 
+        HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+        FontSize="30" WindowStyle="None" ShowInTaskbar="False" 
+        Topmost="True" Background="{x:Null}" ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        >
     <Window.DataContext>
         <usr:LoginModel/>
     </Window.DataContext>

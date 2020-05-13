@@ -19,24 +19,24 @@ namespace Choreo {
         private void ExitItem_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
 
         private void LoginItem_Click(object sender, RoutedEventArgs e) => User.Login();
+        private void LogoutItem_Click(object sender, RoutedEventArgs e) => User.Logout();
 
         private void UsersItem_Click(object sender, RoutedEventArgs e) {
             //System.Diagnostics.Process.Start("C:\\Windows\\System32\\dsa.msc");
             bool ok = Log.OkCancel(
-@"
-Choreo User Management is integrated with Windows.
-Choreo will close and the Windows Local User Management snap-in will open.
-Users must be created as normal Windows user and added to one of the the following groups:
-ChoreoLimitedUsers, ChoreoUsers, ChoreoPowerUsers, CoreoAdministrators.
-To activate the changes a Windows logout/relogin is required, then Choreo can be restarted.
-Please note that you need to be granted the appropriate Windows credentials to change users.
-"
+                "Choreo User Management is integrated with Windows. " +
+                "Choreo will close and the Windows Local User Management snap-in will open. " +
+                "Users must be created as normal Windows user and added to one of the the following groups:\n\n" +
+                "ChoreoLimitedUsers, ChoreoUsers, ChoreoPowerUsers, CoreoAdministrators\n\n" +
+                "To activate the changes a Windows logout/relogin is required, then Choreo can be restarted. " +
+                "Please note that you need to be granted the appropriate Windows credentials to change users."
                 , "Users Management"
                 );
             if (!ok) return;
             System.Diagnostics.Process.Start("lusrmgr.msc");
             Application.Current.Shutdown();
         }
+
     }
     public class CurrentPageVisibilityConverter : IValueConverter
     {

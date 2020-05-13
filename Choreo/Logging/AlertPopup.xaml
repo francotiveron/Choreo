@@ -10,21 +10,19 @@
         Height="450" Width="800">
     <DockPanel LastChildFill="True" >
         <Label DockPanel.Dock="Top" Content="{Binding caption, FallbackValue=Caption}" HorizontalAlignment="Center" FontSize="30"/>
-        <Grid DockPanel.Dock="Bottom" Height="50">
-            <Grid.Resources>
+        <DockPanel DockPanel.Dock="Bottom" Height="50" HorizontalAlignment="Center">
+            <DockPanel.Resources>
                 <Style TargetType="Button">
                     <Setter Property="Margin" Value="10,5"/>
                     <Setter Property="Foreground" Value="White"/>
                     <Setter Property="Background" Value="#333333"/>
                 </Style>
-            </Grid.Resources>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Button x:Name="OkButton" Content="OK" Click="OkButton_Click"/>
-            <Button x:Name="CancelButton" Content="Cancel" Grid.Column="1" Click="CancelButton_Click"/>
-        </Grid>
-        <TextBlock Text="{Binding message, FallbackValue=Message}" TextWrapping="WrapWithOverflow" Padding="10" HorizontalAlignment="Center" Margin="10"/>
+            </DockPanel.Resources>
+            <Button x:Name="OkButton" Content="OK" Width="200" Click="OkButton_Click"/>
+            <Button x:Name="CancelButton" Content="Cancel" Width="200" Click="CancelButton_Click"/>
+            <Border/>
+        </DockPanel>
+         
+        <TextBlock Text="{Binding message, FallbackValue=Message}" TextWrapping="WrapWithOverflow" Padding="10" HorizontalAlignment="Center" Margin="10" TextAlignment="Justify"/>
     </DockPanel>
 </local:Popup>

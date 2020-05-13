@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Choreo.UserManagement;
+using System;
 using System.Globalization;
 using System.Threading;
 using System.Windows.Controls;
@@ -22,12 +23,13 @@ namespace Choreo {
             var n = preset?.Number ?? 0;
             preset = null;
             if (VM.IsEditing || n == 0) return;
+            User.RequirePower();
             VM.BeginPresetEditing(n - 1);
         }
 
         private void Button_MouseDown(object sender, MouseButtonEventArgs e) {
             if (VM.IsEditing) return;
-            if (e.ChangedButton== MouseButton.Left) {
+            if (e.ChangedButton == MouseButton.Left) {
                 preset = (sender as Button).DataContext as Preset;
                 PushTimer.Start(() => PushTimeout());
             }
@@ -35,7 +37,8 @@ namespace Choreo {
 
         private void Button_MouseUp(object sender, MouseButtonEventArgs e) {
             if (VM.IsEditing) return;
-            if (PushTimer.Stop() && preset != null) {
+            if (PushTimer.Stop() && preset != null && !preset.IsEmpty) {
+                User.RequireLimited();
                 Plc.Upload(preset);
             }
         }

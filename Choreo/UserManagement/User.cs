@@ -18,6 +18,7 @@ namespace Choreo.UserManagement {
         public const int LOGON32_LOGON_NEW_CREDENTIALS = 9;
 
         public const int LOGON32_PROVIDER_DEFAULT = 0;
+
         public const int LOGON32_PROVIDER_WINNT35 = 1;
         public const int LOGON32_PROVIDER_WINNT40 = 2;
         public const int LOGON32_PROVIDER_WINNT50 = 3;
@@ -72,6 +73,11 @@ namespace Choreo.UserManagement {
                 
             }
             public void Set(IPrincipal principal) => Set(principal, true);
+            public void Reset() {
+                principal = null;
+                Role = null;
+                VM.IsAdmin = IsAdmin;
+            }
             public IIdentity Identity => principal.Identity;
             public bool IsInRole(string role) => principal.IsInRole(role);
             public bool IsAuthorised(Roles role) => Role.HasValue && role <= Role.Value;
@@ -101,6 +107,9 @@ namespace Choreo.UserManagement {
         }
 
         public static void Login() => Login(null);
+
+        internal static void Logout() => principal.Reset();
+
 
         public enum Roles { Limited, Normal, Power, Admin };
         static Roles[] roles = (Roles[])Enum.GetValues(typeof(Roles));

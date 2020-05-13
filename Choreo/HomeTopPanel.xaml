@@ -32,6 +32,7 @@
                 <Button.ContextMenu>
                     <ContextMenu>
                         <MenuItem x:Name="LoginItem" Header="Login" Click="LoginItem_Click" Visibility="{Binding Source={x:Static local:Configuration.UserManagement}, Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Collapsed'}}"/>
+                        <MenuItem x:Name="LogoutItem" Header="Logout" Click="LogoutItem_Click" Visibility="{Binding Source={x:Static local:Configuration.UserManagement}, Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Collapsed'}}"/>
                         <MenuItem x:Name="UsersItem" Header="Users" Click="UsersItem_Click" Visibility="{Binding IsAdmin, Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Collapsed'}}"/>
                         <MenuItem x:Name="ExitItem" Header="Exit" Click="ExitItem_Click"/>
                     </ContextMenu>

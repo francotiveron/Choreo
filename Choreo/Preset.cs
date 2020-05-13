@@ -54,11 +54,15 @@ namespace Choreo {
         Dictionary<int, double> GroupPositionsBackup = new Dictionary<int, double>();
         public void Backup() {
             nameBackup = Name;
+            MotorPositionsBackup.Clear();
             foreach (var kv in MotorPositions) MotorPositionsBackup[kv.Key] = kv.Value;
+            GroupPositionsBackup.Clear();
             foreach (var kv in GroupPositions) GroupPositionsBackup[kv.Key] = kv.Value;
         }
         public void Restore() {
+            MotorPositions.Clear();
             foreach (var kv in MotorPositionsBackup) MotorPositions[kv.Key] = kv.Value;
+            GroupPositions.Clear();
             foreach (var kv in GroupPositionsBackup) GroupPositions[kv.Key] = kv.Value;
             Name = nameBackup;
         }

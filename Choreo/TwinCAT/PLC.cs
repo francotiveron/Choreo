@@ -275,8 +275,6 @@ namespace Choreo.TwinCAT {
         }
 
         void Upload(Preset preset) {
-            int id = Thread.CurrentThread.ManagedThreadId;
-
             var enabSyms = new List<ISymbol>();
             var valueSyms = new List<ISymbol>();
 
