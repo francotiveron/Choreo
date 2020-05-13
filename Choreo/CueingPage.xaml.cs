@@ -1,9 +1,7 @@
-﻿using System;
-using System.Globalization;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using static Choreo.Globals;
+using Choreo.UserManagement;
 
 namespace Choreo {
     /// <summary>
@@ -17,6 +15,7 @@ namespace Choreo {
         }
 
         private void NewCueButton_Click(object sender, RoutedEventArgs e) {
+            User.RequirePower();
             var cue = new Cue();
             VM.Cues.Add(cue);
             VM.BeginCueEditing(cue.Index);

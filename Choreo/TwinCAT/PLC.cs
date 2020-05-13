@@ -164,7 +164,6 @@ namespace Choreo.TwinCAT {
 
         #region IPlc Implementation
         public void Upload<T>(T obj) {
-            User.RequirePower();
             if (!IsOn) return;
             GetType().GetMethod("Upload",
                 BindingFlags.Instance | BindingFlags.NonPublic,

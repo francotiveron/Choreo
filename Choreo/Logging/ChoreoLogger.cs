@@ -52,7 +52,7 @@ namespace Choreo.Logging {
             });
         }
 
-        public void Alert(string message, string caption) => Popup<AlertPopup>(message, caption);
+        public void Alert(string message, string caption) => Popup<AlertPopup>(message, caption, true, false);
         public bool OkCancel(string message, string caption) => Popup<AlertPopup>(message, caption, true, true) ?? false;
 
         //public void Alert(string message, string caption) {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Choreo.UserManagement;
+using System;
 using System.Data.SqlTypes;
 using System.Diagnostics;
 using System.Globalization;
@@ -84,6 +85,7 @@ namespace Choreo
             if (Gesture) {
                 StopGesture();
                 if (!VM.IsEditing) {
+                    User.RequirePower();
                     if (IsGroup) VM.BeginGroupEditing(Index);
                     else
                     if (IsMotor) VM.BeginMotorSettingsEditing(Index);
@@ -109,6 +111,7 @@ namespace Choreo
         private void GestureLeft()
         {
             Gesture = false;
+            User.RequireNormal();
             if (CheckGroupedMotor()) return;
             VM.BeginMotionEditing(true, (Axis)DataContext);
         }
@@ -116,12 +119,14 @@ namespace Choreo
         private void GestureRight()
         {
             Gesture = false;
+            User.RequireNormal();
             if (CheckGroupedMotor()) return;
             VM.BeginMotionEditing(false, (Axis)DataContext);
         }
 
         private void GestureUp() {
             Gesture = false;
+            User.RequireNormal();
             if (CheckGroupedMotor()) return;
             var axis = (Axis)DataContext;
             if (!axis.JogUpEnable) {
@@ -132,6 +137,7 @@ namespace Choreo
 
         private void GestureDn() {
             Gesture = false;
+            User.RequireNormal();
             if (CheckGroupedMotor()) return;
             var axis = (Axis)DataContext;
             if (!axis.JogDnEnable) {
