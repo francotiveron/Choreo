@@ -5,6 +5,7 @@ using System.Reactive.Concurrency;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms.VisualStyles;
 using System.Windows.Markup;
 using System.Windows.Threading;
 
@@ -19,7 +20,7 @@ namespace Choreo.Logging {
         
         public void Exception(Exception x, string message = null, [CallerMemberName] string caller = null, bool off = false) {
             if (!off) Error(x, message);
-            Popup(typeof(ExceptionPopup), x, message, caller, off);
+            Popup<ExceptionPopup>(x, message, caller, off);
         }
 
         Dictionary<string, Exception> exOnceDict = new Dictionary<string, Exception>();
@@ -44,16 +45,19 @@ namespace Choreo.Logging {
         }
 
 
-        void Popup(Type popupType, params object[] @params) {
-            dsp.Invoke(() => {
-                var popup = (Popup)Activator.CreateInstance(popupType, @params);
-                popup.ShowDialog();
+        bool? Popup<T>(params object[] @params) where T: Popup {
+            return dsp.Invoke(() => {
+                var popup = (Popup)Activator.CreateInstance(typeof(T), @params);
+                return popup.ShowDialog();
             });
         }
 
-        public void Alert(string message, string caption) {
-            _ = MessageBox.Show(Application.Current.MainWindow, message, caption);
-        }
+        public void Alert(string message, string caption) => Popup<AlertPopup>(message, caption);
+        public bool OkCancel(string message, string caption) => Popup<AlertPopup>(message, caption, true, true) ?? false;
+
+        //public void Alert(string message, string caption) {
+        //    _ = MessageBox.Show(Application.Current.MainWindow, message, caption);
+        //}
 
     }
 }

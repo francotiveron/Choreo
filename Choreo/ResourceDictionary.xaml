@@ -77,8 +77,13 @@
     <Style TargetType="{x:Type ContextMenu}">
         <!--<Setter Property="FontFamily" Value="Comic Sans MS" />-->
         <!--<Setter Property="FontSize" Value="28" />-->
-        <Setter Property="Background" Value="{DynamicResource MainWindowsBackgroundBrush}"/>
+        <!--<Setter Property="Background" Value="{DynamicResource MainWindowsBackgroundBrush}"/>-->
         <!--<Setter Property="Foreground" Value="{DynamicResource MainWindowsForegroundBrush}"/>-->
+    </Style>
+    <Style TargetType="{x:Type MenuItem}">
+        <Setter Property="FontSize" Value="26"/>
+        <Setter Property = "Background" Value= "{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"/>
+        <Setter Property = "Foreground" Value= "{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"/>
     </Style>
     <Style TargetType="{x:Type Label}">
         <Setter Property="FontFamily" Value="{StaticResource DefaultFontFamily}" />

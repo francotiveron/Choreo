@@ -2,8 +2,10 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:qc="clr-namespace:QuickConverter;assembly=QuickConverter"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Choreo"
+             xmlns:uman="clr-namespace:Choreo.UserManagement"
              mc:Ignorable="d" 
              Background="#222222"
              d:DesignHeight="60" d:DesignWidth="1080">
@@ -12,7 +14,6 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="21*"/>
-                <!--<ColumnDefinition Width="2*"/>-->
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
             <Image Source="Pictures/VerendusLogo.png"/>
@@ -30,7 +31,9 @@
                 <Image Source="Pictures/MainMenu.png"/>
                 <Button.ContextMenu>
                     <ContextMenu>
-                        <Button x:Name="ExitButton" Content="Exit" Click="ExitButton_Click" Background="{x:Null}"/>
+                        <MenuItem x:Name="LoginItem" Header="Login" Click="LoginItem_Click" Visibility="{Binding Source={x:Static local:Configuration.UserManagement}, Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Collapsed'}}"/>
+                        <MenuItem x:Name="UsersItem" Header="Users" Click="UsersItem_Click" Visibility="{Binding IsAdmin, Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Collapsed'}}"/>
+                        <MenuItem x:Name="ExitItem" Header="Exit" Click="ExitItem_Click"/>
                     </ContextMenu>
                 </Button.ContextMenu>
             </Button>

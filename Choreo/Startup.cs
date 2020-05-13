@@ -13,6 +13,7 @@ namespace Choreo
         [STAThread]
         static void Main(string[] args)
         {
+            Debugger.Launch();
             Cfg.ParseCommandLine(args);
 
             PresentationTraceSources.Refresh();

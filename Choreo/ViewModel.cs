@@ -6,6 +6,7 @@ using System.Linq;
 using static Choreo.Storage;
 using static Choreo.Globals;
 using static System.Linq.Enumerable;
+using Choreo.UserManagement;
 
 namespace Choreo {
     public enum MainWindowPages { Home, Cueing, Show };
@@ -267,6 +268,11 @@ namespace Choreo {
         public int LoadedCue {
             get { return loadedCue; }
             set { loadedCue = value; Notify(); }
+        }
+
+        public bool IsAdmin {
+            get => User.IsAdmin;
+            set => Notify();
         }
 
         #endregion

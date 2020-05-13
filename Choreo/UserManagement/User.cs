@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Threading;
 using Cfg = Choreo.Configuration;
+using static Choreo.Globals;
 
 namespace Choreo.UserManagement {
     public static class User {
@@ -67,11 +68,13 @@ namespace Choreo.UserManagement {
             void Set(IPrincipal principal, bool fetchRole) {
                 this.principal = principal;
                 if (fetchRole) Role = FetchHighestRole(principal);
+                VM.IsAdmin = IsAdmin;
+                
             }
             public void Set(IPrincipal principal) => Set(principal, true);
             public IIdentity Identity => principal.Identity;
             public bool IsInRole(string role) => principal.IsInRole(role);
-            public bool IsInRole(Roles role) => Role.HasValue && role >= Role.Value;
+            public bool IsAuthorised(Roles role) => Role.HasValue && role <= Role.Value;
             public Roles? Role { get; private set; }
             static Roles? FetchHighestRole(IPrincipal principal) {
                 for (int i = roles.Length - 1; i >= 0; i--) {
@@ -88,14 +91,16 @@ namespace Choreo.UserManagement {
         }
 
         static ChoreoPrincipal principal;
-
-        static bool Login(Roles role) {
-            var form = new LoginForm(principal => ChoreoPrincipal.Check(principal, role));
+        public static bool IsAdmin => principal?.IsAuthorised(Roles.Admin) ?? false;
+        static bool Login(Roles? role) {
+            var form = new LoginForm(principal => role.HasValue ? ChoreoPrincipal.Check(principal, role.Value) : true);
             var success = form.ShowDialog();
             if (success != true) return false;
             principal.Set(form.Principal);
             return true;
         }
+
+        public static void Login() => Login(null);
 
         public enum Roles { Limited, Normal, Power, Admin };
         static Roles[] roles = (Roles[])Enum.GetValues(typeof(Roles));
@@ -108,7 +113,7 @@ namespace Choreo.UserManagement {
 
         public static void Require(Roles role) {
             if (!Cfg.UserManagement) return;
-            if (principal.IsInRole(role)) return;
+            if (principal.IsAuthorised(role)) return;
             if (Login(role)) return;
             throw new ChoreoUserException();
         }

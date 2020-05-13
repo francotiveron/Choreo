@@ -164,6 +164,9 @@
     <Compile Include="Input\MaGSelectionPopup.xaml.cs">
       <DependentUpon>MaGSelectionPopup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Logging\AlertPopup.xaml.cs">
+      <DependentUpon>AlertPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Logging\ExceptionPopup.xaml.cs">
       <DependentUpon>ExceptionPopup.xaml</DependentUpon>
     </Compile>
@@ -288,6 +291,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Input\MaGSelectionPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Logging\AlertPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -493,12 +500,12 @@
   <ItemGroup>
     <PublishFile Include="TwinCAT\UIFB.xml">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
   </ItemGroup>
