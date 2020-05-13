@@ -74,12 +74,6 @@
         <Setter Property="Margin" Value="10"/>
         <Setter Property="Content" Value="{Binding FullName, FallbackValue=Preset X}"/>
     </Style>
-    <Style TargetType="{x:Type ContextMenu}">
-        <!--<Setter Property="FontFamily" Value="Comic Sans MS" />-->
-        <!--<Setter Property="FontSize" Value="28" />-->
-        <!--<Setter Property="Background" Value="{DynamicResource MainWindowsBackgroundBrush}"/>-->
-        <!--<Setter Property="Foreground" Value="{DynamicResource MainWindowsForegroundBrush}"/>-->
-    </Style>
     <Style TargetType="{x:Type MenuItem}">
         <Setter Property="FontSize" Value="26"/>
         <Setter Property = "Background" Value= "{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"/>

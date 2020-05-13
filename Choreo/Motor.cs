@@ -68,15 +68,6 @@ namespace Choreo {
         #endregion
 
         #region UI Properties
-        int group;
-        [DataItem(title: "Axis Group")]
-        public int Group {
-            get => group;
-            set {
-                group = value;
-                Notify()("Color");
-            }
-        }
         public bool IsGrouped => Group > 0;
 
         public override Color Color {

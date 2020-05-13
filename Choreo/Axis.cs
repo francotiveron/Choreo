@@ -343,5 +343,14 @@ namespace Choreo {
 
         #endregion
 
+        int group;
+        [DataItem(title: "Axis Group")]
+        public int Group {
+            get => group;
+            set {
+                group = value;
+                Notify()("Color");
+            }
+        }
     }
 }

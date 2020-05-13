@@ -87,7 +87,7 @@
         </ProgressBar>
         <Image Grid.Column="1" Source="Pictures/GreenArrowsUp.png" Stretch="Fill">
             <Image.Visibility>
-                <MultiBinding Converter="{StaticResource UpDnArrowVisibilityConverter}" ConverterParameter="Up" FallbackValue="Visibility.Visible">
+                <MultiBinding Converter="{StaticResource UpDnArrowVisibilityConverter}" ConverterParameter="Up" FallbackValue="Visible">
                     <Binding Path="."/>
                     <Binding Path="Position"/>
                     <Binding Path="MAEnable"/>
@@ -100,7 +100,7 @@
         </Image>
         <Image Grid.Column="1" Source="Pictures/GreenArrowsDn.png" Stretch="Fill">
             <Image.Visibility>
-                <MultiBinding Converter="{StaticResource UpDnArrowVisibilityConverter}" ConverterParameter="Dn" FallbackValue="Visibility.Visible">
+                <MultiBinding Converter="{StaticResource UpDnArrowVisibilityConverter}" ConverterParameter="Dn" FallbackValue="Visible">
                     <Binding Path="."/>
                     <Binding Path="Position"/>
                     <Binding Path="MAEnable"/>

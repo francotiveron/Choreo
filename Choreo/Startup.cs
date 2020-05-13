@@ -13,7 +13,6 @@ namespace Choreo
         [STAThread]
         static void Main(string[] args)
         {
-            Debugger.Launch();
             Cfg.ParseCommandLine(args);
 
             PresentationTraceSources.Refresh();
@@ -74,7 +73,7 @@ namespace Choreo
 
         public override void WriteLine(string message)
         {
-            //Debugger.Break();
+            Debugger.Break();
         }
     }
 }
