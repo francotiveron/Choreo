@@ -36,7 +36,7 @@ namespace Choreo.Input {
                 case "BKSP":
                     if (Value.Length > 0) {
                         var len = Value.Length;
-                        if (Value[len - 1] == '-') Value = Value.Substring(0, len - 2);
+                        if (len == 2 && Value[0] == '-') Value = Value.Substring(0, len - 2);
                         else Value = Value.Substring(0, len - 1);
                     }
                     break;

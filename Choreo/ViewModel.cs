@@ -48,6 +48,8 @@ namespace Choreo {
             }
         }
 
+        bool JogOrMoveActive => Axes.Any(ax => ax.MREnable || ax.MAEnable || ax.JogUpEnable || ax.JogDnEnable);
+
         #region Runtime Properties
         private bool cueLoaded;
         [Plc("Cue_loaded")]
@@ -134,6 +136,10 @@ namespace Choreo {
         }
         public bool IsGroupEditing => GroupBeingEdited > 0;
         public void BeginGroupEditing(int group) {
+            if (JogOrMoveActive) {
+                Log.Alert("Please clear all Moves and Jogs before editing group", "Operation Conflict");
+                return;
+            }
             GroupBeingEdited = group + 1;
             editedGroupMotorsInitial = Motors.Where(m => m.Group == GroupBeingEdited).ToHashSet();
         }

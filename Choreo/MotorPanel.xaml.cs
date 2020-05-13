@@ -35,21 +35,6 @@ namespace Choreo
         }
         double gestureStartX, gestureStartY;
 
-        private void Border_ManipulationStarted(object sender, ManipulationStartedEventArgs e)
-        {
-
-        }
-
-        private void Border_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
-        {
-
-        }
-
-        private void Border_ManipulationCompleted(object sender, ManipulationCompletedEventArgs e)
-        {
-
-        }
-
         private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton != MouseButtonState.Pressed) return;
@@ -123,32 +108,45 @@ namespace Choreo
 
         private void GestureLeft()
         {
-            VM.BeginMotionEditing(true, (Axis)DataContext);
             Gesture = false;
+            if (CheckGroupedMotor()) return;
+            VM.BeginMotionEditing(true, (Axis)DataContext);
         }
 
         private void GestureRight()
         {
-            VM.BeginMotionEditing(false, (Axis)DataContext);
             Gesture = false;
+            if (CheckGroupedMotor()) return;
+            VM.BeginMotionEditing(false, (Axis)DataContext);
         }
 
         private void GestureUp() {
+            Gesture = false;
+            if (CheckGroupedMotor()) return;
             var axis = (Axis)DataContext;
             if (!axis.JogUpEnable) {
                 if (axis.JogDnEnable) Plc.Jog(axis, 0);
                 else Plc.Jog(axis, 1);
             }
-            Gesture = false;
         }
 
         private void GestureDn() {
+            Gesture = false;
+            if (CheckGroupedMotor()) return;
             var axis = (Axis)DataContext;
             if (!axis.JogDnEnable) {
                 if (axis.JogUpEnable) Plc.Jog(axis, 0);
                 else Plc.Jog(axis, -1);
             }
-            Gesture = false;
+        }
+
+        bool IsGroupedMotor => DataContext is Motor m && m.IsGrouped;
+        bool CheckGroupedMotor() {
+            if (IsGroupedMotor) {
+                Log.Alert("Motion/Jog is not available for grouped motors", "Operation Conflict");
+                return true;
+            }
+            return false;
         }
 
         #endregion
