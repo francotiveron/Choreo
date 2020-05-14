@@ -59,14 +59,10 @@
     <Style x:Key="PresetButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonDefaultStyle}">
         <Setter Property="Background">
             <Setter.Value>
-                <SolidColorBrush>
-                    <SolidColorBrush.Color>
-                        <MultiBinding Converter="{StaticResource PresetBottomPanelButtonColorConverter}" FallbackValue="DarkBlue">
-                            <Binding/>
-                            <Binding Source="{x:Static local:Globals.VM}" Path="PresetBeingEdited"/>
-                        </MultiBinding>
-                    </SolidColorBrush.Color>
-                </SolidColorBrush>
+                <MultiBinding Converter="{StaticResource PresetBottomPanelButtonColorConverter}" FallbackValue="DarkBlue">
+                    <Binding Path="." />
+                    <Binding Source="{x:Static local:Globals.VM}" Path="PresetBeingEdited"/>
+                </MultiBinding>
             </Setter.Value>
         </Setter>
         <Setter Property="Margin" Value="10"/>

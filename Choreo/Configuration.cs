@@ -9,6 +9,8 @@ namespace Choreo {
     static class Configuration {
         [DllImport("user32.dll")]
         static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+        [DllImport("kernel32.dll")]
+        static extern bool FreeConsole();
         class CommandLineOptions {
             [Option(HelpText = "Bypass User Management")]
             public bool NoLogin { get; set; }
@@ -26,8 +28,9 @@ namespace Choreo {
                 Environment.Exit(-1);
             });
 
-            IntPtr h = Process.GetCurrentProcess().MainWindowHandle;
-            ShowWindow(h, 0);
+            FreeConsole();
+            //IntPtr h = Process.GetCurrentProcess().MainWindowHandle;
+            //ShowWindow(h, 0);
         }
 
         public static bool UserManagement => !options.NoLogin;
