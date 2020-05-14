@@ -12,10 +12,10 @@ namespace Choreo {
         [DllImport("kernel32.dll")]
         static extern bool FreeConsole();
         class CommandLineOptions {
-            [Option(HelpText = "Bypass User Management")]
+            [Option("no-login", Hidden = true)]
             public bool NoLogin { get; set; }
 
-            [Option(HelpText = "Interactive User Automatic Login")]
+            [Option("auto-login", HelpText = "Interactive User Automatic Login")]
             public bool AutoLogin { get; set; }
         }
 
