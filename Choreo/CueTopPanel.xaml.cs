@@ -16,7 +16,7 @@ namespace Choreo {
             switch (button.Name) {
                 case "CueEditSaveButton":
                     if (VM.Cues[VM.CueBeingEdited - 1].IsValid) VM.CueEditSave();
-                    else Log.Alert("Please insert valid data", "Invalid Data Entry");
+                    else Log.PopInfo("Please insert valid data", "Invalid Data Entry");
                     break;
                 case "CueEditCancelButton":
                     VM.CueEditCancel();

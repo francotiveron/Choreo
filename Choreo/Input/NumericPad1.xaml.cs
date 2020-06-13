@@ -27,7 +27,7 @@ namespace Choreo.Input {
         private void Button_Click(object sender, RoutedEventArgs e) {
             var but = sender as Button;
 
-            switch(but.Name) {
+            switch (but.Name) {
                 case "NEXT":
                 case "PREV":
                     if (DataItem != null) StrVal = Value;
@@ -59,10 +59,13 @@ namespace Choreo.Input {
                     if (!Value.Contains("'") && DataItem.IsPosition && int.TryParse(Value, out _)) Value = Value + "'-";
                     break;
                 default:
-                    if (but.Name.StartsWith("NUM")) Value += but.Content;
+                    if (but.Name.StartsWith("NUM"))
+                        if (isNew && ValueTextBox.SelectionLength > 0) Value = (string)but.Content;
+                        else Value += but.Content;
                     break;
             }
-            
+
+            if (but.Name != "NEXT" && but.Name != "PREV") isNew = false;
         }
 
         public class PadEventArgs: EventArgs {
@@ -72,12 +75,13 @@ namespace Choreo.Input {
 
         public event EventHandler<PadEventArgs> PadEvent;
 
-        public string Value { 
+        string Value { 
             get => ValueTextBox.Text;
             set => ValueTextBox.Text = value;
         }
 
         DataItemUI dataItem;
+        bool isNew;
         public DataItemUI DataItem {
             get => dataItem;
             set {
@@ -86,6 +90,9 @@ namespace Choreo.Input {
                 else {
                     IsEnabled = true;
                     Value = StrVal;
+                    ValueTextBox.Focus();
+                    ValueTextBox.SelectAll();
+                    isNew = true;
                 }
             }
         }

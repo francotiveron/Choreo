@@ -165,7 +165,7 @@ namespace Choreo {
         [Plc]
         public bool Active {
             get => active;
-            set { active = value; Notify()(nameof(Color)); }
+            set { active = value; Notify()(nameof(Color)); VM.MoveActive = !VM.MoveActive; }
         }
 
         public virtual bool Present { get; protected set; } = true;

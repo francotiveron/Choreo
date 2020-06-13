@@ -81,7 +81,7 @@ namespace Choreo {
             Set(value);
         }
         public string StrVal {
-            get => Value.Content.ToString();
+            get => Value.Content?.ToString();
             set => Set(value);
         }
 

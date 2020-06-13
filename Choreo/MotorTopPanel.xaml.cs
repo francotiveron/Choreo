@@ -38,7 +38,7 @@ namespace Choreo {
                     else
                     if (VM.IsGroupSettingsEditing) VM.GroupSettingsEditSave();
                 }
-                else Log.Alert("Please insert valid data", "Invalid Data Entry");
+                else Log.PopInfo("Please insert valid data", "Invalid Data Entry");
             }
         }
     }

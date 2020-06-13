@@ -274,48 +274,58 @@ namespace Choreo.TwinCAT {
             Connection.WriteSymbol(path, jogVel * 100.0, false);
         }
 
+        static readonly string[] presetProps = new string[] { nameof(ViewModel.PresetLoaded), nameof(ViewModel.PresetComplete) };
         void Upload(Preset preset) {
-            var enabSyms = new List<ISymbol>();
-            var valueSyms = new List<ISymbol>();
+            if (preset is Preset) {
+                var enabSyms = new List<ISymbol>();
+                var valueSyms = new List<ISymbol>();
 
-            var aps = new List<(Axis, double)>();
-            aps.AddRange(preset.MotorPositions.Select(mp => (VM.Motors[mp.Key] as Axis, mp.Value)));
-            aps.AddRange(preset.GroupPositions.Select(gp => (VM.Groups[gp.Key] as Axis, gp.Value)));
+                var aps = new List<(Axis, double)>();
+                aps.AddRange(preset.MotorPositions.Select(mp => (VM.Motors[mp.Key] as Axis, mp.Value)));
+                aps.AddRange(preset.GroupPositions.Select(gp => (VM.Groups[gp.Key] as Axis, gp.Value)));
 
-            foreach ((Axis ax, double pos) in aps) {
-                if (!ax.IsOperational) continue;
-                var values = new object[] {
+                foreach ((Axis ax, double pos) in aps) {
+                    if (!ax.IsOperational) continue;
+                    var values = new object[] {
                     pos * ax.RotationsPerFoot
                     , ax.DefVel
                     , ax.DefAcc
                     , ax.DefDec
                 };
 
-                valueSyms.Clear();
-                valueSyms.AddRange(moveProps.Select(prop => tags[ax, prop].Symbol));
-                new SumSymbolWrite(Connection, valueSyms).Write(values);
+                    valueSyms.Clear();
+                    valueSyms.AddRange(moveProps.Select(prop => tags[ax, prop].Symbol));
+                    new SumSymbolWrite(Connection, valueSyms).Write(values);
 
-                enabSyms.AddRange(enabProps.Select(p => tags[ax, p].Symbol));
+                    enabSyms.AddRange(enabProps.Select(p => tags[ax, p].Symbol));
+                }
+
+                var tf = new object[] { true, false, false, false };
+                new SumSymbolWrite(Connection, enabSyms).Write(Enumerable.Repeat(tf, enabSyms.Count / 4).SelectMany(tfe => tfe).ToArray());
+                new SumSymbolWrite(Connection, presetProps.Select(prop => tags[VM, prop].Symbol).ToList()).Write(new object[] { true, false });
+                VM.LoadedPreset = preset.Number;
             }
-
-            var tf = new object[] { true, false, false, false };
-            new SumSymbolWrite(Connection, enabSyms).Write(Enumerable.Repeat(tf, enabSyms.Count / 4).SelectMany(tfe => tfe).ToArray());
+            else {
+                new SumSymbolWrite(Connection, presetProps.Select(prop => tags[VM, prop].Symbol).ToList()).Write(new object[] { false, false });
+                VM.LoadedPreset = 0;
+            }
         }
 
         static readonly string[] cueProps = new string[] { nameof(ViewModel.CueLoaded), nameof(ViewModel.CueComplete)};
         void Upload(Cue cue) {
-            var valueSyms = new List<ISymbol>();
-            var values = new List<object>();
             var enabValues = (object[])allEnabValues.Clone();
 
             if (cue is Cue) {
+                var valueSyms = new List<ISymbol>();
+                var values = new List<object>();
+
                 foreach (var row in cue.Rows) {
                     var rowValues = new object[] {
-                    0.0
-                    , row.Velocity
-                    , row.Acceleration
-                    , row.Deceleration
-                };
+                        0.0
+                        , row.Velocity
+                        , row.Acceleration
+                        , row.Deceleration
+                    };
 
                     foreach (var motor in VM.Motors.Where(motor => row.Motors[motor.Index])) {
                         valueSyms.AddRange(moveProps.Select(prop => tags[motor, prop].Symbol));

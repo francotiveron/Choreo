@@ -15,6 +15,9 @@ namespace Choreo {
             Plc.Upload(JogVelSlider.Value);
         }
 
-        private void ClearButton_Click(object sender, System.Windows.RoutedEventArgs e) => Plc.ClearMotionAndJog();
+        private void ClearButton_Click(object sender, System.Windows.RoutedEventArgs e) {
+            Plc.ClearMotionAndJog();
+            Plc.Upload(default(Preset));
+        }
     }
 }

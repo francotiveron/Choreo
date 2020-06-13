@@ -52,8 +52,11 @@ namespace Choreo.Logging {
             });
         }
 
-        public void Alert(string message, string caption) => Popup<AlertPopup>(message, caption, true, false);
-        public bool OkCancel(string message, string caption) => Popup<AlertPopup>(message, caption, true, true) ?? false;
+        public void Pop(string message, string caption, AlertPopup.Themes theme, bool withOk, bool withCancel) => Popup<AlertPopup>(message, caption, theme, withOk, withCancel);
+        public void PopInfo(string message, string caption) => Pop(message, caption, AlertPopup.Themes.Info, true, false);
+        public void PopWarning(string message, string caption) => Pop(message, caption, AlertPopup.Themes.Warning, true, false);
+        public void PopError(string message, string caption) => Pop(message, caption, AlertPopup.Themes.Error, true, false);
+        public bool OkCancel(string message, string caption) => Popup<AlertPopup>(message, caption, AlertPopup.Themes.Info, true, true) ?? false;
 
         //public void Alert(string message, string caption) {
         //    _ = MessageBox.Show(Application.Current.MainWindow, message, caption);

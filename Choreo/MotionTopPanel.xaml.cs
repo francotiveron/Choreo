@@ -18,7 +18,7 @@ namespace Choreo {
                 var window = Application.Current.MainWindow as MotionWindow;
                 var page = window?.Page;
                 if (DataItemsValid(page.EditableElementsGrid.Children)) VM.SaveMotionEditing();
-                else Log.Alert("Please insert valid data", "Invalid Data Entry");
+                else Log.PopInfo("Please insert valid data", "Invalid Data Entry");
             }
         }
     }

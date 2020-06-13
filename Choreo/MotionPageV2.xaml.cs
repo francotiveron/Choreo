@@ -80,7 +80,8 @@ namespace Choreo {
             cb.SetBinding(CheckBox.IsCheckedProperty, b);
 
             cb.IsEnabled = !isHook;
-            cb.Visibility = axis.IsOperational ? Visibility.Visible : Visibility.Hidden;
+            var isGroupedMotor = axis is Motor m && m.IsGrouped;
+            cb.Visibility = axis.IsOperational && ! isGroupedMotor ? Visibility.Visible : Visibility.Hidden;
 
             cb.Click += Cb_Click;
             return cb;

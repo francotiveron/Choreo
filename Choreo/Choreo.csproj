@@ -5,6 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E2CE80D1-C8AC-4881-9474-A9A865DF46FB}</ProjectGuid>
+    <XamlDebuggingInformation>True</XamlDebuggingInformation>
     <OutputType>Exe</OutputType>
     <RootNamespace>Choreo</RootNamespace>
     <AssemblyName>Choreo</AssemblyName>
@@ -95,6 +96,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Reactive, Version=4.4.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Reactive.4.4.1\lib\net46\System.Reactive.dll</HintPath>
@@ -438,6 +440,10 @@
     </Compile>
     <Resource Include="VerendusLogo.ico" />
     <Resource Include="Pictures\VerendusLogo.ico" />
+    <None Include="Resources\WarningSign1.png" />
+    <Resource Include="Pictures\WarningSign.png" />
+    <Resource Include="Pictures\InfoSign.png" />
+    <Resource Include="Pictures\ErrorSign.png" />
     <Content Include="TwinCAT\UIFB.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

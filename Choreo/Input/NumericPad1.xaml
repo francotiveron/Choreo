@@ -61,8 +61,8 @@
             FontSize="30" 
             MaxLength="10" 
             BorderThickness="3" 
-            TextAlignment="Right" 
             IsReadOnly="True"
+            TextAlignment="Right" 
             />
         <Button Click="Button_Click" Grid.Row="1" Grid.Column="0" x:Name="NUM7" Content="7" />
         <Button Click="Button_Click"  Grid.Row="1" Grid.Column="1" x:Name="NUM8" Content="8"/>

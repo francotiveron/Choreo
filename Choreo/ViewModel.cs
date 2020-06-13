@@ -48,8 +48,19 @@ namespace Choreo {
                 }
             }
         }
+        private void PresetCompleteChanged() {
+            if (PresetComplete) {
+                if (LoadedPreset > 0) {
+                    Plc.Upload(default(Preset));
+                }
+            }
+        }
 
-        bool JogOrMoveActive => Axes.Any(ax => ax.MREnable || ax.MAEnable || ax.JogUpEnable || ax.JogDnEnable);
+        bool JogOrMoveEnabled => Axes.Any(ax => ax.MREnable || ax.MAEnable || ax.JogUpEnable || ax.JogDnEnable);
+        public bool MoveActive {
+            get => Motors.Any(ax => ax.Active);
+            set => Notify();
+        }
 
         #region Runtime Properties
         private bool cueLoaded;
@@ -64,6 +75,20 @@ namespace Choreo {
         public bool CueComplete {
             get { return cueComplete; }
             set { cueComplete = value; Notify(); CueCompleteChanged(); }
+        }
+
+        private bool presetLoaded;
+        [Plc("Preset_loaded")]
+        public bool PresetLoaded {
+            get { return presetLoaded; }
+            set { presetLoaded = value; Notify(); }
+        }
+
+        bool presetComplete;
+        [Plc("Preset_Complete")]
+        public bool PresetComplete {
+            get { return presetComplete; }
+            set { presetComplete = value; Notify(); PresetCompleteChanged(); }
         }
 
         bool globalESStatus;
@@ -137,8 +162,8 @@ namespace Choreo {
         }
         public bool IsGroupEditing => GroupBeingEdited > 0;
         public void BeginGroupEditing(int group) {
-            if (JogOrMoveActive) {
-                Log.Alert("Please clear all Moves and Jogs before editing group", "Operation Conflict");
+            if (JogOrMoveEnabled) {
+                Log.PopWarning("Please clear all Moves and Jogs before editing group", "Operation Conflict");
                 return;
             }
             GroupBeingEdited = group + 1;
@@ -274,6 +299,12 @@ namespace Choreo {
         public int LoadedCue {
             get { return loadedCue; }
             set { loadedCue = value; Notify(); }
+        }
+
+        private int loadedPreset;
+        public int LoadedPreset {
+            get { return loadedPreset; }
+            set { loadedPreset = value; Notify(); }
         }
 
         public bool IsAdmin {

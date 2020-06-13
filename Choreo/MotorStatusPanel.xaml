@@ -37,6 +37,9 @@
         </MultiBinding>
     </UserControl.Background>
     <Grid>
+        <Grid.Background>
+            <ImageBrush/>
+        </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="7*"/>
             <ColumnDefinition />

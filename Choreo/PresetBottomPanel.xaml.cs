@@ -48,10 +48,11 @@ namespace Choreo {
             try {
                 var preset = (Preset)value[0];
                 var edited = (int)value[1];
+                var loaded = (int)value[2];
+                var moveActive = (bool)value[3];
                 if (preset.Number == edited) return Brushes.Aquamarine;
-                else
-                if (!preset.IsEmpty) return Brushes.Blue;
-                else return Brushes.DarkBlue;
+                else if (preset.IsEmpty) return Brushes.Gray;
+                else return preset.Number == loaded ? (moveActive ? Brushes.Lime : Brushes.Blue) : Brushes.DarkBlue;
             }
             catch { }
 

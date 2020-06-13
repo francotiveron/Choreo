@@ -32,6 +32,7 @@ namespace Choreo.Input {
         }
 
         IStrVal dataItem;
+        bool isNew;
         public IStrVal DataItem {
             get => dataItem;
             set {
@@ -48,6 +49,9 @@ namespace Choreo.Input {
                     }
                     Visibility = Visibility.Visible;
                     Value = dataItem.StrVal;
+                    ValueTextBox.Focus();
+                    ValueTextBox.SelectAll();
+                    isNew = true;
                 }
             }
         }
@@ -85,9 +89,12 @@ namespace Choreo.Input {
                     AlNumEvent?.Invoke(this, new AlNumEventArgs { Name = but.Name, DataItem = DataItem }); ;
                     break;
                 default:
-                    if (but.Name.StartsWith("NUM") || but.Name.StartsWith("ALP")) Value += but.Content;
+                    if (but.Name.StartsWith("NUM") || but.Name.StartsWith("ALP"))
+                        if (isNew && ValueTextBox.SelectionLength > 0) Value = (string)but.Content;
+                        else Value += but.Content;
                     break;
             }
+            isNew = false;
         }
 
         void ToggleCapsLock() {

@@ -30,7 +30,6 @@ namespace Choreo {
         public bool ContainsGroup(int groupIndex) => GroupPositions.ContainsKey(groupIndex);
 
         public bool IsEmpty => MotorPositions.Count == 0 && GroupPositions.Count == 0;
-
         public bool Toggle(object element) {
             switch(element) {
                 case Motor motor:
@@ -70,10 +69,10 @@ namespace Choreo {
         /*
          * Rewrites actual positions. This is required for the following scenario
          * 1 - Preset is empty
-         * 2 - Preset is creater => axes are selected in the UI => positions are copied in preset
+         * 2 - Preset is created => axes are selected in the UI => positions are copied in preset
          * 3 - Axes are moved for normal operation
-         * 4 - User open preset and save => as no touch has been performed, new axes position are not updated in the preset
-         * Calling Update before save fixes this scenario
+         * 4 - User opens preset and save => as no touch has been performed, new axes position are not updated in the preset
+         * Calling Update before Save fixes this scenario
          */
         public void Update() {
             foreach (var i in MotorPositions.Keys.ToArray()) MotorPositions[i] = VM.Motors[i].Position;

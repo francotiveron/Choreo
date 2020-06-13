@@ -43,7 +43,7 @@ namespace Choreo
             if (VM.IsGroupEditing && DataContext is Motor m) {
                 if (m.Group == 0) {
                     if (m.IsPreset) {
-                        Log.Alert("Motors already in Presets cannot be grouped", "Motor in Preset");
+                        Log.PopWarning("Motors already in Presets cannot be grouped", "Motor in Preset");
                         return;
                     }
                     m.Group = VM.GroupBeingEdited;
@@ -149,7 +149,7 @@ namespace Choreo
         bool IsGroupedMotor => DataContext is Motor m && m.IsGrouped;
         bool CheckGroupedMotor() {
             if (IsGroupedMotor) {
-                Log.Alert("Motion/Jog is not available for grouped motors", "Operation Conflict");
+                Log.PopWarning("Motion/Jog is not available for grouped motors", "Operation Conflict");
                 return true;
             }
             return false;
@@ -161,6 +161,9 @@ namespace Choreo
     public class MotorPanelDarkeningConverter: IMultiValueConverter {
         public object Convert(object[] value, Type targetType, object parameter, CultureInfo culture)
         {
+            var userEnable = (bool)value[5];
+            if (!userEnable) return Visibility.Visible;
+            else
             if (VM.IsGroupEditing) {
                 switch (value[0]) {
                     case Motor m: return m.Group == VM.GroupBeingEdited ? Visibility.Hidden : Visibility.Visible;

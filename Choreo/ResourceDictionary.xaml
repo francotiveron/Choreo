@@ -59,9 +59,11 @@
     <Style x:Key="PresetButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonDefaultStyle}">
         <Setter Property="Background">
             <Setter.Value>
-                <MultiBinding Converter="{StaticResource PresetBottomPanelButtonColorConverter}" FallbackValue="DarkBlue">
+                <MultiBinding Converter="{StaticResource PresetBottomPanelButtonColorConverter}" FallbackValue="Gray">
                     <Binding Path="." />
                     <Binding Source="{x:Static local:Globals.VM}" Path="PresetBeingEdited"/>
+                    <Binding Source="{x:Static local:Globals.VM}" Path="LoadedPreset"/>
+                    <Binding Source="{x:Static local:Globals.VM}" Path="MoveActive"/>
                 </MultiBinding>
             </Setter.Value>
         </Setter>
@@ -194,7 +196,7 @@
     </Style>
     <local:CurrentPageVisibilityConverter x:Key="CurrentPageVisibilityConverter"/>
     <Style x:Key="PopupStyle" TargetType="{x:Type logging:Popup}">
-        <Setter Property="Background" Value="Black" />
+        <Setter Property="Background" Value="#222222" />
         <Setter Property="Foreground" Value="White" />
         <Setter Property="FontSize" Value="20" />
     </Style>

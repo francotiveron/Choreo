@@ -44,7 +44,9 @@
                         <Label Content="{Binding Name}" Grid.Column="1"/>
                         <Label Content="{Binding Duration}" Grid.Column="2" ContentStringFormat="mm\:ss" />
                         <Label Grid.Column="3" Content="{Binding Path=Enabled, Converter={qc:QuickConverter '$P ? \'Enabled\' : \'Disabled\''}}"/>
-                        <Border Grid.Column="4" Background="#FF03DAA9" CornerRadius="5" Margin="0,0,10,0">
+                        <Border Grid.Column="4" CornerRadius="5" Margin="0,0,10,0"
+                            Background="{Binding Source={x:Static local:Globals.VM}, Path=MoveActive, Converter={qc:QuickConverter '$P ? new SolidColorBrush(Colors.Lime) : new SolidColorBrush(Colors.Blue)'}}"
+                            >
                             <Border.Visibility>
                                 <MultiBinding Converter="{StaticResource LoadedCueVisibilityConverter}">
                                     <Binding Path="."/>
@@ -52,7 +54,10 @@
                                 </MultiBinding>
                             </Border.Visibility>
                             <!--Visibility="{Binding Source={x:Static local:Globals.VM}, Path=LoadedCue, Converter={StaticResource LoadedCueVisibilityConverter}}">-->
-                            <Label Content="loaded" Foreground="Black" HorizontalAlignment="Center" FontWeight="Bold"/>
+                            <!--<Label Content="loaded" Foreground="Black" HorizontalAlignment="Center" FontWeight="Bold"/>-->
+                            <Label Foreground="Black" HorizontalAlignment="Center" FontWeight="Bold"
+                                   Content="{Binding Source={x:Static local:Globals.VM}, Path=MoveActive, Converter={qc:QuickConverter '$P ? \'running\' : \'loaded\''}}"
+                                   />
                         </Border>
                     </Grid>
                 </DataTemplate>
