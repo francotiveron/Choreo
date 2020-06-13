@@ -68,7 +68,7 @@ namespace Choreo {
         CheckBox CreateCheckBox(Axis axis, int i, string binding, bool isHook) {
             var cb = new CheckBox();
             cb.VerticalContentAlignment = VerticalAlignment.Center;
-            cb.HorizontalAlignment = HorizontalAlignment.Center;
+            cb.HorizontalAlignment = HorizontalAlignment.Left;
             cb.SetValue(Grid.RowProperty, i % 4);
             cb.SetValue(Grid.ColumnProperty, i / 4);
 

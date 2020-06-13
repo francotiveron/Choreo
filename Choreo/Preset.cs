@@ -28,7 +28,18 @@ namespace Choreo {
 
         public bool ContainsMotor(int motorIndex) => MotorPositions.ContainsKey(motorIndex);
         public bool ContainsGroup(int groupIndex) => GroupPositions.ContainsKey(groupIndex);
-
+        static readonly double realisedWindow = 1.0 / 12.0 / 10.0; //a tenth of inch in feets
+        public bool Realised { 
+            get {
+                bool SamePos(double p1, double p2) => System.Math.Abs(p1 - p2) <= realisedWindow;
+                return
+                    !IsEmpty
+                    &&
+                    MotorPositions.All(mp => SamePos(mp.Value, VM.Motors[mp.Key].Position))
+                    &&
+                    GroupPositions.All(gp => SamePos(gp.Value, VM.Groups[gp.Key].Position));
+            }
+        }
         public bool IsEmpty => MotorPositions.Count == 0 && GroupPositions.Count == 0;
         public bool Toggle(object element) {
             switch(element) {
@@ -46,7 +57,6 @@ namespace Choreo {
             }
             return false;
         }
-
 
         string nameBackup;
         Dictionary<int, double> MotorPositionsBackup = new Dictionary<int, double>();
@@ -77,6 +87,7 @@ namespace Choreo {
         public void Update() {
             foreach (var i in MotorPositions.Keys.ToArray()) MotorPositions[i] = VM.Motors[i].Position;
             foreach (var i in GroupPositions.Keys.ToArray()) GroupPositions[i] = VM.Groups[i].Position;
+            MultiNotify("Realised");
         }
     }
 }

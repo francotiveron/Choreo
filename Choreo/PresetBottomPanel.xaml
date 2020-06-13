@@ -17,13 +17,30 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Button Grid.Column ="0" Style="{StaticResource PresetButtonStyle}" PreviewMouseDown="Button_MouseDown" PreviewMouseUp="Button_MouseUp" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Presets[0]}"/>
-        <Button Grid.Column ="1" Style="{StaticResource PresetButtonStyle}" PreviewMouseDown="Button_MouseDown" PreviewMouseUp="Button_MouseUp" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Presets[1]}"/>
-        <Button Grid.Column ="2" Style="{StaticResource PresetButtonStyle}" PreviewMouseDown="Button_MouseDown" PreviewMouseUp="Button_MouseUp" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Presets[2]}"/>
-        <Button Grid.Column ="3" Style="{StaticResource PresetButtonStyle}" PreviewMouseDown="Button_MouseDown" PreviewMouseUp="Button_MouseUp" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Presets[3]}"/>
-        <Button Grid.Column ="4" Style="{StaticResource PresetButtonStyle}" PreviewMouseDown="Button_MouseDown" PreviewMouseUp="Button_MouseUp" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Presets[4]}"/>
-        <Button Grid.Column ="5" Style="{StaticResource PresetButtonStyle}" PreviewMouseDown="Button_MouseDown" PreviewMouseUp="Button_MouseUp" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Presets[5]}"/>
-        <Button Grid.Column ="6" Style="{StaticResource PresetButtonStyle}" PreviewMouseDown="Button_MouseDown" PreviewMouseUp="Button_MouseUp" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Presets[6]}"/>
-        <Button Grid.Column ="7" Style="{StaticResource PresetButtonStyle}" PreviewMouseDown="Button_MouseDown" PreviewMouseUp="Button_MouseUp" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Presets[7]}"/>
+        <Border Grid.Column ="0" Style="{StaticResource PresetButtonBorderStyle}" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Presets[0]}">
+            <Button Style="{StaticResource PresetButtonStyle}" PreviewMouseDown="Button_MouseDown" PreviewMouseUp="Button_MouseUp"/>
+        </Border>
+        <Border Grid.Column ="1" Style="{StaticResource PresetButtonBorderStyle}" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Presets[1]}">
+            <Button Style="{StaticResource PresetButtonStyle}" PreviewMouseDown="Button_MouseDown" PreviewMouseUp="Button_MouseUp"/>
+        </Border>
+        <Border Grid.Column ="2" Style="{StaticResource PresetButtonBorderStyle}" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Presets[2]}">
+            <Button Style="{StaticResource PresetButtonStyle}" PreviewMouseDown="Button_MouseDown" PreviewMouseUp="Button_MouseUp"/>
+        </Border>
+        <Border Grid.Column ="3" Style="{StaticResource PresetButtonBorderStyle}" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Presets[3]}">
+            <Button Style="{StaticResource PresetButtonStyle}" PreviewMouseDown="Button_MouseDown" PreviewMouseUp="Button_MouseUp"/>
+        </Border>
+        <Border Grid.Column ="4" Style="{StaticResource PresetButtonBorderStyle}" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Presets[4]}">
+            <Button Style="{StaticResource PresetButtonStyle}" PreviewMouseDown="Button_MouseDown" PreviewMouseUp="Button_MouseUp"/>
+        </Border>
+        <Border Grid.Column ="5" Style="{StaticResource PresetButtonBorderStyle}" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Presets[5]}">
+            <Button Style="{StaticResource PresetButtonStyle}" PreviewMouseDown="Button_MouseDown" PreviewMouseUp="Button_MouseUp"/>
+        </Border>
+        <Border Grid.Column ="6" Style="{StaticResource PresetButtonBorderStyle}" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Presets[6]}">
+            <Button Style="{StaticResource PresetButtonStyle}" PreviewMouseDown="Button_MouseDown" PreviewMouseUp="Button_MouseUp"/>
+        </Border>
+        <Border Grid.Column ="7" Style="{StaticResource PresetButtonBorderStyle}" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Presets[7]}">
+            <Button Style="{StaticResource PresetButtonStyle}" PreviewMouseDown="Button_MouseDown" PreviewMouseUp="Button_MouseUp"/>
+        </Border>
+        <!--<Button Grid.Column ="1" Style="{StaticResource PresetButtonStyle}" PreviewMouseDown="Button_MouseDown" PreviewMouseUp="Button_MouseUp" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Presets[1]}"/>-->
     </Grid>
 </UserControl>

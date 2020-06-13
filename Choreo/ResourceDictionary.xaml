@@ -16,6 +16,7 @@
     <local:DataItemStatusBrushConverter x:Key="DataItemStatusBrushConverter"/>
     <local:DataItemEnablingConverter x:Key="DataItemEnablingConverter"/>
     <local:PresetBottomPanelButtonColorConverter x:Key="PresetBottomPanelButtonColorConverter"/>
+    <local:PresetBottomPanelButtonBorderColorConverter x:Key="PresetBottomPanelButtonBorderColorConverter"/>
     <local:PositionConverter x:Key="PositionConverter"/>
     <local:PasswordConverter x:Key="PasswordConverter"/>
     <local:MotorStatusConverter x:Key="MotorStatusConverter"/>
@@ -67,10 +68,20 @@
                 </MultiBinding>
             </Setter.Value>
         </Setter>
-        <Setter Property="Margin" Value="10"/>
         <Setter Property="Padding" Value="10,0,10,0"/>
-        <Setter Property="Margin" Value="10"/>
         <Setter Property="Content" Value="{Binding FullName, FallbackValue=Preset X}"/>
+    </Style>
+    <Style x:Key="PresetButtonBorderStyle" TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush">
+            <Setter.Value>
+                <MultiBinding Converter="{StaticResource PresetBottomPanelButtonBorderColorConverter}" >
+                    <Binding Path="." />
+                    <Binding Source="{x:Static local:Globals.VM}" Path="MoveActive"/>
+                    <Binding Path="Realised" />
+                </MultiBinding>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderThickness" Value="10"/>
     </Style>
     <Style TargetType="{x:Type MenuItem}">
         <Setter Property="FontSize" Value="26"/>
