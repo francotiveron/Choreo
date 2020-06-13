@@ -22,9 +22,40 @@
                     <Style TargetType="Button">
                         <Setter Property="Background" Value="Red"/>
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Source={x:Static local:Globals.Plc}, Path=IsOn}" Value="True">
+                            <!--<DataTrigger Binding="{Binding Source={x:Static local:Globals.Plc}, Path=IsOn}" Value="True">
                                 <Setter Property="Background" Value="Green"/>
-                            </DataTrigger>
+                            </DataTrigger>-->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Source={x:Static local:Globals.Plc}, Path=IsConnectionOK}" Value="True"/>
+                                    <Condition Binding="{Binding Source={x:Static local:Globals.Plc}, Path=IsWatchdogOK}" Value="False"/>
+                                    <Condition Binding="{Binding Source={x:Static local:Globals.Plc}, Path=AreSymbolsOK}" Value="False"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" Value="Blue"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Source={x:Static local:Globals.Plc}, Path=IsConnectionOK}" Value="True"/>
+                                    <Condition Binding="{Binding Source={x:Static local:Globals.Plc}, Path=IsWatchdogOK}" Value="False"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" Value="Gold"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Source={x:Static local:Globals.Plc}, Path=IsConnectionOK}" Value="True"/>
+                                    <Condition Binding="{Binding Source={x:Static local:Globals.Plc}, Path=IsWatchdogOK}" Value="True"/>
+                                    <Condition Binding="{Binding Source={x:Static local:Globals.Plc}, Path=AreSymbolsOK}" Value="False"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" Value="Magenta"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Source={x:Static local:Globals.Plc}, Path=IsConnectionOK}" Value="True"/>
+                                    <Condition Binding="{Binding Source={x:Static local:Globals.Plc}, Path=IsWatchdogOK}" Value="True"/>
+                                    <Condition Binding="{Binding Source={x:Static local:Globals.Plc}, Path=AreSymbolsOK}" Value="True"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" Value="Green"/>
+                            </MultiDataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Button.Style>

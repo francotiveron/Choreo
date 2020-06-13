@@ -20,7 +20,11 @@ namespace Choreo.Logging {
         
         public void Exception(Exception x, string message = null, [CallerMemberName] string caller = null, bool off = false) {
             if (!off) Error(x, message);
+#if DEBUG
             Popup<ExceptionPopup>(x, message, caller, off);
+#else
+            if (!off) PopError(message, "Exception");
+#endif
         }
 
         Dictionary<string, Exception> exOnceDict = new Dictionary<string, Exception>();
@@ -41,9 +45,8 @@ namespace Choreo.Logging {
                     Exception(x, message, caller);
                 }
             }
-            return default(T); 
+            return default; 
         }
-
 
         bool? Popup<T>(params object[] @params) where T: Popup {
             return dsp.Invoke(() => {

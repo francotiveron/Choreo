@@ -36,9 +36,8 @@ namespace Choreo.TwinCAT {
     {
         public static IPlc New() => new AdsPlc(Cfg.PlcAmsNetId, Cfg.PlcAmsPort).Init();
     }
-    
-    class AdsPlc: PropertyChangedNotifier, IPlc
-    {
+
+    class AdsPlc : PropertyChangedNotifier, IPlc {
         AdsSession adsSession;
         IDisposable notificationSubscription;
         IObserver<ValueChangedArgs> symbolNotificationObserver;
@@ -50,8 +49,7 @@ namespace Choreo.TwinCAT {
         }
 
         AdsConnection Connection => adsSession.Connection;
-        public AdsPlc Init()
-        {
+        public AdsPlc Init() {
             adsSession.Connect();
             adsSession.ConnectionStateChanged += Session_ConnectionStateChanged;
             tags = new TagCollection();
@@ -61,9 +59,12 @@ namespace Choreo.TwinCAT {
             return this;
         }
 
-        bool IsConnectionOK { get; set; }
-        bool IsWatchdogOK { get; set; }
-        bool AreSymbolsOK { get; set; }
+        bool isConnectionOK;
+        bool isWatchdogOK;
+        bool areSymbolsOK;
+        public bool IsConnectionOK { get => isConnectionOK; set { isConnectionOK = value; Notify(); } }
+        public bool IsWatchdogOK { get => isWatchdogOK; set { isWatchdogOK = value; Notify(); } }
+        public bool AreSymbolsOK { get => areSymbolsOK; set { areSymbolsOK = value; Notify(); } }
         public bool IsOn => IsConnectionOK && IsWatchdogOK && AreSymbolsOK;
 
         #region Monitor
@@ -72,6 +73,7 @@ namespace Choreo.TwinCAT {
         }
 
         int watchdogCounter = int.MaxValue;
+
         void Monitor(object state) {
             monitorTimer.Change(Timeout.Infinite, Timeout.Infinite);
             bool wasOn = IsOn;
@@ -149,16 +151,13 @@ namespace Choreo.TwinCAT {
         #region Events
         void Conn_AdsSymbolVersionChanged(object sender, EventArgs e) => AreSymbolsOK = false;
 
-        void Conn_AdsNotificationError(object sender, AdsNotificationErrorEventArgs e)
-        {
+        void Conn_AdsNotificationError(object sender, AdsNotificationErrorEventArgs e) {
         }
 
-        void Conn_AdsStateChanged(object sender, AdsStateChangedEventArgs e)
-        {
+        void Conn_AdsStateChanged(object sender, AdsStateChangedEventArgs e) {
         }
 
-        void Session_ConnectionStateChanged(object sender, ConnectionStateChangedEventArgs e) 
-        { 
+        void Session_ConnectionStateChanged(object sender, ConnectionStateChangedEventArgs e) {
         }
         #endregion
 
@@ -246,11 +245,11 @@ namespace Choreo.TwinCAT {
 
             var enabSyms = new List<ISymbol>();
             var valueSyms = new List<ISymbol>();
-            var enaProps = new string[] { 
+            var enaProps = new string[] {
                 motion.Relative ? nameof(Axis.MREnable): nameof(Axis.MAEnable)
                 , motion.Relative ? nameof(Axis.MAEnable): nameof(Axis.MREnable)
                 , nameof(Axis.JogUpEnable)
-                , nameof(Axis.JogDnEnable) 
+                , nameof(Axis.JogDnEnable)
             };
             var move = motion.Relative ? motion.RelativeSetpoint : motion.AbsoluteSetpoint;
 
@@ -311,7 +310,7 @@ namespace Choreo.TwinCAT {
             }
         }
 
-        static readonly string[] cueProps = new string[] { nameof(ViewModel.CueLoaded), nameof(ViewModel.CueComplete)};
+        static readonly string[] cueProps = new string[] { nameof(ViewModel.CueLoaded), nameof(ViewModel.CueComplete) };
         void Upload(Cue cue) {
             var enabValues = (object[])allEnabValues.Clone();
 
@@ -360,7 +359,7 @@ namespace Choreo.TwinCAT {
 
         delegate int PlcMethodDelegate(params object[] @params);
         delegate int PlcMethodOutDelegate<T>(out T output, params object[] @params);
-        PlcMethodDelegate PlcMethod([CallerMemberName]string method = null) {
+        PlcMethodDelegate PlcMethod([CallerMemberName] string method = null) {
             if (!IsOn) return null;
             int fun(params object[] @params) {
                 var success = Connection.TryInvokeRpcMethod("GVL.UI", method, @params, out var res) == AdsErrorCode.NoError;
@@ -369,7 +368,7 @@ namespace Choreo.TwinCAT {
             return IsOn ? fun : new PlcMethodDelegate((_) => -1);
         }
 
-        PlcMethodOutDelegate<T> PlcMethod<T>(T outObj = null, [CallerMemberName]string method = null) where T:class {
+        PlcMethodOutDelegate<T> PlcMethod<T>(T outObj = null, [CallerMemberName] string method = null) where T : class {
             if (!IsOn) return null;
             var outSpecs = new AnyTypeSpecifier[] { new AnyTypeSpecifier(outObj) };
             int fun<U>(out U output, params object[] @params) {
