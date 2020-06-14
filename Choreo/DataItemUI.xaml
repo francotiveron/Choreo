@@ -37,7 +37,7 @@
                 <Label x:Name="Value" Content="{Binding ., FallbackValue=Value, TargetNullValue=Value}" Padding="0" Margin="5,0,0,0" Style="{StaticResource DataItemDataStyle}"/>
                 <Label x:Name="Unit"
                         Grid.Column="1"
-                        Content="{Binding MU, FallbackValue=MU,  TargetNullValue=MU, RelativeSource={RelativeSource AncestorType={x:Type local:DataItemUI}, Mode=FindAncestor}}"
+                        Content="{Binding MU, FallbackValue=MU, RelativeSource={RelativeSource AncestorType={x:Type local:DataItemUI}, Mode=FindAncestor}}"
                         Style="{StaticResource MeasuringUnitStyle}"
                 />
             </Grid>
