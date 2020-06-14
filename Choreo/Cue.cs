@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Forms;
 using static Choreo.Globals;
 
 namespace Choreo {
@@ -24,6 +25,13 @@ namespace Choreo {
         public Status Status => !(Motors.Any(m => m) || Groups.Any(g => g));
 
         public void Validate() => MultiNotify(nameof(Status));
+
+        public bool IsConsistent { 
+            get {
+                for(int i = 0; i < Motors.Length; i++) if (Motors[i] && (VM.Motors[i].IsGrouped || !VM.Motors[i].UserEnable)) return false;
+                return true;
+            }
+        }
 
         [Persistent]
         public ushort MotorsBitmap {
@@ -109,6 +117,7 @@ namespace Choreo {
         }
 
         public bool IsValid => Rows.All(row => row.Status == Status.Ok);
+        public bool IsConsistent => Rows.All(row => row.IsConsistent);
         public int Index => VM.Cues.IndexOf(this);
 
         [DataItem(title: "Cue Number")]

@@ -43,7 +43,7 @@ namespace Choreo {
         private void CueCompleteChanged() {
             if (CueComplete) {
                 if (LoadedCue > 0) {
-                    var nextCue = Cues.Skip(LoadedCue).FirstOrDefault(cue => cue.Enabled);
+                    var nextCue = Cues.Skip(LoadedCue).FirstOrDefault(cue => cue.Enabled && cue.IsConsistent);
                     Plc.Upload(nextCue);
                 }
             }

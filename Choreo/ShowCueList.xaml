@@ -65,9 +65,9 @@
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="Padding" Value="0"/>
-                    <Setter Property="Margin" Value="0"/>
-                    <!--<Setter Property="BorderThickness" Value="1"/>
-                    <Setter Property="BorderBrush" Value="Red"/>-->
+                    <Setter Property="Margin" Value="1"/>
+                    <Setter Property="BorderThickness" Value="2"/>
+                    <Setter Property="BorderBrush" Value="{Binding Path=IsConsistent, Converter={qc:QuickConverter '$P ? null : new SolidColorBrush(Colors.Red)'}}"/>
                     <Style.Triggers>
                         <Trigger Property="ItemsControl.AlternationIndex"  Value="0">
                             <Setter Property="Background" Value="#222222" />
