@@ -28,7 +28,8 @@ namespace Choreo {
 
         public bool IsConsistent { 
             get {
-                for(int i = 0; i < Motors.Length; i++) if (Motors[i] && (VM.Motors[i].IsGrouped || !VM.Motors[i].UserEnable)) return false;
+                for (int i = 0; i < Motors.Length; i++) if (Motors[i] && (VM.Motors[i].IsGrouped || !VM.Motors[i].UserEnable)) return false;
+                for (int i = 0; i < Groups.Length; i++) if (Groups[i] && !VM.Groups[i].UserEnable) return false;
                 return true;
             }
         }

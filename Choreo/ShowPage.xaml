@@ -18,14 +18,14 @@
         </Grid.ColumnDefinitions>
         <StackPanel Margin="10,10,10,0" Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
             <Button x:Name="DisableCueButton" 
-                    Visibility="{Binding ElementName=CueList, Path=SelectedCue, Converter={qc:QuickConverter '$P == null ? Visibility.Hidden : Visibility.Visible'}}"
-                    Content="{Binding ElementName=CueList, Path=SelectedCue.Enabled, Converter={qc:QuickConverter '$P ? \'Disable Cue\' : \'Enable Cue\''}}"
+                    IsEnabled="{Binding ElementName=CueList, Path=SelectedCue, Converter={qc:QuickConverter '$P == null ? False : True'}}"
+                    Content="{Binding ElementName=CueList, Path=SelectedCue.Enabled, Converter={qc:QuickConverter '$P ? \'Disable Cue\' : \'Enable Cue\''}, FallbackValue=Enable Cue}"
                     Click="DisableCueButton_Click" 
                     Style="{StaticResource TopBarCommandButtonStyle}"
                     Padding="5"
                     />
             <Button x:Name="LoadCueButton" 
-                    Visibility="{Binding ElementName=CueList, Path=SelectedCue, Converter={qc:QuickConverter '$P == null ? Visibility.Hidden : Visibility.Visible'}}"
+                    IsEnabled="{Binding ElementName=CueList, Path=SelectedCue, Converter={qc:QuickConverter '$P == null ? False : True'}}"
                     Background="{Binding Source={x:Static local:Globals.VM}, Path=CueLoaded, Converter={qc:QuickConverter '$P ? new SolidColorBrush(Colors.Crimson) : null'}}"
                     Content="Load Cue"
                     Click="LoadCueButton_Click" 
