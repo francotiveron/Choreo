@@ -26,7 +26,7 @@
                 <RowDefinition Height="6*"/>
             </Grid.RowDefinitions>
             <Label x:Name="Label" HorizontalAlignment="Left"
-                    Content="{Binding Title, FallbackValue=Title, RelativeSource={RelativeSource AncestorType={x:Type local:DataItemUI}, Mode=FindAncestor}}"
+                    Content="{Binding Title, FallbackValue=Title, TargetNullValue=Title, RelativeSource={RelativeSource AncestorType={x:Type local:DataItemUI}, Mode=FindAncestor}}"
                     Style="{StaticResource DataItemLabelStyle}" Margin="5,0,0,0"
             />
             <Grid Grid.Row="1" >
@@ -34,10 +34,10 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Label x:Name="Value" Content="{Binding ., TargetNullValue=Value}" Padding="0" Margin="5,0,0,0" Style="{StaticResource DataItemDataStyle}"/>
+                <Label x:Name="Value" Content="{Binding ., FallbackValue=Value, TargetNullValue=Value}" Padding="0" Margin="5,0,0,0" Style="{StaticResource DataItemDataStyle}"/>
                 <Label x:Name="Unit"
                         Grid.Column="1"
-                        Content="{Binding MU, FallbackValue=MU, RelativeSource={RelativeSource AncestorType={x:Type local:DataItemUI}, Mode=FindAncestor}}"
+                        Content="{Binding MU, FallbackValue=MU,  TargetNullValue=MU, RelativeSource={RelativeSource AncestorType={x:Type local:DataItemUI}, Mode=FindAncestor}}"
                         Style="{StaticResource MeasuringUnitStyle}"
                 />
             </Grid>
