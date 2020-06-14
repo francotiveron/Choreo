@@ -24,10 +24,8 @@ namespace Choreo {
             var key = root.CreateSubKey(element);
             Write(key, obj);
         }
-        static object Read(string element, string setting) {
-            var key = root.OpenSubKey(element);
-            return key?.GetValue(setting);
-        }
+        static object Read(RegistryKey key, string setting) => key?.GetValue(setting);
+        static object Read(string element, string setting) => Read(root.OpenSubKey(element), setting);
         static void Read(RegistryKey key, object obj) {
             foreach (var pi in obj.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
                 if (null != pi.GetCustomAttribute<PersistentAttribute>())
@@ -98,9 +96,11 @@ namespace Choreo {
 
             var elementKey = $@"Cues\{cue.Id}";
             Write(elementKey, cue);
-            foreach(var row in cue.Rows) {
+            Write(elementKey, "Index", cue.Index);
+            foreach (var row in cue.Rows) {
                 var rowKey = $@"{elementKey}\Rows\{row.Id}";
                 Write(rowKey, row);
+                Write(rowKey, "Index", row.Index);
             }
         }
         public static void Load(Cue cue) {
@@ -111,15 +111,19 @@ namespace Choreo {
         static void LoadCue(Cue cue, RegistryKey cueRoot) {
             Read(cueRoot, cue);
             var rowsRoot = cueRoot.OpenSubKey("Rows");
-            cue.Rows.Clear();
             if (rowsRoot == null) return;
+            var dict = new SortedDictionary<int, CueRow>();
             foreach (var rowId in rowsRoot.GetSubKeyNames()) {
                 var rowRoot = rowsRoot.OpenSubKey(rowId);
                 if (rowRoot == null) break;
+                var idx = (int)Read(rowRoot, "Index");
                 var row = new CueRow(cue, rowId);
                 Read(rowRoot, row);
-                cue.Rows.Add(row);
+                dict[idx] = row;
+                //cue.Rows.Add(row);
             }
+            cue.Rows.Clear();
+            foreach (var row in dict.Values) cue.Rows.Add(row);
         }
 
         public static void Delete(Cue cue) {
@@ -132,14 +136,19 @@ namespace Choreo {
         }
         public static void SaveCues() => Save(VM.Cues);
         public static void LoadCues() {
-            VM.Cues.Clear();
             if (root.OpenSubKey("Cues") is RegistryKey cuesRoot) {
+                var dict = new SortedDictionary<int, Cue>();
                 foreach (var cueId in cuesRoot.GetSubKeyNames()) {
                     var cue = new Cue(cueId);
                     var cueRoot = cuesRoot.OpenSubKey(cueId);
+                    if (cueRoot == null) break;
+                    var idx = (int)Read(cueRoot, "Index");
                     LoadCue(cue, cueRoot);
-                    VM.Cues.Add(cue);
+                    dict[idx] = cue;
+                    //VM.Cues.Add(cue);
                 }
+                VM.Cues.Clear();
+                foreach (var cue in dict.Values) VM.Cues.Add(cue);
             }
         }
         #endregion
