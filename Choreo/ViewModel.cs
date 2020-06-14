@@ -7,6 +7,7 @@ using static Choreo.Storage;
 using static Choreo.Globals;
 using static System.Linq.Enumerable;
 using Choreo.UserManagement;
+using System.Reactive.Linq;
 
 namespace Choreo {
     public enum MainWindowPages { Home, Cueing, Show };
@@ -37,7 +38,9 @@ namespace Choreo {
             }
         }
         public List<Preset> Presets { get; } = new List<Preset>(Range(0, 8).Select(i => new Preset(i)));
+        //public ObservableCollection<Cue> Cues { get; } = new ObservableCollection<Cue>();
         public ObservableCollection<Cue> Cues { get; } = new ObservableCollection<Cue>();
+        public IEnumerable<Cue> VisibleCues => Cues.Where(cue => cue.Show);
         public Motion Motion { get; } = new Motion();
 
         private void CueCompleteChanged() {

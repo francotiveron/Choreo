@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="17.0" version="17.1.1" Modules="simple" RootPath="." Language="en" Id="{400404AF-B3C8-4C19-B59E-CE36993BD8FB}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="17.0" version="17.0" Modules="simple" RootPath="." Language="en" Id="{400404AF-B3C8-4C19-B59E-CE36993BD8FB}">
+  <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
+    <ROW Name="HiddenItems" Value="AppXProductDetailsComponent;AppXDependenciesComponent;AppXAppDetailsComponent;AppXVisualAssetsComponent;AppXCapabilitiesComponent;AppXAppDeclarationsComponent;AppXUriRulesComponent;FixupComponent;MsiXDiffComponent;MsixManifestEditorComponent"/>
+  </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_Choreo.exe" Value="..\Choreo\bin\Release"/>
@@ -36,7 +39,6 @@
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_UIFB.xml" Value="UIFB.xml"/>
     <ROW Property="ALLUSERS" Value="1"/>
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
-    <ROW Property="ARPPRODUCTICON" Value="VerendusLogo.exe" Type="8"/>
     <ROW Property="CTRLS" Value="2"/>
     <ROW Property="Manufacturer" Value="Verendus Industries"/>
     <ROW Property="ProductCode" Value="1033:{7DDE06DB-6F41-4C2A-B224-D5E24AB76AC8} " Type="16"/>
@@ -192,9 +194,6 @@
     <ROW Feature_="MainFeature" Component_="Choreo_ContentOutput_TwinCAT"/>
     <ROW Feature_="MainFeature" Component_="Choreo_ContentOutput"/>
     <ROW Feature_="MainFeature" Component_="Choreo_SymbolsOutput"/>
-  </COMPONENT>
-  <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
-    <ROW Name="VerendusLogo.exe" SourcePath="..\Choreo\Pictures\VerendusLogo.ico" Index="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
     <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>

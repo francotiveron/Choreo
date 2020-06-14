@@ -11,7 +11,7 @@
         <local:LoadedCueVisibilityConverter x:Key="LoadedCueVisibilityConverter"/>
     </UserControl.Resources>
     <Grid>
-        <ListView ItemsSource="{Binding Cues}" 
+        <ListView ItemsSource="{Binding VisibleCues}" 
                   Background="{x:Null}" 
                   BorderBrush="{x:Null}" 
                   Foreground="White" 

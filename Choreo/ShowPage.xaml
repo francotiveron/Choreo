@@ -10,7 +10,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -26,7 +27,7 @@
                     />
             <Button x:Name="LoadCueButton" 
                     IsEnabled="{Binding ElementName=CueList, Path=SelectedCue, Converter={qc:QuickConverter '$P == null ? False : True'}}"
-                    Background="{Binding Source={x:Static local:Globals.VM}, Path=CueLoaded, Converter={qc:QuickConverter '$P ? new SolidColorBrush(Colors.Crimson) : null'}}"
+                    Background="{Binding Source={x:Static local:Globals.VM}, Path=CueLoaded, Converter={qc:QuickConverter '$P ? new SolidColorBrush(Colors.Crimson) : new SolidColorBrush(Colors.Gray)'}}"
                     Content="Load Cue"
                     Click="LoadCueButton_Click" 
                     Style="{StaticResource TopBarCommandButtonStyle}"
@@ -41,5 +42,6 @@
         <local:ShowCueList x:Name="CueList" Grid.Row="1" Grid.Column="0"/>
         <Label Content="{qc:MultiBinding 'String.Format(\'Cue {0}: {1}\', $P0, $P1)', P0={Binding Number}, P1={Binding Name}}" Grid.Row="0" Grid.Column="1" DataContext="{Binding ElementName=CueList, Path=SelectedCue}"/>
         <local:ShowCueRowList x:Name="CueRowList" Grid.Row="1" Grid.Column="1" DataContext="{Binding ElementName=CueList, Path=SelectedCue}"/>
+        <local:MaGMonitor Grid.Row="2" Grid.ColumnSpan="2"/>
     </Grid>
 </UserControl>

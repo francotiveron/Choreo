@@ -110,6 +110,7 @@ namespace Choreo {
         }
         static void LoadCue(Cue cue, RegistryKey cueRoot) {
             Read(cueRoot, cue);
+            cue.Rows.Clear();
             var rowsRoot = cueRoot.OpenSubKey("Rows");
             if (rowsRoot == null) return;
             var dict = new SortedDictionary<int, CueRow>();
@@ -122,7 +123,6 @@ namespace Choreo {
                 dict[idx] = row;
                 //cue.Rows.Add(row);
             }
-            cue.Rows.Clear();
             foreach (var row in dict.Values) cue.Rows.Add(row);
         }
 
