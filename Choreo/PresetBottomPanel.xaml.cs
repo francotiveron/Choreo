@@ -54,7 +54,7 @@ namespace Choreo {
 
                 if (preset.Number == edited) return Brushes.Aquamarine;
                 else if (preset.IsEmpty) return Brushes.Gray;
-                else return preset.Number == loaded ? (moveActive ? Brushes.Lime : Brushes.Blue) : Brushes.DarkBlue;
+                else return preset.Number == loaded ? (moveActive ? Brushes.Lime : Brushes.Cyan) : Brushes.DarkBlue;
             }
             catch { }
 

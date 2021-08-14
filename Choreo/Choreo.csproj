@@ -518,9 +518,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Doc\ToDo.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Doc\Hrs.txt" />
   </ItemGroup>
   <ItemGroup>
