@@ -62,7 +62,7 @@
                 <Button x:Name="SaveNewPositionButton" Grid.Column="2" FontSize="16" Click="SaveNewPositionButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource TopBarCommandButtonStyle}">
-                            <Setter Property="Background" Value="{x:Null}"/>
+                            <Setter Property="Background" Value="Black"/>
                             <Setter Property="Content" Value="SAVE NEW POSITION"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding CalibrationSave}" Value="True">

@@ -19,5 +19,10 @@ namespace Choreo {
             Plc.ClearMotionAndJog();
             Plc.Upload(default(Preset));
         }
+
+        private void JogVelSlider_ValueChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<double> e)
+        {
+            Plc.Upload(JogVelSlider.Value);
+        }
     }
 }
