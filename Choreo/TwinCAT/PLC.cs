@@ -270,7 +270,7 @@ namespace Choreo.TwinCAT {
 
         void Upload(double jogVel) {
             var path = tags.PathOf(VM, nameof(ViewModel.JogVelocity));
-            Connection.WriteSymbol(path, jogVel * 100.0, false);
+            Connection.WriteSymbol(path, jogVel, false);
         }
 
         static readonly string[] presetProps = new string[] { nameof(ViewModel.PresetLoaded), nameof(ViewModel.PresetComplete) };

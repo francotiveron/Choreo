@@ -6,12 +6,40 @@
              xmlns:local="clr-namespace:Choreo"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1080" FontSize="24">
+    <Control.Resources>
+        <ControlTemplate x:Key="JogVelSlideTemplate" TargetType="ScrollBar">
+            <Grid>
+                <!--<Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="12"/>
+                </Grid.ColumnDefinitions>-->
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="1" BorderThickness="0" Background="Transparent" CornerRadius="4"/>
+                <RepeatButton Grid.Row="0" Background="#AAAAAA" Command="ScrollBar.LineDownCommand" Content="^" />
+                <Track Grid.Row="1" Name="PART_Track">
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton Background="#444444" Command="ScrollBar.PageDownCommand" />
+                    </Track.IncreaseRepeatButton>
+                    <Track.Thumb>
+                        <Thumb BorderBrush="#EEEEEE" BorderThickness="100" HorizontalAlignment="Stretch"/>
+                    </Track.Thumb>
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton Background="#444444" Command="ScrollBar.PageUpCommand" />
+                    </Track.DecreaseRepeatButton>
+                </Track>
+                <RepeatButton Grid.Row="2" Background="#AAAAAA" Command="ScrollBar.LineUpCommand" Content="v" />
+            </Grid>
+        </ControlTemplate>
+    </Control.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="24*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Grid Margin="0,0,10,0">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="10*"/>
@@ -74,47 +102,51 @@
                 <local:MotorPanel Grid.Row="0" Grid.Column="7" DataContext="{Binding Source={x:Static local:Globals.VM}, Path=Groups[7]}"/>
             </Grid>
         </Grid>
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1" Margin="5,0,10,0">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition Height="15*"/>
             </Grid.RowDefinitions>
             <Viewbox Grid.Row="0" Stretch="Uniform" VerticalAlignment="Bottom">
-                <Label Content="{Binding ElementName=JogVelSlider, Path=Value}" ContentStringFormat="00%"/>
+                <StackPanel Orientation="Horizontal" Margin="0" >
+                    <Label Content="{Binding JogVelocity}" ContentStringFormat="00" Padding="0" Margin="0"/>
+                    <Label Content="%" Padding="0" Margin="0"/>
+                </StackPanel>
             </Viewbox>
             <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*"/>
-                    <ColumnDefinition Width="2*"/>
-                </Grid.ColumnDefinitions>
-                <Slider 
-                    x:Name="JogVelSlider" 
+                <!--<Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>-->
+                <!--<ProgressBar 
                     Grid.Column="0" 
-                    Foreground="White" 
-                    Background="#333333" 
-                    BorderBrush="#FFF90505" 
-                    Maximum="1" 
-                    Orientation="Vertical" 
-                    TickFrequency="0.1" 
-                    TickPlacement="TopLeft" 
-                    Cursor="Hand" 
-                    Thumb.DragCompleted="JogVelSlider_DragCompleted"
-                    ValueChanged="JogVelSlider_ValueChanged"
-                    BorderThickness="2" 
-                    Focusable="False" 
-                    LargeChange="0.1" 
-                    SmallChange="0.01"
-                    Value="{Binding JogVelocity, Mode=OneWay}"
-                    />
-                <ProgressBar 
-                    Grid.Column="1" 
                     Background="{x:Null}" 
                     Foreground="Crimson" 
                     BorderBrush="{x:Null}" 
-                    Maximum="1"
+                    Maximum="100"
                     Orientation="Vertical" 
-                    Value="{Binding ElementName=JogVelSlider, Path=Value, TargetNullValue=0.5}"
-                    />
+                    Value="{Binding JogVelocity, Mode=OneWay}"
+                    />-->
+                <ScrollBar Template="{StaticResource JogVelSlideTemplate}"
+                    x:Name="JogVelSlider"
+                    Grid.Column="0" 
+                    Width="Auto"
+                    Margin="0"
+                    Padding="0"
+                    Foreground="White" 
+                    Background="{x:Null}" 
+                    Minimum="0" 
+                    Maximum="100" 
+                    ViewportSize="10"
+                    Orientation="Vertical" 
+                    Cursor="Hand" 
+                    ValueChanged="JogVelSlider_ValueChanged"
+                    BorderThickness="2" 
+                    Focusable="False" 
+                    LargeChange="10" 
+                    SmallChange="1"
+                    Value="{Binding JogVelocity, Mode=OneWay}"
+                />
             </Grid>
         </Grid>
     </Grid>

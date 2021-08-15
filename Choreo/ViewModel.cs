@@ -112,7 +112,7 @@ namespace Choreo {
         [Plc("Jog_Velocity")]
         public double JogVelocity {
             get { return jogVelocity; }
-            set { jogVelocity = value / 100.0; Notify(); }
+            set { jogVelocity = value; Notify(); }
         }
         #endregion
 
