@@ -194,8 +194,7 @@ namespace Choreo.TwinCAT {
                 , axis.UserEnable
             };
 
-            List<ISymbol> valueSyms = new List<ISymbol>();
-            valueSyms.AddRange(
+            var tagNames =
                 new string[] {
                     nameof(Axis.MinLoad)
                     , nameof(Axis.MaxLoad)
@@ -205,8 +204,15 @@ namespace Choreo.TwinCAT {
                     , nameof(Axis.SoftDnRotations)
                     , nameof(Axis.SoftUpRotations)
                     , nameof(Axis.UserEnable)
-                    }
-                .Select(propName => tags[axis, propName].Symbol));
+                    };
+
+            if (axis.IsMotor)
+            {
+                values = values.Append(axis.RotationsPerFoot).ToArray();
+                tagNames = tagNames.Append(nameof(Axis.RotationsPerFoot)).ToArray();
+            }
+
+            var valueSyms = tagNames.Select(name => tags[axis, name].Symbol).ToList();
 
             new SumSymbolWrite(Connection, valueSyms).Write(values);
             Connection.WriteSymbol(tags.PathOf(VM, nameof(ViewModel.ParameterWrite)), true, false);

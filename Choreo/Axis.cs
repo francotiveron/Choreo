@@ -8,7 +8,8 @@ using static Choreo.Globals;
 namespace Choreo {
     public class Axis : PropertyChangedNotifier {
         public Axis(int index) { Index = index; }
-
+        public bool IsGroup => this is Group;
+        public bool IsMotor => this is Motor;
         public virtual Status AxisStatus => Status.Ok;
         public virtual string AxisStatusDescription {
             get {
@@ -326,7 +327,7 @@ namespace Choreo {
         public Status LoadOffsStatus => Status.Ok;
 
         double rotationsPerFoot = 1.0;
-        [DataItem("r/ft", "Rotations/Foot"), Persistent]
+        [DataItem("r/ft", "Rotations/Foot"), Plc("Rotations_Per_Foot")]
         public double RotationsPerFoot {
             get => rotationsPerFoot;
             set {
