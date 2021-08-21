@@ -189,6 +189,8 @@ namespace Choreo.TwinCAT {
                 , axis.LoadOffs
                 , axis.MinVel
                 , axis.MaxVel
+                , axis.MaxAcc
+                , axis.MaxDec
                 , axis.SoftDnRotations
                 , axis.SoftUpRotations
                 , axis.UserEnable
@@ -201,15 +203,22 @@ namespace Choreo.TwinCAT {
                     , nameof(Axis.LoadOffs)
                     , nameof(Axis.MinVel)
                     , nameof(Axis.MaxVel)
+                    , nameof(Axis.MaxAcc)
+                    , nameof(Axis.MaxDec)
                     , nameof(Axis.SoftDnRotations)
                     , nameof(Axis.SoftUpRotations)
                     , nameof(Axis.UserEnable)
                     };
 
-            if (axis.IsMotor)
+            if (axis is Motor motor)
             {
                 values = values.Append(axis.RotationsPerFoot).ToArray();
-                tagNames = tagNames.Append(nameof(Axis.RotationsPerFoot)).ToArray();
+                tagNames = tagNames.Append(nameof(motor.RotationsPerFoot)).ToArray();
+            }
+            else if (axis is Group group)
+            {
+                values = values.Append(true).ToArray();
+                tagNames = tagNames.Append(nameof(group.Save)).ToArray();
             }
 
             var valueSyms = tagNames.Select(name => tags[axis, name].Symbol).ToList();
@@ -218,20 +227,28 @@ namespace Choreo.TwinCAT {
             Connection.WriteSymbol(tags.PathOf(VM, nameof(ViewModel.ParameterWrite)), true, false);
         }
 
-        void Download(Axis axis) {
-            List<ISymbol> valueSyms = new List<ISymbol>();
-            valueSyms.AddRange(
+        void Download(Axis axis)
+        {
+            var tagNames =
                 new string[] {
                     nameof(Axis.MinLoad)
                     , nameof(Axis.MaxLoad)
                     , nameof(Axis.LoadOffs)
                     , nameof(Axis.MinVel)
                     , nameof(Axis.MaxVel)
+                    , nameof(Axis.MaxAcc)
+                    , nameof(Axis.MaxDec)
                     , nameof(Axis.SoftDnRotations)
                     , nameof(Axis.SoftUpRotations)
                     , nameof(Axis.UserEnable)
-                    }
-                .Select(propName => tags[axis, propName].Symbol));
+                    };
+
+            if (axis is Motor motor)
+            {
+                tagNames = tagNames.Append(nameof(motor.RotationsPerFoot)).ToArray();
+            }
+
+            var valueSyms = tagNames.Select(name => tags[axis, name].Symbol).ToList();
 
             var values = new SumSymbolRead(Connection, valueSyms).Read();
             for (int i = 0; i < valueSyms.Count; i++) tags[valueSyms[i]].Push(values[i]);

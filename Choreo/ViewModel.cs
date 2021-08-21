@@ -146,6 +146,7 @@ namespace Choreo {
         public void BeginGroupSettingsEditing(int index) => GroupSettingsBeingEdited = index + 1;
         public void EndGroupSettingsEditing() => GroupSettingsBeingEdited = 0;
         public void GroupSettingsEditCancel() {
+            Plc.Download(Groups[GroupSettingsBeingEdited - 1]);
             Load(Groups[GroupSettingsBeingEdited - 1]);
             EndGroupSettingsEditing();
         }

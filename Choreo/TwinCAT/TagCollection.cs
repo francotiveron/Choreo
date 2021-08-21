@@ -35,7 +35,10 @@ namespace Choreo.TwinCAT {
                         break;
 
                     case Group g:
-                        path = $"GVL.Axis_{(g.Number + 16):00}_{_.plc.Path ?? _.pi.Name}";
+                        if (_.plc.Path is string _path && _path.StartsWith("GVL."))
+                            path = _path.Replace("NN", $"{ (g.Number):00}");
+                        else
+                            path = $"GVL.Axis_{(g.Number + 16):00}_{_.plc.Path ?? _.pi.Name}";
                         key = Tag.GetKey(nameof(Group), _.pi.Name, g.Number);
                         break;
                 }

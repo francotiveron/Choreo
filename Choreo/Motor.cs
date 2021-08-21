@@ -65,6 +65,14 @@ namespace Choreo {
             get => eSStatus;
             set { eSStatus = !value; Notify()(nameof(AxisStatus)); }
         }
+
+        [Plc("Rotations_Per_Foot")]
+        public override double RotationsPerFoot
+        {
+            get => base.RotationsPerFoot;
+            set => base.RotationsPerFoot = value;
+        }
+
         #endregion
 
         #region UI Properties

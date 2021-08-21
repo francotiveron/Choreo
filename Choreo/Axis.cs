@@ -25,6 +25,7 @@ namespace Choreo {
         public bool IsOperational => Present && UserEnable;
 
         #region Runtime+PLC Properties
+
         double rotations;
         [Plc("Act_Pos")]
         public double Rotations {
@@ -50,15 +51,15 @@ namespace Choreo {
         }
         public Status LoadStatus => Status.Ok;
 
-        [Plc("Min_Load")]
-        public double LoadMin {
-            set => MinLoad = value;
-        }
+        //[Plc("Min_Load")]
+        //public double LoadMin {
+        //    set => MinLoad = value;
+        //}
 
-        [Plc("Max_Load")]
-        public double LoadMax {
-            set => MaxLoad = value;
-        }
+        //[Plc("Max_Load")]
+        //public double LoadMax {
+        //    set => MaxLoad = value;
+        //}
 
         double moveValRotations;
         [Plc("Move_Val")]
@@ -259,7 +260,7 @@ namespace Choreo {
         public Status MinAccStatus => MinAcc < 0;
 
         double maxAcc;
-        [DataItem("fpm2", "Max Acceleration"), Persistent]
+        [DataItem("fpm2", "Max Acceleration"), Plc("Max_Accel")]
         public double MaxAcc {
             get => maxAcc;
             set { maxAcc = value; Notify()(nameof(DefAcc)); }
@@ -287,7 +288,7 @@ namespace Choreo {
         public Status MinDecStatus => MinDec < 0;
 
         double maxDec;
-        [DataItem("fpm2", "Max Deceleration"), Persistent]
+        [DataItem("fpm2", "Max Deceleration"), Plc("Max_Decel")]
         public double MaxDec {
             get => maxDec;
             set { maxDec = value; Notify()(nameof(DefDec)); }
@@ -327,10 +328,14 @@ namespace Choreo {
         public Status LoadOffsStatus => Status.Ok;
 
         double rotationsPerFoot = 1.0;
-        [DataItem("r/ft", "Rotations/Foot"), Plc("Rotations_Per_Foot")]
-        public double RotationsPerFoot {
+        
+        [DataItem("r/ft", "Rotations/Foot")]
+        public virtual double RotationsPerFoot
+        {
             get => rotationsPerFoot;
-            set {
+
+            set
+            {
                 var calVal = CalibrationValue;
                 var softUp = SoftUp;
                 var softDn = SoftDn;
@@ -341,6 +346,21 @@ namespace Choreo {
                 Notify()(nameof(Position), nameof(CalibrationValue), nameof(SoftUp), nameof(SoftDn));
             }
         }
+
+        //[DataItem("r/ft", "Rotations/Foot"), Plc("Rotations_Per_Foot")]
+        //public double RotationsPerFoot {
+        //    get => rotationsPerFoot;
+        //    set {
+        //        var calVal = CalibrationValue;
+        //        var softUp = SoftUp;
+        //        var softDn = SoftDn;
+        //        rotationsPerFoot = value <= 0.0 ? 1.0 : value;
+        //        CalibrationValue = calVal;
+        //        SoftUp = softUp;
+        //        SoftDn = softDn;
+        //        Notify()(nameof(Position), nameof(CalibrationValue), nameof(SoftUp), nameof(SoftDn));
+        //    }
+        //}
 
         #endregion
 

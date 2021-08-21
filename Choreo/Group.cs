@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Choreo.TwinCAT;
+using System.Linq;
 using System.Windows.Media;
 using static Choreo.Globals;
 
@@ -7,7 +8,13 @@ namespace Choreo {
         public static readonly Color[] GroupColors = { Colors.Red, Colors.Blue, Colors.Purple, Colors.Orange, Colors.DarkCyan, Colors.Green, Colors.Brown, Colors.Magenta };
         public Group(int index) : base(index) { }
 
-        //public bool Contains(int motorIndex) => VM.Motors[.Any(m => m.Group == Index);
+        bool save;
+        [Plc("GVL.Group_NN_Save")]
+        public bool Save
+        {
+            get => save;
+            set { save = !value; Notify()(nameof(Save)); }
+        }
 
         #region UI Properties
         public override Color Color {

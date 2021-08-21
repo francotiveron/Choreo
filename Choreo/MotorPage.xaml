@@ -12,9 +12,9 @@
     </UserControl.Resources>-->
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="16*"/>
             <ColumnDefinition Width="8*"/>
-            <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -25,9 +25,9 @@
             <!--<Viewbox Stretch="Fill">
                 <Label Content="CURRENT POSITION &amp; LOAD" Margin="20"/>
             </Viewbox>-->
-            <local:MotorPanel Margin="10"/>
+            <local:MotorPanel Margin="5,5,0,0"/>
         </StackPanel>
-        <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="5" x:Name="EditableElementsGrid"  FocusManager.IsFocusScope="True">
+        <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="0" x:Name="EditableElementsGrid"  FocusManager.IsFocusScope="True">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -139,7 +139,7 @@
             </Grid>
         </Grid>
         <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="2">
-            <inp:NumericPad1 x:Name="NumPad" Margin="20,20,20,5" Height="400" PadEvent="NumPad_PadEvent" />
+            <inp:NumericPad1 x:Name="NumPad" Margin="5,5,5,5" Height="400" PadEvent="NumPad_PadEvent" />
         </StackPanel>
         <Grid Grid.Row="1" Grid.ColumnSpan="3">
             <Grid.RowDefinitions>
