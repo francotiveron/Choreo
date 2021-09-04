@@ -96,7 +96,7 @@ namespace Choreo {
             get => minVel;
             set { minVel = value; Notify()(nameof(DefVel), nameof(MaxVel)); }
         }
-        public Status MinVelStatus => MinVel < 0 || MinVel > DefVel;
+        public virtual Status MinVelStatus => MinVel < 0 || MinVel > DefVel;
 
         double maxVel;
         [DataItem("fpm", "Max Velocity"), Plc("Max_Velocity")]
@@ -104,7 +104,7 @@ namespace Choreo {
             get => maxVel;
             set { maxVel = value; Notify()(nameof(MinVel), nameof(DefVel)); }
         }
-        public Status MaxVelStatus => MaxVel < DefVel;
+        public virtual Status MaxVelStatus => MaxVel < DefVel;
 
         bool mAEnable;
         [Plc("MA_Enable")]
@@ -265,7 +265,7 @@ namespace Choreo {
             get => maxAcc;
             set { maxAcc = value; Notify()(nameof(DefAcc)); }
         }
-        public Status MaxAccStatus => MaxAcc < DefAcc;
+        public virtual Status MaxAccStatus => MaxAcc < DefAcc;
 
         double defAcc;
         [DataItem("fpm2", "Default Acceleration"), Persistent]
@@ -293,7 +293,7 @@ namespace Choreo {
             get => maxDec;
             set { maxDec = value; Notify()(nameof(DefDec)); }
         }
-        public Status MaxDecStatus => MaxDec < DefDec;
+        public virtual Status MaxDecStatus => MaxDec < DefDec;
 
         double defDec;
         [DataItem("fpm2", "Default Deceleration"), Persistent]

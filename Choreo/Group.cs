@@ -24,6 +24,11 @@ namespace Choreo {
             }
         }
         public bool IsPreset => VM.Presets.Any(p => p.ContainsGroup(Index));
+
+        public override Status MinVelStatus => base.MinVelStatus || VM.Motors.Any(m => m.Group == Number && m.MinVel > MinVel);
+        public override Status MaxVelStatus => base.MaxVelStatus || VM.Motors.Any(m => m.Group == Number && m.MaxVel < MaxVel);
+        public override Status MaxAccStatus => base.MaxAccStatus || VM.Motors.Any(m => m.Group == Number && m.MaxAcc < MaxAcc);
+        public override Status MaxDecStatus => base.MaxDecStatus || VM.Motors.Any(m => m.Group == Number && m.MaxDec < MaxDec);
         #endregion
     }
 }

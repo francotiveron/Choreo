@@ -46,6 +46,12 @@ namespace Choreo
                         Log.PopWarning("Motors already in Presets cannot be grouped", "Motor in Preset");
                         return;
                     }
+                    var g = VM.Groups[VM.GroupBeingEdited - 1];
+                    if (!AreCompatible(m, g))
+                    {
+                        Log.PopWarning("Motor settings are incompatible with this group", "Motor incompatible");
+                        return;
+                    }
                     m.Group = VM.GroupBeingEdited;
                 }
                 else
