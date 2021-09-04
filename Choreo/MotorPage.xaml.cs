@@ -15,10 +15,27 @@ namespace Choreo {
             FocusManager.AddGotFocusHandler(this, Focus);
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e) => FocusManager.SetFocusedElement(EditableElementsGrid, SetPosition);
+        bool? _isGroup = null;
+        bool IsGroup
+        {
+            get
+            {
+                if (_isGroup is null)
+                {
+                    _isGroup = DataContext is Group;
+                }
+                return _isGroup.Value;
+            }
+        }
+
+        Grid Grid => IsGroup ? EditableElementsGridG : EditableElementsGrid;
+        DataItemUI AxisNameUI => IsGroup ? AxisNameG : AxisName;
+        DataItemUI SetPositionUI => IsGroup ? SetPositionG : SetPosition;
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e) => FocusManager.SetFocusedElement(Grid, SetPositionUI);
         private void Focus(object sender, RoutedEventArgs e) {
             if (e.OriginalSource is DataItemUI diui) {
-                if (diui == AxisName) {
+                if (diui == AxisNameUI) {
                     NumPad.DataItem = null;
                     AlNumPad.DataItem = diui;
                 }
@@ -29,10 +46,10 @@ namespace Choreo {
             }
             e.Handled = true;
         }
-        private void NumPad_PadEvent(object sender, Input.NumericPad1.PadEventArgs e) => FocusManager.SetFocusedElement(EditableElementsGrid, e.DataItem.Navigate(e.Name));
+        private void NumPad_PadEvent(object sender, Input.NumericPad1.PadEventArgs e) => FocusManager.SetFocusedElement(Grid, e.DataItem.Navigate(e.Name));
 
         private void AlNumPad_AlNumEvent(object sender, Input.AlphaNumericPad.AlNumEventArgs e) {
-            FocusManager.SetFocusedElement(EditableElementsGrid, null);
+            FocusManager.SetFocusedElement(Grid, null);
             AlNumPad.DataItem = null;
         }
 
