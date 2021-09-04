@@ -1,26 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using static Choreo.Globals;
 
-namespace Choreo {
+
+namespace Choreo
+{
     /// <summary>
     /// Interaction logic for ShowCueRowList.xaml
     /// </summary>
     public partial class ShowCueRowList : UserControl {
         public ShowCueRowList() {
             InitializeComponent();
+        }
+
+        private void Issues_Click(object sender, RoutedEventArgs e)
+        {
+            var row = (CueRow)((Control)sender).DataContext;
+            Log.Pop(row.InconsistencyMessage, "Cue Row Issues", Logging.AlertPopup.Themes.Error, true, false);
         }
     }
 
