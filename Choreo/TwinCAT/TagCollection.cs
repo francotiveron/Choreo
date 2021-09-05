@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using TwinCAT.TypeSystem;
 using static Choreo.Globals;
 
-namespace Choreo.TwinCAT {
+namespace Choreo.TwinCAT
+{
     public class TagCollection: IEnumerable<ITag> {
         Dictionary<string, ITag> tags = new Dictionary<string, ITag>();
         Dictionary<string, string> pathMap = new Dictionary<string, string>();

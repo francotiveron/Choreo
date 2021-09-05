@@ -1,11 +1,9 @@
 ﻿using Choreo.TwinCAT;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows.Media;
 using static Choreo.Globals;
 
-namespace Choreo {
+namespace Choreo
+{
     public class Axis : PropertyChangedNotifier {
         public Axis(int index) { Index = index; }
         public bool IsGroup => this is Group;

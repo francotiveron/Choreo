@@ -1,9 +1,10 @@
-﻿using System.Windows;
+﻿using Choreo.UserManagement;
+using System.Windows;
 using System.Windows.Controls;
 using static Choreo.Globals;
-using Choreo.UserManagement;
 
-namespace Choreo {
+namespace Choreo
+{
     /// <summary>
     /// Interaction logic for CueingPage.xaml
     /// </summary>

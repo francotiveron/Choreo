@@ -2,7 +2,8 @@
 using System.Windows;
 using static Choreo.Globals;
 
-namespace Choreo {
+namespace Choreo
+{
     /// <summary>
     /// Interaction logic for MotorSettingsWindow.xaml
     /// </summary>

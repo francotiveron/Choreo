@@ -1,15 +1,16 @@
 ﻿using Choreo.TwinCAT;
+using Choreo.UserManagement;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using static Choreo.Storage;
-using static Choreo.Globals;
-using static System.Linq.Enumerable;
-using Choreo.UserManagement;
 using System.Reactive.Linq;
+using static Choreo.Globals;
+using static Choreo.Storage;
+using static System.Linq.Enumerable;
 
-namespace Choreo {
+namespace Choreo
+{
     public enum MainWindowPages { Home, Cueing, Show };
     public class ViewModel: PropertyChangedNotifier
     {

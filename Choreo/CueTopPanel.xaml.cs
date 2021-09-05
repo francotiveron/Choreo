@@ -2,7 +2,8 @@
 using System.Windows.Controls;
 using static Choreo.Globals;
 
-namespace Choreo {
+namespace Choreo
+{
     /// <summary>
     /// Interaction logic for CueSettingsTopPanel.xaml
     /// </summary>

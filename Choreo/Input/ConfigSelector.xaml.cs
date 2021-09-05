@@ -2,9 +2,6 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Xml.Linq;
-using static Choreo.Globals;
-using static Choreo.Input.AlphaNumericPad;
 
 namespace Choreo.Input
 {

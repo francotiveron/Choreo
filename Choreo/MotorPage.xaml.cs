@@ -1,11 +1,12 @@
-﻿using System.Text.RegularExpressions;
+﻿using Choreo.Input;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Choreo.Input;
 using static Choreo.Globals;
 
-namespace Choreo {
+namespace Choreo
+{
     /// <summary>
     /// Interaction logic for MotorSettingsPage.xaml
     /// </summary>

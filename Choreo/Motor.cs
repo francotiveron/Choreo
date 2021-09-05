@@ -3,7 +3,8 @@ using System.Linq;
 using System.Windows.Media;
 using static Choreo.Globals;
 
-namespace Choreo {
+namespace Choreo
+{
     public class Motor : Axis {
         public Motor(int index) : base(index) { }
 

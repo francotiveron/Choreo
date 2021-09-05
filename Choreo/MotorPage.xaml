@@ -142,7 +142,7 @@
             </Grid>
         </Grid>
         <Grid Visibility="{Binding Path=IsGroup, Converter={qc:QuickConverter '$P ? Visibility.Visible: Visibility.Hidden'}}"
-              Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="0" x:Name="EditableElementsGridG"  FocusManager.IsFocusScope="True" d:IsHidden="True">
+              Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="0" x:Name="EditableElementsGridG"  FocusManager.IsFocusScope="True">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -152,7 +152,7 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" d:IsHidden="True">
+            <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="4*"/>
                     <ColumnDefinition/>
@@ -160,7 +160,7 @@
                 <local:DataItemUI x:Name="AxisNameG" Margin="5" DataContext="{Binding Name}" Focusable="True"/>
                 <local:DataItemUI Margin="5" Grid.Column="1" DataContext="{Binding Group}" StandAlone="True"/>
             </Grid>
-            <Grid Grid.Row="1" d:IsHidden="True">
+            <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
@@ -259,12 +259,12 @@
             </Grid>
             <inp:ConfigSelector Grid.Row="1" x:Name="ConfigSel" Margin="5,25,5,5" Height="250" CfgSelEvent="ConfigSel_CfgSelEvent" CanLoad="{Binding IsUngrouped}" />
         </StackPanel>
-        <Grid Grid.Row="1" Grid.ColumnSpan="3" d:IsHidden="True">
+        <Grid Grid.Row="1" Grid.ColumnSpan="3">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <inp:AlphaNumericPad x:Name="AlNumPad" Grid.Row="1" Grid.ColumnSpan="2" AlNumEvent="AlNumPad_AlNumEvent" d:IsHidden="True"/>
+            <inp:AlphaNumericPad x:Name="AlNumPad" Grid.Row="1" Grid.ColumnSpan="2" AlNumEvent="AlNumPad_AlNumEvent"/>
         </Grid>
     </Grid>
 </UserControl>

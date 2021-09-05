@@ -1,15 +1,12 @@
 ﻿using NLog;
 using System;
 using System.Collections.Generic;
-using System.Reactive.Concurrency;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Forms.VisualStyles;
-using System.Windows.Markup;
 using System.Windows.Threading;
 
-namespace Choreo.Logging {
+namespace Choreo.Logging
+{
     public class ChoreoLogger : Logger {
         static readonly Dispatcher dsp = Application.Current.Dispatcher;
 

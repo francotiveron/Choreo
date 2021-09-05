@@ -1,13 +1,13 @@
-﻿using NLog.LayoutRenderers.Wrappers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Threading;
-using Cfg = Choreo.Configuration;
 using static Choreo.Globals;
+using Cfg = Choreo.Configuration;
 
-namespace Choreo.UserManagement {
+namespace Choreo.UserManagement
+{
     public static class User {
         public const int LOGON32_LOGON_INTERACTIVE = 2;
         public const int LOGON32_LOGON_NETWORK = 3;

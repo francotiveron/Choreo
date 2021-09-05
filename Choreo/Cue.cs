@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 using static Choreo.Globals;
 
-namespace Choreo {
+namespace Choreo
+{
     public class CueRow: PropertyChangedNotifier {
         Cue cue;
         public CueRow(Cue cue) {

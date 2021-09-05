@@ -1,11 +1,7 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Linq;
-using static Choreo.Globals;
+﻿using System.Windows.Controls;
 
-namespace Choreo.Input {
+namespace Choreo.Input
+{
     /// <summary>
     /// Interaction logic for MotorAndGroupSelectorPanel.xaml
     /// </summary>

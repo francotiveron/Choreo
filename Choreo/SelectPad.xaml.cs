@@ -2,7 +2,8 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Choreo {
+namespace Choreo
+{
     /// <summary>
     /// Interaction logic for ComboPad.xaml
     /// </summary>

@@ -6,7 +6,8 @@ using System.Windows.Data;
 using System.Windows.Media;
 using static Choreo.Globals;
 
-namespace Choreo {
+namespace Choreo
+{
     /// <summary>
     /// Interaction logic for MotorStatusPanel.xaml
     /// </summary>

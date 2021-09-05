@@ -1,6 +1,4 @@
-﻿using Choreo.UserManagement;
-using NLog.LayoutRenderers.Wrappers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,8 +6,6 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Security.Permissions;
-using System.Security.Principal;
 using System.Threading;
 using TwinCAT;
 using TwinCAT.Ads;
@@ -20,7 +16,8 @@ using TwinCAT.TypeSystem;
 using static Choreo.Globals;
 using Cfg = Choreo.Configuration;
 
-namespace Choreo.TwinCAT {
+namespace Choreo.TwinCAT
+{
     public interface IPlc : INotifyPropertyChanged {
         bool IsOn { get; }
         void Upload<T>(T obj);

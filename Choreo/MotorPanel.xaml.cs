@@ -1,14 +1,10 @@
 ﻿using Choreo.UserManagement;
 using System;
-using System.Data.SqlTypes;
-using System.Diagnostics;
 using System.Globalization;
-using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Threading;
 using static Choreo.Globals;
 
 namespace Choreo

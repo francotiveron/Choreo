@@ -3,7 +3,8 @@ using System.Windows;
 using System.Windows.Controls;
 using static Choreo.Globals;
 
-namespace Choreo {
+namespace Choreo
+{
     /// <summary>
     /// Interaction logic for MainPage.xaml
     /// </summary>

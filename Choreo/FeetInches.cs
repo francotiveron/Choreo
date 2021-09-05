@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace Choreo {
+namespace Choreo
+{
     public static class FeetInchesConvert {
         /*
          * 1m = 3.28' = 3'3.37''

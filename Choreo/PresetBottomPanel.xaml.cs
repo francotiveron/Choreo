@@ -1,16 +1,14 @@
 ﻿using Choreo.UserManagement;
 using System;
 using System.Globalization;
-using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Navigation;
-using System.Windows.Threading;
 using static Choreo.Globals;
 
-namespace Choreo {
+namespace Choreo
+{
     /// <summary>
     /// Interaction logic for PresetBottomPanel.xaml
     /// </summary>
