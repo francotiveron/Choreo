@@ -2,7 +2,8 @@
 using System.Linq;
 using static Choreo.Globals;
 
-namespace Choreo {
+namespace Choreo
+{
     public class Preset : PropertyChangedNotifier 
     {
         public Preset(int index) { Index = index; }

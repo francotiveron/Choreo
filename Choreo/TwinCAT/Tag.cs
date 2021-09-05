@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Windows.Forms;
-using TwinCAT.Ads.Reactive;
 using TwinCAT.TypeSystem;
-using static Choreo.Globals;
 
-namespace Choreo.TwinCAT {
+namespace Choreo.TwinCAT
+{
     public interface ITag {
         ISymbol Symbol { get; set; }
         void Push(object value);

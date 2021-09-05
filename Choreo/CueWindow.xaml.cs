@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 
-namespace Choreo {
+namespace Choreo
+{
     /// <summary>
     /// Interaction logic for CueSettingsWindow.xaml
     /// </summary>

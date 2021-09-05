@@ -1,19 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace Choreo.Input {
+namespace Choreo.Input
+{
     public interface IStrVal {
         string StrVal { get; set; }
         bool IsPassword { get; }
@@ -67,7 +59,7 @@ namespace Choreo.Input {
 
             switch (but.Name) {
                 case "ESC":
-                    AlNumEvent?.Invoke(this, new AlNumEventArgs { Name = but.Name, DataItem = DataItem }); ;
+                    AlNumEvent?.Invoke(this, new AlNumEventArgs { Name = but.Name, DataItem = DataItem });
                     break;
                 case "CAPSLOCK":
                     ToggleCapsLock();

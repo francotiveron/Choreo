@@ -1,10 +1,6 @@
 ﻿using Choreo.Input;
 using System;
-using System.Collections;
-using System.Diagnostics;
-using System.Dynamic;
 using System.Globalization;
-using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Windows;
@@ -12,11 +8,10 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using TwinCAT.Ads;
-using TwinCAT.TypeSystem;
 using static Choreo.Globals;
 
-namespace Choreo {
+namespace Choreo
+{
     public partial class DataItemUI : IStrVal {
         public DataItemUI() {
             InitializeComponent();

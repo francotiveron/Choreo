@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Threading;
 
-namespace Choreo {
+namespace Choreo
+{
     public static class PushTimer {
         static DispatcherTimer timer;
         static readonly TimeSpan interval = TimeSpan.FromSeconds(5);

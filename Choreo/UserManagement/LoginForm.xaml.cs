@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Security.Principal;
 using System.Windows;
-using System.Windows.Forms;
 using System.Windows.Input;
-using static Choreo.Globals;
 
-namespace Choreo.UserManagement {
+namespace Choreo.UserManagement
+{
     public partial class LoginForm : Window {
         Func<IPrincipal, bool> roleChecker;
         public LoginForm(Func<IPrincipal, bool> checker) {

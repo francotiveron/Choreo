@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using TwinCAT.TypeSystem;
 using static Choreo.Globals;
 
-namespace Choreo.TwinCAT {
+namespace Choreo.TwinCAT
+{
     public class TagCollection: IEnumerable<ITag> {
         Dictionary<string, ITag> tags = new Dictionary<string, ITag>();
         Dictionary<string, string> pathMap = new Dictionary<string, string>();
@@ -35,7 +35,10 @@ namespace Choreo.TwinCAT {
                         break;
 
                     case Group g:
-                        path = $"GVL.Axis_{(g.Number + 16):00}_{_.plc.Path ?? _.pi.Name}";
+                        if (_.plc.Path is string _path && _path.StartsWith("GVL."))
+                            path = _path.Replace("NN", $"{ (g.Number):00}");
+                        else
+                            path = $"GVL.Axis_{(g.Number + 16):00}_{_.plc.Path ?? _.pi.Name}";
                         key = Tag.GetKey(nameof(Group), _.pi.Name, g.Number);
                         break;
                 }

@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Forms;
+using System.Text;
 using static Choreo.Globals;
 
-namespace Choreo {
+namespace Choreo
+{
     public class CueRow: PropertyChangedNotifier {
         Cue cue;
         public CueRow(Cue cue) {
@@ -33,6 +33,25 @@ namespace Choreo {
                 return true;
             }
         }
+
+        string PrintInconsistencies()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < Motors.Length; i++)
+                if (Motors[i]) {
+                    Motor m = VM.Motors[i];
+                    if (m.IsGrouped) sb.AppendLine($"Motor {m.Number} is grouped");
+                    if (!m.UserEnable) sb.AppendLine($"Motor {m.Number} is disabled");
+                }
+
+            for (int i = 0; i < Groups.Length; i++) 
+                if (Groups[i] && VM.Groups[i] is Group g && !g.UserEnable) sb.AppendLine($"Group {g.Number} is disabled");
+
+            return sb.ToString();
+        }
+
+        public string InconsistencyMessage => PrintInconsistencies();
 
         [Persistent]
         public ushort MotorsBitmap {

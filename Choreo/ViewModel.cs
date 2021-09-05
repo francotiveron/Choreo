@@ -1,15 +1,16 @@
 ﻿using Choreo.TwinCAT;
+using Choreo.UserManagement;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using static Choreo.Storage;
-using static Choreo.Globals;
-using static System.Linq.Enumerable;
-using Choreo.UserManagement;
 using System.Reactive.Linq;
+using static Choreo.Globals;
+using static Choreo.Storage;
+using static System.Linq.Enumerable;
 
-namespace Choreo {
+namespace Choreo
+{
     public enum MainWindowPages { Home, Cueing, Show };
     public class ViewModel: PropertyChangedNotifier
     {
@@ -38,7 +39,6 @@ namespace Choreo {
             }
         }
         public List<Preset> Presets { get; } = new List<Preset>(Range(0, 8).Select(i => new Preset(i)));
-        //public ObservableCollection<Cue> Cues { get; } = new ObservableCollection<Cue>();
         public ObservableCollection<Cue> Cues { get; } = new ObservableCollection<Cue>();
         public IEnumerable<Cue> VisibleCues => Cues.Where(cue => cue.Show);
         public Motion Motion { get; } = new Motion();
@@ -112,7 +112,7 @@ namespace Choreo {
         [Plc("Jog_Velocity")]
         public double JogVelocity {
             get { return jogVelocity; }
-            set { jogVelocity = value / 100.0; Notify(); }
+            set { jogVelocity = value; Notify(); }
         }
         #endregion
 
@@ -146,6 +146,7 @@ namespace Choreo {
         public void BeginGroupSettingsEditing(int index) => GroupSettingsBeingEdited = index + 1;
         public void EndGroupSettingsEditing() => GroupSettingsBeingEdited = 0;
         public void GroupSettingsEditCancel() {
+            Plc.Download(Groups[GroupSettingsBeingEdited - 1]);
             Load(Groups[GroupSettingsBeingEdited - 1]);
             EndGroupSettingsEditing();
         }
@@ -314,7 +315,6 @@ namespace Choreo {
             get => User.IsAdmin;
             set => Notify();
         }
-
         #endregion
     }
 

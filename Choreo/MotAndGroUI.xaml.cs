@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Threading;
 
-namespace Choreo {
+namespace Choreo
+{
     /// <summary>
     /// Interaction logic for MotAndGro.xaml
     /// </summary>

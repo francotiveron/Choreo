@@ -1,13 +1,9 @@
-﻿using Choreo.Input;
-using Choreo.Logging;
+﻿using Choreo.Logging;
 using Choreo.TwinCAT;
-using QuickConverter;
 using System;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Choreo.UserManagement;
 
 namespace Choreo
 {
@@ -33,6 +29,7 @@ namespace Choreo
             public static implicit operator Values(Status status) => status.Value;
             public static implicit operator Status(Values value) => new Status(value);
             public static implicit operator Status(bool error) => error ? Error : Ok;
+            public static implicit operator bool(Status status) => status == Error;
             public static implicit operator int(Status status) => (int)status.Value;
             public override string ToString() => Value.ToString();
         }
@@ -79,6 +76,12 @@ namespace Choreo
             }
             return true;
         }
+
+        public static bool AreCompatible(Motor m, Group g) => 
+            g.MaxVel <= m.MaxVel 
+            && g.MinVel >= m.MinVel 
+            && g.MaxAcc <= m.MaxAcc 
+            && g.MaxDec <= m.MaxDec;
 
         public static object Default(this Type t) {
             if (t.IsValueType && Nullable.GetUnderlyingType(t) == null)

@@ -2,7 +2,8 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Choreo {
+namespace Choreo
+{
     /// <summary>
     /// Interaction logic for CueSettingsPage.xaml
     /// </summary>

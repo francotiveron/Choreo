@@ -4,7 +4,8 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace Choreo.Logging {
+namespace Choreo.Logging
+{
     /// <summary>
     /// Interaction logic for AlertPopup.xaml
     /// </summary>

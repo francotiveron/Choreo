@@ -59,6 +59,11 @@
                         <Label Content="{Binding Acceleration}" Grid.Column="2"/>
                         <Label Content="{Binding Velocity}" Grid.Column="3"/>
                         <Label Content="{Binding Deceleration}" Grid.Column="4"/>
+                        <Button Grid.Column="0" Grid.ColumnSpan="5" Content="Issues..." Background="Red" 
+                        Visibility="{Binding Path=IsConsistent, Converter={qc:QuickConverter '$P ? Visibility.Hidden : Visibility.Visible'}}"
+                        DataContext="{Binding .}"
+                        Click="Issues_Click"
+                        />
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

@@ -1,14 +1,13 @@
 ﻿using Choreo.TwinCAT;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows.Media;
 using static Choreo.Globals;
 
-namespace Choreo {
+namespace Choreo
+{
     public class Axis : PropertyChangedNotifier {
         public Axis(int index) { Index = index; }
-
+        public bool IsGroup => this is Group;
+        public bool IsMotor => this is Motor;
         public virtual Status AxisStatus => Status.Ok;
         public virtual string AxisStatusDescription {
             get {
@@ -24,6 +23,7 @@ namespace Choreo {
         public bool IsOperational => Present && UserEnable;
 
         #region Runtime+PLC Properties
+
         double rotations;
         [Plc("Act_Pos")]
         public double Rotations {
@@ -49,15 +49,15 @@ namespace Choreo {
         }
         public Status LoadStatus => Status.Ok;
 
-        [Plc("Min_Load")]
-        public double LoadMin {
-            set => MinLoad = value;
-        }
+        //[Plc("Min_Load")]
+        //public double LoadMin {
+        //    set => MinLoad = value;
+        //}
 
-        [Plc("Max_Load")]
-        public double LoadMax {
-            set => MaxLoad = value;
-        }
+        //[Plc("Max_Load")]
+        //public double LoadMax {
+        //    set => MaxLoad = value;
+        //}
 
         double moveValRotations;
         [Plc("Move_Val")]
@@ -94,7 +94,7 @@ namespace Choreo {
             get => minVel;
             set { minVel = value; Notify()(nameof(DefVel), nameof(MaxVel)); }
         }
-        public Status MinVelStatus => MinVel < 0 || MinVel > DefVel;
+        public virtual Status MinVelStatus => MinVel < 0 || MinVel > DefVel;
 
         double maxVel;
         [DataItem("fpm", "Max Velocity"), Plc("Max_Velocity")]
@@ -102,7 +102,7 @@ namespace Choreo {
             get => maxVel;
             set { maxVel = value; Notify()(nameof(MinVel), nameof(DefVel)); }
         }
-        public Status MaxVelStatus => MaxVel < DefVel;
+        public virtual Status MaxVelStatus => MaxVel < DefVel;
 
         bool mAEnable;
         [Plc("MA_Enable")]
@@ -221,6 +221,10 @@ namespace Choreo {
             }
         }
         public void PresetTouch() => ++PresetTouches;
+
+        public virtual bool IsGrouped => false;
+        public bool IsUngrouped => !IsGrouped;
+
         #endregion
 
         #region Settings
@@ -258,12 +262,12 @@ namespace Choreo {
         public Status MinAccStatus => MinAcc < 0;
 
         double maxAcc;
-        [DataItem("fpm2", "Max Acceleration"), Persistent]
+        [DataItem("fpm2", "Max Acceleration"), Plc("Max_Accel")]
         public double MaxAcc {
             get => maxAcc;
             set { maxAcc = value; Notify()(nameof(DefAcc)); }
         }
-        public Status MaxAccStatus => MaxAcc < DefAcc;
+        public virtual Status MaxAccStatus => MaxAcc < DefAcc;
 
         double defAcc;
         [DataItem("fpm2", "Default Acceleration"), Persistent]
@@ -286,12 +290,12 @@ namespace Choreo {
         public Status MinDecStatus => MinDec < 0;
 
         double maxDec;
-        [DataItem("fpm2", "Max Deceleration"), Persistent]
+        [DataItem("fpm2", "Max Deceleration"), Plc("Max_Decel")]
         public double MaxDec {
             get => maxDec;
             set { maxDec = value; Notify()(nameof(DefDec)); }
         }
-        public Status MaxDecStatus => MaxDec < DefDec;
+        public virtual Status MaxDecStatus => MaxDec < DefDec;
 
         double defDec;
         [DataItem("fpm2", "Default Deceleration"), Persistent]
@@ -326,10 +330,14 @@ namespace Choreo {
         public Status LoadOffsStatus => Status.Ok;
 
         double rotationsPerFoot = 1.0;
-        [DataItem("r/ft", "Rotations/Foot"), Persistent]
-        public double RotationsPerFoot {
+        
+        [DataItem("r/ft", "Rotations/Foot")]
+        public virtual double RotationsPerFoot
+        {
             get => rotationsPerFoot;
-            set {
+
+            set
+            {
                 var calVal = CalibrationValue;
                 var softUp = SoftUp;
                 var softDn = SoftDn;
@@ -340,6 +348,21 @@ namespace Choreo {
                 Notify()(nameof(Position), nameof(CalibrationValue), nameof(SoftUp), nameof(SoftDn));
             }
         }
+
+        //[DataItem("r/ft", "Rotations/Foot"), Plc("Rotations_Per_Foot")]
+        //public double RotationsPerFoot {
+        //    get => rotationsPerFoot;
+        //    set {
+        //        var calVal = CalibrationValue;
+        //        var softUp = SoftUp;
+        //        var softDn = SoftDn;
+        //        rotationsPerFoot = value <= 0.0 ? 1.0 : value;
+        //        CalibrationValue = calVal;
+        //        SoftUp = softUp;
+        //        SoftDn = softDn;
+        //        Notify()(nameof(Position), nameof(CalibrationValue), nameof(SoftUp), nameof(SoftDn));
+        //    }
+        //}
 
         #endregion
 

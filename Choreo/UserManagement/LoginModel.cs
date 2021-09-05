@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Choreo.UserManagement {
-	public class LoginModel : PropertyChangedNotifier {
+﻿namespace Choreo.UserManagement
+{
+    public class LoginModel : PropertyChangedNotifier {
 		string username = string.Empty;
 		[DataItem]
 		public string Username {

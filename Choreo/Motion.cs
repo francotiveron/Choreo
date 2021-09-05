@@ -1,13 +1,9 @@
-﻿using Microsoft.Xaml.Behaviors.Core;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TwinCAT.Ads;
 using static Choreo.Globals;
 
-namespace Choreo {
+namespace Choreo
+{
     public class Motion: PropertyChangedNotifier {
         public Motion() { }
 

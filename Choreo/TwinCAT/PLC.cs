@@ -1,6 +1,4 @@
-﻿using Choreo.UserManagement;
-using NLog.LayoutRenderers.Wrappers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,8 +6,6 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Security.Permissions;
-using System.Security.Principal;
 using System.Threading;
 using TwinCAT;
 using TwinCAT.Ads;
@@ -20,7 +16,8 @@ using TwinCAT.TypeSystem;
 using static Choreo.Globals;
 using Cfg = Choreo.Configuration;
 
-namespace Choreo.TwinCAT {
+namespace Choreo.TwinCAT
+{
     public interface IPlc : INotifyPropertyChanged {
         bool IsOn { get; }
         void Upload<T>(T obj);
@@ -189,43 +186,66 @@ namespace Choreo.TwinCAT {
                 , axis.LoadOffs
                 , axis.MinVel
                 , axis.MaxVel
+                , axis.MaxAcc
+                , axis.MaxDec
                 , axis.SoftDnRotations
                 , axis.SoftUpRotations
                 , axis.UserEnable
             };
 
-            List<ISymbol> valueSyms = new List<ISymbol>();
-            valueSyms.AddRange(
+            var tagNames =
                 new string[] {
                     nameof(Axis.MinLoad)
                     , nameof(Axis.MaxLoad)
                     , nameof(Axis.LoadOffs)
                     , nameof(Axis.MinVel)
                     , nameof(Axis.MaxVel)
+                    , nameof(Axis.MaxAcc)
+                    , nameof(Axis.MaxDec)
                     , nameof(Axis.SoftDnRotations)
                     , nameof(Axis.SoftUpRotations)
                     , nameof(Axis.UserEnable)
-                    }
-                .Select(propName => tags[axis, propName].Symbol));
+                    };
+
+            if (axis is Motor motor)
+            {
+                values = values.Append(axis.RotationsPerFoot).ToArray();
+                tagNames = tagNames.Append(nameof(motor.RotationsPerFoot)).ToArray();
+            }
+            else if (axis is Group group)
+            {
+                values = values.Append(true).ToArray();
+                tagNames = tagNames.Append(nameof(group.Save)).ToArray();
+            }
+
+            var valueSyms = tagNames.Select(name => tags[axis, name].Symbol).ToList();
 
             new SumSymbolWrite(Connection, valueSyms).Write(values);
             Connection.WriteSymbol(tags.PathOf(VM, nameof(ViewModel.ParameterWrite)), true, false);
         }
 
-        void Download(Axis axis) {
-            List<ISymbol> valueSyms = new List<ISymbol>();
-            valueSyms.AddRange(
+        void Download(Axis axis)
+        {
+            var tagNames =
                 new string[] {
                     nameof(Axis.MinLoad)
                     , nameof(Axis.MaxLoad)
                     , nameof(Axis.LoadOffs)
                     , nameof(Axis.MinVel)
                     , nameof(Axis.MaxVel)
+                    , nameof(Axis.MaxAcc)
+                    , nameof(Axis.MaxDec)
                     , nameof(Axis.SoftDnRotations)
                     , nameof(Axis.SoftUpRotations)
                     , nameof(Axis.UserEnable)
-                    }
-                .Select(propName => tags[axis, propName].Symbol));
+                    };
+
+            if (axis is Motor motor)
+            {
+                tagNames = tagNames.Append(nameof(motor.RotationsPerFoot)).ToArray();
+            }
+
+            var valueSyms = tagNames.Select(name => tags[axis, name].Symbol).ToList();
 
             var values = new SumSymbolRead(Connection, valueSyms).Read();
             for (int i = 0; i < valueSyms.Count; i++) tags[valueSyms[i]].Push(values[i]);
@@ -270,7 +290,7 @@ namespace Choreo.TwinCAT {
 
         void Upload(double jogVel) {
             var path = tags.PathOf(VM, nameof(ViewModel.JogVelocity));
-            Connection.WriteSymbol(path, jogVel * 100.0, false);
+            Connection.WriteSymbol(path, jogVel, false);
         }
 
         static readonly string[] presetProps = new string[] { nameof(ViewModel.PresetLoaded), nameof(ViewModel.PresetComplete) };

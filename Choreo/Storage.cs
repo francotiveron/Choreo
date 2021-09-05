@@ -3,11 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using static Choreo.Globals;
 
-namespace Choreo {
+namespace Choreo
+{
     public static class Storage {
         static RegistryKey root = Registry.CurrentUser.CreateSubKey($@"SOFTWARE\Verendus\Choreo\{Assembly.GetExecutingAssembly().GetName().Version}\Settings");
         static void Write(string element, string setting, object value) {
@@ -28,7 +27,7 @@ namespace Choreo {
         static object Read(string element, string setting) => Read(root.OpenSubKey(element), setting);
         static void Read(RegistryKey key, object obj) {
             foreach (var pi in obj.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
-                if (null != pi.GetCustomAttribute<PersistentAttribute>())
+                if (null != pi.GetCustomAttribute<PersistentAttribute>() && pi.CanWrite)
                     if (key.GetValue(pi.Name) is object value && value != null) {
                         var typed = Convert.ChangeType(value, pi.PropertyType);
                         pi.SetValue(obj, typed);
@@ -150,6 +149,23 @@ namespace Choreo {
                 VM.Cues.Clear();
                 foreach (var cue in dict.Values) VM.Cues.Add(cue);
             }
+        }
+        #endregion
+
+        #region Axis Configurations
+        public static void Save(AxisConfiguration config) => Write($@"Config\{config.Name}", config);
+
+        public static void DeleteAxisConfiguration(string name) => root.DeleteSubKey($@"Config\{name}");
+
+        public static void Load(AxisConfiguration config) => Read($@"Config\{config.Name}", config);
+
+        public static string[] LoadAxisConfigurationsNames()
+        {
+            if (root.OpenSubKey("Config") is RegistryKey key)
+            {
+                return key.GetSubKeyNames();
+            }
+            return null;
         }
         #endregion
 

@@ -6,7 +6,8 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using static Choreo.Globals;
 
-namespace Choreo {
+namespace Choreo
+{
     /// <summary>
     /// Interaction logic for MainTopPanel.xaml
     /// </summary>

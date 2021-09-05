@@ -1,11 +1,11 @@
 ﻿using CommandLine;
 using System;
 using System.Configuration;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using TwinCAT.Ads;
 
-namespace Choreo {
+namespace Choreo
+{
     static class Configuration {
         [DllImport("user32.dll")]
         static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
