@@ -149,6 +149,7 @@
       <DependentUpon>AxesAndGroupsPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Axis.cs" />
+    <Compile Include="AxisConfiguration.cs" />
     <Compile Include="Cue.cs" />
     <Compile Include="CuePage.xaml.cs">
       <DependentUpon>CuePage.xaml</DependentUpon>
@@ -168,6 +169,9 @@
     <Compile Include="FeetInches.cs" />
     <Compile Include="Input\AlphaNumericPad.xaml.cs">
       <DependentUpon>AlphaNumericPad.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Input\ConfigSelector.xaml.cs">
+      <DependentUpon>ConfigSelector.xaml</DependentUpon>
     </Compile>
     <Compile Include="Input\MaGSelectionPopup.xaml.cs">
       <DependentUpon>MaGSelectionPopup.xaml</DependentUpon>
@@ -301,6 +305,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Input\AlphaNumericPad.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Input\ConfigSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

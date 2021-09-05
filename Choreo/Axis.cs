@@ -223,6 +223,10 @@ namespace Choreo {
             }
         }
         public void PresetTouch() => ++PresetTouches;
+
+        public virtual bool IsGrouped => false;
+        public bool IsUngrouped => !IsGrouped;
+
         #endregion
 
         #region Settings

@@ -38,7 +38,6 @@ namespace Choreo {
             }
         }
         public List<Preset> Presets { get; } = new List<Preset>(Range(0, 8).Select(i => new Preset(i)));
-        //public ObservableCollection<Cue> Cues { get; } = new ObservableCollection<Cue>();
         public ObservableCollection<Cue> Cues { get; } = new ObservableCollection<Cue>();
         public IEnumerable<Cue> VisibleCues => Cues.Where(cue => cue.Show);
         public Motion Motion { get; } = new Motion();
@@ -315,7 +314,6 @@ namespace Choreo {
             get => User.IsAdmin;
             set => Notify();
         }
-
         #endregion
     }
 

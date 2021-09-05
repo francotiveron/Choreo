@@ -76,8 +76,7 @@ namespace Choreo {
         #endregion
 
         #region UI Properties
-        public bool IsGrouped => Group > 0;
-        public bool IsUngrouped => !IsGrouped;
+        public override bool IsGrouped => Group > 0;
 
         public override Color Color {
             get {
