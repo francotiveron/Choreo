@@ -472,6 +472,7 @@
     <Resource Include="Pictures\WarningSign.png" />
     <Resource Include="Pictures\InfoSign.png" />
     <Resource Include="Pictures\ErrorSign.png" />
+    <Content Include=".gitignore" />
     <Content Include="TwinCAT\UIFB.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
