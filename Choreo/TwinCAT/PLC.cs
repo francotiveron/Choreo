@@ -431,6 +431,12 @@ namespace Choreo.TwinCAT
             var pathSet = tags.PathOf(axis, nameof(Axis.CalibrationSave));
             Connection.WriteSymbol(pathVal, axis.CalibrationRotations, false);
             Connection.WriteSymbol(pathSet, true, false);
+
+            if (axis is Group group)
+            {
+                var pathSave = tags.PathOf(group, nameof(Group.Save));
+                Connection.WriteSymbol(pathSave, true, false);
+            }
         }
 
         #endregion

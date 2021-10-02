@@ -79,7 +79,11 @@ namespace Choreo
             #endregion
         }
 
-        private void SaveNewPositionButton_Click(object sender, RoutedEventArgs e) => Plc.Calibrate(DataContext as Axis);
+        private void SaveNewPositionButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Log.OkCancel("Click OK to Confirm", "Save New Position"))
+                Plc.Calibrate(DataContext as Axis);
+        }
 
         class Str : IStrVal
         {
