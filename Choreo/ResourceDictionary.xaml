@@ -19,7 +19,8 @@
     <local:PresetBottomPanelButtonBorderColorConverter x:Key="PresetBottomPanelButtonBorderColorConverter"/>
     <local:PositionConverter x:Key="PositionConverter"/>
     <local:PasswordConverter x:Key="PasswordConverter"/>
-    <local:MotorStatusConverter x:Key="MotorStatusConverter"/>
+    <local:MotorStatusColorConverter x:Key="MotorStatusConverter"/>
+    <local:MotorStatusTextConverter x:Key="MotorStatusTextConverter"/>
 
     <Style TargetType="{x:Type Window}">
         <Setter Property="Background" Value="{StaticResource DefaultBackgroundBrush}"/>
@@ -161,6 +162,12 @@
     </Style>
     <Style x:Key="DataItemDataStyle" TargetType="{x:Type Label}">
         <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultFontFamily}" />
+        <Setter Property="Foreground" Value="{StaticResource DefaultForegroundBrush}"/>
+    </Style>
+    <Style x:Key="StatusIndicatorTextStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
         <Setter Property="FontFamily" Value="{StaticResource DefaultFontFamily}" />
         <Setter Property="Foreground" Value="{StaticResource DefaultForegroundBrush}"/>
     </Style>

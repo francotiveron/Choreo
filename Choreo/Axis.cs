@@ -8,9 +8,10 @@ namespace Choreo
         public Axis(int index) { Index = index; }
         public bool IsGroup => this is Group;
         public bool IsMotor => this is Motor;
-        public virtual Status AxisStatus => Status.Ok;
+        public virtual Status AxisStatus => FaultCode != 0;
         public virtual string AxisStatusDescription {
             get {
+                if (FaultCode != 0) return FaultDescription;
                 if (MAEnable || MREnable) {
                     return $"{(MAEnable ? "A" : "R")}: {FeetInchesConvert.ToString(MoveVal)}";
                 }
@@ -48,16 +49,6 @@ namespace Choreo
             set { load = value; Notify(); }
         }
         public Status LoadStatus => Status.Ok;
-
-        //[Plc("Min_Load")]
-        //public double LoadMin {
-        //    set => MinLoad = value;
-        //}
-
-        //[Plc("Max_Load")]
-        //public double LoadMax {
-        //    set => MaxLoad = value;
-        //}
 
         double moveValRotations;
         [Plc("Move_Val")]
@@ -188,6 +179,27 @@ namespace Choreo
         public bool CalibrationSave {
             get => calibrationSave;
             set { calibrationSave = value; Notify(); }
+        }
+
+        ushort faultCode;
+        [Plc("Fault_Code")]
+        public ushort FaultCode
+        {
+            get => faultCode;
+            set { faultCode = value; Notify()(nameof(AxisStatus)); }
+        }
+
+        private string FaultDescription
+        {
+            get
+            {
+                if (FaultCode == 0xFFFF) return "Unknown Fault (PLC)";
+                if (FaultCodeMap.TryGetValue(FaultCode, out var description))
+                {
+                    return description;
+                }
+                return "Unknown Fault (UI)";
+            }
         }
 
         #endregion
@@ -348,22 +360,6 @@ namespace Choreo
                 Notify()(nameof(Position), nameof(CalibrationValue), nameof(SoftUp), nameof(SoftDn));
             }
         }
-
-        //[DataItem("r/ft", "Rotations/Foot"), Plc("Rotations_Per_Foot")]
-        //public double RotationsPerFoot {
-        //    get => rotationsPerFoot;
-        //    set {
-        //        var calVal = CalibrationValue;
-        //        var softUp = SoftUp;
-        //        var softDn = SoftDn;
-        //        rotationsPerFoot = value <= 0.0 ? 1.0 : value;
-        //        CalibrationValue = calVal;
-        //        SoftUp = softUp;
-        //        SoftDn = softDn;
-        //        Notify()(nameof(Position), nameof(CalibrationValue), nameof(SoftUp), nameof(SoftDn));
-        //    }
-        //}
-
         #endregion
 
         int group;

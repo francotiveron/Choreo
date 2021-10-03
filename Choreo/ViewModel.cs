@@ -18,7 +18,11 @@ namespace Choreo
             CurrentMainWindowPage = MainWindowPages.Home;
         }
 
-        public void Init() => Plc.PropertyChanged += Plc_PropertyChanged;
+        public void Init()
+        {
+            FaultCodeMap = Plc.DownloadErrorMapping();
+            Plc.PropertyChanged += Plc_PropertyChanged;
+        }
 
         void Plc_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
             if (e.PropertyName == nameof(AdsPlc.IsOn)) {
