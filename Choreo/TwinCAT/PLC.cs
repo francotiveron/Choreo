@@ -6,6 +6,7 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Threading;
 using TwinCAT;
 using TwinCAT.Ads;
@@ -27,6 +28,7 @@ namespace Choreo.TwinCAT
         bool ClearMotionAndJog();
         void Jog(Axis axis, int direction);
         void Calibrate(Axis axis);
+        Dictionary<ushort, string> DownloadErrorMapping();
     }
 
     static public class PlcFactory
@@ -216,6 +218,8 @@ namespace Choreo.TwinCAT
             {
                 values = values.Append(true).ToArray();
                 tagNames = tagNames.Append(nameof(group.Save)).ToArray();
+                values = values.Append(group.ToleranceRotations).ToArray();
+                tagNames = tagNames.Append(nameof(group.ToleranceRotations)).ToArray();
             }
 
             var valueSyms = tagNames.Select(name => tags[axis, name].Symbol).ToList();
@@ -243,6 +247,10 @@ namespace Choreo.TwinCAT
             if (axis is Motor motor)
             {
                 tagNames = tagNames.Append(nameof(motor.RotationsPerFoot)).ToArray();
+            }
+            else if (axis is Group group)
+            {
+                tagNames = tagNames.Append(nameof(group.ToleranceRotations)).ToArray();
             }
 
             var valueSyms = tagNames.Select(name => tags[axis, name].Symbol).ToList();
@@ -431,6 +439,26 @@ namespace Choreo.TwinCAT
             var pathSet = tags.PathOf(axis, nameof(Axis.CalibrationSave));
             Connection.WriteSymbol(pathVal, axis.CalibrationRotations, false);
             Connection.WriteSymbol(pathSet, true, false);
+
+            if (axis is Group group)
+            {
+                var pathSave = tags.PathOf(group, nameof(Group.Save));
+                Connection.WriteSymbol(pathSave, true, false);
+            }
+        }
+
+        public Dictionary<ushort, string> DownloadErrorMapping()
+        {
+            var info = Connection.ReadSymbolInfo("GVL.AxesErrors");
+            var n = info.Size / 24;
+            var map = new Dictionary<ushort, string>();
+            for (var i = 0; i < n; i++)
+            {
+                var code = (ushort)Connection.ReadAny((uint)info.IndexGroup, (uint)(info.IndexOffset + i * 24), typeof(ushort));
+                var desc = Connection.ReadAnyString((uint)info.IndexGroup, (uint)(info.IndexOffset + i * 24 + 2), 21, Encoding.Default);
+                map[code] = desc;
+            }
+            return map;
         }
 
         #endregion

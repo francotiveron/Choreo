@@ -17,6 +17,22 @@ namespace Choreo
             set { save = !value; Notify()(nameof(Save)); }
         }
 
+        double toleranceRotations;
+        [Plc("Tolerance_Value")]
+        public double ToleranceRotations
+        {
+            get => toleranceRotations;
+            set { toleranceRotations = value; Notify(nameof(ToleranceValue)); }
+        }
+
+        [DataItem(title: "Group Tolerance")]
+        public double ToleranceValue
+        {
+            get => ToleranceRotations / RotationsPerFoot;
+            set { ToleranceRotations = value * RotationsPerFoot; Notify(); }
+        }
+
+
         #region UI Properties
         public override Color Color {
             get {

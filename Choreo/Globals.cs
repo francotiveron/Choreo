@@ -1,6 +1,7 @@
 ﻿using Choreo.Logging;
 using Choreo.TwinCAT;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -89,6 +90,8 @@ namespace Choreo
             else
                 return null;
         }
+
+        public static Dictionary<ushort, string> FaultCodeMap;
 
     }
 }

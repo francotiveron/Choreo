@@ -22,8 +22,7 @@ namespace Choreo
         //}
     }
 
-    public class MotorStatusConverter : IMultiValueConverter {
-        static string GetText(Axis axis) => axis.AxisStatusDescription;
+    public class MotorStatusColorConverter : IMultiValueConverter {
 
         static readonly SolidColorBrush okBrush = new SolidColorBrush(Colors.Lime);
         static readonly SolidColorBrush warnBrush = new SolidColorBrush(Colors.Yellow);
@@ -31,14 +30,16 @@ namespace Choreo
         static readonly Brush[] brushes = new Brush[] { okBrush, warnBrush, errBrush };
         static Brush GetColor(Axis axis) => brushes[(int)axis.AxisStatus];
 
-        static Dictionary<Type, Func<Axis, object>> funcs = new Dictionary<Type, Func<Axis, object>>() { { typeof(object), GetText }, { typeof(Brush), GetColor } };
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
-            if (funcs.TryGetValue(targetType, out var func)) return func(values[0] as Axis);
-            return null;
-        }
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) => GetColor(values[0] as Axis);
 
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) {
-            throw new NotImplementedException();
-        }
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) => throw new NotImplementedException();
+    }
+
+    public class MotorStatusTextConverter : IMultiValueConverter
+    {
+        static string GetText(Axis axis) => axis.AxisStatusDescription;
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) => GetText(values[0] as Axis);
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) => throw new NotImplementedException();
     }
 }

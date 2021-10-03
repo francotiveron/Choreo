@@ -8,7 +8,7 @@ namespace Choreo
     public class Motor : Axis {
         public Motor(int index) : base(index) { }
 
-        public override Status AxisStatus => DriveStatus || ESStatus;
+        public override Status AxisStatus => base.AxisStatus || DriveStatus || ESStatus;
         public override string AxisStatusDescription {
             get {
                 if (ESStatus) return "E-Stop";

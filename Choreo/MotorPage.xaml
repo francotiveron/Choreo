@@ -170,8 +170,16 @@
                     x:Name="SetPositionG" 
                     Margin="5" 
                     DataContext="{Binding CalibrationValue, Converter={StaticResource PositionConverter}}" 
-                    EditOrderNext="{Binding ElementName=SoftUpG, Mode=OneWay}" 
+                    EditOrderNext="{Binding ElementName=ToleranceG, Mode=OneWay}" 
                     EditOrderPrev="{Binding ElementName=LoadOffsG, Mode=OneWay}" 
+                    Focusable="True" />
+                <local:DataItemUI 
+                    x:Name="ToleranceG" 
+                    Grid.Column="1" 
+                    Margin="5" 
+                    DataContext="{Binding ToleranceValue, Converter={StaticResource PositionConverter}}" 
+                    EditOrderNext="{Binding ElementName=SoftUpG, Mode=OneWay}" 
+                    EditOrderPrev="{Binding ElementName=SetPositionG, Mode=OneWay}" 
                     Focusable="True" />
                 <!--<local:DataItemUI x:Name="RotationsPerFootG" Grid.Column="1" Margin="5" DataContext="{Binding RotationsPerFoot}" EditOrderNext="{Binding ElementName=SoftUp, Mode=OneWay}" EditOrderPrev="{Binding ElementName=SetPosition, Mode=OneWay}" Focusable="True" />-->
                 <Button x:Name="SaveNewPositionButtonG" Grid.Column="2" FontSize="16" Click="SaveNewPositionButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -202,7 +210,7 @@
                     DataContext="{Binding SoftUp, Converter={StaticResource PositionConverter}}" 
                     Focusable="True" 
                     EditOrderNext="{Binding ElementName=SoftDnG, Mode=OneWay}" 
-                    EditOrderPrev="{Binding ElementName=SetPositionG, Mode=OneWay}"/>
+                    EditOrderPrev="{Binding ElementName=ToleranceG, Mode=OneWay}"/>
                 <local:DataItemUI 
                     x:Name="SoftDnG" 
                     Grid.Column="1" 
