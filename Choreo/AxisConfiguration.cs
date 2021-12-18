@@ -8,7 +8,7 @@
             if (axis != null)
             {
                 CalibrationValue = axis.CalibrationValue;
-                RotationsPerFoot = axis.RotationsPerFoot;
+                if (axis.IsMotor) RotationsPerFoot = axis.RotationsPerFoot; else RotationsPerFoot = 0;
                 SoftUp = axis.SoftUp;
                 SoftDn = axis.SoftDn;
                 MaxAcc = axis.MaxAcc;
@@ -58,7 +58,7 @@
         public void Download(Axis axis)
         {
             axis.CalibrationValue = CalibrationValue;
-            axis.RotationsPerFoot = RotationsPerFoot;
+            if (axis.IsMotor) axis.RotationsPerFoot = RotationsPerFoot; else axis.RotationsPerFoot = 1;
             axis.SoftUp = SoftUp;
             axis.SoftDn = SoftDn;
             axis.MaxAcc = MaxAcc;

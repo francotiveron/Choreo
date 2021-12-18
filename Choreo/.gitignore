@@ -342,5 +342,7 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
-/ChoreoSetup/ChoreoSetup-cache
-/ChoreoSetup/ChoreoSetup-SetupFiles
+
+
+/ChoreoSetup/ChoreoSetup-cache/**
+/ChoreoSetup/ChoreoSetup-SetupFiles/**
