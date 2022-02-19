@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Choreo"
+             xmlns:qc="clr-namespace:QuickConverter;assembly=QuickConverter"
              IsEnabled="{Binding UserEnable}"
              mc:Ignorable="d" 
              d:DesignHeight="134" d:DesignWidth="120">
@@ -55,7 +56,9 @@
                 <RowDefinition Height="8*"/>
             </Grid.RowDefinitions>
             <local:DataItemUI DataContext="{Binding Position, Converter={StaticResource PositionConverter}}"/>
-            <local:DataItemUI Grid.Row="1" DataContext="{Binding Load}"/>
+            <Grid Grid.Row="1" IsEnabled="{Binding LoadCellActive}" >
+                <local:DataItemUI DataContext="{Binding Load}"/>
+            </Grid>
             <local:MotorStatusIndicator Grid.Row="2"/>
         </Grid>
         <Rectangle x:Name="StatusRectangle" Grid.Row="1" Grid.ColumnSpan="2">

@@ -193,6 +193,7 @@ namespace Choreo.TwinCAT
                 , axis.SoftDnRotations
                 , axis.SoftUpRotations
                 , axis.UserEnable
+                , axis.LoadCellActive
             };
 
             var tagNames =
@@ -207,6 +208,7 @@ namespace Choreo.TwinCAT
                     , nameof(Axis.SoftDnRotations)
                     , nameof(Axis.SoftUpRotations)
                     , nameof(Axis.UserEnable)
+                    , nameof(Axis.LoadCellActive)
                     };
 
             if (axis is Motor motor)
@@ -242,6 +244,7 @@ namespace Choreo.TwinCAT
                     , nameof(Axis.SoftDnRotations)
                     , nameof(Axis.SoftUpRotations)
                     , nameof(Axis.UserEnable)
+                    , nameof(Axis.LoadCellActive)
                     };
 
             if (axis is Motor motor)

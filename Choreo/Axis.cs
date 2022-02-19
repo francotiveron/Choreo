@@ -152,6 +152,14 @@ namespace Choreo
             set { userEnable = value; Notify(); }
         }
 
+        bool loadCellActive;
+        [Plc("Load_Cell_Enable")]
+        public bool LoadCellActive
+        {
+            get => loadCellActive;
+            set { loadCellActive = value; Notify(); }
+        }
+
         bool active;
         [Plc]
         public bool Active {

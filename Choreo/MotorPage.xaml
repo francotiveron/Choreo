@@ -27,6 +27,7 @@
                 <Label Content="CURRENT POSITION &amp; LOAD" Margin="20"/>
             </Viewbox>-->
             <local:MotorPanel Margin="5,5,0,0"/>
+            <CheckBox HorizontalAlignment="left" FontSize="22" Content="Load Cell Active" IsChecked="{Binding LoadCellActive}" Margin="5,0,0,0" />
         </StackPanel>
 
         <Grid Visibility="{Binding Path=IsMotor, Converter={qc:QuickConverter '$P ? Visibility.Visible: Visibility.Hidden'}}"
