@@ -10,12 +10,13 @@
              Background="#222222"
              d:DesignHeight="60" d:DesignWidth="1080">
     <Grid>
-        <Grid>
+        <Grid Background="{Binding Source={x:Static local:Globals.VM}, Path=DeadMan, Converter={qc:QuickConverter '$P ? new SolidColorBrush(Colors.DarkBlue) : new SolidColorBrush(Colors.Transparent)'}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="21*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
+
             <Image Source="Pictures/VerendusLogo.png"/>
             <Button x:Name="MainMenu" Grid.Column="2">
                 <Button.Style>
