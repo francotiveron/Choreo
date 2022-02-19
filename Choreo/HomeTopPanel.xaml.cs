@@ -37,7 +37,11 @@ namespace Choreo
             System.Diagnostics.Process.Start("lusrmgr.msc");
             Application.Current.Shutdown();
         }
-
+        private void ClearButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Plc.ClearMotionAndJog();
+            Plc.Upload(default(Preset));
+        }
     }
     public class CurrentPageVisibilityConverter : IValueConverter
     {

@@ -47,7 +47,6 @@
                 <RowDefinition Height="5*"/>
             </Grid.RowDefinitions>
             <Label Content="Axis Monitor" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-            <Button Content="Clear" x:Name="ClearButton" Click="ClearButton_Click" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" Padding="10,0" Background="Blue"/>
             <Label Content="Axis Groups" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
             <Grid Grid.Row ="1" x:Name="AxisMonitorGrid">
                 <Grid.RowDefinitions>
