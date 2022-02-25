@@ -1,9 +1,11 @@
 ﻿using Choreo.UserManagement;
 using System;
+using System.Linq;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 using static Choreo.Globals;
 
 namespace Choreo
@@ -41,6 +43,32 @@ namespace Choreo
         {
             Plc.ClearMotionAndJog();
             Plc.Upload(default(Preset));
+        }
+
+        private void MainMenu_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var left = e.ChangedButton == MouseButton.Left;
+            var right = e.ChangedButton == MouseButton.Right;
+
+            if (right || Configuration.UserManagement)
+            {
+                ContextMenu contextMenu = MainMenu.ContextMenu;
+
+                foreach (var mi in contextMenu.Items.OfType<MenuItem>())
+                {
+                    switch (mi.Name)
+                    {
+                        case "ExitItem": mi.Visibility = right ? Visibility.Visible : Visibility.Collapsed; break;
+                        case "UsersItem": mi.Visibility = left && VM.IsAdmin && Configuration.UserManagement ? Visibility.Visible : Visibility.Collapsed; break;
+                        default: mi.Visibility = left && Configuration.UserManagement ? Visibility.Visible : Visibility.Collapsed; break;
+                    }
+                }
+
+                contextMenu.PlacementTarget = MainMenu;
+                contextMenu.IsOpen = true;
+            }
+
+            e.Handled = true;
         }
     }
     public class CurrentPageVisibilityConverter : IValueConverter

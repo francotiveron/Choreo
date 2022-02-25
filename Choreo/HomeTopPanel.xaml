@@ -22,7 +22,7 @@
             <Image Source="Pictures/VerendusLogo.png"/>
             <Button Content="Clear" x:Name="ClearButton" Click="ClearButton_Click" Grid.Column="2" Background="Blue"/>
 
-            <Button x:Name="MainMenu" Grid.Column="4">
+            <Button x:Name="MainMenu" Grid.Column="4" PreviewMouseDown="MainMenu_MouseDown">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Background" Value="Red"/>
@@ -67,10 +67,10 @@
                 <Image Source="Pictures/MainMenu.png"/>
                 <Button.ContextMenu>
                     <ContextMenu>
-                        <MenuItem x:Name="LoginItem" Header="Login" Click="LoginItem_Click" Visibility="{Binding Source={x:Static local:Configuration.UserManagement}, Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Collapsed'}}"/>
-                        <MenuItem x:Name="LogoutItem" Header="Logout" Click="LogoutItem_Click" Visibility="{Binding Source={x:Static local:Configuration.UserManagement}, Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Collapsed'}}"/>
-                        <MenuItem x:Name="UsersItem" Header="Users" Click="UsersItem_Click" Visibility="{Binding IsAdmin, Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Collapsed'}}"/>
-                        <MenuItem x:Name="ExitItem" Header="Exit" Click="ExitItem_Click"/>
+                        <MenuItem x:Name="LoginItem" Header="Login" Click="LoginItem_Click"/>
+                        <MenuItem x:Name="LogoutItem" Header="Logout" Click="LogoutItem_Click"/>
+                        <MenuItem x:Name="UsersItem" Header="Users" Click="UsersItem_Click"/>
+                        <MenuItem x:Name="ExitItem" Header="Exit" Click="ExitItem_Click" />
                     </ContextMenu>
                 </Button.ContextMenu>
             </Button>
