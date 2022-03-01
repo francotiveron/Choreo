@@ -16,10 +16,5 @@ namespace Choreo
         private void JogVelSlider_ValueChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<double> e) => UpdateJogVelocity();
 
         private void UpdateJogVelocity() => Plc.Upload(JogVelSlider.Value);
-
-        private void ClearButton_Click(object sender, System.Windows.RoutedEventArgs e) {
-            Plc.ClearMotionAndJog();
-            Plc.Upload(default(Preset));
-        }
     }
 }

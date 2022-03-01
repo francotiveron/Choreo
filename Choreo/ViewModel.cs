@@ -118,6 +118,14 @@ namespace Choreo
             get { return jogVelocity; }
             set { jogVelocity = value; Notify(); }
         }
+
+        bool deadMan;
+        [Plc("Dead_Man")]
+        public bool DeadMan
+        {
+            get { return deadMan; }
+            set { deadMan = value; Notify(); }
+        }
         #endregion
 
         #region ******************Motor and Group Settings Editing******************

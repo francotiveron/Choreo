@@ -27,6 +27,7 @@
                     <Binding Path="JogUpEnable"/>
                     <Binding Path="JogDnEnable"/>
                     <Binding Path="AxisStatus"/>
+                    <Binding Path="JogStickEnable"/>
                 </MultiBinding>
             </TextBlock.Text>
         </TextBlock>

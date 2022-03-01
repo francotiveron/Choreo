@@ -110,12 +110,24 @@ namespace Choreo
             Gesture = false;
         }
 
+        //private void GestureLeft()
+        //{
+        //    Gesture = false;
+        //    User.RequireNormal();
+        //    if (CheckGroupedMotor()) return;
+        //    VM.BeginMotionEditing(true, (Axis)DataContext);
+        //}
         private void GestureLeft()
         {
             Gesture = false;
             User.RequireNormal();
             if (CheckGroupedMotor()) return;
-            VM.BeginMotionEditing(true, (Axis)DataContext);
+            var axis = (Axis)DataContext;
+            if (!axis.JogStickEnable)
+            {
+                if (axis.JogDnEnable || axis.JogUpEnable || axis.MAEnable || axis.MREnable) Plc.Jog(axis, 0);
+                else Plc.Jog(axis, 2);
+            }
         }
 
         private void GestureRight()
@@ -131,8 +143,9 @@ namespace Choreo
             User.RequireNormal();
             if (CheckGroupedMotor()) return;
             var axis = (Axis)DataContext;
-            if (!axis.JogUpEnable) {
-                if (axis.JogDnEnable) Plc.Jog(axis, 0);
+            if (!axis.JogUpEnable)
+            {
+                if (axis.JogDnEnable || axis.JogStickEnable || axis.MAEnable || axis.MREnable) Plc.Jog(axis, 0);
                 else Plc.Jog(axis, 1);
             }
         }
@@ -142,8 +155,9 @@ namespace Choreo
             User.RequireNormal();
             if (CheckGroupedMotor()) return;
             var axis = (Axis)DataContext;
-            if (!axis.JogDnEnable) {
-                if (axis.JogUpEnable) Plc.Jog(axis, 0);
+            if (!axis.JogDnEnable)
+            {
+                if (axis.JogUpEnable || axis.JogStickEnable || axis.MAEnable || axis.MREnable) Plc.Jog(axis, 0);
                 else Plc.Jog(axis, -1);
             }
         }
