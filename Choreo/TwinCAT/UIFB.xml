@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://www.plcopen.org/xml/tc6_0200">
-  <fileHeader companyName="Beckhoff Automation GmbH" productName="TwinCAT PLC Control" productVersion="3.5.13.20" creationDateTime="2020-05-12T15:43:13.4880122" />
-  <contentHeader name="Choereo" modificationDateTime="2020-05-12T15:43:13.4930108">
+  <fileHeader companyName="Beckhoff Automation GmbH" productName="TwinCAT PLC Control" productVersion="3.5.13.20" creationDateTime="2022-02-26T11:03:58.5838602" />
+  <contentHeader name="Choereo" modificationDateTime="2022-02-26T11:03:58.5869207">
     <coordinateInfo>
       <fbd>
         <scaling x="1" y="1" />
@@ -37,7 +37,7 @@
         </body>
         <addData>
           <data name="http://www.3s-software.com/plcopenxml/method" handleUnknown="implementation">
-            <Method name="ClearMotionAndJog" ObjectId="11ef4a45-0560-43fe-bb9d-e74b80ded0b2">
+            <Method name="ClearMotionAndJog" ObjectId="a029a2a4-604c-4277-811d-cf6d695192cf">
               <interface>
                 <returnType>
                   <DINT />
@@ -52,30 +52,30 @@
               </interface>
               <body>
                 <ST>
-                  <xhtml xmlns="http://www.w3.org/1999/xhtml">GVL.Axis_01_MA_Enable := GVL.Axis_01_MR_Enable := GVL.Axis_01_Jog_Up_Enable := GVL.Axis_01_Jog_Dn_Enable := 
-GVL.Axis_02_MA_Enable := GVL.Axis_02_MR_Enable := GVL.Axis_02_Jog_Up_Enable := GVL.Axis_02_Jog_Dn_Enable := 
-GVL.Axis_03_MA_Enable := GVL.Axis_03_MR_Enable := GVL.Axis_03_Jog_Up_Enable := GVL.Axis_03_Jog_Dn_Enable := 
-GVL.Axis_04_MA_Enable := GVL.Axis_04_MR_Enable := GVL.Axis_04_Jog_Up_Enable := GVL.Axis_04_Jog_Dn_Enable := 
-GVL.Axis_05_MA_Enable := GVL.Axis_05_MR_Enable := GVL.Axis_05_Jog_Up_Enable := GVL.Axis_05_Jog_Dn_Enable := 
-GVL.Axis_06_MA_Enable := GVL.Axis_06_MR_Enable := GVL.Axis_06_Jog_Up_Enable := GVL.Axis_06_Jog_Dn_Enable := 
-GVL.Axis_07_MA_Enable := GVL.Axis_07_MR_Enable := GVL.Axis_07_Jog_Up_Enable := GVL.Axis_07_Jog_Dn_Enable := 
-GVL.Axis_08_MA_Enable := GVL.Axis_08_MR_Enable := GVL.Axis_08_Jog_Up_Enable := GVL.Axis_08_Jog_Dn_Enable := 
-GVL.Axis_09_MA_Enable := GVL.Axis_09_MR_Enable := GVL.Axis_09_Jog_Up_Enable := GVL.Axis_09_Jog_Dn_Enable := 
-GVL.Axis_10_MA_Enable := GVL.Axis_10_MR_Enable := GVL.Axis_10_Jog_Up_Enable := GVL.Axis_10_Jog_Dn_Enable := 
-GVL.Axis_11_MA_Enable := GVL.Axis_11_MR_Enable := GVL.Axis_11_Jog_Up_Enable := GVL.Axis_11_Jog_Dn_Enable := 
-GVL.Axis_12_MA_Enable := GVL.Axis_12_MR_Enable := GVL.Axis_12_Jog_Up_Enable := GVL.Axis_12_Jog_Dn_Enable := 
-GVL.Axis_13_MA_Enable := GVL.Axis_13_MR_Enable := GVL.Axis_13_Jog_Up_Enable := GVL.Axis_13_Jog_Dn_Enable := 
-GVL.Axis_14_MA_Enable := GVL.Axis_14_MR_Enable := GVL.Axis_14_Jog_Up_Enable := GVL.Axis_14_Jog_Dn_Enable := 
-GVL.Axis_15_MA_Enable := GVL.Axis_15_MR_Enable := GVL.Axis_15_Jog_Up_Enable := GVL.Axis_15_Jog_Dn_Enable := 
-GVL.Axis_16_MA_Enable := GVL.Axis_16_MR_Enable := GVL.Axis_16_Jog_Up_Enable := GVL.Axis_16_Jog_Dn_Enable := 
-GVL.Axis_17_MA_Enable := GVL.Axis_17_MR_Enable := GVL.Axis_17_Jog_Up_Enable := GVL.Axis_17_Jog_Dn_Enable := 
-GVL.Axis_18_MA_Enable := GVL.Axis_18_MR_Enable := GVL.Axis_18_Jog_Up_Enable := GVL.Axis_18_Jog_Dn_Enable := 
-GVL.Axis_19_MA_Enable := GVL.Axis_19_MR_Enable := GVL.Axis_19_Jog_Up_Enable := GVL.Axis_19_Jog_Dn_Enable := 
-GVL.Axis_20_MA_Enable := GVL.Axis_20_MR_Enable := GVL.Axis_20_Jog_Up_Enable := GVL.Axis_20_Jog_Dn_Enable := 
-GVL.Axis_21_MA_Enable := GVL.Axis_21_MR_Enable := GVL.Axis_21_Jog_Up_Enable := GVL.Axis_21_Jog_Dn_Enable := 
-GVL.Axis_22_MA_Enable := GVL.Axis_22_MR_Enable := GVL.Axis_22_Jog_Up_Enable := GVL.Axis_22_Jog_Dn_Enable := 
-GVL.Axis_23_MA_Enable := GVL.Axis_23_MR_Enable := GVL.Axis_23_Jog_Up_Enable := GVL.Axis_23_Jog_Dn_Enable := 
-GVL.Axis_24_MA_Enable := GVL.Axis_24_MR_Enable := GVL.Axis_24_Jog_Up_Enable := GVL.Axis_24_Jog_Dn_Enable := 
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml">GVL.Axis_01_MA_Enable := GVL.Axis_01_MR_Enable := GVL.Axis_01_Jog_Up_Enable := GVL.Axis_01_Jog_Dn_Enable := GVL.Axis_01_Jog_Stick_Enable := 
+GVL.Axis_02_MA_Enable := GVL.Axis_02_MR_Enable := GVL.Axis_02_Jog_Up_Enable := GVL.Axis_02_Jog_Dn_Enable := GVL.Axis_02_Jog_Stick_Enable :=  
+GVL.Axis_03_MA_Enable := GVL.Axis_03_MR_Enable := GVL.Axis_03_Jog_Up_Enable := GVL.Axis_03_Jog_Dn_Enable := GVL.Axis_03_Jog_Stick_Enable :=  
+GVL.Axis_04_MA_Enable := GVL.Axis_04_MR_Enable := GVL.Axis_04_Jog_Up_Enable := GVL.Axis_04_Jog_Dn_Enable := GVL.Axis_04_Jog_Stick_Enable :=  
+GVL.Axis_05_MA_Enable := GVL.Axis_05_MR_Enable := GVL.Axis_05_Jog_Up_Enable := GVL.Axis_05_Jog_Dn_Enable := GVL.Axis_05_Jog_Stick_Enable :=  
+GVL.Axis_06_MA_Enable := GVL.Axis_06_MR_Enable := GVL.Axis_06_Jog_Up_Enable := GVL.Axis_06_Jog_Dn_Enable := GVL.Axis_06_Jog_Stick_Enable :=  
+GVL.Axis_07_MA_Enable := GVL.Axis_07_MR_Enable := GVL.Axis_07_Jog_Up_Enable := GVL.Axis_07_Jog_Dn_Enable := GVL.Axis_07_Jog_Stick_Enable :=  
+GVL.Axis_08_MA_Enable := GVL.Axis_08_MR_Enable := GVL.Axis_08_Jog_Up_Enable := GVL.Axis_08_Jog_Dn_Enable := GVL.Axis_08_Jog_Stick_Enable :=  
+GVL.Axis_09_MA_Enable := GVL.Axis_09_MR_Enable := GVL.Axis_09_Jog_Up_Enable := GVL.Axis_09_Jog_Dn_Enable := GVL.Axis_09_Jog_Stick_Enable :=  
+GVL.Axis_10_MA_Enable := GVL.Axis_10_MR_Enable := GVL.Axis_10_Jog_Up_Enable := GVL.Axis_10_Jog_Dn_Enable := GVL.Axis_10_Jog_Stick_Enable :=  
+GVL.Axis_11_MA_Enable := GVL.Axis_11_MR_Enable := GVL.Axis_11_Jog_Up_Enable := GVL.Axis_11_Jog_Dn_Enable := GVL.Axis_11_Jog_Stick_Enable :=  
+GVL.Axis_12_MA_Enable := GVL.Axis_12_MR_Enable := GVL.Axis_12_Jog_Up_Enable := GVL.Axis_12_Jog_Dn_Enable := GVL.Axis_12_Jog_Stick_Enable :=  
+GVL.Axis_13_MA_Enable := GVL.Axis_13_MR_Enable := GVL.Axis_13_Jog_Up_Enable := GVL.Axis_13_Jog_Dn_Enable := GVL.Axis_13_Jog_Stick_Enable :=  
+GVL.Axis_14_MA_Enable := GVL.Axis_14_MR_Enable := GVL.Axis_14_Jog_Up_Enable := GVL.Axis_14_Jog_Dn_Enable := GVL.Axis_14_Jog_Stick_Enable :=  
+GVL.Axis_15_MA_Enable := GVL.Axis_15_MR_Enable := GVL.Axis_15_Jog_Up_Enable := GVL.Axis_15_Jog_Dn_Enable := GVL.Axis_15_Jog_Stick_Enable :=  
+GVL.Axis_16_MA_Enable := GVL.Axis_16_MR_Enable := GVL.Axis_16_Jog_Up_Enable := GVL.Axis_16_Jog_Dn_Enable := GVL.Axis_16_Jog_Stick_Enable :=  
+GVL.Axis_17_MA_Enable := GVL.Axis_17_MR_Enable := GVL.Axis_17_Jog_Up_Enable := GVL.Axis_17_Jog_Dn_Enable := GVL.Axis_17_Jog_Stick_Enable :=  
+GVL.Axis_18_MA_Enable := GVL.Axis_18_MR_Enable := GVL.Axis_18_Jog_Up_Enable := GVL.Axis_18_Jog_Dn_Enable := GVL.Axis_18_Jog_Stick_Enable :=  
+GVL.Axis_19_MA_Enable := GVL.Axis_19_MR_Enable := GVL.Axis_19_Jog_Up_Enable := GVL.Axis_19_Jog_Dn_Enable := GVL.Axis_19_Jog_Stick_Enable :=  
+GVL.Axis_20_MA_Enable := GVL.Axis_20_MR_Enable := GVL.Axis_20_Jog_Up_Enable := GVL.Axis_20_Jog_Dn_Enable := GVL.Axis_20_Jog_Stick_Enable :=  
+GVL.Axis_21_MA_Enable := GVL.Axis_21_MR_Enable := GVL.Axis_21_Jog_Up_Enable := GVL.Axis_21_Jog_Dn_Enable := GVL.Axis_21_Jog_Stick_Enable :=  
+GVL.Axis_22_MA_Enable := GVL.Axis_22_MR_Enable := GVL.Axis_22_Jog_Up_Enable := GVL.Axis_22_Jog_Dn_Enable := GVL.Axis_22_Jog_Stick_Enable :=  
+GVL.Axis_23_MA_Enable := GVL.Axis_23_MR_Enable := GVL.Axis_23_Jog_Up_Enable := GVL.Axis_23_Jog_Dn_Enable := GVL.Axis_23_Jog_Stick_Enable :=  
+GVL.Axis_24_MA_Enable := GVL.Axis_24_MR_Enable := GVL.Axis_24_Jog_Up_Enable := GVL.Axis_24_Jog_Dn_Enable := GVL.Axis_24_Jog_Stick_Enable :=  
 0;
 
 ClearMotionAndJog := 0;</xhtml>
@@ -90,7 +90,7 @@ METHOD PUBLIC ClearMotionAndJog : DINT
             </Method>
           </data>
           <data name="http://www.3s-software.com/plcopenxml/method" handleUnknown="implementation">
-            <Method name="GetMotorsGroup" ObjectId="aff4a827-7071-4903-bfa0-75ca92683f35">
+            <Method name="GetMotorsGroup" ObjectId="99ac7ac5-ab17-4df4-a579-bced1117b7f8">
               <interface>
                 <returnType>
                   <DINT />
@@ -325,7 +325,7 @@ END_VAR
             </Method>
           </data>
           <data name="http://www.3s-software.com/plcopenxml/method" handleUnknown="implementation">
-            <Method name="SaveGroupMotors" ObjectId="14725f97-0d69-4151-8e3a-914062cc559c">
+            <Method name="SaveGroupMotors" ObjectId="b4650146-7739-4031-ae1a-c0cd509c0cfa">
               <interface>
                 <returnType>
                   <DINT />
@@ -557,9 +557,9 @@ END_VAR
     <data name="http://www.3s-software.com/plcopenxml/projectstructure" handleUnknown="discard">
       <ProjectStructure>
         <Object Name="UIFB" ObjectId="5f5724ba-b515-4970-a705-6a0dab9d357f">
-          <Object Name="ClearMotionAndJog" ObjectId="11ef4a45-0560-43fe-bb9d-e74b80ded0b2" />
-          <Object Name="GetMotorsGroup" ObjectId="aff4a827-7071-4903-bfa0-75ca92683f35" />
-          <Object Name="SaveGroupMotors" ObjectId="14725f97-0d69-4151-8e3a-914062cc559c" />
+          <Object Name="ClearMotionAndJog" ObjectId="a029a2a4-604c-4277-811d-cf6d695192cf" />
+          <Object Name="GetMotorsGroup" ObjectId="99ac7ac5-ab17-4df4-a579-bced1117b7f8" />
+          <Object Name="SaveGroupMotors" ObjectId="b4650146-7739-4031-ae1a-c0cd509c0cfa" />
         </Object>
       </ProjectStructure>
     </data>

@@ -21,9 +21,9 @@ namespace Choreo
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
             var axis = values[0] as Axis;
             return
-                (string)parameter == "Up" && (axis.MAEnable && axis.MoveVal > axis.Position || axis.MREnable && axis.MoveVal > 0 || axis.JogUpEnable)
+                (string)parameter == "Up" && (axis.MAEnable && axis.MoveVal > axis.Position || axis.MREnable && axis.MoveVal > 0 || axis.JogUpEnable || axis.JogStickEnable)
                 ||
-                (string)parameter == "Dn" && (axis.MAEnable && axis.MoveVal < axis.Position || axis.MREnable && axis.MoveVal < 0 || axis.JogDnEnable)
+                (string)parameter == "Dn" && (axis.MAEnable && axis.MoveVal < axis.Position || axis.MREnable && axis.MoveVal < 0 || axis.JogDnEnable || axis.JogStickEnable)
                 ?
                 Visibility.Visible
                 :
@@ -44,6 +44,7 @@ namespace Choreo
                 jogDn = values[3] as Brush,
                 move = values[4] as Brush,
                 error = values[5] as Brush,
+                jogStick = values[6] as Brush,
                 brush = null;
 
             if ((string)parameter == "Rectangle") {
@@ -52,7 +53,7 @@ namespace Choreo
                     brush.Opacity = 1.0;
                 }
                 else
-                if (axis.MAEnable || axis.MREnable || axis.JogUpEnable || axis.JogDnEnable) {
+                if (axis.MAEnable || axis.MREnable || axis.JogUpEnable || axis.JogDnEnable || axis.JogStickEnable) {
                     brush = move.Clone();
                     brush.Opacity = 1.0;
                 }
@@ -61,6 +62,7 @@ namespace Choreo
             else if (axis.Active) brush = move;
             else if (axis.JogUpEnable) brush = jogUp;
             else if (axis.JogDnEnable) brush = jogDn;
+            else if (axis.JogStickEnable) brush = jogStick;
             else brush = @default;
 
             return brush;

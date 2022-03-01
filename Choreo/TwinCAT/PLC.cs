@@ -281,6 +281,7 @@ namespace Choreo.TwinCAT
                 , motion.Relative ? nameof(Axis.MAEnable): nameof(Axis.MREnable)
                 , nameof(Axis.JogUpEnable)
                 , nameof(Axis.JogDnEnable)
+                , nameof(Axis.JogStickEnable)
             };
             var move = motion.Relative ? motion.RelativeSetpoint : motion.AbsoluteSetpoint;
 
@@ -295,8 +296,8 @@ namespace Choreo.TwinCAT
                 enabSyms.AddRange(enaProps.Select(p => tags[ax, p].Symbol));
             }
 
-            var tf = new object[] { true, false, false, false };
-            new SumSymbolWrite(Connection, enabSyms).Write(Enumerable.Repeat(tf, enabSyms.Count / 4).SelectMany(tfe => tfe).ToArray());
+            var tf = new object[] { true, false, false, false, false };
+            new SumSymbolWrite(Connection, enabSyms).Write(Enumerable.Repeat(tf, enabSyms.Count / 5).SelectMany(tfe => tfe).ToArray());
         }
 
         void Upload(double jogVel) {
@@ -414,8 +415,9 @@ namespace Choreo.TwinCAT
             if (!IsOn) return;
 
             var values = new object[] {
-                direction > 0
-                , direction < 0
+                direction == 1
+                , direction == -1
+                , direction == 2
                 , false
                 , false
             };
@@ -425,6 +427,7 @@ namespace Choreo.TwinCAT
                 new string[] {
                     nameof(Axis.JogUpEnable)
                     , nameof(Axis.JogDnEnable)
+                    , nameof(Axis.JogStickEnable)
                     , nameof(Axis.MAEnable)
                     , nameof(Axis.MREnable)
                 }

@@ -17,6 +17,7 @@ namespace Choreo
                 }
                 if (JogUpEnable) return "Jog Up";
                 if (JogDnEnable) return "Jog Dn";
+                if (JogStickEnable) return "Jog Stick";
                 return AxisStatus.ToString();
             }
         }
@@ -158,6 +159,14 @@ namespace Choreo
         {
             get => loadCellActive;
             set { loadCellActive = value; Notify(); }
+        }
+
+        bool jogStickEnable;
+        [Plc("Jog_Stick_Enable")]
+        public bool JogStickEnable
+        {
+            get => jogStickEnable;
+            set { jogStickEnable = value; Notify(); }
         }
 
         bool active;

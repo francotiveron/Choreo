@@ -17,6 +17,11 @@
             <GradientStop Color="#FF406C4B"/>
             <GradientStop Color="#FF181F1A" Offset="1"/>
         </LinearGradientBrush>
+        <LinearGradientBrush x:Key="JogStickBrush"  StartPoint="0.5,0.2" EndPoint="0.5,0.8" MappingMode="RelativeToBoundingBox">
+            <GradientStop Color="#FF406C4B" />
+            <GradientStop Color="#FF181F1A" Offset="0.5"/>
+            <GradientStop Color="#FF406C4B" Offset="1"/>
+        </LinearGradientBrush>
         <SolidColorBrush x:Key="DefaultBrush" Color="#333333"/>
         <SolidColorBrush x:Key="MoveBrush" Color="Lime" Opacity="0.5"/>
         <SolidColorBrush x:Key="ErrorBrush" Color="Red"  Opacity="0.5"/>
@@ -31,10 +36,12 @@
             <Binding Source="{StaticResource JogDnBrush}" />
             <Binding Source="{StaticResource MoveBrush}" />
             <Binding Source="{StaticResource ErrorBrush}" />
+            <Binding Source="{StaticResource JogStickBrush}" />
             <Binding Path="JogUpEnable"/>
             <Binding Path="JogDnEnable"/>
             <Binding Path="Active"/>
             <Binding Path="AxisStatus"/>
+            <Binding Path="JogStickEnable"/>
         </MultiBinding>
     </UserControl.Background>
     <Grid>
@@ -70,12 +77,14 @@
                     <Binding Source="{StaticResource JogDnBrush}" />
                     <Binding Source="{StaticResource MoveBrush}" />
                     <Binding Source="{StaticResource ErrorBrush}" />
+                    <Binding Source="{StaticResource JogStickBrush}" />
                     <Binding Path="MAEnable"/>
                     <Binding Path="MREnable"/>
                     <Binding Path="JogUpEnable"/>
                     <Binding Path="JogDnEnable"/>
                     <Binding Path="Active"/>
                     <Binding Path="AxisStatus"/>
+                    <Binding Path="JogStickEnable"/>
                 </MultiBinding>
             </Rectangle.Fill>
         </Rectangle>
@@ -100,6 +109,7 @@
                     <Binding Path="MREnable"/>
                     <Binding Path="JogUpEnable"/>
                     <Binding Path="JogDnEnable"/>
+                    <Binding Path="JogStickEnable"/>
                     <Binding Path="MoveVal"/>
                 </MultiBinding>
             </Image.Visibility>
@@ -113,6 +123,7 @@
                     <Binding Path="MREnable"/>
                     <Binding Path="JogUpEnable"/>
                     <Binding Path="JogDnEnable"/>
+                    <Binding Path="JogStickEnable"/>
                     <Binding Path="MoveVal"/>
                 </MultiBinding>
             </Image.Visibility>
