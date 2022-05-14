@@ -201,7 +201,7 @@ namespace Choreo
             EndGroupEditing();
             BeginGroupSettingsEditing(group.Index);
         }
-        public void GroupEditClear() { foreach (var m in Motors.Where(m => m.Group == GroupBeingEdited)) m.Group = 0; }
+        public void GroupEditClear() { foreach (var m in Motors.Where(m => m.Group == GroupBeingEdited)) m.Group = 0; Groups[GroupBeingEdited - 1].Name = null; }
         public void GroupEditCancel() {
             var group = Groups[GroupBeingEdited - 1];
             var editedGroupMotorsCurrent = new HashSet<Motor>(Motors.Where(m => m.Group == GroupBeingEdited));
@@ -239,6 +239,7 @@ namespace Choreo
             keys = Presets[PresetBeingEdited - 1].GroupPositions.Keys.ToList();
             Presets[PresetBeingEdited - 1].GroupPositions.Clear();
             foreach (var key in keys) Groups[key].PresetTouch();
+            Presets[PresetBeingEdited - 1].Name = null;
         }
         public void PresetEditCancel() {
             Presets[PresetBeingEdited - 1].Restore();
