@@ -5,7 +5,7 @@ namespace Choreo
 {
     public static class PushTimer {
         static DispatcherTimer timer;
-        static readonly TimeSpan interval = TimeSpan.FromSeconds(5);
+        static readonly TimeSpan interval = TimeSpan.FromSeconds(2.5);
 
         public static bool Start(Action callback) {
             if (timer == null) {
