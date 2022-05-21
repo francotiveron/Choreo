@@ -63,7 +63,7 @@
                 <RowDefinition Height="8*"/>
             </Grid.RowDefinitions>
             <local:DataItemUI DataContext="{Binding Position, Converter={StaticResource PositionConverter}}"/>
-            <Grid Grid.Row="1" IsEnabled="{Binding LoadCellActive}" >
+            <Grid Grid.Row="1" Visibility="{Binding Path=LoadCellActive, Converter={qc:QuickConverter '$P ? Visibility.Visible : Visibility.Hidden'}}" >
                 <local:DataItemUI DataContext="{Binding Load}"/>
             </Grid>
             <local:MotorStatusIndicator Grid.Row="2"/>
