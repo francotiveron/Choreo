@@ -25,7 +25,7 @@ namespace Choreo.TwinCAT
         void Download<T>(T obj);
         bool SaveGroupMotors(int groupIndex, ushort bitmap);
         bool GetMotorsGroup(ref ushort[] motorGroups);
-        bool ClearMotionAndJog();
+        bool ClearMotion();
         void Jog(Axis axis, int direction);
         void Calibrate(Axis axis);
         Dictionary<ushort, string> DownloadErrorMapping();
@@ -385,6 +385,14 @@ namespace Choreo.TwinCAT
             }
         }
 
+        public bool ClearMotion()
+        {
+            new SumSymbolWrite(Connection, cueProps.Select(prop => tags[VM, prop].Symbol).ToList()).Write(new object[] { false, false });
+            VM.LoadedCue = 0;
+
+            return PlcMethod("ClearMotionAndJog")?.Invoke() == 0;
+        }
+
         public bool SaveGroupMotors(int groupIndex, ushort bitmap) => PlcMethod()?.Invoke(groupIndex, bitmap) == 0;
 
         public bool GetMotorsGroup(ref ushort[] motorGroups) => PlcMethod(motorGroups)?.Invoke(out motorGroups) == 0;
@@ -435,8 +443,6 @@ namespace Choreo.TwinCAT
 
             new SumSymbolWrite(Connection, valueSyms).Write(values);
         }
-
-        public bool ClearMotionAndJog() => PlcMethod()?.Invoke() == 0;
 
         public void Calibrate(Axis axis) {
             if (!IsOn) return;
