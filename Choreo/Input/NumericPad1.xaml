@@ -56,7 +56,7 @@
             x:Name="ValueTextBox" 
             Background="{x:Null}" 
             Foreground="yellow" 
-            Text="0" 
+            Text="+0" 
             MaxLines="1" 
             FontSize="30" 
             MaxLength="10" 
