@@ -204,12 +204,7 @@ namespace Choreo
         [Plc("Fault_Code")]
         public ushort FaultCode
         {
-            //get => faultCode;
-            get
-            {
-                if (Index == 0) return 0x4000;
-                else return faultCode;
-            }
+            get => faultCode;
             set { faultCode = value; Notify()(nameof(AxisStatus)); }
         }
 
