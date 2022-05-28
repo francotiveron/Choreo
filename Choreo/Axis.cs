@@ -8,8 +8,10 @@ namespace Choreo
         public Axis(int index) { Index = index; }
         public bool IsGroup => this is Group;
         public bool IsMotor => this is Motor;
-        public virtual Status AxisStatus => FaultCode != 0;
-        public virtual string AxisStatusDescription {
+        //public virtual Status AxisStatus => FaultCode != 0;
+        public virtual Status AxisStatus => new Status(FaultCode);
+        public virtual string AxisStatusDescription
+        {
             get {
                 if (FaultCode != 0) return FaultDescription;
                 if (MAEnable || MREnable) {
@@ -202,7 +204,12 @@ namespace Choreo
         [Plc("Fault_Code")]
         public ushort FaultCode
         {
-            get => faultCode;
+            //get => faultCode;
+            get
+            {
+                if (Index == 0) return 0x4000;
+                else return faultCode;
+            }
             set { faultCode = value; Notify()(nameof(AxisStatus)); }
         }
 

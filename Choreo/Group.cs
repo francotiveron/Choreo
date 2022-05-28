@@ -42,10 +42,50 @@ namespace Choreo
         }
         public bool IsPreset => VM.Presets.Any(p => p.ContainsGroup(Index));
 
-        public override Status MinVelStatus => base.MinVelStatus || VM.Motors.Any(m => m.Group == Number && m.MinVel > MinVel);
-        public override Status MaxVelStatus => base.MaxVelStatus || VM.Motors.Any(m => m.Group == Number && m.MaxVel < MaxVel);
-        public override Status MaxAccStatus => base.MaxAccStatus || VM.Motors.Any(m => m.Group == Number && m.MaxAcc < MaxAcc);
-        public override Status MaxDecStatus => base.MaxDecStatus || VM.Motors.Any(m => m.Group == Number && m.MaxDec < MaxDec);
+        //public override Status MinVelStatus => base.MinVelStatus || VM.Motors.Any(m => m.Group == Number && m.MinVel > MinVel);
+        //public override Status MaxVelStatus => base.MaxVelStatus || VM.Motors.Any(m => m.Group == Number && m.MaxVel < MaxVel);
+        //public override Status MaxAccStatus => base.MaxAccStatus || VM.Motors.Any(m => m.Group == Number && m.MaxAcc < MaxAcc);
+        //public override Status MaxDecStatus => base.MaxDecStatus || VM.Motors.Any(m => m.Group == Number && m.MaxDec < MaxDec);
+        public override Status MinVelStatus {
+            get
+            {
+                if (VM.Motors.Any(m => m.Group == Number && m.MinVel > MinVel))
+                    return Status.Error;
+                else
+                    return base.MinVelStatus;
+            }
+        }
+
+        public override Status MaxVelStatus
+        {
+            get
+            {
+                if (VM.Motors.Any(m => m.Group == Number && m.MaxVel < MaxVel))
+                    return Status.Error;
+                else
+                    return base.MaxVelStatus;
+            }
+        }
+        public override Status MaxAccStatus
+        {
+            get
+            {
+                if (VM.Motors.Any(m => m.Group == Number && m.MaxAcc < MaxAcc))
+                    return Status.Error;
+                else
+                    return base.MaxAccStatus;
+            }
+        }
+        public override Status MaxDecStatus
+        {
+            get
+            {
+                if (VM.Motors.Any(m => m.Group == Number && m.MaxDec < MaxDec))
+                    return Status.Error;
+                else
+                    return base.MaxDecStatus;
+            }
+        }
         #endregion
     }
 }
