@@ -176,6 +176,9 @@
     <Compile Include="Input\MaGSelectionPopup.xaml.cs">
       <DependentUpon>MaGSelectionPopup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Logging\AxesSetupPopup.xaml.cs">
+      <DependentUpon>AxesSetupPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Logging\AlertPopup.xaml.cs">
       <DependentUpon>AlertPopup.xaml</DependentUpon>
     </Compile>
@@ -315,6 +318,10 @@
     <Page Include="Input\MaGSelectionPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Logging\AxesSetupPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Logging\AlertPopup.xaml">
       <SubType>Designer</SubType>

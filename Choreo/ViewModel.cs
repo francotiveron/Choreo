@@ -143,10 +143,10 @@ namespace Choreo
             EndMotorSettingsEditing();
         }
 
-        public void MotorSettingsEditSave() {
-            Plc.Upload(Motors[MotorSettingsBeingEdited - 1]);
-            Save(Motors[MotorSettingsBeingEdited - 1]);
-            EndMotorSettingsEditing();
+        void MotorSettingsEditSave(int index)
+        {
+            Plc.Upload(Motors[index]);
+            Save(Motors[index]);
         }
 
         int groupSettingsBeingEdited;
@@ -162,9 +162,20 @@ namespace Choreo
             Load(Groups[GroupSettingsBeingEdited - 1]);
             EndGroupSettingsEditing();
         }
-        public void GroupSettingsEditSave() {
-            Plc.Upload(Groups[GroupSettingsBeingEdited - 1]);
-            Save(Groups[GroupSettingsBeingEdited - 1]);
+        public void GroupSettingsEditSave(int index)
+        {
+            Plc.Upload(Groups[index]);
+            Save(Groups[index]);
+        }
+        public void AxesSettingsEditSave(int[] indexes)
+        {
+            foreach (int i in indexes)
+            {
+                if (i < 16) VM.MotorSettingsEditSave(i);
+                else VM.GroupSettingsEditSave(i - 16);
+            }
+
+            EndMotorSettingsEditing();
             EndGroupSettingsEditing();
         }
         #endregion
