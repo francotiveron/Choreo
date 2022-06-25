@@ -318,7 +318,7 @@ namespace Choreo
         public Status DefAccStatus => DefAcc < MinAcc || DefAcc > MaxAcc;
 
         double jogAcc;
-        [DataItem("fpm2", "Jog")/*, Plc("Jog_Accel")*/]
+        [DataItem("fpm2", "Jog"), Plc("Jog_Accel")]
         public double JogAcc
         {
             get => jogAcc;
@@ -347,7 +347,7 @@ namespace Choreo
         public Status DefDecStatus => DefDec < MinDec || DefVel > MaxDec;
 
         double jogDec;
-        [DataItem("fpm2", "Jog")/*, Plc("Jog_Decel")*/]
+        [DataItem("fpm2", "Jog"), Plc("Jog_Decel")]
         public double JogDec
         {
             get => jogDec;
@@ -379,32 +379,6 @@ namespace Choreo
         }
         public Status LoadOffsStatus => Status.Ok;
 
-        double pGain;
-        [DataItem("r/s/r", "P-Gain")/*, Plc("P_Gain")*/]
-        public double PGain
-        {
-            get => pGain;
-            set { pGain = value; Notify(); }
-        }
-        public Status PGainStatus => Status.Ok;
-
-        double jerk;
-        [DataItem("r/s2", "Jerk")/*, Plc("Jerk")*/]
-        public double Jerk
-        {
-            get => jerk;
-            set { jerk = value; Notify(); }
-        }
-        public Status JerkStatus => Status.Ok;
-
-        double refVel;
-        [DataItem("r/s", "Ref.Velocity")/*, Plc("RefVel")*/]
-        public double RefVel
-        {
-            get => refVel;
-            set { refVel = value; Notify(); }
-        }
-        public Status RefVelStatus => Status.Ok;
 
         double rotationsPerFoot = 1.0;
         

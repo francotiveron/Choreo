@@ -194,6 +194,8 @@ namespace Choreo.TwinCAT
                 , axis.SoftUpRotations
                 , axis.UserEnable
                 , axis.LoadCellActive
+                , axis.JogAcc
+                , axis.JogDec
             };
 
             var tagNames =
@@ -209,12 +211,20 @@ namespace Choreo.TwinCAT
                     , nameof(Axis.SoftUpRotations)
                     , nameof(Axis.UserEnable)
                     , nameof(Axis.LoadCellActive)
+                    , nameof(Axis.JogAcc)
+                    , nameof(Axis.JogDec)
                     };
 
             if (axis is Motor motor)
             {
                 values = values.Append(axis.RotationsPerFoot).ToArray();
                 tagNames = tagNames.Append(nameof(motor.RotationsPerFoot)).ToArray();
+                values = values.Append(motor.PGain).ToArray();
+                tagNames = tagNames.Append(nameof(motor.PGain)).ToArray();
+                values = values.Append(motor.Jerk).ToArray();
+                tagNames = tagNames.Append(nameof(motor.Jerk)).ToArray();
+                values = values.Append(motor.RefVel).ToArray();
+                tagNames = tagNames.Append(nameof(motor.RefVel)).ToArray();
             }
             else if (axis is Group group)
             {
@@ -245,11 +255,16 @@ namespace Choreo.TwinCAT
                     , nameof(Axis.SoftUpRotations)
                     , nameof(Axis.UserEnable)
                     , nameof(Axis.LoadCellActive)
+                    , nameof(Axis.JogAcc)
+                    , nameof(Axis.JogDec)
                     };
 
             if (axis is Motor motor)
             {
                 tagNames = tagNames.Append(nameof(motor.RotationsPerFoot)).ToArray();
+                tagNames = tagNames.Append(nameof(motor.PGain)).ToArray();
+                tagNames = tagNames.Append(nameof(motor.Jerk)).ToArray();
+                tagNames = tagNames.Append(nameof(motor.RefVel)).ToArray();
             }
             else if (axis is Group group)
             {

@@ -86,6 +86,32 @@ namespace Choreo
             set => base.RotationsPerFoot = value;
         }
 
+        double pGain;
+        [DataItem("r/s/r", "P-Gain"), Plc("PGain")]
+        public double PGain
+        {
+            get => pGain;
+            set { pGain = value; Notify(); }
+        }
+        public Status PGainStatus => !(PGain >= 0.0001 && PGain <= 10);
+
+        double jerk;
+        [DataItem("r/s2", "Jerk"), Plc("Jerk")]
+        public double Jerk
+        {
+            get => jerk;
+            set { jerk = value; Notify(); }
+        }
+        public Status JerkStatus => !(Jerk >= 0 && Jerk <= 10);
+
+        double refVel;
+        [DataItem("r/s", "Ref.Velocity"), Plc("Ref_Vel")]
+        public double RefVel
+        {
+            get => refVel;
+            set { refVel = value; Notify(); }
+        }
+        public Status RefVelStatus => !(RefVel >= 0 && RefVel <= 10);
         #endregion
 
         #region UI Properties
