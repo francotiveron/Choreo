@@ -61,6 +61,15 @@ namespace Choreo
                             targetAxis.SoftDnRotations = editAxis.SoftDnRotations;
                             targetAxis.SoftUpRotations = editAxis.SoftUpRotations;
                             targetAxis.LoadCellActive = editAxis.LoadCellActive;
+                            targetAxis.SoftLimitEnable = editAxis.SoftLimitEnable;
+                            targetAxis.JogAcc = editAxis.JogAcc;
+                            targetAxis.JogDec = editAxis.JogDec;
+                            if (targetAxis is Motor targetMotor && editAxis is Motor editMotor)
+                            {
+                                targetMotor.PGain = editMotor.PGain;
+                                targetMotor.Jerk = editMotor.Jerk;
+                                targetMotor.RefVel = editMotor.RefVel;
+                            }
                         }
                     }
                 }

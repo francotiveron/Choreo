@@ -83,7 +83,7 @@ namespace Choreo
         }
 
         double minVel;
-        [DataItem("fpm", "Min"), Plc("Min_Velocity")]
+        [DataItem("fpm", "Min(Velocity)"), Plc("Min_Velocity")]
         public double MinVel {
             get => minVel;
             set { minVel = value; Notify()(nameof(DefVel), nameof(MaxVel)); }
@@ -170,6 +170,14 @@ namespace Choreo
         {
             get => loadCellActive;
             set { loadCellActive = value; Notify(); }
+        }
+
+        bool softLimitEnable;
+        [Plc("Soft_Limit_Enable")]
+        public bool SoftLimitEnable
+        {
+            get => softLimitEnable;
+            set { softLimitEnable = value; Notify(); }
         }
 
         bool jogStickEnable;
@@ -297,7 +305,7 @@ namespace Choreo
         }
         public Status SoftDnStatus => SoftDn > SoftUp;
 
-        [DataItem("fpm2", "Min")]
+        [DataItem("fpm2", "Min(Accel.)")]
         public double MinAcc => 1.0;
         public Status MinAccStatus => MinAcc < 0;
 
@@ -326,7 +334,7 @@ namespace Choreo
         }
         public Status JogAccStatus => Status.Ok;
 
-        [DataItem("fpm2", "Min")]
+        [DataItem("fpm2", "Min(Decel.)")]
         public double MinDec => 1.0;
         public Status MinDecStatus => MinDec < 0;
 
@@ -356,7 +364,7 @@ namespace Choreo
         public Status JogDecStatus => Status.Ok;
 
         double minLoad;
-        [DataItem("lbs", "Min Load"), Plc("Min_Load")]
+        [DataItem("lbs", "Min(Load)"), Plc("Min_Load")]
         public double MinLoad {
             get => minLoad;
             set { minLoad = value; Notify()(nameof(MaxLoad), nameof(LoadOffs)); }
@@ -364,7 +372,7 @@ namespace Choreo
         public Status MinLoadStatus => MinLoad > MaxLoad;
 
         double maxLoad;
-        [DataItem("lbs", "Max Load"), Plc("Max_Load")]
+        [DataItem("lbs", "Max"), Plc("Max_Load")]
         public double MaxLoad {
             get => maxLoad;
             set { maxLoad = value; Notify()(nameof(MinLoad), nameof(LoadOffs)); }
@@ -372,7 +380,7 @@ namespace Choreo
         public Status MaxLoadStatus => MaxLoad < MinLoad;
 
         double loadOffs;
-        [DataItem("lbs", "Load Offset"), Plc("Load_Offset")]
+        [DataItem("lbs", "Offset"), Plc("Load_Offset")]
         public double LoadOffs {
             get => loadOffs;
             set { loadOffs = value; Notify()(nameof(MaxLoad), nameof(MinLoad)); }

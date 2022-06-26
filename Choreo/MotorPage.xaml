@@ -27,12 +27,8 @@
                 <Label Content="CURRENT POSITION &amp; LOAD" Margin="20"/>
             </Viewbox>-->
             <local:MotorPanel Margin="5,0,0,0"/>
-            <CheckBox HorizontalAlignment="left" FontSize="20" Content="Load Cell Active" IsChecked="{Binding LoadCellActive}" Margin="5,0,0,0" />
-            <Label Content="Velocities ->" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="30,30,20,20" FontSize="22"></Label>
-            <Label Content="Accelerations ->" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="30,30,20,20" FontSize="22"></Label>
-            <Label Content="Decelerations ->" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="30,30,20,20" FontSize="22"></Label>
-            <Label Content="Load ->" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="30,30,20,20" FontSize="22"></Label>
-            <Label Visibility="{Binding Path=IsMotor, Converter={qc:QuickConverter '$P ? Visibility.Visible: Visibility.Hidden'}}" Content="Controller ->" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="30,30,20,20" FontSize="22"></Label>
+            <CheckBox HorizontalAlignment="left" FontSize="22" Content="Load Cell Active" IsChecked="{Binding LoadCellActive}" Margin="5,0,0,0" />
+            <CheckBox HorizontalAlignment="left" FontSize="21" Content="Soft Limit Enable" IsChecked="{Binding SoftLimitEnable}" Margin="5,0,0,0" />
         </StackPanel>
 
         <Grid Visibility="{Binding Path=IsMotor, Converter={qc:QuickConverter '$P ? Visibility.Visible: Visibility.Hidden'}}"
