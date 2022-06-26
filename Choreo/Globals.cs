@@ -21,12 +21,26 @@ namespace Choreo
         }
 
         public struct Status {
-            public enum Values { Ok, Warning, Error };
+            public enum Values { Ok, Warning, Alert, Error };
             public static Values Ok => Values.Ok;
             public static Values Warning => Values.Warning;
+            public static Values Alert => Values.Alert;
             public static Values Error => Values.Error;
-            public Status(Values value) => Value = value;
             public Values Value { get; set; }
+            public Status(Values value) => Value = value;
+
+            public Status(ushort faultCode)
+            {
+                switch (faultCode & 0xC000)
+                {
+                    case 0x0000: Value = Ok; break;
+                    case 0x4000: Value = Warning; break;
+                    case 0x8000: Value = Alert; break;
+                    case 0xC000: Value = Error; break;
+                    default: throw new ArgumentOutOfRangeException(nameof(faultCode));
+                }
+            }
+
             public static implicit operator Values(Status status) => status.Value;
             public static implicit operator Status(Values value) => new Status(value);
             public static implicit operator Status(bool error) => error ? Error : Ok;

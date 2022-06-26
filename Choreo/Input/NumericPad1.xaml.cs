@@ -46,7 +46,7 @@ namespace Choreo.Input
                     if (!Value.Contains('.') && Value != "" && char.IsDigit(Value.Last())) Value = Value + '.';
                     break;
                 case "FEET":
-                    if (!Value.Contains("'") && DataItem.IsPosition && int.TryParse(Value, out _)) Value = Value + "'-";
+                    if (!Value.Contains("'") && DataItem.IsPosition && int.TryParse(Value, out _)) Value = Value + "'";
                     break;
                 default:
                     if (but.Name.StartsWith("NUM"))

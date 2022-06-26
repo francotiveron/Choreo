@@ -25,7 +25,7 @@ namespace Choreo.TwinCAT
         void Download<T>(T obj);
         bool SaveGroupMotors(int groupIndex, ushort bitmap);
         bool GetMotorsGroup(ref ushort[] motorGroups);
-        bool ClearMotionAndJog();
+        bool ClearMotion();
         void Jog(Axis axis, int direction);
         void Calibrate(Axis axis);
         Dictionary<ushort, string> DownloadErrorMapping();
@@ -194,6 +194,9 @@ namespace Choreo.TwinCAT
                 , axis.SoftUpRotations
                 , axis.UserEnable
                 , axis.LoadCellActive
+                , axis.SoftLimitEnable
+                , axis.JogAcc
+                , axis.JogDec
             };
 
             var tagNames =
@@ -209,12 +212,21 @@ namespace Choreo.TwinCAT
                     , nameof(Axis.SoftUpRotations)
                     , nameof(Axis.UserEnable)
                     , nameof(Axis.LoadCellActive)
+                    , nameof(Axis.SoftLimitEnable)
+                    , nameof(Axis.JogAcc)
+                    , nameof(Axis.JogDec)
                     };
 
             if (axis is Motor motor)
             {
                 values = values.Append(axis.RotationsPerFoot).ToArray();
                 tagNames = tagNames.Append(nameof(motor.RotationsPerFoot)).ToArray();
+                values = values.Append(motor.PGain).ToArray();
+                tagNames = tagNames.Append(nameof(motor.PGain)).ToArray();
+                values = values.Append(motor.Jerk).ToArray();
+                tagNames = tagNames.Append(nameof(motor.Jerk)).ToArray();
+                values = values.Append(motor.RefVel).ToArray();
+                tagNames = tagNames.Append(nameof(motor.RefVel)).ToArray();
             }
             else if (axis is Group group)
             {
@@ -245,11 +257,17 @@ namespace Choreo.TwinCAT
                     , nameof(Axis.SoftUpRotations)
                     , nameof(Axis.UserEnable)
                     , nameof(Axis.LoadCellActive)
+                    , nameof(Axis.SoftLimitEnable)
+                    , nameof(Axis.JogAcc)
+                    , nameof(Axis.JogDec)
                     };
 
             if (axis is Motor motor)
             {
                 tagNames = tagNames.Append(nameof(motor.RotationsPerFoot)).ToArray();
+                tagNames = tagNames.Append(nameof(motor.PGain)).ToArray();
+                tagNames = tagNames.Append(nameof(motor.Jerk)).ToArray();
+                tagNames = tagNames.Append(nameof(motor.RefVel)).ToArray();
             }
             else if (axis is Group group)
             {
@@ -385,6 +403,14 @@ namespace Choreo.TwinCAT
             }
         }
 
+        public bool ClearMotion()
+        {
+            new SumSymbolWrite(Connection, cueProps.Select(prop => tags[VM, prop].Symbol).ToList()).Write(new object[] { false, false });
+            VM.LoadedCue = 0;
+
+            return PlcMethod("ClearMotionAndJog")?.Invoke() == 0;
+        }
+
         public bool SaveGroupMotors(int groupIndex, ushort bitmap) => PlcMethod()?.Invoke(groupIndex, bitmap) == 0;
 
         public bool GetMotorsGroup(ref ushort[] motorGroups) => PlcMethod(motorGroups)?.Invoke(out motorGroups) == 0;
@@ -435,8 +461,6 @@ namespace Choreo.TwinCAT
 
             new SumSymbolWrite(Connection, valueSyms).Write(values);
         }
-
-        public bool ClearMotionAndJog() => PlcMethod()?.Invoke() == 0;
 
         public void Calibrate(Axis axis) {
             if (!IsOn) return;

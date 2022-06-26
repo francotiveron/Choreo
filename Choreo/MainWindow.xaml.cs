@@ -31,9 +31,11 @@ namespace Choreo
         ~MainWindow() {}
 
         private void VM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
-            if (e.PropertyName == nameof(ViewModel.GroupBeingEdited)) {
+            if (e.PropertyName == nameof(ViewModel.GroupBeingEdited))
+            {
                 var group = VM.GroupBeingEdited;
-                if (group > 0) {
+                if (group > 0)
+                {
                     if (!(TopPanelArea.Child is GroupTopPanel)) TopPanelArea.Child = new GroupTopPanel();
                     var panel = (GroupTopPanel)TopPanelArea.Child;
                     if (panel.DataContext != VM.Groups[group - 1]) panel.DataContext = VM.Groups[group - 1];
@@ -41,9 +43,11 @@ namespace Choreo
                 else TopPanelArea.Child = new HomeTopPanel();
             }
             else
-            if (e.PropertyName == nameof(ViewModel.PresetBeingEdited)) {
+            if (e.PropertyName == nameof(ViewModel.PresetBeingEdited))
+            {
                 var preset = VM.PresetBeingEdited;
-                if (preset > 0) {
+                if (preset > 0)
+                {
                     if (!(TopPanelArea.Child is PresetTopPanel)) TopPanelArea.Child = new PresetTopPanel();
                     var panel = (PresetTopPanel)TopPanelArea.Child;
                     if (panel.DataContext != VM.Presets[preset - 1]) panel.DataContext = VM.Presets[preset - 1];
@@ -51,7 +55,11 @@ namespace Choreo
                 else TopPanelArea.Child = new HomeTopPanel();
             }
             else
-            if (e.PropertyName == nameof(ViewModel.CurrentMainWindowPage)) SelectPage();
+            if (e.PropertyName == nameof(ViewModel.CurrentMainWindowPage))
+            {
+                Plc.ClearMotion();
+                SelectPage();
+            }
         }
 
         void SelectPage() {

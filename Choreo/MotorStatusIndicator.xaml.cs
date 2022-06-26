@@ -26,8 +26,9 @@ namespace Choreo
 
         static readonly SolidColorBrush okBrush = new SolidColorBrush(Colors.Lime);
         static readonly SolidColorBrush warnBrush = new SolidColorBrush(Colors.Yellow);
+        static readonly SolidColorBrush alertBrush = new SolidColorBrush(Colors.Orange);
         static readonly SolidColorBrush errBrush = new SolidColorBrush(Colors.Red);
-        static readonly Brush[] brushes = new Brush[] { okBrush, warnBrush, errBrush };
+        static readonly Brush[] brushes = new Brush[] { okBrush, warnBrush, alertBrush, errBrush };
         static Brush GetColor(Axis axis) => brushes[(int)axis.AxisStatus];
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) => GetColor(values[0] as Axis);

@@ -8,8 +8,10 @@ namespace Choreo
         public Axis(int index) { Index = index; }
         public bool IsGroup => this is Group;
         public bool IsMotor => this is Motor;
-        public virtual Status AxisStatus => FaultCode != 0;
-        public virtual string AxisStatusDescription {
+        //public virtual Status AxisStatus => FaultCode != 0;
+        public virtual Status AxisStatus => new Status(FaultCode);
+        public virtual string AxisStatusDescription
+        {
             get {
                 if (FaultCode != 0) return FaultDescription;
                 if (MAEnable || MREnable) {
@@ -81,7 +83,7 @@ namespace Choreo
         }
 
         double minVel;
-        [DataItem("fpm", "Min Velocity"), Plc("Min_Velocity")]
+        [DataItem("fpm", "Min(Velocity)"), Plc("Min_Velocity")]
         public double MinVel {
             get => minVel;
             set { minVel = value; Notify()(nameof(DefVel), nameof(MaxVel)); }
@@ -89,12 +91,21 @@ namespace Choreo
         public virtual Status MinVelStatus => MinVel < 0 || MinVel > DefVel;
 
         double maxVel;
-        [DataItem("fpm", "Max Velocity"), Plc("Max_Velocity")]
+        [DataItem("fpm", "Max"), Plc("Max_Velocity")]
         public double MaxVel {
             get => maxVel;
             set { maxVel = value; Notify()(nameof(MinVel), nameof(DefVel)); }
         }
         public virtual Status MaxVelStatus => MaxVel < DefVel;
+
+        double defVel;
+        [DataItem("fpm", "Default"), Persistent]
+        public double DefVel
+        {
+            get => defVel;
+            set { defVel = value; Notify()(nameof(MinVel), nameof(MaxVel)); }
+        }
+        public Status DefVelStatus => DefVel < MinVel || DefVel > MaxVel;
 
         bool mAEnable;
         [Plc("MA_Enable")]
@@ -159,6 +170,14 @@ namespace Choreo
         {
             get => loadCellActive;
             set { loadCellActive = value; Notify(); }
+        }
+
+        bool softLimitEnable;
+        [Plc("Soft_Limit_Enable")]
+        public bool SoftLimitEnable
+        {
+            get => softLimitEnable;
+            set { softLimitEnable = value; Notify(); }
         }
 
         bool jogStickEnable;
@@ -286,12 +305,12 @@ namespace Choreo
         }
         public Status SoftDnStatus => SoftDn > SoftUp;
 
-        [DataItem("fpm2", "Min Acceleration")]
+        [DataItem("fpm2", "Min(Accel.)")]
         public double MinAcc => 1.0;
         public Status MinAccStatus => MinAcc < 0;
 
         double maxAcc;
-        [DataItem("fpm2", "Max Acceleration"), Plc("Max_Accel")]
+        [DataItem("fpm2", "Max"), Plc("Max_Accel")]
         public double MaxAcc {
             get => maxAcc;
             set { maxAcc = value; Notify()(nameof(DefAcc)); }
@@ -299,27 +318,28 @@ namespace Choreo
         public virtual Status MaxAccStatus => MaxAcc < DefAcc;
 
         double defAcc;
-        [DataItem("fpm2", "Default Acceleration"), Persistent]
+        [DataItem("fpm2", "Default"), Persistent]
         public double DefAcc {
             get => defAcc;
             set { defAcc = value; Notify()(nameof(MaxAcc)); }
         }
         public Status DefAccStatus => DefAcc < MinAcc || DefAcc > MaxAcc;
 
-        double defVel;
-        [DataItem("fpm", "Default Velocity"), Persistent]
-        public double DefVel {
-            get => defVel;
-            set { defVel = value; Notify()(nameof(MinVel), nameof(MaxVel)); }
+        double jogAcc;
+        [DataItem("fpm2", "Jog"), Plc("Jog_Accel")]
+        public double JogAcc
+        {
+            get => jogAcc;
+            set { jogAcc = value; Notify(); }
         }
-        public Status DefVelStatus => DefVel < MinVel || DefVel > MaxVel;
+        public Status JogAccStatus => Status.Ok;
 
-        [DataItem("fpm2", "Min Deceleration")]
+        [DataItem("fpm2", "Min(Decel.)")]
         public double MinDec => 1.0;
         public Status MinDecStatus => MinDec < 0;
 
         double maxDec;
-        [DataItem("fpm2", "Max Deceleration"), Plc("Max_Decel")]
+        [DataItem("fpm2", "Max"), Plc("Max_Decel")]
         public double MaxDec {
             get => maxDec;
             set { maxDec = value; Notify()(nameof(DefDec)); }
@@ -327,15 +347,24 @@ namespace Choreo
         public virtual Status MaxDecStatus => MaxDec < DefDec;
 
         double defDec;
-        [DataItem("fpm2", "Default Deceleration"), Persistent]
+        [DataItem("fpm2", "Default"), Persistent]
         public double DefDec {
             get => defDec;
             set { defDec = value; Notify()(nameof(MaxDec)); }
         }
         public Status DefDecStatus => DefDec < MinDec || DefVel > MaxDec;
 
+        double jogDec;
+        [DataItem("fpm2", "Jog"), Plc("Jog_Decel")]
+        public double JogDec
+        {
+            get => jogDec;
+            set { jogDec = value; Notify(); }
+        }
+        public Status JogDecStatus => Status.Ok;
+
         double minLoad;
-        [DataItem("lbs", "Min Load"), Plc("Min_Load")]
+        [DataItem("lbs", "Min(Load)"), Plc("Min_Load")]
         public double MinLoad {
             get => minLoad;
             set { minLoad = value; Notify()(nameof(MaxLoad), nameof(LoadOffs)); }
@@ -343,7 +372,7 @@ namespace Choreo
         public Status MinLoadStatus => MinLoad > MaxLoad;
 
         double maxLoad;
-        [DataItem("lbs", "Max Load"), Plc("Max_Load")]
+        [DataItem("lbs", "Max"), Plc("Max_Load")]
         public double MaxLoad {
             get => maxLoad;
             set { maxLoad = value; Notify()(nameof(MinLoad), nameof(LoadOffs)); }
@@ -351,12 +380,13 @@ namespace Choreo
         public Status MaxLoadStatus => MaxLoad < MinLoad;
 
         double loadOffs;
-        [DataItem("lbs", "Load Offset"), Plc("Load_Offset")]
+        [DataItem("lbs", "Offset"), Plc("Load_Offset")]
         public double LoadOffs {
             get => loadOffs;
             set { loadOffs = value; Notify()(nameof(MaxLoad), nameof(MinLoad)); }
         }
         public Status LoadOffsStatus => Status.Ok;
+
 
         double rotationsPerFoot = 1.0;
         

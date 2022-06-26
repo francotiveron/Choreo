@@ -41,7 +41,7 @@ namespace Choreo
         }
         private void ClearButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            Plc.ClearMotionAndJog();
+            Plc.ClearMotion();
             Plc.Upload(default(Preset));
         }
 

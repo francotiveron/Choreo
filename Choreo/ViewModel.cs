@@ -143,10 +143,10 @@ namespace Choreo
             EndMotorSettingsEditing();
         }
 
-        public void MotorSettingsEditSave() {
-            Plc.Upload(Motors[MotorSettingsBeingEdited - 1]);
-            Save(Motors[MotorSettingsBeingEdited - 1]);
-            EndMotorSettingsEditing();
+        void MotorSettingsEditSave(int index)
+        {
+            Plc.Upload(Motors[index]);
+            Save(Motors[index]);
         }
 
         int groupSettingsBeingEdited;
@@ -162,9 +162,20 @@ namespace Choreo
             Load(Groups[GroupSettingsBeingEdited - 1]);
             EndGroupSettingsEditing();
         }
-        public void GroupSettingsEditSave() {
-            Plc.Upload(Groups[GroupSettingsBeingEdited - 1]);
-            Save(Groups[GroupSettingsBeingEdited - 1]);
+        public void GroupSettingsEditSave(int index)
+        {
+            Plc.Upload(Groups[index]);
+            Save(Groups[index]);
+        }
+        public void AxesSettingsEditSave(int[] indexes)
+        {
+            foreach (int i in indexes)
+            {
+                if (i < 16) VM.MotorSettingsEditSave(i);
+                else VM.GroupSettingsEditSave(i - 16);
+            }
+
+            EndMotorSettingsEditing();
             EndGroupSettingsEditing();
         }
         #endregion
@@ -201,7 +212,11 @@ namespace Choreo
             EndGroupEditing();
             BeginGroupSettingsEditing(group.Index);
         }
-        public void GroupEditClear() { foreach (var m in Motors.Where(m => m.Group == GroupBeingEdited)) m.Group = 0; }
+        public void GroupEditClear() { 
+            foreach (var m in Motors.Where(m => m.Group == GroupBeingEdited)) m.Group = 0; 
+            Groups[GroupBeingEdited - 1].Name = null; 
+            EndGroupEditing();
+        }
         public void GroupEditCancel() {
             var group = Groups[GroupBeingEdited - 1];
             var editedGroupMotorsCurrent = new HashSet<Motor>(Motors.Where(m => m.Group == GroupBeingEdited));
@@ -239,6 +254,7 @@ namespace Choreo
             keys = Presets[PresetBeingEdited - 1].GroupPositions.Keys.ToList();
             Presets[PresetBeingEdited - 1].GroupPositions.Clear();
             foreach (var key in keys) Groups[key].PresetTouch();
+            Presets[PresetBeingEdited - 1].Name = null;
         }
         public void PresetEditCancel() {
             Presets[PresetBeingEdited - 1].Restore();

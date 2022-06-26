@@ -67,13 +67,13 @@ namespace Choreo
             {
                 var x = e.GetPosition(this).X;
                 var y = e.GetPosition(this).Y;
-                if ((x - gestureStartX) < -10.0) GestureLeft();
+                if ((x - gestureStartX) < -25.0) GestureLeft();
                 else
-                if ((x - gestureStartX) > 10.0) GestureRight();
+                if ((x - gestureStartX) > 25.0) GestureRight();
                 else
-                if ((y - gestureStartY) < -10.0) GestureUp();
+                if ((y - gestureStartY) < -25.0) GestureUp();
                 else
-                if ((y - gestureStartY) > 10.0) GestureDn();
+                if ((y - gestureStartY) > 25.0) GestureDn();
                 e.Handled = true;
             }
         }
