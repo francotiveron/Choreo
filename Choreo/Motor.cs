@@ -93,7 +93,7 @@ namespace Choreo
             get => pGain;
             set { pGain = value; Notify(); }
         }
-        public Status PGainStatus => !(PGain >= 0.0001 && PGain <= 10);
+        public Status PGainStatus => !(PGain >= 0.0001 && PGain <= 10000);
 
         double jerk;
         [DataItem("r/s2", "Jerk"), Plc("Jerk")]
@@ -102,7 +102,7 @@ namespace Choreo
             get => jerk;
             set { jerk = value; Notify(); }
         }
-        public Status JerkStatus => !(Jerk >= 0 && Jerk <= 10);
+        public Status JerkStatus => !(Jerk >= 0 && Jerk <= 10000);
 
         double refVel;
         [DataItem("r/s", "Ref.Velocity"), Plc("Ref_Vel")]
@@ -111,7 +111,7 @@ namespace Choreo
             get => refVel;
             set { refVel = value; Notify(); }
         }
-        public Status RefVelStatus => !(RefVel >= 0 && RefVel <= 10);
+        public Status RefVelStatus => !(RefVel >= 0 && RefVel <= 10000);
         #endregion
 
         #region UI Properties
