@@ -10,7 +10,8 @@ namespace Choreo
          */
 
         const double f2i = 12.0;
-        public static (char sgn, int feet, double inches) FeetInches(double feet) {
+        static (char sgn, int feet, double inches) FeetInches(double feet)
+        {
             var abs = Math.Abs(feet);
             var sgn = Math.Sign(feet);
             var intFeet = (int)Math.Floor(abs);
@@ -20,15 +21,16 @@ namespace Choreo
         public static double Feet(int feet, double inches) => feet + inches / f2i;
         public static string ToString(double feet) {
             (char sgn, int intFeet, double inches) = FeetInches(feet);
-            return $"{sgn}{intFeet}'{inches:0.00}\"";
+            if (sgn == '+') return $" {intFeet}'{inches:0.00}\"";
+            else return $"{sgn}{intFeet}'{inches:0.00}\"";
         }
         public static bool TryParse(string s, out double? feet) {
             feet = null;
             int? intFeet = null;
             double? inches = null;
 
-            //var match = Regex.Match(s, "^([+-])?((\\d+)(')\\s?)?((\\d*\\.?\\d*)(\")?)?$");
-            //var match = Regex.Match(s, "^([+-])?((\\d+)(')-)?((\\d*\\.?\\d*)(\")?)?$");
+            s = s.Replace(' ', '+');
+
             var match = Regex.Match(s, "^([+-])?((\\d+)('))?((\\d*\\.?\\d*)(\")?)?$");
             if (!match.Success) return false;
             var groups = match.Groups;

@@ -87,7 +87,7 @@ namespace Choreo.Input
             }
         }
         string StrVal {
-            get => dataItem.StrVal.Replace("\"", string.Empty);
+            get => dataItem.StrVal.Replace("\"", string.Empty).Replace(" ", string.Empty);
             set => DataItem.StrVal = value;
         }
     }
