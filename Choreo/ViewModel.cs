@@ -213,8 +213,10 @@ namespace Choreo
             BeginGroupSettingsEditing(group.Index);
         }
         public void GroupEditClear() { 
+            var group = Groups[GroupBeingEdited - 1];
             foreach (var m in Motors.Where(m => m.Group == GroupBeingEdited)) m.Group = 0; 
-            Groups[GroupBeingEdited - 1].Name = null; 
+            if (!Plc.SaveGroupMotors(group.Index, 0)) GroupEditCancel();
+            Groups[GroupBeingEdited - 1].Name = null;
             EndGroupEditing();
         }
         public void GroupEditCancel() {

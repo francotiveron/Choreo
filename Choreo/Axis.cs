@@ -326,7 +326,7 @@ namespace Choreo
         public Status DefAccStatus => DefAcc < MinAcc || DefAcc > MaxAcc;
 
         double jogAcc;
-        [DataItem("fpm2", "Jog"), Plc("Jog_Accel")]
+        [DataItem("fpm2", "Jog(Accel.)"), Plc("Jog_Accel")]
         public double JogAcc
         {
             get => jogAcc;
@@ -355,7 +355,7 @@ namespace Choreo
         public Status DefDecStatus => DefDec < MinDec || DefVel > MaxDec;
 
         double jogDec;
-        [DataItem("fpm2", "Jog"), Plc("Jog_Decel")]
+        [DataItem("fpm2", "Jog(Decel.)"), Plc("Jog_Decel")]
         public double JogDec
         {
             get => jogDec;

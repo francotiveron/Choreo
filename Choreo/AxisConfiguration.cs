@@ -21,6 +21,14 @@
                 MinLoad = axis.MinLoad;
                 MaxLoad = axis.MaxLoad;
                 LoadOffs = axis.LoadOffs;
+                JogAcc = axis.JogAcc;
+                JogDec = axis.JogDec;
+                if (axis is Motor m)
+                {
+                    Jerk = m.Jerk;
+                    PGain = m.PGain;
+                    RefVel = m.RefVel;
+                }
             }
         }
 
@@ -54,6 +62,17 @@
         public double MaxLoad { get; set; }
         [Persistent]
         public double LoadOffs { get; set; }
+        [Persistent]
+        public double JogAcc { get; set; }
+        [Persistent]
+        public double JogDec { get; set; }
+        [Persistent]
+        public double Jerk { get; set; }
+        [Persistent]
+        public double PGain { get; set; }
+        [Persistent]
+        public double RefVel { get; set; }
+
 
         public void Download(Axis axis)
         {
@@ -71,6 +90,15 @@
             axis.MinLoad = MinLoad;
             axis.MaxLoad = MaxLoad;
             axis.LoadOffs = LoadOffs;
+            axis.JogAcc = JogAcc;
+            axis.JogDec = JogDec;
+
+            if (axis is Motor m)
+            {
+                m.Jerk = Jerk;
+                m.PGain = PGain;
+                m.RefVel = RefVel;
+            }
         }
 
         public override string ToString() => Name;
