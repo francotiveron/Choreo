@@ -110,13 +110,19 @@ namespace Choreo
             Gesture = false;
         }
 
-        //private void GestureLeft()
-        //{
-        //    Gesture = false;
-        //    User.RequireNormal();
-        //    if (CheckGroupedMotor()) return;
-        //    VM.BeginMotionEditing(true, (Axis)DataContext);
-        //}
+        private void SetJog(Axis axis, int direction)
+        {
+            Plc.Jog(axis, direction);
+            if (direction != 0)
+            {
+                if (axis.MaxVel - axis.MinVel is double velRange && velRange > 0.0)
+                {
+                    var jogVel = (axis.DefVel - axis.MinVel) / velRange * 100.0;
+                    Plc.Upload(jogVel);
+                }
+            }
+        }
+
         private void GestureLeft()
         {
             Gesture = false;
@@ -125,8 +131,8 @@ namespace Choreo
             var axis = (Axis)DataContext;
             if (!axis.JogStickEnable)
             {
-                if (axis.JogDnEnable || axis.JogUpEnable || axis.MAEnable || axis.MREnable) Plc.Jog(axis, 0);
-                else Plc.Jog(axis, 2);
+                if (axis.JogDnEnable || axis.JogUpEnable || axis.MAEnable || axis.MREnable) SetJog(axis, 0);
+                else SetJog(axis, 2);
             }
         }
 
@@ -145,8 +151,8 @@ namespace Choreo
             var axis = (Axis)DataContext;
             if (!axis.JogUpEnable)
             {
-                if (axis.JogDnEnable || axis.JogStickEnable || axis.MAEnable || axis.MREnable) Plc.Jog(axis, 0);
-                else Plc.Jog(axis, 1);
+                if (axis.JogDnEnable || axis.JogStickEnable || axis.MAEnable || axis.MREnable) SetJog(axis, 0);
+                else SetJog(axis, 1);
             }
         }
 
@@ -157,8 +163,8 @@ namespace Choreo
             var axis = (Axis)DataContext;
             if (!axis.JogDnEnable)
             {
-                if (axis.JogUpEnable || axis.JogStickEnable || axis.MAEnable || axis.MREnable) Plc.Jog(axis, 0);
-                else Plc.Jog(axis, -1);
+                if (axis.JogUpEnable || axis.JogStickEnable || axis.MAEnable || axis.MREnable) SetJog(axis, 0);
+                else SetJog(axis, -1);
             }
         }
 

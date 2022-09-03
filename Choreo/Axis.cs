@@ -352,7 +352,7 @@ namespace Choreo
             get => defDec;
             set { defDec = value; Notify()(nameof(MaxDec)); }
         }
-        public Status DefDecStatus => DefDec < MinDec || DefVel > MaxDec;
+        public Status DefDecStatus => DefDec < MinDec || DefDec > MaxDec;
 
         double jogDec;
         [DataItem("fpm2", "Jog(Decel.)"), Plc("Jog_Decel")]

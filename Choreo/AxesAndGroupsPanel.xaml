@@ -144,7 +144,7 @@
                     Focusable="False" 
                     LargeChange="10" 
                     SmallChange="1"
-                    Value="{Binding JogVelocity, Mode=OneWay}"
+                    Value="{Binding JogVelocity, Mode=TwoWay}"
                 />
             </Grid>
         </Grid>
