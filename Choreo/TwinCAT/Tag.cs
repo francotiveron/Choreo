@@ -5,13 +5,17 @@ namespace Choreo.TwinCAT
 {
     public interface ITag {
         ISymbol Symbol { get; set; }
+        bool AdsNotify { get; set; }
         void Push(object value);
     }
     
     public class Tag: ITag {
-        public Tag(Action<object> pusher = null) { 
+        public Tag(Action<object> pusher = null, bool adsNotify = true) { 
             Pusher = pusher;
+            AdsNotify = adsNotify;
         }
+      
+        public bool AdsNotify { get; set; }
         public ISymbol Symbol { get; set; }
         public Action<object> Pusher { get; private set; }
 

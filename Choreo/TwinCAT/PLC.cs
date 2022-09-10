@@ -39,7 +39,7 @@ namespace Choreo.TwinCAT
     class AdsPlc : PropertyChangedNotifier, IPlc {
         AdsSession adsSession;
         IDisposable notificationSubscription;
-        IObserver<ValueChangedArgs> symbolNotificationObserver;
+        IObserver<SymbolValueNotification> symbolNotificationObserver;
         Timer monitorTimer;
         TagCollection tags;
 
@@ -53,7 +53,7 @@ namespace Choreo.TwinCAT
             adsSession.ConnectionStateChanged += Session_ConnectionStateChanged;
             tags = new TagCollection();
             allEnabs.AddRange(VM.Axes.SelectMany(ax => enabProps.Select(prop => tags[ax, prop])));
-            symbolNotificationObserver = Observer.Create<ValueChangedArgs>(OnSymbolNotification);
+            symbolNotificationObserver = Observer.Create<SymbolValueNotification>(OnSymbolNotification);
             StartMonitor();
             return this;
         }
@@ -80,9 +80,9 @@ namespace Choreo.TwinCAT
             bool WatchdogOK() {
                 return Log.ExOnce(() => {
                     try {
-                        var watchdog = (bool)Connection.ReadSymbol("GVL.Watchdog_OK", typeof(bool), false);
+                        Connection.TryReadValue<bool>("GVL.Watchdog_OK", out var watchdog); //.ReadSymbol("GVL.Watchdog_OK", typeof(bool), false);
                         if (watchdog) {
-                            Connection.WriteSymbol("GVL.Watchdog_OK", false, false);
+                            Connection.WriteValue("GVL.Watchdog_OK", false);   //.WriteSymbol("GVL.Watchdog_OK", false, false);
                             watchdogCounter = 0;
                             return true;
                         }
@@ -138,26 +138,26 @@ namespace Choreo.TwinCAT
         void SetupSymbolsAndNotifications() {
             Log.ExOnce(() => {
                 notificationSubscription?.Dispose();
-                tags.Symbols = SymbolLoaderFactory.Create(Connection, SymbolLoaderSettings.Default).Symbols;
-                SymbolCollection notificationSymbols = new SymbolCollection(tags.Select(tag => tag.Symbol));
-                notificationSubscription = notificationSymbols.WhenValueChangedAnnotated().Subscribe(symbolNotificationObserver);
+                var symbolLoader = SymbolLoaderFactory.Create(Connection, SymbolLoaderSettings.Default);
+                tags.SetSymbols(symbolLoader);
+                var readAllCommand = new SumSymbolRead(Connection, tags.Symbols);
+                var values = readAllCommand.Read();
+                int i = 0; foreach (var tag in tags) tag.Push(values[i++]);
+                notificationSubscription = Connection.WhenNotification(tags.NotificationSymbols, NotificationSettings.Default).Subscribe(symbolNotificationObserver);
                 AreSymbolsOK = true;
             }, "PLC Symbols do not match");
         }
-        void OnSymbolNotification(ValueChangedArgs vca) => tags[vca.Symbol].Push(vca.Value);
+        void OnSymbolNotification(SymbolValueNotification vca) => tags[vca.Symbol].Push(vca.Value);
         #endregion
 
         #region Events
         void Conn_AdsSymbolVersionChanged(object sender, EventArgs e) => AreSymbolsOK = false;
 
-        void Conn_AdsNotificationError(object sender, AdsNotificationErrorEventArgs e) {
-        }
+        void Conn_AdsNotificationError(object sender, AdsNotificationErrorEventArgs e) { }
 
-        void Conn_AdsStateChanged(object sender, AdsStateChangedEventArgs e) {
-        }
+        void Conn_AdsStateChanged(object sender, AdsStateChangedEventArgs e) { }
 
-        void Session_ConnectionStateChanged(object sender, ConnectionStateChangedEventArgs e) {
-        }
+        void Session_ConnectionStateChanged(object sender, ConnectionStateChangedEventArgs e) { }
         #endregion
 
         #region IPlc Implementation
@@ -243,7 +243,7 @@ namespace Choreo.TwinCAT
             var valueSyms = tagNames.Select(name => tags[axis, name].Symbol).ToList();
 
             new SumSymbolWrite(Connection, valueSyms).Write(values);
-            Connection.WriteSymbol(tags.PathOf(VM, nameof(ViewModel.ParameterWrite)), true, false);
+            Connection.WriteValue(tags.PathOf(VM, nameof(ViewModel.ParameterWrite)), true);
         }
 
         void Download(Axis axis)
@@ -326,7 +326,7 @@ namespace Choreo.TwinCAT
 
         void Upload(double jogVel) {
             var path = tags.PathOf(VM, nameof(ViewModel.JogVelocity));
-            Connection.WriteSymbol(path, jogVel, false);
+            Connection.WriteValue(path, jogVel);
         }
 
         static readonly string[] presetProps = new string[] { nameof(ViewModel.PresetLoaded), nameof(ViewModel.PresetComplete) };
@@ -473,19 +473,19 @@ namespace Choreo.TwinCAT
 
             var pathVal = tags.PathOf(axis, nameof(Axis.CalibrationRotations));
             var pathSet = tags.PathOf(axis, nameof(Axis.CalibrationSave));
-            Connection.WriteSymbol(pathVal, axis.CalibrationRotations, false);
-            Connection.WriteSymbol(pathSet, true, false);
+            Connection.WriteValue(pathVal, axis.CalibrationRotations);
+            Connection.WriteValue(pathSet, true);
 
             if (axis is Group group)
             {
                 var pathSave = tags.PathOf(group, nameof(Group.Save));
-                Connection.WriteSymbol(pathSave, true, false);
+                Connection.WriteValue(pathSave, true);
             }
         }
 
         public Dictionary<ushort, string> DownloadErrorMapping()
         {
-            var info = Connection.ReadSymbolInfo("GVL.AxesErrors");
+            var info = Connection.ReadSymbol("GVL.AxesErrors");
             var n = info.Size / 24;
             var map = new Dictionary<ushort, string>();
             for (var i = 0; i < n; i++)
@@ -502,11 +502,13 @@ namespace Choreo.TwinCAT
 
     [System.AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
     sealed class PlcAttribute : Attribute {
-        public PlcAttribute(string path = null) {
+        public PlcAttribute(string path = null, bool adsNotify = true) {
             Path = path;
+            AdsNotify = adsNotify;
         }
 
         public string Path { get; private set; }
+        public bool AdsNotify { get; private set; }
     }
 
 }

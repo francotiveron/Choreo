@@ -51,7 +51,7 @@ namespace Choreo.TwinCAT
                 return (value) => pi.SetValue(obj, value);
             }
 
-            void NewTag((PropertyInfo pi, PlcAttribute plc) _) => tags[FullPath(_)] = new Tag(PropertySetter(_.pi));
+            void NewTag((PropertyInfo pi, PlcAttribute plc) _) => tags[FullPath(_)] = new Tag(PropertySetter(_.pi), _.plc.AdsNotify);
 
             var pi_plc =
                 type
@@ -62,11 +62,14 @@ namespace Choreo.TwinCAT
             foreach (var pp in pi_plc) NewTag(pp);
         }
 
-        public ReadOnlySymbolCollection Symbols {
-            set {
-                foreach (var kv in tags) kv.Value.Symbol = value[kv.Key];
-            }
+        public void SetSymbols(ISymbolLoader symbolLoader)
+        {
+            var symbols = symbolLoader.Symbols;
+            foreach (var kv in tags) kv.Value.Symbol = symbols[kv.Key];
         }
+
+        public IList<ISymbol> Symbols => tags.Values.Select(t => t.Symbol).ToList();
+        public IList<ISymbol> NotificationSymbols => tags.Values.Where(tag => tag.AdsNotify).Select(t => t.Symbol).ToList();
 
         public IEnumerator<ITag> GetEnumerator() => tags.Values.GetEnumerator();
 

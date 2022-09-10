@@ -31,7 +31,7 @@ namespace Choreo
 
         #region Runtime+PLC Properties
         bool followErrorEnable;
-        [Plc("Follow_Error_Enable")]
+        [Plc("Follow_Error_Enable", false)]
         public bool FollowErrorEnable
         {
             get => followErrorEnable;
@@ -45,28 +45,28 @@ namespace Choreo
         }
 
         bool fwdLim;
-        [Plc("Fwd_Lim")]
+        [Plc("Fwd_Lim", false)]
         public bool FwdLim {
             get => fwdLim;
             set { fwdLim = value; Notify(); }
         }
 
         bool revLim;
-        [Plc("Rev_Lim")]
+        [Plc("Rev_Lim", false)]
         public bool RevLim {
             get => revLim;
             set { revLim = value; Notify(); }
         }
 
         bool fwdUltLim;
-        [Plc("Fwd_Ult_Lim")]
+        [Plc("Fwd_Ult_Lim", false)]
         public bool FwdUltLim {
             get => fwdUltLim;
             set { fwdUltLim = value; Notify(); }
         }
 
         bool revUltLim;
-        [Plc("Rev_Ult_Lim")]
+        [Plc("Rev_Ult_Lim", false)]
         public bool RevUltLim {
             get => revUltLim;
             set { revUltLim = value; Notify(); }
@@ -86,7 +86,7 @@ namespace Choreo
             set { eSStatus = !value; Notify()(nameof(AxisStatus)); }
         }
 
-        [Plc("Rotations_Per_Foot")]
+        [Plc("Rotations_Per_Foot", false)]
         public override double RotationsPerFoot
         {
             get => base.RotationsPerFoot;
@@ -101,7 +101,7 @@ namespace Choreo
         }
 
         double pGain;
-        [DataItem("r/s/r", "P-Gain"), Plc("PGain")]
+        [DataItem("r/s/r", "P-Gain"), Plc("PGain", false)]
         public double PGain
         {
             get => pGain;
@@ -110,7 +110,7 @@ namespace Choreo
         public Status PGainStatus => !(PGain >= 0.0001 && PGain <= 10000);
 
         double jerk;
-        [DataItem("r/s2", "Jerk"), Plc("Jerk")]
+        [DataItem("r/s2", "Jerk"), Plc("Jerk", false)]
         public double Jerk
         {
             get => jerk;
@@ -119,7 +119,7 @@ namespace Choreo
         public Status JerkStatus => !(Jerk >= 0 && Jerk <= 10000);
 
         double refVel;
-        [DataItem("r/s", "Ref.Velocity"), Plc("Ref_Vel")]
+        [DataItem("r/s", "Ref.Velocity"), Plc("Ref_Vel", false)]
         public double RefVel
         {
             get => refVel;
@@ -129,7 +129,7 @@ namespace Choreo
 
 
         double followingErrorRotations;
-        [Plc("Following_Error")]
+        [Plc("Following_Error", false)]
         public double FollowingErrorRotations
         {
             get => followingErrorRotations;

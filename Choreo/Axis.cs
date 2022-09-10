@@ -46,7 +46,7 @@ namespace Choreo
         }
 
         double load;
-        [DataItem("lbs"), Plc]
+        [DataItem("lbs"), Plc(adsNotify:false)]
         public double Load {
             get => load;
             set { load = value; Notify(); }
@@ -54,7 +54,7 @@ namespace Choreo
         public Status LoadStatus => Status.Ok;
 
         double moveValRotations;
-        [Plc("Move_Val")]
+        [Plc("Move_Val", false)]
         public double MoveValRotations {
             get => moveValRotations;
             set { moveValRotations = value; Notify()(nameof(MoveVal)); }
@@ -62,28 +62,28 @@ namespace Choreo
         public double MoveVal => MoveValRotations / RotationsPerFoot;
 
         double accel;
-        [Plc]
+        [Plc(adsNotify: false)]
         public double Accel {
             get => accel;
             set { accel = value; Notify(); }
         }
 
         double decel;
-        [Plc]
+        [Plc(adsNotify: false)]
         public double Decel {
             get => decel;
             set { decel = value; Notify(); }
         }
 
         double velocity;
-        [Plc]
+        [Plc(adsNotify: false)]
         public double Velocity {
             get => velocity;
             set { velocity = value; Notify(); }
         }
 
         double minVel;
-        [DataItem("fpm", "Min(Velocity)"), Plc("Min_Velocity")]
+        [DataItem("fpm", "Min(Velocity)"), Plc("Min_Velocity", false)]
         public double MinVel {
             get => minVel;
             set { minVel = value; Notify()(nameof(DefVel), nameof(MaxVel)); }
@@ -91,7 +91,7 @@ namespace Choreo
         public virtual Status MinVelStatus => MinVel < 0 || MinVel > DefVel;
 
         double maxVel;
-        [DataItem("fpm", "Max"), Plc("Max_Velocity")]
+        [DataItem("fpm", "Max"), Plc("Max_Velocity", false)]
         public double MaxVel {
             get => maxVel;
             set { maxVel = value; Notify()(nameof(MinVel), nameof(DefVel)); }
@@ -158,14 +158,14 @@ namespace Choreo
         }
 
         bool userEnable;
-        [Plc("User_Enable")]
+        [Plc("User_Enable", false)]
         public bool UserEnable {
             get => userEnable;
             set { userEnable = value; Notify(); }
         }
 
         bool loadCellActive;
-        [Plc("Load_Cell_Enable")]
+        [Plc("Load_Cell_Enable", false)]
         public bool LoadCellActive
         {
             get => loadCellActive;
@@ -173,7 +173,7 @@ namespace Choreo
         }
 
         bool softLimitEnable;
-        [Plc("Soft_Limit_Enable")]
+        [Plc("Soft_Limit_Enable", false)]
         public bool SoftLimitEnable
         {
             get => softLimitEnable;
@@ -198,7 +198,7 @@ namespace Choreo
         public virtual bool Present { get; protected set; } = true;
 
         double calibrationRotations;
-        [Plc("Calibration_Value")]
+        [Plc("Calibration_Value", false)]
         public double CalibrationRotations {
             get => calibrationRotations;
             set { calibrationRotations = value; Notify(nameof(CalibrationValue)); }
@@ -278,7 +278,7 @@ namespace Choreo
         #region Settings
 
         double softUpRotations;
-        [Plc("Soft_Up")]
+        [Plc("Soft_Up", false)]
         public double SoftUpRotations {
             get => softUpRotations;
             set { softUpRotations = value; Notify()(nameof(SoftUp)); }
@@ -292,7 +292,7 @@ namespace Choreo
         public Status SoftUpStatus => SoftUp < SoftDn;
 
         double softDnRotations;
-        [Plc("Soft_Down")]
+        [Plc("Soft_Down", false)]
         public double SoftDnRotations {
             get => softDnRotations;
             set { softDnRotations = value; Notify()(nameof(SoftDn)); }
@@ -310,7 +310,7 @@ namespace Choreo
         public Status MinAccStatus => MinAcc < 0;
 
         double maxAcc;
-        [DataItem("fpm2", "Max"), Plc("Max_Accel")]
+        [DataItem("fpm2", "Max"), Plc("Max_Accel", false)]
         public double MaxAcc {
             get => maxAcc;
             set { maxAcc = value; Notify()(nameof(DefAcc)); }
@@ -326,7 +326,7 @@ namespace Choreo
         public Status DefAccStatus => DefAcc < MinAcc || DefAcc > MaxAcc;
 
         double jogAcc;
-        [DataItem("fpm2", "Jog(Accel.)"), Plc("Jog_Accel")]
+        [DataItem("fpm2", "Jog(Accel.)"), Plc("Jog_Accel", false)]
         public double JogAcc
         {
             get => jogAcc;
@@ -339,7 +339,7 @@ namespace Choreo
         public Status MinDecStatus => MinDec < 0;
 
         double maxDec;
-        [DataItem("fpm2", "Max"), Plc("Max_Decel")]
+        [DataItem("fpm2", "Max"), Plc("Max_Decel", false)]
         public double MaxDec {
             get => maxDec;
             set { maxDec = value; Notify()(nameof(DefDec)); }
@@ -355,7 +355,7 @@ namespace Choreo
         public Status DefDecStatus => DefDec < MinDec || DefDec > MaxDec;
 
         double jogDec;
-        [DataItem("fpm2", "Jog(Decel.)"), Plc("Jog_Decel")]
+        [DataItem("fpm2", "Jog(Decel.)"), Plc("Jog_Decel", false)]
         public double JogDec
         {
             get => jogDec;
@@ -364,7 +364,7 @@ namespace Choreo
         public Status JogDecStatus => Status.Ok;
 
         double minLoad;
-        [DataItem("lbs", "Min(Load)"), Plc("Min_Load")]
+        [DataItem("lbs", "Min(Load)"), Plc("Min_Load", false)]
         public double MinLoad {
             get => minLoad;
             set { minLoad = value; Notify()(nameof(MaxLoad), nameof(LoadOffs)); }
@@ -372,7 +372,7 @@ namespace Choreo
         public Status MinLoadStatus => MinLoad > MaxLoad;
 
         double maxLoad;
-        [DataItem("lbs", "Max"), Plc("Max_Load")]
+        [DataItem("lbs", "Max"), Plc("Max_Load", false)]
         public double MaxLoad {
             get => maxLoad;
             set { maxLoad = value; Notify()(nameof(MinLoad), nameof(LoadOffs)); }
@@ -380,7 +380,7 @@ namespace Choreo
         public Status MaxLoadStatus => MaxLoad < MinLoad;
 
         double loadOffs;
-        [DataItem("lbs", "Offset"), Plc("Load_Offset")]
+        [DataItem("lbs", "Offset"), Plc("Load_Offset", false)]
         public double LoadOffs {
             get => loadOffs;
             set { loadOffs = value; Notify()(nameof(MaxLoad), nameof(MinLoad)); }
