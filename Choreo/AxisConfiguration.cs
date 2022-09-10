@@ -28,6 +28,7 @@
                     Jerk = m.Jerk;
                     PGain = m.PGain;
                     RefVel = m.RefVel;
+                    FollowingError = m.FollowingError;
                 }
             }
         }
@@ -72,6 +73,8 @@
         public double PGain { get; set; }
         [Persistent]
         public double RefVel { get; set; }
+        [Persistent]
+        public double FollowingError { get; set; }
 
 
         public void Download(Axis axis)
@@ -98,6 +101,7 @@
                 m.Jerk = Jerk;
                 m.PGain = PGain;
                 m.RefVel = RefVel;
+                m.FollowingError = FollowingError;
             }
         }
 

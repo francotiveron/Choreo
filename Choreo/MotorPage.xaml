@@ -29,6 +29,7 @@
             <local:MotorPanel Margin="5,0,0,0"/>
             <CheckBox HorizontalAlignment="left" FontSize="22" Content="Load Cell Active" IsChecked="{Binding LoadCellActive}" Margin="5,0,0,0" />
             <CheckBox HorizontalAlignment="left" FontSize="21" Content="Soft Limit Enable" IsChecked="{Binding SoftLimitEnable}" Margin="5,0,0,0" />
+            <CheckBox Visibility="{Binding Path=IsMotor, Converter={qc:QuickConverter '$P ? Visibility.Visible: Visibility.Hidden'}}" HorizontalAlignment="left" FontSize="21" Content="Follow Err Enable" IsChecked="{Binding FollowErrorEnable}" Margin="5,0,0,0" />
         </StackPanel>
 
         <Grid Visibility="{Binding Path=IsMotor, Converter={qc:QuickConverter '$P ? Visibility.Visible: Visibility.Hidden'}}"
@@ -45,27 +46,12 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="2*"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <local:DataItemUI x:Name="AxisName" Margin="5" DataContext="{Binding Name}" Focusable="True"/>
-                <local:DataItemUI Margin="5" Grid.Column="1" DataContext="{Binding Group}" StandAlone="True"/>
-            </Grid>
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <local:DataItemUI 
-                    x:Name="SetPosition" 
-                    Margin="5" 
-                    DataContext="{Binding CalibrationValue, Converter={StaticResource PositionConverter}}" 
-                    EditOrderNext="{Binding ElementName=RotationsPerFoot, Mode=OneWay}" 
-                    EditOrderPrev="{Binding ElementName=RefVel, Mode=OneWay}" 
-                    Focusable="True" />
-                <local:DataItemUI x:Name="RotationsPerFoot" Grid.Column="1" Margin="5" DataContext="{Binding RotationsPerFoot}" EditOrderNext="{Binding ElementName=SoftUp, Mode=OneWay}" EditOrderPrev="{Binding ElementName=SetPosition, Mode=OneWay}" Focusable="True" />
-                <Button x:Name="SaveNewPositionButton" Grid.Column="2" FontSize="16" Click="SaveNewPositionButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Button x:Name="SaveNewPositionButton" Grid.Column="1" FontSize="16" Click="SaveNewPositionButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource TopBarCommandButtonStyle}">
                             <Setter Property="Background" Value="Black"/>
@@ -81,6 +67,30 @@
                         </Style>
                     </Button.Style>
                 </Button>
+                <local:DataItemUI Margin="5" Grid.Column="2" DataContext="{Binding Group}" StandAlone="True"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <local:DataItemUI 
+                    x:Name="SetPosition" 
+                    Margin="5" 
+                    DataContext="{Binding CalibrationValue, Converter={StaticResource PositionConverter}}" 
+                    EditOrderNext="{Binding ElementName=RotationsPerFoot, Mode=OneWay}" 
+                    EditOrderPrev="{Binding ElementName=RefVel, Mode=OneWay}" 
+                    Focusable="True" />
+                <local:DataItemUI x:Name="RotationsPerFoot" Grid.Column="1" Margin="5" DataContext="{Binding RotationsPerFoot}" EditOrderNext="{Binding ElementName=FollowingError, Mode=OneWay}" EditOrderPrev="{Binding ElementName=SetPosition, Mode=OneWay}" Focusable="True" />
+                <local:DataItemUI 
+                    x:Name="FollowingError" 
+                    Grid.Column="2" 
+                    Margin="5" 
+                    DataContext="{Binding FollowingError, Converter={StaticResource PositionConverter}}" 
+                    EditOrderNext="{Binding ElementName=SoftUp, Mode=OneWay}" 
+                    EditOrderPrev="{Binding ElementName=RotationsPerFoot, Mode=OneWay}" 
+                    Focusable="True"/>
             </Grid>
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
@@ -93,7 +103,7 @@
                     DataContext="{Binding SoftUp, Converter={StaticResource PositionConverter}}" 
                     Focusable="True" 
                     EditOrderNext="{Binding ElementName=SoftDn, Mode=OneWay}" 
-                    EditOrderPrev="{Binding ElementName=RotationsPerFoot, Mode=OneWay}"/>
+                    EditOrderPrev="{Binding ElementName=FollowingError, Mode=OneWay}"/>
                 <local:DataItemUI 
                     x:Name="SoftDn" 
                     Grid.Column="1" 

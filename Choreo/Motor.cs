@@ -30,6 +30,13 @@ namespace Choreo
         }
 
         #region Runtime+PLC Properties
+        bool followErrorEnable;
+        [Plc("Follow_Error_Enable")]
+        public bool FollowErrorEnable
+        {
+            get => followErrorEnable;
+            set { followErrorEnable = value; Notify(); }
+        }
 
         [Plc]
         public override bool Present {
@@ -83,7 +90,14 @@ namespace Choreo
         public override double RotationsPerFoot
         {
             get => base.RotationsPerFoot;
-            set => base.RotationsPerFoot = value;
+
+            set
+            {
+                var followingError = FollowingError;
+                base.RotationsPerFoot = value;
+                FollowingError = followingError;
+                Notify()(nameof(FollowingError));
+            }
         }
 
         double pGain;
@@ -112,6 +126,26 @@ namespace Choreo
             set { refVel = value; Notify(); }
         }
         public Status RefVelStatus => !(RefVel >= 0 && RefVel <= 10000);
+
+
+        double followingErrorRotations;
+        [Plc("Following_Error")]
+        public double FollowingErrorRotations
+        {
+            get => followingErrorRotations;
+            set { followingErrorRotations = value; Notify()(nameof(FollowingError)); }
+        }
+
+        [DataItem(title: "Following Error")]
+        public double FollowingError
+        {
+            get => followingErrorRotations / RotationsPerFoot;
+            set { followingErrorRotations = value * RotationsPerFoot; Notify()(nameof(FollowingErrorStatus)); }
+        }
+        public Status FollowingErrorStatus => Status.Ok;
+
+
+
         #endregion
 
         #region UI Properties

@@ -410,7 +410,7 @@ namespace Choreo
         #endregion
 
         int group;
-        [DataItem(title: "Axis Group")]
+        [DataItem(title: "Group")]
         public int Group {
             get => group;
             set {

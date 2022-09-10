@@ -227,6 +227,10 @@ namespace Choreo.TwinCAT
                 tagNames = tagNames.Append(nameof(motor.Jerk)).ToArray();
                 values = values.Append(motor.RefVel).ToArray();
                 tagNames = tagNames.Append(nameof(motor.RefVel)).ToArray();
+                values = values.Append(motor.FollowingErrorRotations).ToArray();
+                tagNames = tagNames.Append(nameof(motor.FollowingErrorRotations)).ToArray();
+                values = values.Append(motor.FollowErrorEnable).ToArray();
+                tagNames = tagNames.Append(nameof(motor.FollowErrorEnable)).ToArray();
             }
             else if (axis is Group group)
             {
@@ -268,6 +272,8 @@ namespace Choreo.TwinCAT
                 tagNames = tagNames.Append(nameof(motor.PGain)).ToArray();
                 tagNames = tagNames.Append(nameof(motor.Jerk)).ToArray();
                 tagNames = tagNames.Append(nameof(motor.RefVel)).ToArray();
+                tagNames = tagNames.Append(nameof(motor.FollowingErrorRotations)).ToArray();
+                tagNames = tagNames.Append(nameof(motor.FollowErrorEnable)).ToArray();
             }
             else if (axis is Group group)
             {
