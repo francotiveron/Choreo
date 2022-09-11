@@ -17,6 +17,9 @@ namespace Choreo
 
             [Option("auto-login", HelpText = "Interactive User Automatic Login")]
             public bool AutoLogin { get; set; }
+
+            [Option("auto-logout", HelpText = "User Automatic Timed Logout (min=1/default=10/max=30 min)")]
+            public int AutoLogout { get; set; }
         }
 
         static CommandLineOptions options;
@@ -28,6 +31,9 @@ namespace Choreo
                 Environment.Exit(-1);
             });
 
+            if (options.AutoLogout < 0) options.AutoLogout = 0;
+            if (options.AutoLogout > 30) options.AutoLogout = 30;
+
             FreeConsole();
             //IntPtr h = Process.GetCurrentProcess().MainWindowHandle;
             //ShowWindow(h, 0);
@@ -35,6 +41,7 @@ namespace Choreo
 
         public static bool UserManagement => !options.NoLogin;
         public static bool AutoLogin => options.AutoLogin;
+        public static int AutoLogout => options.AutoLogout;
         public static AmsNetId PlcAmsNetId => Parse(AmsNetId.Parse);
         public static AmsPort PlcAmsPort => Parse((s) => (AmsPort)Enum.Parse(typeof(AmsPort), s));
 

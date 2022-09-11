@@ -1,14 +1,63 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Threading;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Threading;
 using static Choreo.Globals;
 using Cfg = Choreo.Configuration;
 
 namespace Choreo.UserManagement
 {
     public static class User {
+        class ChoreoPrincipal : IPrincipal
+        {
+            public ChoreoPrincipal() => Set(Thread.CurrentPrincipal, Cfg.AutoLogin);
+
+            IPrincipal principal;
+            public IIdentity Identity => principal.Identity;
+
+
+            void Set(IPrincipal principal, bool fetchRole)
+            {
+                this.principal = principal;
+                if (fetchRole) Role = FetchHighestRole(principal);
+                VM.IsAdmin = IsAdmin;
+            }
+
+            public void Set(IPrincipal principal) => Set(principal, true);
+
+            public void Reset()
+            {
+                principal = null;
+                Role = null;
+                VM.IsAdmin = IsAdmin;
+            }
+
+            public bool IsInRole(string role) => principal.IsInRole(role);
+            public bool IsAuthorised(Roles role) => Role.HasValue && role <= Role.Value;
+            public Roles? Role { get; private set; }
+            static Roles? FetchHighestRole(IPrincipal principal)
+            {
+                for (int i = roles.Length - 1; i >= 0; i--)
+                {
+                    var role = userGroups[roles[i]];
+                    if (principal.IsInRole(role)) return roles[i];
+                }
+                return null;
+            }
+
+            public static bool Check(IPrincipal principal, Roles role)
+            {
+                var highestRole = FetchHighestRole(principal);
+                return highestRole >= role;
+            }
+        } // ChoreoPrincipal
+
         public const int LOGON32_LOGON_INTERACTIVE = 2;
         public const int LOGON32_LOGON_NETWORK = 3;
         public const int LOGON32_LOGON_BATCH = 4;
@@ -62,54 +111,61 @@ namespace Choreo.UserManagement
             return null;
         }
 
-        class ChoreoPrincipal : IPrincipal {
-            public ChoreoPrincipal() => Set(Thread.CurrentPrincipal, Cfg.AutoLogin);
-            
-            IPrincipal principal;
-            void Set(IPrincipal principal, bool fetchRole) {
-                this.principal = principal;
-                if (fetchRole) Role = FetchHighestRole(principal);
-                VM.IsAdmin = IsAdmin;
-                
-            }
-            public void Set(IPrincipal principal) => Set(principal, true);
-            public void Reset() {
-                principal = null;
-                Role = null;
-                VM.IsAdmin = IsAdmin;
-            }
-            public IIdentity Identity => principal.Identity;
-            public bool IsInRole(string role) => principal.IsInRole(role);
-            public bool IsAuthorised(Roles role) => Role.HasValue && role <= Role.Value;
-            public Roles? Role { get; private set; }
-            static Roles? FetchHighestRole(IPrincipal principal) {
-                for (int i = roles.Length - 1; i >= 0; i--) {
-                    var role = userGroups[roles[i]];
-                    if (principal.IsInRole(role)) return roles[i];
-                }
-                return null;
-            }
-
-            public static bool Check(IPrincipal principal, Roles role) {
-                var highestRole = FetchHighestRole(principal);
-                return highestRole >= role;
-            }
-        }
 
         static ChoreoPrincipal principal;
+        static DispatcherTimer autoLogoutTimer;
+
         public static bool IsAdmin => principal?.IsAuthorised(Roles.Admin) ?? false;
+        
         static bool Login(Roles? role) {
             var form = new LoginForm(principal => role.HasValue ? ChoreoPrincipal.Check(principal, role.Value) : true);
             var success = form.ShowDialog();
             if (success != true) return false;
             principal.Set(form.Principal);
+            SetAutoLogout();
             return true;
         }
 
         public static void Login() => Login(null);
 
-        internal static void Logout() => principal.Reset();
+        internal static void Logout()
+        {
+            principal.Reset();
+            ResetAutoLogout();
+        }
 
+        static void PreProcessInputHandler(object sender, PreProcessInputEventArgs ea)
+        {
+            if (ea.StagingItem.Input.GetType().Name == "InputReportEventArgs") return;
+            autoLogoutTimer.Stop(); autoLogoutTimer.Start();
+        }
+
+        static void SetAutoLogout()
+        {
+            if (Cfg.AutoLogout > 0)
+            {
+                autoLogoutTimer = null;
+
+                autoLogoutTimer = new DispatcherTimer(
+                    TimeSpan.FromMinutes(Cfg.AutoLogout),
+                    DispatcherPriority.ApplicationIdle,
+                    (s, e) => Logout(),
+                    Application.Current.Dispatcher);
+
+                InputManager.Current.PreProcessInput += PreProcessInputHandler;
+            }
+        }
+
+        static void ResetAutoLogout()
+        {
+            InputManager.Current.PreProcessInput -= PreProcessInputHandler;
+            
+            if (autoLogoutTimer != null)
+            {
+                autoLogoutTimer.Stop();
+                autoLogoutTimer = null;
+            }
+        }
 
         public enum Roles { Limited, Normal, Power, Admin };
         static Roles[] roles = (Roles[])Enum.GetValues(typeof(Roles));
