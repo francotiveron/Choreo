@@ -47,7 +47,7 @@ namespace Choreo.Logging
                         break;
                 }
 
-                if (axis.IsOperational)
+                if (axis.IsOperational || axis == triggerAxis)
                 {
                     ((TextBlock)b.Content).Text = axis.FullName;
                     if (axis == triggerAxis)
