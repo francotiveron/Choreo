@@ -316,7 +316,7 @@ namespace Choreo.TwinCAT
                 valueSyms.AddRange(moveProps.Select(prop => tags[ax, prop].Symbol));
                 values[0] = move * ax.RotationsPerFoot;
                 new SumSymbolWrite(Connection, valueSyms).Write(values);
-
+                ax.MoveValRotations = (double)values[0];
                 enabSyms.AddRange(enaProps.Select(p => tags[ax, p].Symbol));
             }
 

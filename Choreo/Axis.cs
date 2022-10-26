@@ -46,7 +46,7 @@ namespace Choreo
         }
 
         double load;
-        [DataItem("lbs"), Plc(adsNotify:false)]
+        [DataItem("lbs"), Plc()]
         public double Load {
             get => load;
             set { load = value; Notify(); }
