@@ -91,9 +91,9 @@ namespace Choreo
 
         #region Cues
         public static void Save(Cue cue) {
-            Delete(cue);
-
             var elementKey = $@"Cues\{cue.Id}";
+            try { root.DeleteSubKeyTree($@"{elementKey}\Rows"); } catch { }
+
             Write(elementKey, cue);
             Write(elementKey, "Index", cue.Index);
             foreach (var row in cue.Rows) {
@@ -102,11 +102,22 @@ namespace Choreo
                 Write(rowKey, "Index", row.Index);
             }
         }
+
+        static void UpdateCueIndexes()
+        {
+            foreach(var cue in VM.Cues)
+            {
+                var elementKey = $@"Cues\{cue.Id}";
+                Write(elementKey, "Index", cue.Index);
+            }
+        }
+
         public static void Load(Cue cue) {
             var elementKey = $@"Cues\{cue.Id}";
             var cueRoot = root.OpenSubKey(elementKey);
             if (cueRoot != null) LoadCue(cue, cueRoot);
         }
+
         static void LoadCue(Cue cue, RegistryKey cueRoot) {
             Read(cueRoot, cue);
             cue.Rows.Clear();
@@ -127,13 +138,19 @@ namespace Choreo
 
         public static void Delete(Cue cue) {
             var elementKey = $@"Cues\{cue.Id}";
-            try { root.DeleteSubKeyTree(elementKey); } catch { }
-        }
-        public static void Delete(Cue cue, CueRow row) {
-            var elementKey = $@"Cues\{cue.Id}\Rows\{row.Id}";
             root.DeleteSubKeyTree(elementKey);
+            UpdateCueIndexes();
+            //Save(VM.Cues);
         }
-        public static void SaveCues() => Save(VM.Cues);
+
+        //public static void Delete(Cue cue, CueRow row) {
+        //    var elementKey = $@"Cues\{cue.Id}\Rows\{row.Id}";
+        //    root.DeleteSubKeyTree(elementKey);
+        //    Save(cue);
+        //}
+
+        //public static void SaveCues() => Save(VM.Cues);
+        
         public static void LoadCues() {
             if (root.OpenSubKey("Cues") is RegistryKey cuesRoot) {
                 var dict = new SortedDictionary<int, Cue>();
@@ -169,12 +186,13 @@ namespace Choreo
         }
         #endregion
 
-        public static void SaveAll() {
-            SaveMotors();
-            SaveGroups();
-            SavePresets();
-            SaveCues();
-        }
+        //public static void SaveAll() {
+        //    SaveMotors();
+        //    SaveGroups();
+        //    SavePresets();
+        //    SaveCues();
+        //}
+
         public static void LoadAll() {
             LoadMotors();
             LoadGroups();
