@@ -54,7 +54,7 @@ namespace Choreo
         public Status LoadStatus => Status.Ok;
 
         double moveValRotations;
-        [Plc("Move_Val", false)]
+        [Plc("Move_Val")]
         public double MoveValRotations {
             get => moveValRotations;
             set { moveValRotations = value; Notify()(nameof(MoveVal)); }

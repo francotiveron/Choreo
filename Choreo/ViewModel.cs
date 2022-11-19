@@ -284,12 +284,12 @@ namespace Choreo
         }
         public void DeleteCue(int cueIndex) {
             var cue = Cues[cueIndex];
-            Delete(cue);
             Cues.Remove(cue);
+            Delete(cue);
             foreach (var c in Cues) c.RefreshIndex();
         }
         internal void DeleteCueRow(int rowIndex) {
-            var cue = Cues[CueBeingEdited -1];
+            var cue = Cues[CueBeingEdited - 1];
             var row = cue.Rows[rowIndex];
             //Delete(cue, row);
             cue.Rows.Remove(row);
