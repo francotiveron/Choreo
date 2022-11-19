@@ -289,7 +289,7 @@ namespace Choreo
             foreach (var c in Cues) c.RefreshIndex();
         }
         internal void DeleteCueRow(int rowIndex) {
-            var cue = Cues[CueBeingEdited -1];
+            var cue = Cues[CueBeingEdited - 1];
             var row = cue.Rows[rowIndex];
             //Delete(cue, row);
             cue.Rows.Remove(row);
