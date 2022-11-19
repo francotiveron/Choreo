@@ -131,9 +131,11 @@ namespace Choreo
         }
 
         private bool enabled;
-        public bool Enabled {
+        [Persistent]
+        public bool Enabled
+        {
             get { return enabled; }
-            set { enabled = value; Notify(); }
+            set { enabled = value; Storage.SaveCueEnable(this); Notify(); }
         }
 
         public bool IsValid => Rows.All(row => row.Status == Status.Ok);

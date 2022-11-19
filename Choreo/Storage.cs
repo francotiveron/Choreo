@@ -103,6 +103,13 @@ namespace Choreo
             }
         }
 
+        public static void SaveCueEnable(Cue cue)
+        {
+            var elementKey = $@"Cues\{cue.Id}";
+
+            Write(elementKey, "Enabled", cue.Enabled);
+        }
+
         static void UpdateCueIndexes()
         {
             foreach(var cue in VM.Cues)
