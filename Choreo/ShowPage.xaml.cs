@@ -15,5 +15,10 @@ namespace Choreo
         private void DisableCueButton_Click(object sender, RoutedEventArgs e) => CueList.SelectedCue.Enabled = !CueList.SelectedCue.Enabled;
 
         private void LoadCueButton_Click(object sender, RoutedEventArgs e) => Plc.Upload(CueList.SelectedCue);
+
+        private void SaveShowButton_Click(object sender, RoutedEventArgs e)
+        {
+            Storage.PersistToRegistry();
+        }
     }
 }

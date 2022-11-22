@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using static Choreo.Globals;
 
 namespace Choreo
@@ -205,6 +206,24 @@ namespace Choreo
             LoadGroups();
             LoadPresets();
             LoadCues();
-        } 
+        }
+
+        public static void PersistToRegistry()
+        {
+            try
+            {
+                RegFlushKey(HKEY_CURRENT_USER);
+            }
+            catch (Exception e)
+            {
+                Log.PopError(e.Message, "Registry Flush Failed");
+            }
+        }
+        
+        [DllImport("coredll.dll")]
+        static extern int RegFlushKey(IntPtr hKey);
+
+        //const uint HKEY_CURRENT_USER = 0x80000001; 
+        private static readonly IntPtr HKEY_CURRENT_USER = new IntPtr(-2147483647);
     }
 }

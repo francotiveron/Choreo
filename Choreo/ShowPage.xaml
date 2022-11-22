@@ -33,6 +33,12 @@
                     Style="{StaticResource TopBarCommandButtonStyle}"
                     Padding="5"
                     />
+            <Button x:Name="SaveShowButton" 
+                    Content="Save Show"
+                    Click="SaveShowButton_Click" 
+                    Style="{StaticResource TopBarCommandButtonStyle}"
+                    Padding="5"
+                    />
         </StackPanel>
         <!--DataContext="{Binding ElementName=CueList, Path=SelectedCue}"-->
         <!--Visibility="{qc:Binding '$P0 == null ? Visibility.Hidden : Visibility:Visible', P0={Binding SelectedValue}}"-->
