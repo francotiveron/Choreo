@@ -22,5 +22,9 @@ namespace Choreo
             VM.BeginCueEditing(cue.Index);
         }
 
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            Storage.PersistToRegistry();
+        }
     }
 }

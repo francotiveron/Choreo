@@ -23,6 +23,14 @@
                     Background="Green"
                     Padding="10"
                     />
+            <Button x:Name="SaveButton" 
+                    Content="Save Cues" 
+                    HorizontalAlignment="Right" 
+                    Click="SaveButton_Click" 
+                    Style="{StaticResource TopBarCommandButtonStyle}"
+                    Background="Green"
+                    Padding="10"
+                    />
         </DockPanel>
         <local:CuesListView Grid.Row="1" IsEditable="True"/>
     </Grid>
