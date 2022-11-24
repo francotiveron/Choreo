@@ -220,7 +220,7 @@ namespace Choreo
             }
         }
         
-        [DllImport("coredll.dll")]
+        [DllImport("Advapi32.dll")]
         static extern int RegFlushKey(IntPtr hKey);
 
         //const uint HKEY_CURRENT_USER = 0x80000001; 
