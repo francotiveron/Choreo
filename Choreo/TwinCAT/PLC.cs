@@ -341,12 +341,13 @@ namespace Choreo.TwinCAT
 
                 foreach ((Axis ax, double pos) in aps) {
                     if (!ax.IsOperational) continue;
+
                     var values = new object[] {
-                    pos * ax.RotationsPerFoot
-                    , ax.DefVel
-                    , ax.DefAcc
-                    , ax.DefDec
-                };
+                        pos * ax.RotationsPerFoot
+                        , ax.DefVel
+                        , ax.DefAcc
+                        , ax.DefDec
+                    };
 
                     valueSyms.Clear();
                     valueSyms.AddRange(moveProps.Select(prop => tags[ax, prop].Symbol));
