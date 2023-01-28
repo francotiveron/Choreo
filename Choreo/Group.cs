@@ -28,8 +28,8 @@ namespace Choreo
         [DataItem(title: "Group Tolerance")]
         public double ToleranceValue
         {
-            get => ToleranceRotations / RotationsPerFoot;
-            set { ToleranceRotations = value * RotationsPerFoot; Notify(); }
+            get => ToleranceRotations / RotationsPerEU;
+            set { ToleranceRotations = value * RotationsPerEU; Notify(); }
         }
 
 

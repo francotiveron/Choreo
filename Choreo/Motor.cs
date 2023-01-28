@@ -86,15 +86,16 @@ namespace Choreo
             set { eSStatus = !value; Notify()(nameof(AxisStatus)); }
         }
 
+        //[Plc("Rotations_Per_EU", false)]
         [Plc("Rotations_Per_Foot", false)]
-        public override double RotationsPerFoot
+        public override double RotationsPerEU
         {
-            get => base.RotationsPerFoot;
+            get => base.RotationsPerEU;
 
             set
             {
                 var followingError = FollowingError;
-                base.RotationsPerFoot = value;
+                base.RotationsPerEU = value;
                 FollowingError = followingError;
                 Notify()(nameof(FollowingError));
             }
@@ -139,8 +140,8 @@ namespace Choreo
         [DataItem(title: "Following Error")]
         public double FollowingError
         {
-            get => followingErrorRotations / RotationsPerFoot;
-            set { followingErrorRotations = value * RotationsPerFoot; Notify()(nameof(FollowingErrorStatus)); }
+            get => followingErrorRotations / RotationsPerEU;
+            set { followingErrorRotations = value * RotationsPerEU; Notify()(nameof(FollowingErrorStatus)); }
         }
         public Status FollowingErrorStatus => Status.Ok;
 

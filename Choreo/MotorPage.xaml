@@ -79,17 +79,17 @@
                     x:Name="SetPosition" 
                     Margin="5" 
                     DataContext="{Binding CalibrationValue, Converter={StaticResource PositionConverter}}" 
-                    EditOrderNext="{Binding ElementName=RotationsPerFoot, Mode=OneWay}" 
+                    EditOrderNext="{Binding ElementName=RotationsPerEU, Mode=OneWay}" 
                     EditOrderPrev="{Binding ElementName=RefVel, Mode=OneWay}" 
                     Focusable="True" />
-                <local:DataItemUI x:Name="RotationsPerFoot" Grid.Column="1" Margin="5" DataContext="{Binding RotationsPerFoot}" EditOrderNext="{Binding ElementName=FollowingError, Mode=OneWay}" EditOrderPrev="{Binding ElementName=SetPosition, Mode=OneWay}" Focusable="True" />
+                <local:DataItemUI x:Name="RotationsPerEU" Grid.Column="1" Margin="5" DataContext="{Binding RotationsPerEU}" EditOrderNext="{Binding ElementName=FollowingError, Mode=OneWay}" EditOrderPrev="{Binding ElementName=SetPosition, Mode=OneWay}" Focusable="True" />
                 <local:DataItemUI 
                     x:Name="FollowingError" 
                     Grid.Column="2" 
                     Margin="5" 
                     DataContext="{Binding FollowingError, Converter={StaticResource PositionConverter}}" 
                     EditOrderNext="{Binding ElementName=SoftUp, Mode=OneWay}" 
-                    EditOrderPrev="{Binding ElementName=RotationsPerFoot, Mode=OneWay}" 
+                    EditOrderPrev="{Binding ElementName=RotationsPerEU, Mode=OneWay}" 
                     Focusable="True"/>
             </Grid>
             <Grid Grid.Row="2">

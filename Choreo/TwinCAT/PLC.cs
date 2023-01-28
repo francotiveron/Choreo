@@ -219,8 +219,8 @@ namespace Choreo.TwinCAT
 
             if (axis is Motor motor)
             {
-                values = values.Append(axis.RotationsPerFoot).ToArray();
-                tagNames = tagNames.Append(nameof(motor.RotationsPerFoot)).ToArray();
+                values = values.Append(axis.RotationsPerEU).ToArray();
+                tagNames = tagNames.Append(nameof(motor.RotationsPerEU)).ToArray();
                 values = values.Append(motor.PGain).ToArray();
                 tagNames = tagNames.Append(nameof(motor.PGain)).ToArray();
                 values = values.Append(motor.Jerk).ToArray();
@@ -268,7 +268,7 @@ namespace Choreo.TwinCAT
 
             if (axis is Motor motor)
             {
-                tagNames = tagNames.Append(nameof(motor.RotationsPerFoot)).ToArray();
+                tagNames = tagNames.Append(nameof(motor.RotationsPerEU)).ToArray();
                 tagNames = tagNames.Append(nameof(motor.PGain)).ToArray();
                 tagNames = tagNames.Append(nameof(motor.Jerk)).ToArray();
                 tagNames = tagNames.Append(nameof(motor.RefVel)).ToArray();
@@ -314,7 +314,7 @@ namespace Choreo.TwinCAT
 
                 valueSyms.Clear();
                 valueSyms.AddRange(moveProps.Select(prop => tags[ax, prop].Symbol));
-                values[0] = move * ax.RotationsPerFoot;
+                values[0] = move * ax.RotationsPerEU;
                 new SumSymbolWrite(Connection, valueSyms).Write(values);
                 ax.MoveValRotations = (double)values[0];
                 enabSyms.AddRange(enaProps.Select(p => tags[ax, p].Symbol));
@@ -343,7 +343,7 @@ namespace Choreo.TwinCAT
                     if (!ax.IsOperational) continue;
 
                     var values = new object[] {
-                        pos * ax.RotationsPerFoot
+                        pos * ax.RotationsPerEU
                         , ax.DefVel
                         , ax.DefAcc
                         , ax.DefDec
@@ -385,14 +385,14 @@ namespace Choreo.TwinCAT
 
                     foreach (var motor in VM.Motors.Where(motor => row.Motors[motor.Index])) {
                         valueSyms.AddRange(moveProps.Select(prop => tags[motor, prop].Symbol));
-                        rowValues[0] = row.Target * motor.RotationsPerFoot;
+                        rowValues[0] = row.Target * motor.RotationsPerEU;
                         values.AddRange(rowValues);
                         enabValues[motor.Index * 4] = true;
                     }
 
                     foreach (var group in VM.Groups.Where(group => row.Groups[group.Index])) {
                         valueSyms.AddRange(moveProps.Select(prop => tags[group, prop].Symbol));
-                        rowValues[0] = row.Target * group.RotationsPerFoot;
+                        rowValues[0] = row.Target * group.RotationsPerEU;
                         values.AddRange(rowValues);
                         enabValues[(group.Index + 16) * 4] = true;
                     }

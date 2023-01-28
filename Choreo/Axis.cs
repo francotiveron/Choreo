@@ -35,7 +35,7 @@ namespace Choreo
             set { rotations = value; Notify()(nameof(Position)); }
         }
         [DataItem]
-        public double Position => Rotations / RotationsPerFoot;
+        public double Position => Rotations / RotationsPerEU;
         public Status PositionStatus => Status.Ok;
 
         private double posisionSlider;
@@ -59,7 +59,7 @@ namespace Choreo
             get => moveValRotations;
             set { moveValRotations = value; Notify()(nameof(MoveVal)); }
         }
-        public double MoveVal => MoveValRotations / RotationsPerFoot;
+        public double MoveVal => MoveValRotations / RotationsPerEU;
 
         double accel;
         [Plc(adsNotify: false)]
@@ -206,8 +206,8 @@ namespace Choreo
 
         [DataItem(title: "Set Position")]
         public double CalibrationValue {
-            get => CalibrationRotations / RotationsPerFoot;
-            set { calibrationRotations = value * RotationsPerFoot; Notify(); }
+            get => CalibrationRotations / RotationsPerEU;
+            set { calibrationRotations = value * RotationsPerEU; Notify(); }
         }
 
         bool calibrationSave;
@@ -286,8 +286,8 @@ namespace Choreo
 
         [DataItem(title: "Soft Up/Max Limit")]
         public double SoftUp {
-            get => softUpRotations / RotationsPerFoot;
-            set { softUpRotations = value * RotationsPerFoot; Notify()(nameof(SoftDnStatus)); }
+            get => softUpRotations / RotationsPerEU;
+            set { softUpRotations = value * RotationsPerEU; Notify()(nameof(SoftDnStatus)); }
         }
         public Status SoftUpStatus => SoftUp < SoftDn;
 
@@ -300,8 +300,8 @@ namespace Choreo
 
         [DataItem(title: "Soft Down/Min Limit")]
         public double SoftDn {
-            get => softDnRotations / RotationsPerFoot;
-            set { softDnRotations = value * RotationsPerFoot; Notify()(nameof(SoftUpStatus)); }
+            get => softDnRotations / RotationsPerEU;
+            set { softDnRotations = value * RotationsPerEU; Notify()(nameof(SoftUpStatus)); }
         }
         public Status SoftDnStatus => SoftDn > SoftUp;
 
@@ -388,19 +388,19 @@ namespace Choreo
         public Status LoadOffsStatus => Status.Ok;
 
 
-        double rotationsPerFoot = 1.0;
+        double rotationsPerEU = 1.0;
         
-        [DataItem("r/ft", "Rotations/Foot")]
-        public virtual double RotationsPerFoot
+        [DataItem("r/eu", "Rotations/Eng.Unit")]
+        public virtual double RotationsPerEU
         {
-            get => rotationsPerFoot;
+            get => rotationsPerEU;
 
             set
             {
                 var calVal = CalibrationValue;
                 var softUp = SoftUp;
                 var softDn = SoftDn;
-                rotationsPerFoot = value <= 0.0 ? 1.0 : value;
+                rotationsPerEU = value <= 0.0 ? 1.0 : value;
                 CalibrationValue = calVal;
                 SoftUp = softUp;
                 SoftDn = softDn;
