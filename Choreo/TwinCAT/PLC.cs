@@ -194,6 +194,7 @@ namespace Choreo.TwinCAT
                 , axis.SoftUpRotations
                 , axis.UserEnable
                 , axis.LoadCellActive
+                , axis.RotationalAxis
                 , axis.SoftLimitEnable
                 , axis.JogAcc
                 , axis.JogDec
@@ -212,6 +213,7 @@ namespace Choreo.TwinCAT
                     , nameof(Axis.SoftUpRotations)
                     , nameof(Axis.UserEnable)
                     , nameof(Axis.LoadCellActive)
+                    , nameof(Axis.RotationalAxis)
                     , nameof(Axis.SoftLimitEnable)
                     , nameof(Axis.JogAcc)
                     , nameof(Axis.JogDec)
@@ -261,6 +263,7 @@ namespace Choreo.TwinCAT
                     , nameof(Axis.SoftUpRotations)
                     , nameof(Axis.UserEnable)
                     , nameof(Axis.LoadCellActive)
+                    , nameof(Axis.RotationalAxis)
                     , nameof(Axis.SoftLimitEnable)
                     , nameof(Axis.JogAcc)
                     , nameof(Axis.JogDec)

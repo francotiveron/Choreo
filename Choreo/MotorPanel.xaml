@@ -21,7 +21,7 @@
                 <RowDefinition/>
                 <RowDefinition Height="5*"/>
             </Grid.RowDefinitions>
-            <Border>
+            <Border CornerRadius="{Binding RotationalAxis, Converter={ qc:QuickConverter '$P ? 10 : 0'}}">
                 <Border.Background>
                     <SolidColorBrush Color="{Binding Color, FallbackValue=DarkGray}"/>
                 </Border.Background>

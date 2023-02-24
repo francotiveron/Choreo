@@ -29,7 +29,6 @@ namespace Choreo
             }
         }
 
-        #region Runtime+PLC Properties
         bool followErrorEnable;
         [Plc("Follow_Error_Enable", false)]
         public bool FollowErrorEnable
@@ -86,8 +85,7 @@ namespace Choreo
             set { eSStatus = !value; Notify()(nameof(AxisStatus)); }
         }
 
-        //[Plc("Rotations_Per_EU", false)]
-        [Plc("Rotations_Per_Foot", false)]
+        [Plc("Rotations_Per_EU", false)]
         public override double RotationsPerEU
         {
             get => base.RotationsPerEU;
@@ -145,11 +143,6 @@ namespace Choreo
         }
         public Status FollowingErrorStatus => Status.Ok;
 
-
-
-        #endregion
-
-        #region UI Properties
         public override bool IsGrouped => Group > 0;
 
         public override Color Color {
@@ -160,6 +153,5 @@ namespace Choreo
             }
         }
         public bool IsPreset => VM.Presets.Any(p => p.ContainsMotor(Index));
-        #endregion
     }
 }
