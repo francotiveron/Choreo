@@ -26,8 +26,6 @@ namespace Choreo
 
         public bool IsOperational => Present && UserEnable;
 
-        #region Runtime+PLC Properties
-
         double rotations;
         [Plc("Act_Pos")]
         public double Rotations {
@@ -35,7 +33,7 @@ namespace Choreo
             set { rotations = value; Notify()(nameof(Position)); }
         }
         [DataItem]
-        public double Position => Rotations / RotationsPerFoot;
+        public double Position => Rotations / RotationsPerEU;
         public Status PositionStatus => Status.Ok;
 
         private double posisionSlider;
@@ -59,7 +57,7 @@ namespace Choreo
             get => moveValRotations;
             set { moveValRotations = value; Notify()(nameof(MoveVal)); }
         }
-        public double MoveVal => MoveValRotations / RotationsPerFoot;
+        public double MoveVal => MoveValRotations / RotationsPerEU;
 
         double accel;
         [Plc(adsNotify: false)]
@@ -83,7 +81,7 @@ namespace Choreo
         }
 
         double minVel;
-        [DataItem("fpm", "Min(Velocity)"), Plc("Min_Velocity", false)]
+        [DataItem("'/m", "Min(Velocity)"), Plc("Min_Velocity", false)]
         public double MinVel {
             get => minVel;
             set { minVel = value; Notify()(nameof(DefVel), nameof(MaxVel)); }
@@ -91,7 +89,7 @@ namespace Choreo
         public virtual Status MinVelStatus => MinVel < 0 || MinVel > DefVel;
 
         double maxVel;
-        [DataItem("fpm", "Max"), Plc("Max_Velocity", false)]
+        [DataItem("'/m", "Max"), Plc("Max_Velocity", false)]
         public double MaxVel {
             get => maxVel;
             set { maxVel = value; Notify()(nameof(MinVel), nameof(DefVel)); }
@@ -99,7 +97,7 @@ namespace Choreo
         public virtual Status MaxVelStatus => MaxVel < DefVel;
 
         double defVel;
-        [DataItem("fpm", "Default"), Persistent]
+        [DataItem("'/m", "Default"), Persistent]
         public double DefVel
         {
             get => defVel;
@@ -188,6 +186,14 @@ namespace Choreo
             set { jogStickEnable = value; Notify(); }
         }
 
+        bool rotationalAxis;
+        [Plc("Rotational_Axis")]
+        public bool RotationalAxis
+        {
+            get => rotationalAxis;
+            set { rotationalAxis = value; Notify(); }
+        }
+
         bool active;
         [Plc]
         public bool Active {
@@ -206,8 +212,8 @@ namespace Choreo
 
         [DataItem(title: "Set Position")]
         public double CalibrationValue {
-            get => CalibrationRotations / RotationsPerFoot;
-            set { calibrationRotations = value * RotationsPerFoot; Notify(); }
+            get => CalibrationRotations / RotationsPerEU;
+            set { calibrationRotations = value * RotationsPerEU; Notify(); }
         }
 
         bool calibrationSave;
@@ -238,9 +244,6 @@ namespace Choreo
             }
         }
 
-        #endregion
-
-        #region UI Properties
         string name;
         [DataItem(title: "Axis Name"), Persistent]
         public string Name {
@@ -273,10 +276,6 @@ namespace Choreo
         public virtual bool IsGrouped => false;
         public bool IsUngrouped => !IsGrouped;
 
-        #endregion
-
-        #region Settings
-
         double softUpRotations;
         [Plc("Soft_Up", false)]
         public double SoftUpRotations {
@@ -286,8 +285,8 @@ namespace Choreo
 
         [DataItem(title: "Soft Up/Max Limit")]
         public double SoftUp {
-            get => softUpRotations / RotationsPerFoot;
-            set { softUpRotations = value * RotationsPerFoot; Notify()(nameof(SoftDnStatus)); }
+            get => softUpRotations / RotationsPerEU;
+            set { softUpRotations = value * RotationsPerEU; Notify()(nameof(SoftDnStatus)); }
         }
         public Status SoftUpStatus => SoftUp < SoftDn;
 
@@ -300,17 +299,17 @@ namespace Choreo
 
         [DataItem(title: "Soft Down/Min Limit")]
         public double SoftDn {
-            get => softDnRotations / RotationsPerFoot;
-            set { softDnRotations = value * RotationsPerFoot; Notify()(nameof(SoftUpStatus)); }
+            get => softDnRotations / RotationsPerEU;
+            set { softDnRotations = value * RotationsPerEU; Notify()(nameof(SoftUpStatus)); }
         }
         public Status SoftDnStatus => SoftDn > SoftUp;
 
-        [DataItem("fpm2", "Min(Accel.)")]
+        [DataItem("'/m2", "Min(Accel.)")]
         public double MinAcc => 1.0;
         public Status MinAccStatus => MinAcc < 0;
 
         double maxAcc;
-        [DataItem("fpm2", "Max"), Plc("Max_Accel", false)]
+        [DataItem("'/m2", "Max"), Plc("Max_Accel", false)]
         public double MaxAcc {
             get => maxAcc;
             set { maxAcc = value; Notify()(nameof(DefAcc)); }
@@ -318,7 +317,7 @@ namespace Choreo
         public virtual Status MaxAccStatus => MaxAcc < DefAcc;
 
         double defAcc;
-        [DataItem("fpm2", "Default"), Persistent]
+        [DataItem("'/m2", "Default"), Persistent]
         public double DefAcc {
             get => defAcc;
             set { defAcc = value; Notify()(nameof(MaxAcc)); }
@@ -326,7 +325,7 @@ namespace Choreo
         public Status DefAccStatus => DefAcc < MinAcc || DefAcc > MaxAcc;
 
         double jogAcc;
-        [DataItem("fpm2", "Jog(Accel.)"), Plc("Jog_Accel", false)]
+        [DataItem("'/m2", "Jog(Accel.)"), Plc("Jog_Accel", false)]
         public double JogAcc
         {
             get => jogAcc;
@@ -334,12 +333,12 @@ namespace Choreo
         }
         public Status JogAccStatus => Status.Ok;
 
-        [DataItem("fpm2", "Min(Decel.)")]
+        [DataItem("'/m2", "Min(Decel.)")]
         public double MinDec => 1.0;
         public Status MinDecStatus => MinDec < 0;
 
         double maxDec;
-        [DataItem("fpm2", "Max"), Plc("Max_Decel", false)]
+        [DataItem("'/m2", "Max"), Plc("Max_Decel", false)]
         public double MaxDec {
             get => maxDec;
             set { maxDec = value; Notify()(nameof(DefDec)); }
@@ -347,7 +346,7 @@ namespace Choreo
         public virtual Status MaxDecStatus => MaxDec < DefDec;
 
         double defDec;
-        [DataItem("fpm2", "Default"), Persistent]
+        [DataItem("'/m2", "Default"), Persistent]
         public double DefDec {
             get => defDec;
             set { defDec = value; Notify()(nameof(MaxDec)); }
@@ -355,7 +354,7 @@ namespace Choreo
         public Status DefDecStatus => DefDec < MinDec || DefDec > MaxDec;
 
         double jogDec;
-        [DataItem("fpm2", "Jog(Decel.)"), Plc("Jog_Decel", false)]
+        [DataItem("'/m2", "Jog(Decel.)"), Plc("Jog_Decel", false)]
         public double JogDec
         {
             get => jogDec;
@@ -388,26 +387,25 @@ namespace Choreo
         public Status LoadOffsStatus => Status.Ok;
 
 
-        double rotationsPerFoot = 1.0;
+        double rotationsPerEU = 1.0;
         
-        [DataItem("r/ft", "Rotations/Foot")]
-        public virtual double RotationsPerFoot
+        [DataItem("r/'", "Rotations/Eng.Unit")]
+        public virtual double RotationsPerEU
         {
-            get => rotationsPerFoot;
+            get => rotationsPerEU;
 
             set
             {
                 var calVal = CalibrationValue;
                 var softUp = SoftUp;
                 var softDn = SoftDn;
-                rotationsPerFoot = value <= 0.0 ? 1.0 : value;
+                rotationsPerEU = value <= 0.0 ? 1.0 : value;
                 CalibrationValue = calVal;
                 SoftUp = softUp;
                 SoftDn = softDn;
                 Notify()(nameof(Position), nameof(CalibrationValue), nameof(SoftUp), nameof(SoftDn));
             }
         }
-        #endregion
 
         int group;
         [DataItem(title: "Group")]

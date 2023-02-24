@@ -97,21 +97,21 @@ namespace Choreo
         }
 
         double velocity;
-        [DataItem(mu: "fpm"), Persistent]
+        [DataItem(mu: "'/m"), Persistent]
         public double Velocity {
             get { return velocity; }
             set { velocity = value; Notify(); }
         }
 
         double acceleration;
-        [DataItem, Persistent]
+        [DataItem(mu: "'/m2"), Persistent]
         public double Acceleration {
             get { return acceleration; }
             set { acceleration = value; Notify(); }
         }
 
         double deceleration;
-        [DataItem, Persistent]
+        [DataItem(mu: "'/m2"), Persistent]
         public double Deceleration {
             get { return deceleration; }
             set { deceleration = value; Notify(); }

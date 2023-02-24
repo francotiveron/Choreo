@@ -28,12 +28,10 @@ namespace Choreo
         [DataItem(title: "Group Tolerance")]
         public double ToleranceValue
         {
-            get => ToleranceRotations / RotationsPerFoot;
-            set { ToleranceRotations = value * RotationsPerFoot; Notify(); }
+            get => ToleranceRotations / RotationsPerEU;
+            set { ToleranceRotations = value * RotationsPerEU; Notify(); }
         }
 
-
-        #region UI Properties
         public override Color Color {
             get {
                 if (Active) return Colors.Lime;
@@ -42,10 +40,6 @@ namespace Choreo
         }
         public bool IsPreset => VM.Presets.Any(p => p.ContainsGroup(Index));
 
-        //public override Status MinVelStatus => base.MinVelStatus || VM.Motors.Any(m => m.Group == Number && m.MinVel > MinVel);
-        //public override Status MaxVelStatus => base.MaxVelStatus || VM.Motors.Any(m => m.Group == Number && m.MaxVel < MaxVel);
-        //public override Status MaxAccStatus => base.MaxAccStatus || VM.Motors.Any(m => m.Group == Number && m.MaxAcc < MaxAcc);
-        //public override Status MaxDecStatus => base.MaxDecStatus || VM.Motors.Any(m => m.Group == Number && m.MaxDec < MaxDec);
         public override Status MinVelStatus {
             get
             {
@@ -86,6 +80,5 @@ namespace Choreo
                     return base.MaxDecStatus;
             }
         }
-        #endregion
     }
 }
