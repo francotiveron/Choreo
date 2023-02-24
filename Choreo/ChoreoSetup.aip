@@ -28,7 +28,7 @@
     <ROW Property="ProductCode" Value="1033:{7DDE06DB-6F41-4C2A-B224-D5E24AB76AC8} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="Choreo UI App"/>
-    <ROW Property="ProductVersion" Value="1.6.3.0" Type="32"/>
+    <ROW Property="ProductVersion" Value="1.6.5.0" Type="32"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{46CF055B-37B7-4867-856C-C3512502F7DF}"/>
