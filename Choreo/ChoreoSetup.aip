@@ -2,15 +2,15 @@
 <DOCUMENT Type="Advanced Installer" CreateVersion="17.0" version="17.1.1" Modules="simple" RootPath="." Language="en" Id="{400404AF-B3C8-4C19-B59E-CE36993BD8FB}">
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Choreo.exe" Value="..\Choreo\bin\Release"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Choreo.exe.config" Value="..\Choreo\bin\Release"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Choreo.pdb" Value="..\Choreo\bin\Release"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Choreo.exe" Value="bin\Release"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Choreo.exe.config" Value="bin\Release"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Choreo.pdb" Value="bin\Release"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_Microsoft.Xaml.Behaviors.dll" Value="..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.19\lib\net45"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_NLog.config" Value="..\Choreo\bin\Release"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_NLog.config" Value="bin\Release"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_NLog.dll" Value="..\packages\NLog.4.7.0\lib\net45"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Plc.config" Value="..\Choreo\bin\Release"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Plc.config" Value="bin\Release"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_System.Threading.Tasks.Extensions.dll" Value="..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_UIFB.xml" Value="..\Choreo\bin\Release\TwinCAT"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_UIFB.xml" Value="bin\Release\TwinCAT"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Choreo.exe" Value="Choreo.exe"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Choreo.exe.config" Value="Choreo.exe.config"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Choreo.pdb" Value="Choreo.pdb"/>
@@ -28,7 +28,7 @@
     <ROW Property="ProductCode" Value="1033:{7DDE06DB-6F41-4C2A-B224-D5E24AB76AC8} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="Choreo UI App"/>
-    <ROW Property="ProductVersion" Value="1.6.2.0" Type="32"/>
+    <ROW Property="ProductVersion" Value="1.6.3.0" Type="32"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{46CF055B-37B7-4867-856C-C3512502F7DF}"/>
@@ -93,26 +93,26 @@
     <ROW File="NLog.config" Component_="Choreo_ContentOutput" FileName="NLOG~2.CON|[|AI_PROPPATH_FILENAME_PERBUILD_NLog.config]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_NLog.config&gt;" SelfReg="false"/>
     <ROW File="Plc.config" Component_="Choreo_ContentOutput" FileName="PLC~2.CON|[|AI_PROPPATH_FILENAME_PERBUILD_Plc.config]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Plc.config&gt;" SelfReg="false"/>
     <ROW File="Choreo.pdb" Component_="Choreo_SymbolsOutput" FileName="[|AI_PROPPATH_FILENAME_PERBUILD_Choreo.pdb]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Choreo.pdb&gt;" SelfReg="false"/>
-    <ROW File="System.Reactive.dll_1" Component_="System.Reactive.dll" FileName="SYSTEM~1.DLL|System.Reactive.dll" Attributes="0" SourcePath="..\Choreo\bin\Release\System.Reactive.dll" SelfReg="false"/>
-    <ROW File="CommandLine.dll_1" Component_="CommandLine.dll" FileName="COMMAN~1.DLL|CommandLine.dll" Attributes="0" SourcePath="..\Choreo\bin\Release\CommandLine.dll" SelfReg="false"/>
-    <ROW File="Microsoft.Extensions.Logging.Abstractions.dll" Component_="Microsoft.Extensions.Logging.Abstractions.dll" FileName="MICROS~1.DLL|Microsoft.Extensions.Logging.Abstractions.dll" Attributes="0" SourcePath="..\Choreo\bin\Release\Microsoft.Extensions.Logging.Abstractions.dll" SelfReg="false"/>
-    <ROW File="Microsoft.Xaml.Behaviors.dll_1" Component_="Microsoft.Xaml.Behaviors.dll" FileName="MICROS~3.DLL|Microsoft.Xaml.Behaviors.dll" Attributes="0" SourcePath="..\Choreo\bin\Release\Microsoft.Xaml.Behaviors.dll" SelfReg="false"/>
-    <ROW File="NLog.dll_1" Component_="NLog.dll" FileName="NLog.dll" Attributes="0" SourcePath="..\Choreo\bin\Release\NLog.dll" SelfReg="false"/>
-    <ROW File="QuickConverter.dll_1" Component_="QuickConverter.dll" FileName="QUICKC~1.DLL|QuickConverter.dll" Attributes="0" SourcePath="..\Choreo\bin\Release\QuickConverter.dll" SelfReg="false"/>
-    <ROW File="System.Buffers.dll" Component_="System.Buffers.dll" FileName="SYSTEM~2.DLL|System.Buffers.dll" Attributes="0" SourcePath="..\Choreo\bin\Release\System.Buffers.dll" SelfReg="false"/>
-    <ROW File="System.Configuration.ConfigurationManager.dll" Component_="System.Configuration.ConfigurationManager.dll" FileName="SYSTEM~6.DLL|System.Configuration.ConfigurationManager.dll" Attributes="0" SourcePath="..\Choreo\bin\Release\System.Configuration.ConfigurationManager.dll" SelfReg="false"/>
-    <ROW File="System.Memory.dll" Component_="System.Memory.dll" FileName="SYSTEM~7.DLL|System.Memory.dll" Attributes="0" SourcePath="..\Choreo\bin\Release\System.Memory.dll" SelfReg="false"/>
-    <ROW File="System.Numerics.Vectors.dll" Component_="System.Numerics.Vectors.dll" FileName="SYSTEM~8.DLL|System.Numerics.Vectors.dll" Attributes="0" SourcePath="..\Choreo\bin\Release\System.Numerics.Vectors.dll" SelfReg="false"/>
-    <ROW File="System.Runtime.CompilerServices.Unsafe.dll_1" Component_="System.Runtime.CompilerServices.Unsafe.dll" FileName="SYSTEM~9.DLL|System.Runtime.CompilerServices.Unsafe.dll" Attributes="0" SourcePath="..\Choreo\bin\Release\System.Runtime.CompilerServices.Unsafe.dll" SelfReg="false"/>
-    <ROW File="System.Security.AccessControl.dll" Component_="System.Security.AccessControl.dll" FileName="SYSTE~10.DLL|System.Security.AccessControl.dll" Attributes="0" SourcePath="..\Choreo\bin\Release\System.Security.AccessControl.dll" SelfReg="false"/>
-    <ROW File="System.Security.Permissions.dll" Component_="System.Security.Permissions.dll" FileName="SYSTE~11.DLL|System.Security.Permissions.dll" Attributes="0" SourcePath="..\Choreo\bin\Release\System.Security.Permissions.dll" SelfReg="false"/>
-    <ROW File="System.Security.Principal.Windows.dll" Component_="System.Security.Principal.Windows.dll" FileName="SYSTE~12.DLL|System.Security.Principal.Windows.dll" Attributes="0" SourcePath="..\Choreo\bin\Release\System.Security.Principal.Windows.dll" SelfReg="false"/>
-    <ROW File="System.Text.Encoding.CodePages.dll" Component_="System.Text.Encoding.CodePages.dll" FileName="SYSTE~13.DLL|System.Text.Encoding.CodePages.dll" Attributes="0" SourcePath="..\Choreo\bin\Release\System.Text.Encoding.CodePages.dll" SelfReg="false"/>
-    <ROW File="System.ValueTuple.dll_1" Component_="System.ValueTuple.dll" FileName="SYSTE~15.DLL|System.ValueTuple.dll" Attributes="0" SourcePath="..\Choreo\bin\Release\System.ValueTuple.dll" SelfReg="false"/>
-    <ROW File="TwinCAT.Ads.Abstractions.dll" Component_="TwinCAT.Ads.Abstractions.dll" FileName="TWINCA~1.DLL|TwinCAT.Ads.Abstractions.dll" Attributes="0" SourcePath="..\Choreo\bin\Release\TwinCAT.Ads.Abstractions.dll" SelfReg="false"/>
-    <ROW File="TwinCAT.Ads.dll_1" Component_="TwinCAT.Ads.dll" FileName="TWINCA~4.DLL|TwinCAT.Ads.dll" Attributes="0" SourcePath="..\Choreo\bin\Release\TwinCAT.Ads.dll" SelfReg="false"/>
-    <ROW File="TwinCAT.Ads.Reactive.dll_1" Component_="TwinCAT.Ads.Reactive.dll" FileName="TWINCA~5.DLL|TwinCAT.Ads.Reactive.dll" Attributes="0" SourcePath="..\Choreo\bin\Release\TwinCAT.Ads.Reactive.dll" SelfReg="false"/>
-    <ROW File="TwinCAT.Ads.Server.dll" Component_="TwinCAT.Ads.Server.dll" FileName="TWINCA~6.DLL|TwinCAT.Ads.Server.dll" Attributes="0" SourcePath="..\Choreo\bin\Release\TwinCAT.Ads.Server.dll" SelfReg="false"/>
+    <ROW File="System.Reactive.dll_1" Component_="System.Reactive.dll" FileName="SYSTEM~1.DLL|System.Reactive.dll" Attributes="0" SourcePath="bin\Release\System.Reactive.dll" SelfReg="false"/>
+    <ROW File="CommandLine.dll_1" Component_="CommandLine.dll" FileName="COMMAN~1.DLL|CommandLine.dll" Attributes="0" SourcePath="bin\Release\CommandLine.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.Logging.Abstractions.dll" Component_="Microsoft.Extensions.Logging.Abstractions.dll" FileName="MICROS~1.DLL|Microsoft.Extensions.Logging.Abstractions.dll" Attributes="0" SourcePath="bin\Release\Microsoft.Extensions.Logging.Abstractions.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Xaml.Behaviors.dll_1" Component_="Microsoft.Xaml.Behaviors.dll" FileName="MICROS~3.DLL|Microsoft.Xaml.Behaviors.dll" Attributes="0" SourcePath="bin\Release\Microsoft.Xaml.Behaviors.dll" SelfReg="false"/>
+    <ROW File="NLog.dll_1" Component_="NLog.dll" FileName="NLog.dll" Attributes="0" SourcePath="bin\Release\NLog.dll" SelfReg="false"/>
+    <ROW File="QuickConverter.dll_1" Component_="QuickConverter.dll" FileName="QUICKC~1.DLL|QuickConverter.dll" Attributes="0" SourcePath="bin\Release\QuickConverter.dll" SelfReg="false"/>
+    <ROW File="System.Buffers.dll" Component_="System.Buffers.dll" FileName="SYSTEM~2.DLL|System.Buffers.dll" Attributes="0" SourcePath="bin\Release\System.Buffers.dll" SelfReg="false"/>
+    <ROW File="System.Configuration.ConfigurationManager.dll" Component_="System.Configuration.ConfigurationManager.dll" FileName="SYSTEM~6.DLL|System.Configuration.ConfigurationManager.dll" Attributes="0" SourcePath="bin\Release\System.Configuration.ConfigurationManager.dll" SelfReg="false"/>
+    <ROW File="System.Memory.dll" Component_="System.Memory.dll" FileName="SYSTEM~7.DLL|System.Memory.dll" Attributes="0" SourcePath="bin\Release\System.Memory.dll" SelfReg="false"/>
+    <ROW File="System.Numerics.Vectors.dll" Component_="System.Numerics.Vectors.dll" FileName="SYSTEM~8.DLL|System.Numerics.Vectors.dll" Attributes="0" SourcePath="bin\Release\System.Numerics.Vectors.dll" SelfReg="false"/>
+    <ROW File="System.Runtime.CompilerServices.Unsafe.dll_1" Component_="System.Runtime.CompilerServices.Unsafe.dll" FileName="SYSTEM~9.DLL|System.Runtime.CompilerServices.Unsafe.dll" Attributes="0" SourcePath="bin\Release\System.Runtime.CompilerServices.Unsafe.dll" SelfReg="false"/>
+    <ROW File="System.Security.AccessControl.dll" Component_="System.Security.AccessControl.dll" FileName="SYSTE~10.DLL|System.Security.AccessControl.dll" Attributes="0" SourcePath="bin\Release\System.Security.AccessControl.dll" SelfReg="false"/>
+    <ROW File="System.Security.Permissions.dll" Component_="System.Security.Permissions.dll" FileName="SYSTE~11.DLL|System.Security.Permissions.dll" Attributes="0" SourcePath="bin\Release\System.Security.Permissions.dll" SelfReg="false"/>
+    <ROW File="System.Security.Principal.Windows.dll" Component_="System.Security.Principal.Windows.dll" FileName="SYSTE~12.DLL|System.Security.Principal.Windows.dll" Attributes="0" SourcePath="bin\Release\System.Security.Principal.Windows.dll" SelfReg="false"/>
+    <ROW File="System.Text.Encoding.CodePages.dll" Component_="System.Text.Encoding.CodePages.dll" FileName="SYSTE~13.DLL|System.Text.Encoding.CodePages.dll" Attributes="0" SourcePath="bin\Release\System.Text.Encoding.CodePages.dll" SelfReg="false"/>
+    <ROW File="System.ValueTuple.dll_1" Component_="System.ValueTuple.dll" FileName="SYSTE~15.DLL|System.ValueTuple.dll" Attributes="0" SourcePath="bin\Release\System.ValueTuple.dll" SelfReg="false"/>
+    <ROW File="TwinCAT.Ads.Abstractions.dll" Component_="TwinCAT.Ads.Abstractions.dll" FileName="TWINCA~1.DLL|TwinCAT.Ads.Abstractions.dll" Attributes="0" SourcePath="bin\Release\TwinCAT.Ads.Abstractions.dll" SelfReg="false"/>
+    <ROW File="TwinCAT.Ads.dll_1" Component_="TwinCAT.Ads.dll" FileName="TWINCA~4.DLL|TwinCAT.Ads.dll" Attributes="0" SourcePath="bin\Release\TwinCAT.Ads.dll" SelfReg="false"/>
+    <ROW File="TwinCAT.Ads.Reactive.dll_1" Component_="TwinCAT.Ads.Reactive.dll" FileName="TWINCA~5.DLL|TwinCAT.Ads.Reactive.dll" Attributes="0" SourcePath="bin\Release\TwinCAT.Ads.Reactive.dll" SelfReg="false"/>
+    <ROW File="TwinCAT.Ads.Server.dll" Component_="TwinCAT.Ads.Server.dll" FileName="TWINCA~6.DLL|TwinCAT.Ads.Server.dll" Attributes="0" SourcePath="bin\Release\TwinCAT.Ads.Server.dll" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.AppPathsComponent">
     <ROW Name="AI_APPPATH_PERBUILD_Choreo.exe" Path="[|AI_PROPPATH_DIR_PERBUILD_Choreo.exe]\[|AI_PROPPATH_FILENAME_PERBUILD_Choreo.exe]" Type="2" Content="0"/>
@@ -226,7 +226,7 @@
     <ROW Feature_="MainFeature" Component_="TwinCAT.Ads.Server.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
-    <ROW Name="VerendusLogo.exe" SourcePath="..\Choreo\Pictures\VerendusLogo.ico" Index="0"/>
+    <ROW Name="VerendusLogo.exe" SourcePath="Pictures\VerendusLogo.ico" Index="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
     <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
