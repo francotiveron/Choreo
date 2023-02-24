@@ -17,6 +17,8 @@
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
     <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -37,8 +39,6 @@
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -517,6 +517,7 @@
     </Compile>
     <Resource Include="VerendusLogo.ico" />
     <Resource Include="Pictures\VerendusLogo.ico" />
+    <None Include="ChoreoSetup.aip" />
     <None Include="Resources\WarningSign1.png" />
     <Resource Include="Pictures\WarningSign.png" />
     <Resource Include="Pictures\InfoSign.png" />
