@@ -208,6 +208,7 @@
     <Compile Include="CueWindow.xaml.cs">
       <DependentUpon>CueWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RoundDegrees.cs" />
     <Compile Include="FeetInches.cs" />
     <Compile Include="Input\AlphaNumericPad.xaml.cs">
       <DependentUpon>AlphaNumericPad.xaml</DependentUpon>

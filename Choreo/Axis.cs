@@ -15,7 +15,10 @@ namespace Choreo
             get {
                 if (FaultCode != 0) return FaultDescription;
                 if (MAEnable || MREnable) {
-                    return $"{(MAEnable ? "A" : "R")}: {FeetInchesConvert.ToString(MoveVal)}";
+                    string stringVal;
+                    if (RotationalAxis) stringVal = RoundsDegreesConvert.ToString(MoveVal);
+                    else stringVal = FeetInchesConvert.ToString(MoveVal);
+                    return $"{(MAEnable ? "A" : "R")}: {stringVal}";
                 }
                 if (JogUpEnable) return "Jog Up";
                 if (JogDnEnable) return "Jog Dn";

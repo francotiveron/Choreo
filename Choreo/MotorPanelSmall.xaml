@@ -37,7 +37,15 @@
                     />
             </Border>
             <Viewbox Grid.Row="1">
-                <Label x:Name="Value" Content="{Binding Position, Converter={StaticResource PositionConverter}, FallbackValue=Value, TargetNullValue=Value}" Padding="0" Margin="0" Style="{StaticResource DataItemDataStyle}"/>
+                <!--<Label x:Name="Value" Content="{Binding Position, Converter={StaticResource PositionConverter}, FallbackValue=Value, TargetNullValue=Value}" Padding="0" Margin="0" Style="{StaticResource DataItemDataStyle}"/>-->
+                <Label x:Name="Value" Padding="0" Margin="0" Style="{StaticResource DataItemDataStyle}">
+                    <Label.Content>
+                        <MultiBinding Converter="{StaticResource PositionConverter}" FallbackValue="Value">
+                            <Binding Path="Position"/>
+                            <Binding Path="RotationalAxis"/>
+                        </MultiBinding>
+                    </Label.Content>
+                </Label>
             </Viewbox> 
             <Viewbox Grid.Row="2">
                 <local:MotorStatusIndicator/>

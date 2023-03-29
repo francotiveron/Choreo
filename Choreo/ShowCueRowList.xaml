@@ -55,15 +55,21 @@
                             <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="{Binding Converter={StaticResource CueRowMaGToStringConverter}}" ContentStringFormat="00" />
-                        <Label Content="{Binding Target, Converter={StaticResource PositionConverter}}" Grid.Column="1"/>
+                        <Label Grid.Column="1">
+                            <Label.Content>
+                                <MultiBinding Converter="{StaticResource PositionConverter}" FallbackValue="Value" TargetNullValue="Value">
+                                    <Binding Path="Target"/>
+                                    <Binding Path="RotationalAxis"/>
+                                </MultiBinding>
+                            </Label.Content>
+                        </Label>
                         <Label Content="{Binding Acceleration}" Grid.Column="2"/>
                         <Label Content="{Binding Velocity}" Grid.Column="3"/>
                         <Label Content="{Binding Deceleration}" Grid.Column="4"/>
                         <Button Grid.Column="0" Grid.ColumnSpan="5" Content="Issues..." Background="Red" 
-                        Visibility="{Binding Path=IsConsistent, Converter={qc:QuickConverter '$P ? Visibility.Hidden : Visibility.Visible'}}"
-                        DataContext="{Binding .}"
-                        Click="Issues_Click"
-                        />
+                            Visibility="{Binding Path=IsConsistent, Converter={qc:QuickConverter '$P ? Visibility.Hidden : Visibility.Visible'}}"
+                            DataContext="{Binding .}"
+                            Click="Issues_Click"/>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

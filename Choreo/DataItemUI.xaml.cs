@@ -23,17 +23,24 @@ namespace Choreo
         DependencyObject focusScope = null;
         public bool IsPosition { get; private set; }
         public bool IsPassword { get; private set; }
+        public bool IsRotational { get; private set; }
 
         private void DataItemUI_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e) {
             var binding = BindingOperations.GetBinding(this, DataContextProperty);
-            if (binding == null) return;
-
-            IsPosition = binding.Converter == Application.Current.Resources["PositionConverter"];
-            IsPassword = binding.Converter == Application.Current.Resources["PasswordConverter"];
+            var multibinding = BindingOperations.GetMultiBinding(this, DataContextProperty);
+            if (binding == null && multibinding == null) return;
 
             dc = (Parent ?? TemplatedParent).GetValue(DataContextProperty);
+            IsRotational = ((dc as Axis)?.RotationalAxis).GetValueOrDefault(false);
             var type = dc.GetType();
-            var property = binding.Path.Path;
+
+            IsPosition = multibinding?.Converter == Application.Current.Resources["PositionConverter"];
+            IsPassword = binding?.Converter == Application.Current.Resources["PasswordConverter"];
+
+            string property;
+
+            if (IsPosition) property = (multibinding.Bindings[0] as Binding).Path.Path;
+            else property = binding.Path.Path;
             pi = type.GetProperty(property);
             statusPi = type.GetProperty($"{property}Status");
             var attr = pi.GetCustomAttribute<DataItemAttribute>();
@@ -65,7 +72,8 @@ namespace Choreo
         void Set(string v) {
             object value = null;
             if (IsPosition) {
-                if (FeetInchesConvert.TryParse(v, out double? feet)) value = feet;
+                if (IsRotational && RoundsDegreesConvert.TryParse(v, out double? rounds)) value = rounds;
+                else if (FeetInchesConvert.TryParse(v, out double? feet)) value = feet;
             }
             else {
                 try { value = Convert.ChangeType(v, pi.PropertyType); }
@@ -220,13 +228,26 @@ namespace Choreo
         }
     }
 
-    public class PositionConverter : IValueConverter {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-            var feet = (double)value;
-            return FeetInchesConvert.ToString(feet);
+    public class PositionConverter : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            try
+            {
+                var position = (double)values[0];
+                var rotational = (values[1] as bool?).GetValueOrDefault(false);
+                string result = "???";
+
+                if (rotational) result = RoundsDegreesConvert.ToString(position);
+                else result = FeetInchesConvert.ToString(position);
+
+                return result;
+            }
+            catch {  return null; }
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
             throw new NotImplementedException();
         }
     }
