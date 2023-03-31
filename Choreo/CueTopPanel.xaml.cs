@@ -10,6 +10,7 @@ namespace Choreo
     public partial class CueTopPanel : UserControl {
         public CueTopPanel() {
             InitializeComponent();
+            this.ForceRotational.IsChecked = Globals.ForceRotational;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) {
@@ -27,6 +28,16 @@ namespace Choreo
                     cue.Rows.Add(new CueRow(cue));
                     break;
             }
+        }
+
+        private void ForceRotational_Click(object sender, RoutedEventArgs e)
+        {
+            Globals.ForceRotational = !Globals.ForceRotational;
+            this.ForceRotational.IsChecked = Globals.ForceRotational;
+            var w = Window.GetWindow(this);
+            var dc = w.DataContext;
+            w.DataContext = null;
+            w.DataContext = dc;
         }
     }
 }

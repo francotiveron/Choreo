@@ -10,6 +10,7 @@ namespace Choreo
     public partial class ShowPage : UserControl {
         public ShowPage() {
             InitializeComponent();
+            this.ForceRotational.IsChecked = Globals.ForceRotational;
         }
 
         private void DisableCueButton_Click(object sender, RoutedEventArgs e) => CueList.SelectedCue.Enabled = !CueList.SelectedCue.Enabled;
@@ -19,6 +20,15 @@ namespace Choreo
         private void SaveShowButton_Click(object sender, RoutedEventArgs e)
         {
             Storage.PersistToRegistry();
+        }
+        private void ForceRotational_Click(object sender, RoutedEventArgs e)
+        {
+            Globals.ForceRotational = !Globals.ForceRotational;
+            this.ForceRotational.IsChecked = Globals.ForceRotational;
+            var w = Window.GetWindow(this);
+            var dc = w.DataContext;
+            w.DataContext = null;
+            w.DataContext = dc;
         }
     }
 }

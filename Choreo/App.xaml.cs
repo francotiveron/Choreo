@@ -18,7 +18,7 @@ namespace Choreo
         }
 
         void VM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
-            if (e.PropertyName == "MotorSettingsBeingEdited") {
+            if (e?.PropertyName == "MotorSettingsBeingEdited") {
                 var motorIndex = VM.MotorSettingsBeingEdited;
                 if (motorIndex > 0 && MainWindow is MainWindow) {
                     var newWindow = new MotorWindow();
@@ -29,7 +29,7 @@ namespace Choreo
                 if (motorIndex == 0 && MainWindow is MotorWindow) ChangeWindow(new MainWindow());
             }
             else
-            if (e.PropertyName == "GroupSettingsBeingEdited") {
+            if (e?.PropertyName == "GroupSettingsBeingEdited") {
                 var groupIndex = VM.GroupSettingsBeingEdited;
                 if (groupIndex > 0 && MainWindow is MainWindow) {
                     var newWindow = new MotorWindow();
@@ -40,7 +40,7 @@ namespace Choreo
                 if (groupIndex == 0 && MainWindow is MotorWindow) ChangeWindow(new MainWindow());
             }
             else
-            if (e.PropertyName == "CueBeingEdited") {
+            if (e?.PropertyName == "CueBeingEdited") {
                 var cueIndex = VM.CueBeingEdited;
                 if (cueIndex > 0 && MainWindow is MainWindow) {
                     var newWindow = new CueWindow();
@@ -51,7 +51,7 @@ namespace Choreo
                 if (cueIndex == 0 && MainWindow is CueWindow) ChangeWindow(new MainWindow());
             }
             else
-            if (e.PropertyName == "MotionEditing") {
+            if (e?.PropertyName == "MotionEditing") {
                 if (VM.MotionEditing && MainWindow is MainWindow) {
                     var newWindow = new MotionWindow();
                     ChangeWindow(newWindow);
@@ -68,16 +68,5 @@ namespace Choreo
             oldWindow.Close();
         }
 
-        //protected override void OnStartup(StartupEventArgs e)
-        //{
-        //    base.OnStartup(e);
-        //    //PresentationTraceSources.Refresh();
-        //    //PresentationTraceSources.DataBindingSource.Listeners.Add(new ConsoleTraceListener());
-        //    //PresentationTraceSources.DataBindingSource.Listeners.Add(new DebugTraceListener());
-        //    //PresentationTraceSources.DataBindingSource.Switch.Level = SourceLevels.Warning | SourceLevels.Error;
-        //    //SetupExceptionHandling();
-        //    MainWindow = new MainWindow();
-        //    MainWindow.Show();
-        //}
     }
 }

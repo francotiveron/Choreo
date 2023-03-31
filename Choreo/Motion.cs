@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Threading;
 using static Choreo.Globals;
 
 namespace Choreo
@@ -24,6 +25,8 @@ namespace Choreo
                 Deceleration = hook.DefDec;
             }
         }
+
+        public bool? Rotational { get { return Hook.RotationalAxis; } }
 
         public bool[] Motors { get; } = new bool[16];
         public bool[] Groups { get; } = new bool[8];

@@ -39,6 +39,8 @@
                     Style="{StaticResource TopBarCommandButtonStyle}"
                     Padding="5"
                     />
+            <CheckBox x:Name="ForceRotational" HorizontalAlignment="Right" Grid.Column="1" Content="Rotational" DockPanel.Dock="Right" Click="ForceRotational_Click"/>
+
         </StackPanel>
         <!--DataContext="{Binding ElementName=CueList, Path=SelectedCue}"-->
         <!--Visibility="{qc:Binding '$P0 == null ? Visibility.Hidden : Visibility:Visible', P0={Binding SelectedValue}}"-->

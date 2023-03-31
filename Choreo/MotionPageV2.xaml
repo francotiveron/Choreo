@@ -93,7 +93,7 @@
                         <local:DataItemUI.DataContext>
                             <MultiBinding Converter="{StaticResource PositionConverter}">
                                 <Binding Path="RelativeSetpoint"/>
-                                <Binding Path="RotationalAxis"/>
+                                <Binding Path="Rotational"/>
                             </MultiBinding>
                         </local:DataItemUI.DataContext>
                     </local:DataItemUI>
@@ -104,7 +104,7 @@
                         <local:DataItemUI.DataContext>
                             <MultiBinding Converter="{StaticResource PositionConverter}">
                                 <Binding Path="AbsoluteSetpoint"/>
-                                <Binding Path="RotationalAxis"/>
+                                <Binding Path="Rotational"/>
                             </MultiBinding>
                         </local:DataItemUI.DataContext>
                     </local:DataItemUI>

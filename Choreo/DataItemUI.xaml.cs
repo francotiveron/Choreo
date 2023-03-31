@@ -1,6 +1,7 @@
 ﻿using Choreo.Input;
 using System;
 using System.Globalization;
+using System.Net.Security;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Windows;
@@ -28,10 +29,16 @@ namespace Choreo
         private void DataItemUI_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e) {
             var binding = BindingOperations.GetBinding(this, DataContextProperty);
             var multibinding = BindingOperations.GetMultiBinding(this, DataContextProperty);
-            if (binding == null && multibinding == null) return;
 
             dc = (Parent ?? TemplatedParent).GetValue(DataContextProperty);
-            IsRotational = ((dc as Axis)?.RotationalAxis).GetValueOrDefault(false);
+            if (binding == null && multibinding == null || dc == null) return;
+
+            if (dc is Axis) IsRotational = ((dc as Axis)?.RotationalAxis).GetValueOrDefault(false);
+            else
+            if (dc is Motion) IsRotational = ((dc as Motion)?.Rotational).GetValueOrDefault(false);
+            else 
+            IsRotational = ForceRotational;
+
             var type = dc.GetType();
 
             IsPosition = multibinding?.Converter == Application.Current.Resources["PositionConverter"];
@@ -236,6 +243,8 @@ namespace Choreo
             {
                 var position = (double)values[0];
                 var rotational = (values[1] as bool?).GetValueOrDefault(false);
+                if (Globals.ForceRotational) rotational = true;
+
                 string result = "???";
 
                 if (rotational) result = RoundsDegreesConvert.ToString(position);

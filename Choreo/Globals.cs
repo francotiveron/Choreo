@@ -107,5 +107,7 @@ namespace Choreo
 
         public static Dictionary<ushort, string> FaultCodeMap;
 
+        public static bool ForceRotational = false;
+
     }
 }

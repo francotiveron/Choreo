@@ -11,6 +11,8 @@
         <Button x:Name="CueAddRowButton" Content="ADD ROW" Style="{StaticResource TopBarCommandButtonStyle}"  Click="Button_Click"/>
         <Button x:Name="CueEditSaveButton" Content="SAVE" Style="{StaticResource TopBarCommandButtonStyle}"  Click="Button_Click"/>
         <Button x:Name="CueEditCancelButton" Content="CANCEL" Style="{StaticResource TopBarCommandButtonStyle}" Click="Button_Click"/>
+        <CheckBox x:Name="ForceRotational" HorizontalAlignment="Right" Grid.Column="1" Content="Rotational" DockPanel.Dock="Right" Click="ForceRotational_Click"/>
+
     </DockPanel>
 
 </UserControl>
